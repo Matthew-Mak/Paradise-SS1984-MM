@@ -3,24 +3,37 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
-	desc = "Some blob creature thingy"
+	desc = "A thick wall of writhing tendrils."
 	density = FALSE
 	opacity = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSBLOB
+	layer = BELOW_MOB_LAYER
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
-	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	var/health_timestamp = 0
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
-	/// If a threshold is reached, resulting in shifting variables
-	var/compromised_integrity = FALSE
-	var/mob/camera/blob/overmind
 	creates_cover = TRUE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP // stops blob mobs from falling on multiz.
+	max_integrity = BLOB_REGULAR_MAX_HP
+	/// Multiplies brute damage by this
+	var/brute_resist = BLOB_BRUTE_RESIST
+	/// Multiplies burn damage by this
+	var/fire_resist = BLOB_FIRE_RESIST
+	/// how much health this blob regens when pulsed
+	var/health_regen = BLOB_REGULAR_HP_REGEN
+	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = 0
+	/// If a threshold is reached, resulting in shifting variables
+	var/compromised_integrity = FALSE
+	/// Blob overmind
+	var/mob/camera/blob/overmind
+	/// We got pulsed when?
+	COOLDOWN_DECLARE(pulse_timestamp)
+	/// we got healed when?
+	COOLDOWN_DECLARE(heal_timestamp)
+	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
+	var/ignore_syncmesh_share = FALSE
+	/// If the blob blocks atmos and heat spread
+	var/atmosblock = FALSE
 
 
 /obj/structure/blob/Initialize(mapload)

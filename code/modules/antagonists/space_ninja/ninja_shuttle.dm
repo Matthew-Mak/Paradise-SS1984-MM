@@ -31,3 +31,4 @@
 	name = "\improper Spider Clan \"Ombra\" Shuttle"
 	parallax_movedir = SOUTH
 	nad_allowed = TRUE
+	area_flags = NONE

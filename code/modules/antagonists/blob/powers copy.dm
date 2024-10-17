@@ -1,4 +1,4 @@
-// Point controlling procs
+/*// Point controlling procs
 
 /mob/camera/blob/proc/can_buy(var/cost = 15)
 	if(blob_points < cost)
@@ -251,7 +251,7 @@
 			to_chat(blobber, "<span class='biggerdanger'>Вы блобернаут! Вы должны помочь всем формам блоба в их миссии по уничтожению всего!</span>")
 			to_chat(blobber, "<span class='danger'>Вы исцеляетесь, стоя на плитках блоба, однако вы будете медленно разлагаться, если получите урон за пределами блоба.</span>")
 
-			blobber.color = blob_reagent_datum.complementary_color
+			blobber.color = blobstrain.complementary_color
 			blobber.overmind = src
 			blob_mobs.Add(blobber)
 			blobber.AIStatus = AI_OFF
@@ -323,7 +323,7 @@
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
-/mob/camera/blob/proc/expand_blob(var/turf/T)
+/mob/camera/blob/proc/expand_blob(turf/T)
 	if(!T)
 		return
 
@@ -347,14 +347,14 @@
 	if(!((locate(/mob/living) in T) || can_buy(5)))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, blob_reagent_datum.color)
+	OB.expand(T, 0, blobstrain.color)
 	for(var/mob/living/L in T)
 		if(ROLE_BLOB in L.faction) //no friendly/dead fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, REAGENT_TOUCH, 25, 1, mob_protection)
-		blob_reagent_datum.send_message(L)
-	OB.color = blob_reagent_datum.color
+		blobstrain.reaction_mob(L, REAGENT_TOUCH, 25, 1, mob_protection)
+		blobstrain.send_message(L)
+	OB.color = blobstrain.color
 	return
 
 
@@ -469,29 +469,17 @@
 	set name = "Reactive Chemical Adaptation (50)"
 	set desc = "Заменяет ваш химикат на другой случайным образом."
 
-	if(!can_buy(50))
-		return
+	//var/datum/antagonist/blob_overmind/overmind_datum = mind.has_antag_datum(/datum/antagonist/blob_overmind)
+	//if(overmind_datum)
+	//	overmind_datum.reagent = blob_reagent_datum
 
-	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
-	blob_reagent_datum = new B
-	var/datum/antagonist/blob_overmind/overmind_datum = mind.has_antag_datum(/datum/antagonist/blob_overmind)
-	if(overmind_datum)
-		overmind_datum.reagent = blob_reagent_datum
-	color = blob_reagent_datum.complementary_color
-
-	for(var/obj/structure/blob/BL in GLOB.blobs)
-		BL.adjustcolors(blob_reagent_datum.color)
-
-	for(var/mob/living/simple_animal/hostile/blob/BLO)
-		BLO.adjustcolors(blob_reagent_datum.complementary_color)
-
-	to_chat(src, "Ваш новый реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> - [blob_reagent_datum.description]")
+	//to_chat(src, "Ваш новый реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> - [blob_reagent_datum.description]")
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"
 	set name = "*Blob Help*"
 	set desc = "Help on how to blob."
-	for (var/message in get_blob_help_messages(blob_reagent_datum))
+	for (var/message in get_blob_help_messages(blobstrain))
 		to_chat(src, message)
 
-
+*/

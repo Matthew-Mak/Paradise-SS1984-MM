@@ -2165,8 +2165,8 @@
 			update_blind_effects()
 			update_blurry_effects()
 			update_unconscious_overlay()
-			GLOB.alive_mob_list += src
-			GLOB.dead_mob_list -= src
+			add_to_alive_mob_list()
+			remove_from_dead_mob_list()
 
 	switch(stat) //Current stat.
 		if(CONSCIOUS)
@@ -2179,8 +2179,8 @@
 			SetLoseBreath(0)
 			SetDisgust(0)
 			SetEyeBlurry(0)
-			GLOB.alive_mob_list -= src
-			GLOB.dead_mob_list += src
+			remove_from_alive_mob_list()
+			add_to_dead_mob_list()
 
 
 /// Updates hands HUD element.

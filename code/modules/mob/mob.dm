@@ -1,7 +1,7 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	GLOB.mob_list -= src
-	GLOB.dead_mob_list -= src
-	GLOB.alive_mob_list -= src
+	remove_from_mob_list()
+	remove_from_alive_mob_list()
+	remove_from_dead_mob_list()
 	focus = null
 	QDEL_NULL(hud_used)
 	if(mind && mind.current == src)
@@ -25,11 +25,11 @@
 	return ..()
 
 /mob/Initialize(mapload)
-	GLOB.mob_list += src
+	add_to_mob_list()
 	if(stat == DEAD)
-		GLOB.dead_mob_list += src
+		add_to_dead_mob_list()
 	else
-		GLOB.alive_mob_list += src
+		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
 	. = ..()
@@ -591,8 +591,8 @@
 
 /mob/proc/get_status_tab_items()
 	SHOULD_CALL_PARENT(TRUE)
-	var/list/status_tab_data = list()
-	return status_tab_data
+	. = list(" ")
+	return .
 
 // facing verbs
 /mob/proc/canface()

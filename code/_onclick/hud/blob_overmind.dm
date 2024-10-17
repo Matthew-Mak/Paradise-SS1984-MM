@@ -3,7 +3,7 @@
 		hud_used = new /datum/hud/blob_overmind(src)
 
 /atom/movable/screen/blob
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/hud/blob.dmi'
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
@@ -89,8 +89,14 @@
 
 /atom/movable/screen/blob/FactoryBlob
 	icon_state = "ui_factory"
-	name = "Produce Factory Blob (60)"
-	desc = "Производит фабрику за 60 ресурсов.<br>Фабрики будут производить споры каждые несколько секунд."
+	name = "Produce Factory Blob (ERROR)"
+	desc = "Производит фабрику за ERROR ресурсов.<br>Фабрики будут производить споры каждые несколько секунд."
+
+
+/atom/movable/screen/blob/FactoryBlob/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
+	desc = "Производит фабрику за [BLOB_STRUCTURE_FACTORY_COST] ресурсов.<br>Фабрики будут производить споры каждые несколько секунд."
 
 /atom/movable/screen/blob/FactoryBlob/Click()
 	if(isovermind(usr))
@@ -146,10 +152,7 @@
 	SET_PLANE_EXPLICIT(blobpwrdisplay, ABOVE_HUD_PLANE, mymob)
 	static_inventory += blobpwrdisplay
 
-	blobhealthdisplay = new /atom/movable/screen(null, src)
-	blobhealthdisplay.name = "blob health"
-	blobhealthdisplay.icon_state = "block"
-	blobhealthdisplay.screen_loc = ui_internal
+	blobhealthdisplay = new /atom/movable/screen/healths/blob(null, src)
 	static_inventory += blobhealthdisplay
 
 	using = new /atom/movable/screen/blob/BlobHelp(null, src)

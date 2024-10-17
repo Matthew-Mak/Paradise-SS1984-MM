@@ -251,18 +251,22 @@
 	if(blob_client && location)
 		mode.bursted_blobs_count++
 		C.was_bursted = TRUE
-
-		var/datum/antagonist/blob_overmind/overmind = transform_to_overmind()
-		owner.remove_antag_datum(/datum/antagonist/blob_infected)
 		kill_borer_inside()
 		C.gib()
-		var/obj/structure/blob/core/core = new(location, 200, blob_client, SSticker.mode.blob_point_rate)
+		var/obj/structure/blob/special/core/core = new(location, blob_client)
 		if(!(core.overmind && core.overmind.mind))
 			return
+		var/datum/antagonist/blob_overmind/overmind = transform_to_overmind()
 		core.overmind.mind.add_antag_datum(overmind)
 		core.lateblobtimer()
+		notify_ghosts(
+			"A Blob host has burst in [get_area_name(core)]",
+			source = core,
+			title = "Blob Awakening!",
+		)
 		SSticker?.mode?.process_blob_stages()
 		mode.update_blob_objective()
+		owner.remove_antag_datum(/datum/antagonist/blob_infected)
 
 
 /datum/antagonist/blob_infected/proc/transform_to_overmind()

@@ -1,4 +1,5 @@
 
+/*
 ////////////////
 // BASE TYPE //
 ////////////////
@@ -260,3 +261,4 @@
 				var/rendered_ghost = "<i><span class='blob'>Blob Telepathy,</span> <span class='name'>[name]([overmind]) </span> \
 				<a href='byond://?src=[M.UID()];follow=[UID()]'>(F)</a> states, <span class='blob'>\"[message]\"</span></i>"
 				M.show_message(rendered_ghost, 2)
+*/

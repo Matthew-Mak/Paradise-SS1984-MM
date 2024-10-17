@@ -13,14 +13,17 @@
 	var/is_offspring = FALSE
 	/// Was the blob with this datum bursted blob_infected.
 	var/is_tranformed = FALSE
-	/// Link to the datum of the selected blob reagent.
-	var/datum/reagent/blob/reagent
+	//Link to the datum of the selected blob reagent.
+	var/datum/blobstrain/strain
+
+/datum/antagonist/blob_overmind/can_be_owned(datum/mind/new_owner)
+	. = ..() && isovermind(new_owner?.current)
 
 /datum/antagonist/blob_overmind/on_gain()
-	if(!reagent)
-		var/reagent_type = pick(subtypesof(/datum/reagent/blob))
-		reagent = new reagent_type
-	return ..()
+	var/mob/camera/blob/camera = owner.current
+	strain = camera.blobstrain
+	. = ..()
+	
 
 /datum/antagonist/blob_overmind/add_owner_to_gamemode()
 	var/datum/game_mode/mode = SSticker.mode
@@ -54,12 +57,12 @@
 /datum/antagonist/blob_overmind/greet()
 	var/list/messages = list()
 	messages.Add("<span class='danger'>Вы Блоб!</span>")
-	for(var/message in get_blob_help_messages(reagent))
+	for(var/message in get_blob_help_messages(strain))
 		messages.Add(message)
 	SEND_SOUND(owner.current, 'sound/magic/mutate.ogg')
 	return messages
 
-/proc/get_blob_help_messages(datum/reagent/blob/blob_reagent_datum)
+/proc/get_blob_help_messages(datum/blobstrain/blob_reagent_datum)
 	var/list/messages = list()
 	messages += "<b>Как надразум, вы можете управлять блобом!</b>"
 	messages += "Ваш реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> - [blob_reagent_datum.description]"
