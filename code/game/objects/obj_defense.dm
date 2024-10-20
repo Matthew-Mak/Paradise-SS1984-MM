@@ -108,12 +108,16 @@
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
 
+
 /obj/blob_act(obj/structure/blob/B)
+	if (!..() || (obj_flags & IGNORE_BLOB_ACT))
+		return
 	if(isturf(loc))
 		var/turf/T = loc
 		if((T.intact && level == 1) || T.transparent_floor == TURF_TRANSPARENT) //the blob doesn't destroy thing below the floor
 			return
-	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
+	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
+
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)

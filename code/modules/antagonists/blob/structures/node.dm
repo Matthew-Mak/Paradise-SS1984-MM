@@ -39,9 +39,10 @@
 	if(blocks_emissive)
 		add_overlay(get_emissive_block())
 
-/obj/structure/blob/special/node/creation_action()
-	if(overmind)
-		overmind.node_blobs += src
+
+/obj/structure/blob/special/node/link_to_overmind(mob/camera/blob/owner_overmind)
+	. = ..()
+	overmind.node_blobs += src
 
 /obj/structure/blob/special/node/Destroy()
 	GLOB.blob_nodes -= src

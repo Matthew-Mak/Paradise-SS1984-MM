@@ -1,6 +1,6 @@
 /datum/game_mode
 	/// List of of blobs, their offsprings and blobburnouts spawned by them
-	var/list/blobs = list("infected"=list(), "offsprings"=list(), "blobernauts"=list())
+	var/list/blobs = list("infected"=list(), "offsprings"=list(), "minions"=list())
 	/// Count of blob tiles to blob win
 	var/blob_win_count = BLOB_BASE_TARGET_POINT
 	/// Number of resource produced by the core
@@ -15,6 +15,8 @@
 	var/off_auto_gamma = FALSE
 	/// Disables automatic nuke codes
 	var/off_auto_nuke_codes = FALSE
+	/// Is all blobs have infinity points
+	var/is_blob_infinity_points = FALSE
 	/// Total blobs objective
 	var/datum/objective/blob_critical_mass/blob_objective
 
@@ -126,7 +128,7 @@
 		blob_list.Add(value)
 	for(var/value in blobs["offsprings"])
 		blob_list.Add(value)
-	for(var/value in blobs["blobernauts"])
+	for(var/value in blobs["minions"])
 		blob_list.Add(value)
 	return blob_list
 

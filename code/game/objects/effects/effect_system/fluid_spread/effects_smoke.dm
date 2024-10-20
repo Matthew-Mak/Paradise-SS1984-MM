@@ -380,7 +380,7 @@
 		return FALSE
 	if(!istype(smoker))
 		return FALSE
-	if(smoker.internal != null || smoker.can_breathe_gas())
+	if(smoker.internal != null || !smoker.can_breathe_gas())
 		return FALSE
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)

@@ -5,31 +5,26 @@
 	icon_state = "zombie"
 	icon_living = "zombie"
 	health_doll_icon = "blobpod"
-	mob_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	health = 70
 	maxHealth = 70
-	verb_say = "gurgles"
+	verb_say = list("gurgles", "groans")
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = 20
-	attack_verb_continuous = "punches"
-	attack_verb_simple = "punch"
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	attacktext = "ударяет"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	death_message = "collapses to the ground!"
+	deathmessage = 	"collapses to the ground!"
 	gold_core_spawnable = NO_SPAWN
-	basic_mob_flags = DEL_ON_DEATH
+	del_on_death = TRUE
 	/// The dead body we have inside
 	var/mob/living/carbon/human/corpse
 
-/mob/living/simple_animal/hostile/blob_minion/zombie/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT) // This mob doesn't function visually without a corpse and wouldn't respawn with one
 
-/mob/living/simple_animal/hostile/hostile/blob_minion/zombie/death(gibbed)
+/mob/living/simple_animal/hostile/blob_minion/zombie/death(gibbed)
 	corpse?.forceMove(loc)
 	death_burst()
 	return ..()
@@ -40,6 +35,16 @@
 		return
 	corpse = null
 	death()
+
+/mob/living/simple_animal/hostile/blob_minion/zombie/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(istype(mover, /obj/structure/blob))
+		return TRUE
+
+
+/mob/living/simple_animal/hostile/blob_minion/zombie/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/blob_minion/zombie/Destroy()
 	QDEL_NULL(corpse)
@@ -56,21 +61,24 @@
 	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
 	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
 	overlays += blob_head_overlay
+	if(blocks_emissive)
+		add_overlay(get_emissive_block())
 
 /// Create an explosion of spores on death
-/mob/living/basic/blob_minion/zombie/proc/death_burst()
+/mob/living/simple_animal/hostile/blob_minion/zombie/proc/death_burst()
 	do_chem_smoke(range = 0, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
 
 /// Store a body so that we can drop it on death
 /mob/living/simple_animal/hostile/blob_minion/zombie/proc/consume_corpse(mob/living/carbon/human/new_corpse)
 	if(new_corpse.wear_suit)
-		maxHealth += new_corpse.get_armor_rating(MELEE)
+		maxHealth += new_corpse.getarmor(attack_flag = MELEE)
 		health = maxHealth
-	new_corpse.set_facial_hairstyle("Shaved", update = FALSE)
-	new_corpse.set_hairstyle("Bald", update = TRUE)
+	new_corpse.change_facial_hair("Shaved")
+	new_corpse.change_hair("Bald")
 	new_corpse.forceMove(src)
 	corpse = new_corpse
 	update_appearance(UPDATE_ICON)
+	overlays += new_corpse.overlays
 	set_up_zombie_appearance()
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 
@@ -91,7 +99,6 @@
 		/datum/component/ghost_direct_control,\
 		ban_type = ROLE_BLOB,\
 		poll_candidates = TRUE,\
-		poll_ignore_key = POLL_IGNORE_BLOB,\
 	)
 
 /mob/living/simple_animal/hostile/blob_minion/zombie/controlled/death_burst()

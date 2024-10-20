@@ -1,5 +1,5 @@
 /atom/proc/can_blob_attack()
-	return !(HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED))
+	return TRUE
 
 /mob/living/can_blob_attack()
 	. = ..()

@@ -9,15 +9,26 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_TRANSFER_MIND
 
 /datum/action/innate/blob/comm/Activate()
-	var/input = stripped_input(usr, "Выберите сообщение для отправки другому блобу.", "Blob Telepathy", "")
+	var/input = tgui_input_text(usr, "Выберите сообщение для отправки другим блобам.", "Телепатия Блоба", "")
 	if(!input || !IsAvailable())
 		return
-	blob_talk(usr, input)
+	blob_talk(input)
 	return
 
+/datum/action/innate/blob/comm/proc/blob_talk(message)
+
+	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	if(!message)
+		return
+
+	add_say_logs(usr, message, language = "BLOB")
+	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] <span class='name'>[usr.name]</span> states, [message]"))
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, usr)
+
 /datum/action/innate/blob/self_burst
-	icon_icon = 'icons/mob/blob.dmi'
-	button_icon = 'icons/mob/blob.dmi'
+	icon_icon = 'icons/hud/blob.dmi'
+	button_icon = 'icons/hud/blob.dmi'
 	background_icon_state = "block"
 	button_icon_state = "ui_tocore"
 	name = "Self burst"
@@ -25,7 +36,7 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_TRANSFER_MIND
 
 /datum/action/innate/blob/self_burst/Activate()
-	var/input = alert(usr,"Вы действительно хотите лопнуть себя и превратиться в блоба досрочно? Это действие необратимо.", "", "Да", "Нет") == "Да"
+	var/input = tgui_alert(usr,"Вы действительно хотите лопнуть себя и превратиться в блоба досрочно? Это действие необратимо.", "", list("Да", "Нет")) == "Да"
 	if(!input || !IsAvailable())
 		return
 	var/datum/antagonist/blob_infected/blob = usr?.mind?.has_antag_datum(/datum/antagonist/blob_infected)
@@ -33,14 +44,3 @@
 		return
 	blob.burst_blob()
 	return
-
-/proc/blob_talk(mob/living/user, message)
-
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if(!message)
-		return
-
-	add_say_logs(user, message, language = "BLOB")
-	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] <span class='name'>[user.name]</span> states, [message]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, user)

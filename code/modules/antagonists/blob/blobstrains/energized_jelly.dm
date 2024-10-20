@@ -23,13 +23,14 @@
 
 /datum/reagent/blob/energized_jelly
 	name = "Energized Blob Jelly"
+	id = "blob_energized_jelly"
 	taste_description = "gelatin"
 	color = "#EFD65A"
 
-/datum/reagent/blob/energized_jelly/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/energized_jelly/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
-	exposed_mob.losebreath += round(0.2*reac_volume)
+	exposed_mob.LoseBreath(round(0.2*reac_volume))
 	exposed_mob.adjustStaminaLoss(reac_volume * 1.2)
 	if(exposed_mob)
 		exposed_mob.apply_damage(0.6*reac_volume, OXY)

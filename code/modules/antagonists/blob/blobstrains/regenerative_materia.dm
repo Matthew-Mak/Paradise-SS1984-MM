@@ -12,14 +12,15 @@
 
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
+	id = "blob_regenerative_materia"
 	taste_description = "heaven"
 	color = "#A88FB7"
 
-/datum/reagent/blob/regenerative_materia/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/regenerative_materia/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	if(iscarbon(exposed_mob))
-		exposed_mob.adjust_drugginess(reac_volume * 2 SECONDS)
+		exposed_mob.Druggy(reac_volume * 2 SECONDS)
 	if(exposed_mob.reagents)
 		exposed_mob.reagents.add_reagent(/datum/reagent/blob/regenerative_materia, 0.2*reac_volume)
 		exposed_mob.reagents.add_reagent(/datum/reagent/toxin/spore, 0.2*reac_volume)
@@ -28,9 +29,9 @@
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
 	if(metabolizer.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
-		return UPDATE_MOB_HEALTH
+		return STATUS_UPDATE_HEALTH
 
-/datum/reagent/blob/regenerative_materia/on_mob_metabolize(mob/living/metabolizer)
+/datum/reagent/blob/regenerative_materia/on_mob_start_metabolize(mob/living/metabolizer)
 	. = ..()
 	metabolizer.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 

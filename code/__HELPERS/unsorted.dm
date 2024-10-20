@@ -511,8 +511,8 @@ Returns 1 if the chain up to the area contains the given typepath
 
 ///Step-towards method of determining whether one atom can see another. Similar to viewers()
 ///note: this is a line of sight algorithm, view() does not do any sort of raycasting and cannot be emulated by it accurately
-/proc/can_see(atom/source, atom/target, length = 5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
-	var/turf/current_turf = get_turf(source)
+/atom/proc/can_see(atom/target, length = 5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
+	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	if(!current_turf || !target_turf)	// nullspace
 		return FALSE

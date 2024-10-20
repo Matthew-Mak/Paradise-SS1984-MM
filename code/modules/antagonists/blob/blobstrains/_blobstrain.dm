@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
 		B.modify_max_integrity(B.max_integrity * max_structure_health_multiplier)
-		B.update_appearance()
+		B.update_blob()
 
 	for(var/mob/living/blob_mob as anything in overmind.blob_mobs)
 		blob_mob.maxHealth *= max_mob_health_multiplier
@@ -144,9 +144,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)
-
 /// When this blob's blobbernaut attacks any atom
-/datum/blobstrain/proc/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+/datum/blobstrain/proc/blobbernaut_attack(atom/attacking, mob/living/simple_animal/hostile/blobbernaut)
 	return
 
 /datum/blobstrain/proc/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this

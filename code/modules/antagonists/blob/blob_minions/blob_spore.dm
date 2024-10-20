@@ -10,25 +10,30 @@
 	health_doll_icon = "blobpod"
 	health = BLOBMOB_SPORE_HEALTH
 	maxHealth = BLOBMOB_SPORE_HEALTH
-	verb_say = "psychically pulses"
+	verb_say = list("psychically pulses", "pulses")
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"
 	verb_yell = "psychically screams"
 	melee_damage_lower = BLOBMOB_SPORE_DMG_LOWER
 	melee_damage_upper = BLOBMOB_SPORE_DMG_UPPER
-	obj_damage = 0
-	attack_verb_continuous = "batters"
-	attack_verb_simple = "batter"
+	obj_damage = 20
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	attacktext = "ударяет"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	death_message = "explodes into a cloud of gas!"
+	deathmessage = "explodes into a cloud of gas!"
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = TRUE
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = 1
 	/// Type of mob to create
-	var/mob/living/zombie_type = /mob/living/basic/blob_minion/zombie
+	var/mob/living/zombie_type = /mob/living/simple_animal/hostile/blob_minion/zombie
+
 
 /mob/living/simple_animal/hostile/blob_minion/spore/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+
+/mob/living/simple_animal/hostile/blob_minion/spore/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
@@ -43,17 +48,29 @@
 /mob/living/simple_animal/hostile/blob_minion/spore/proc/death_burst()
 	do_chem_smoke(range = death_cloud_size, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
 
-
-/mob/living/simple_animal/hostile/blob_minion/spore/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
+/mob/living/simple_animal/hostile/blob_minion/spore/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if (!ishuman(target) || target.stat != DEAD)
+	if(istype(mover, /obj/structure/blob))
+		return TRUE
+
+/mob/living/simple_animal/hostile/blob_minion/spore/CanAttack(atom/the_target)
+	if(ishuman(the_target))
+		stat_attack = DEAD
+	. = ..()
+	stat_attack = initial(stat_attack)
+	
+
+/mob/living/simple_animal/hostile/blob_minion/spore/AttackingTarget()
+	. = ..()
+	var/mob/living/carbon/human/human_target = target
+	if (!istype(human_target) || human_target.stat != DEAD)
 		return
-	zombify(target)
+	zombify(human_target)
 
 /// Become a zombie
 /mob/living/simple_animal/hostile/blob_minion/spore/proc/zombify(mob/living/carbon/human/target)
 	visible_message(span_warning("The corpse of [target.name] suddenly rises!"))
-	var/mob/living/basic/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
+	var/mob/living/simple_animal/hostile/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
 	blombie.set_name()
 	if (istype(blombie)) // In case of badmin
 		blombie.consume_corpse(target)
@@ -63,7 +80,7 @@
 /// Variant of the blob spore which is actually spawned by blob factories
 /mob/living/simple_animal/hostile/blob_minion/spore/minion
 	gold_core_spawnable = NO_SPAWN
-	zombie_type = /mob/living/basic/blob_minion/zombie/controlled
+	zombie_type = /mob/living/simple_animal/hostile/blob_minion/zombie/controlled
 	/// We die if we leave the same turf as this z level
 	var/turf/z_turf
 
@@ -86,17 +103,11 @@
 
 /// If the blob changes to distributed neurons then you can control the spores
 /mob/living/simple_animal/hostile/blob_minion/spore/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
-	if (isnull(overmind))
-		REMOVE_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
-	else
-		ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
-
 	if (istype(new_strain, /datum/blobstrain/reagent/distributed_neurons))
 		AddComponent(\
 			/datum/component/ghost_direct_control,\
-			ban_type = ROLE_BLOB_INFECTION,\
+			ban_type = ROLE_BLOB,\
 			poll_candidates = TRUE,\
-			poll_ignore_key = POLL_IGNORE_BLOB,\
 		)
 	else
 		qdel(GetComponent(/datum/component/ghost_direct_control))

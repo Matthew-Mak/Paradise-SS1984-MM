@@ -136,6 +136,7 @@
 		add_overlay(head_icon)
 
 	update_fire()
+	update_wet()
 
 	if(blocks_emissive)
 		add_overlay(get_emissive_block())

@@ -152,7 +152,7 @@
 			scan_target = get_turf(src)
 		if(ANALYZER_MODE_TARGET)
 			scan_target = target
-			if(!can_see(src, target, scan_range))
+			if(!can_see(target, scan_range))
 				target_mode = ANALYZER_MODE_SURROUNDINGS
 				scan_target = get_turf(src)
 			if(!scan_target)
@@ -189,7 +189,7 @@
 
 /obj/item/analyzer/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
-	if(!can_see(user, target, scan_range))
+	if(!user.can_see(target, scan_range))
 		return
 	target_mode = ANALYZER_MODE_TARGET
 	if(target == user || target == user.loc)

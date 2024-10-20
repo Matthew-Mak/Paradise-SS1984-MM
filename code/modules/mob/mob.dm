@@ -592,6 +592,7 @@
 /mob/proc/get_status_tab_items()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list(" ")
+	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
 
 // facing verbs
@@ -638,7 +639,7 @@
 	return FALSE
 
 /mob/proc/can_use_machinery(obj/machinery/mach)
-	return IsAdvancedToolUser() 
+	return IsAdvancedToolUser()
 
 /mob/proc/swap_hand()
 	return
@@ -673,7 +674,7 @@
 	var/mob/living/picked = tgui_input_list(usr, "Please select an NPC to respawn as", "Respawn as NPC", allowed_creatures)
 	if(!picked)
 		return
-		
+
 	if(picked == "Mouse")
 		become_mouse()
 		return
@@ -684,7 +685,7 @@
 	if(QDELETED(picked_mob) || picked_mob.key || picked_mob.stat == DEAD)
 		to_chat(usr, span_warning("[capitalize(picked_mob)] is no longer available to respawn!"))
 		return
-	
+
 	if(istype(picked_mob, /mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/borer = picked_mob
 		borer.transfer_personality(usr.client)
@@ -693,7 +694,7 @@
 	to_chat(usr, span_notify(message))
 	GLOB.respawnable_list -= usr
 	picked_mob.key = key
-		
+
 
 /mob/proc/become_mouse()
 	var/timedifference = world.time - client.time_joined_as_mouse

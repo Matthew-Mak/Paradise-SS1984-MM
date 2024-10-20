@@ -24,6 +24,10 @@
 
 	light_system = MOVABLE_LIGHT
 
+	hud_type = /datum/hud/bot
+
+	wet_immunity = TRUE
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates

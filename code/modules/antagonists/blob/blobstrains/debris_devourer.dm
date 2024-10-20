@@ -34,10 +34,15 @@
 	if (prob(40 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
 		var/obj/item/I = length(core.contents) ? pick(core.contents) : null
 		if (!QDELETED(I))
+			I.obj_flags |= IGNORE_BLOB_ACT
 			I.forceMove(get_turf(source))
 			I.throw_at(attacking, 6, 5, overmind, TRUE, FALSE, null, 3)
+			addtimer(CALLBACK(src, PROC_REF(remove_protection), I), BLOB_ACT_PROTECTION_TIME)
 
-/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+/datum/blobstrain/debris_devourer/proc/remove_protection(obj/item)
+	item.obj_flags &= ~IGNORE_BLOB_ACT
+
+/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/simple_animal/hostile/blobbernaut)
 	debris_attack(attacking, blobbernaut)
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this

@@ -13,25 +13,30 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
-	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = BLOBMOB_BLOBBERNAUT_DMG_OBJ
-	attack_verb_continuous = "slams"
-	attack_verb_simple = "slam"
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	attacktext = "ударяет"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
 	pressure_resistance = 50
+	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
-	hud_type = /datum/hud/living/blobbernaut
+	move_resist = MOVE_FORCE_OVERPOWERING
+	hud_type = /datum/hud/blobbernaut
 	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/damage_threshold, 10)
+	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 
-/mob/living/basic/blob_minion/blobbernaut/death(gibbed)
+/mob/living/simple_animal/hostile/blob_minion/blobbernaut/experience_pressure_difference(pressure_difference, direction)
+	if(!HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
+		return ..()
+
+/mob/living/simple_animal/hostile/blob_minion/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
 	return ..()
 
@@ -55,6 +60,13 @@
 		damage_sources++
 	else
 		var/particle_colour = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_BLACK
+		if (locate(/obj/structure/blob) in blobs_in_area)
+			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_TILE * seconds_per_tick)
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
+			heal_effect.color = particle_colour
+			if(on_fire)
+				adjust_fire_stacks(-1)
+
 		if (locate(/obj/structure/blob/special/core) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_CORE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
@@ -84,24 +96,22 @@
 	health = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
 	SEND_SOUND(src, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(src, sound('sound/effects/attackblob.ogg'))
-	to_chat(src, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cult_large("but will slowly die if not near the blob")] or if the factory that made you is killed."))
-	to_chat(src, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
-	to_chat(src, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
-	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
+	log_game("[key] has spawned as Blobbernaut")
 
 /// Set our attack damage based on blob's properties
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	if (isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		attack_verb_continuous = initial(attack_verb_continuous)
+		attacktext = initial(attacktext)
 		return
 	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_LOWER
 	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_UPPER
-	attack_verb_continuous = new_strain.blobbernaut_message
+	attacktext = new_strain.blobbernaut_message
 
 /// Called by our factory to inform us that it's not going to support us financially any more
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/on_factory_destroyed()
 	. = ..()
 	orphaned = TRUE
 	throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
+

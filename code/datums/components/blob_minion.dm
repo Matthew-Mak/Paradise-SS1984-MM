@@ -10,7 +10,7 @@
 
 /datum/component/blob_minion/Initialize(mob/camera/blob/overmind, datum/callback/on_strain_changed)
 	. = ..()
-	if (!isliving(parent))
+	if (!isminion(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
@@ -47,7 +47,7 @@
 	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
 	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
-	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
+	living_parent.stop_pulling()
 	RegisterSignal(parent, COMSIG_MOB_MIND_INITIALIZED, PROC_REF(on_mind_init))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_appearance))
 	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_update_status_tab))
@@ -67,7 +67,6 @@
 	living_parent.pass_flags &= ~PASSBLOB
 	living_parent.faction -= ROLE_BLOB
 	REMOVE_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
-	add_verb(parent, /mob/living/verb/pulled)
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_FIRE_ACT,
@@ -84,9 +83,11 @@
 /// Become blobpilled when we gain a mind
 /datum/component/blob_minion/proc/on_mind_init(mob/living/minion, datum/mind/new_mind)
 	SIGNAL_HANDLER
-	if (isnull(overmind))
+	if (isnull(overmind) || new_mind.has_antag_datum(/datum/antagonist/blob_minion))
 		return
-	var/datum/antagonist/blob_minion/minion_motive = new(overmind)
+
+	var/datum_type = (isblobbernaut(minion))? /datum/antagonist/blob_minion/blobernaut : /datum/antagonist/blob_minion
+	var/datum/antagonist/blob_minion/minion_motive = new datum_type(overmind)
 	new_mind.add_antag_datum(minion_motive)
 
 /// When our icon is updated, update our colour too
@@ -102,7 +103,7 @@
 	SIGNAL_HANDLER
 	if (isnull(overmind))
 		return
-	status_items += "Blobs to Win: [length(GLOB.blobs)]/[SSticker?.mode.blob_win_count]"
+	status_items += list("Blobs to Win:", "[length(GLOB.blobs)]/[SSticker?.mode.blob_win_count]")
 
 /// If we feel the gentle caress of a blob, we feel better
 /datum/component/blob_minion/proc/on_blob_touched(mob/living/minion)
@@ -140,7 +141,7 @@
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 	var/spanned_message = minion.say_quote(message)
-	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
+	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message], [message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion)
 	return COMPONENT_CANNOT_SPEAK
 

@@ -48,7 +48,7 @@
 #define FIRST_STAGE_WARN span_userdanger("Вы чувствуете усталость и раздутость.")
 #define SECOND_STAGE_WARN span_userdanger("Вы чувствуете, что вот-вот лопнете.")
 
-#define isblobbernaut(M) istype((M), /mob/living/simple_animal/hostile/blob/blobbernaut)
+#define isblobbernaut(M) istype((M), /mob/living/simple_animal/hostile/blob_minion/blobbernaut)
 
 //Few global vars to track the blob
 GLOBAL_LIST_EMPTY(blobs)
@@ -67,6 +67,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 #define BLOB_BASE_POINT_RATE 2 // Base amount of points per process()
 #define BLOB_EXPAND_COST 4 // Price to expand onto a new tile
+#define BLOB_ZOMBIFICATION_COST 5 
 #define BLOB_ATTACK_REFUND 2 // Points 'refunded' when the expand attempt actually attacks something instead
 #define BLOB_BRUTE_RESIST 0.5 // Brute damage taken gets multiplied by this value
 #define BLOB_FIRE_RESIST 1 // Burn damage taken gets multiplied by this value
@@ -124,6 +125,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOB_REFLECTOR_HP_REGEN 2
 
 #define BLOB_STORAGE_MAX_HP 30
+#define BLOB_STORAGE_MAX_POINTS_BONUS 50
+#define BLOB_STORAGE_MIN_DISTANCE 3
 #define BLOB_STORAGE_FIRE_RESIST 2
 
 
@@ -132,8 +135,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOB_UPGRADE_STRONG_COST 15 // Upgrade and build costs here
 #define BLOB_UPGRADE_REFLECTOR_COST 15
 #define BLOB_STRUCTURE_RESOURCE_COST 40
+#define BLOB_STRUCTURE_STORAGE_COST 40
 #define BLOB_STRUCTURE_FACTORY_COST 60
 #define BLOB_STRUCTURE_NODE_COST 50
+#define BLOB_CORE_SPLIT_COST 100
 
 #define BLOB_REFUND_STRONG_COST 4 // Points refunded when destroying the structure
 #define BLOB_REFUND_REFLECTOR_COST 8
@@ -169,4 +174,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOBMOB_BLOBBERNAUT_DMG_OBJ 60 // Damage dealth to objects/machines
 #define BLOBMOB_BLOBBERNAUT_HEALING_CORE 0.05 // Percentage multiplier HP restored on Life() when within 2 tiles of the blob core
 #define BLOBMOB_BLOBBERNAUT_HEALING_NODE 0.025 // Same, but for a nearby node
+#define BLOBMOB_BLOBBERNAUT_HEALING_TILE 0.0125 // Same, but for a nearby blob tile
 #define BLOBMOB_BLOBBERNAUT_HEALTH_DECAY 0.0125 // Percentage multiplier HP lost when not near blob tiles or without factory
+
+#define BLOB_ACT_PROTECTION_TIME 2 SECONDS

@@ -25,9 +25,15 @@
 		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
 	return "Will produce a blob spore every few seconds."
 
-/obj/structure/blob/special/factory/creation_action()
-	if(overmind)
-		overmind.factory_blobs += src
+/obj/structure/blob/special/factory/link_to_overmind(mob/camera/blob/owner_overmind)
+	. = ..()
+	owner_overmind.factory_blobs += src
+	if(!owner_overmind.blobstrain)
+		return .
+	for(var/mob in spores_and_zombies)
+		owner_overmind.assume_direct_control(mob)
+	if(blobbernaut)
+		owner_overmind.assume_direct_control(blobbernaut)
 
 /obj/structure/blob/special/factory/Destroy()
 	spores_and_zombies = null
@@ -46,7 +52,7 @@
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
 	flick("blob_factory_glow", src)
-	var/mob/living/basic/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+	var/mob/living/simple_animal/hostile/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
 

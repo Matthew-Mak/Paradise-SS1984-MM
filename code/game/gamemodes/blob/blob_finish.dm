@@ -62,7 +62,7 @@
 /datum/game_mode/proc/auto_declare_completion_blob()
 	var/list/blob_infected = blobs["infected"]
 	var/list/blob_offsprings = blobs["offsprings"]
-	var/list/blobernauts = blobs["blobernauts"]
+	var/list/minions = blobs["minions"]
 	if(blob_infected?.len)
 		declare_blob_completion()
 		var/text = "<br/><FONT size = 2><B>Блоб[(blob_infected.len > 1 ? "ами были" : "ом был")]:</B></FONT>"
@@ -75,9 +75,9 @@
 			for(var/datum/mind/blob in blob_offsprings)
 				text += "<br/><b>[blob.key]</b> был <b>[blob.name]</b>"
 
-		if(blobernauts?.len)
-			text += "<br/><br/><FONT size = 2><B>Блобернаут[(blobernauts.len > 1 ? "ами были" : "ом был")]:</B></FONT>"
-			for(var/datum/mind/blob in blobernauts)
+		if(minions?.len)
+			text += "<br/><br/><FONT size = 2><B>Миньен[(minions.len > 1 ? "ами были" : "ом был")]:</B></FONT>"
+			for(var/datum/mind/blob in minions)
 				text += "<br/><b>[blob.key]</b> был <b>[blob.name]</b>"
 
 		to_chat(world, text)

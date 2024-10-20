@@ -13,9 +13,9 @@
 /obj/structure/blob/special/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
 
-/obj/structure/blob/special/resource/creation_action()
-	if(overmind)
-		overmind.resource_blobs += src
+/obj/structure/blob/special/resource/link_to_overmind(mob/camera/blob/owner_overmind)
+	. = ..()
+	overmind.resource_blobs += src
 
 /obj/structure/blob/special/resource/Destroy()
 	if(overmind)

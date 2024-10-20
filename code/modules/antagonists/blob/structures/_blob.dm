@@ -35,27 +35,29 @@
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
 
+/obj/structure/blob/ComponentInitialize()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 	GLOB.blobs += src
 	if(owner_overmind && isovermind(owner_overmind))
-		overmind = owner_overmind
-		overmind.all_blobs += src
+		link_to_overmind(owner_overmind)
 	setDir(pick(GLOB.cardinal))
 	if(atmosblock)
 		air_update_turf(TRUE)
 	ConsumeTile()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	update_blob()
 
 
-/obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
-	return
+/obj/structure/blob/proc/link_to_overmind(mob/camera/blob/owner_overmind)
+	overmind = owner_overmind
+	overmind.all_blobs += src
 
 
 /obj/structure/blob/Destroy()
@@ -176,14 +178,16 @@
 		return
 	var/make_blob = TRUE //can we make a blob?
 
-	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
-		make_blob = FALSE
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T))
+		if(SEND_SIGNAL(T, COMSIG_TRY_CONSUME_TURF) & COMPONENT_CANT_CONSUME)
+			make_blob = FALSE
+			playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
-		make_blob = FALSE
-		T.blob_act(src) //hit the turf if it is
+		if(SEND_SIGNAL(T, COMSIG_TRY_CONSUME_TURF) & COMPONENT_CANT_CONSUME)
+			make_blob = FALSE
+			T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
 		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
@@ -333,7 +337,6 @@
 	if(!ispath(type))
 		CRASH("change_to(): invalid type for blob")
 	var/obj/structure/blob/B = new type(src.loc, controller)
-	B.creation_action()
 	B.update_blob()
 	B.setDir(dir)
 	qdel(src)

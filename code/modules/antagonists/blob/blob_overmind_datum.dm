@@ -56,7 +56,7 @@
 
 /datum/antagonist/blob_overmind/greet()
 	var/list/messages = list()
-	messages.Add("<span class='danger'>Вы Блоб!</span>")
+	messages.Add(span_danger("Вы Блоб!"))
 	for(var/message in get_blob_help_messages(strain))
 		messages.Add(message)
 	SEND_SOUND(owner.current, 'sound/magic/mutate.ogg')
@@ -65,7 +65,8 @@
 /proc/get_blob_help_messages(datum/blobstrain/blob_reagent_datum)
 	var/list/messages = list()
 	messages += "<b>Как надразум, вы можете управлять блобом!</b>"
-	messages += "Ваш реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> - [blob_reagent_datum.description]"
+	messages += "Ваш реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>"
+	messages += blob_reagent_datum.overmind.get_strain_info()
 	messages += "<b>Вы можете расширяться, атакуя людей, повреждая объекты или размещая простую плитку, если клетка свободна.</b>"
 	messages += "<i>Обычная плитка</i> будет расширять ваше влияние и может быть улучшена до специальной плитки, выполняющей определённую функцию."
 	messages += "<b>Вы можете улучшить обычные плитки до следующих типов:</b>"

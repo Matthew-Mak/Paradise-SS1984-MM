@@ -16,8 +16,7 @@
 		new_blob.overmind.add_points(1)
 		qdel(new_blob)
 		return
-	if(isspaceturf(chosen_turf))
-		return
+		
 	for(var/obj/structure/blob/possible_expander in range(1, new_blob))
 		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/special/node)))
 			new_blob.forceMove(get_turf(possible_expander))
@@ -30,12 +29,13 @@
 //does massive brute and burn damage, but can only expand manually
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
+	id = "blob_networked_fibers"
 	taste_description = "efficiency"
 	color = "#4F4441"
 
-/datum/reagent/blob/networked_fibers/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/networked_fibers/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
-	exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+	exposed_mob.apply_damage(0.6*reac_volume, BRUTE, forced = TRUE)
 	if(!QDELETED(exposed_mob))
-		exposed_mob.apply_damage(0.6*reac_volume, BURN, wound_bonus=CANT_WOUND)
+		exposed_mob.apply_damage(0.6*reac_volume, BURN, forced = TRUE)

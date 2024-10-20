@@ -7,7 +7,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 90)
 	explosion_block = 6
 	explosion_vertical_block = 5
-	point_return = BLOB_REFUND_CORE_COST 
+	point_return = BLOB_REFUND_CORE_COST
 	fire_resist = BLOB_CORE_FIRE_RESIST
 	health_regen = BLOB_CORE_HP_REGEN
 	resistance_flags = LAVA_PROOF
@@ -17,9 +17,15 @@
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
 	ignore_syncmesh_share = TRUE
+	COOLDOWN
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 5 minutes
 	var/is_offspring = null
 	var/selecting = 0
+
+
+/obj/structure/blob/special/core/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 
 /obj/structure/blob/special/core/Initialize(mapload, client/new_overmind = null, offspring)
@@ -33,8 +39,8 @@
 	if(overmind)
 		overmind.blobstrain.on_gain()
 		update_blob()
-	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 	return ..()
+
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src
@@ -90,6 +96,7 @@
 	reinforce_area(seconds_per_tick)
 	..()
 
+
 /obj/structure/blob/special/core/proc/create_overmind(client/new_overmind, override_delay)
 	if(overmind_get_delay > world.time && !override_delay)
 		return
@@ -120,16 +127,15 @@
 		C = new_overmind
 
 	if(C && !QDELETED(src))
-		var/mob/camera/blob/B = new(loc)
+		var/mob/camera/blob/B = new(loc, src)
+		B.blob_core = src
 		B.mind_initialize()
 		B.key = C.key
-		B.blob_core = src
 		overmind = B
 		B.is_offspring = is_offspring
-		overmind.select_reagent()
 		addtimer(CALLBACK(src, PROC_REF(add_datum_if_not_exist)), TIME_TO_ADD_OM_DATUM)
 		log_game("[B.key] has become Blob [is_offspring ? "offspring" : ""]")
-		
+
 
 /obj/structure/blob/special/core/proc/add_datum_if_not_exist()
 	if(!overmind.mind.has_antag_datum(/datum/antagonist/blob_overmind))

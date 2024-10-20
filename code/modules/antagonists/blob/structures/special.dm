@@ -39,7 +39,7 @@
 		if(!is_location_within_transition_boundaries(get_turf(B)))
 			continue
 		if(!B.overmind && prob(30))
-			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
+			B.link_to_overmind(pulsing_overmind) //reclaim unclaimed, non-core blobs.
 			B.update_blob()
 		var/distance = get_dist(get_turf(src), get_turf(B))
 		var/expand_probablity = max(20 - distance * 8, 1)

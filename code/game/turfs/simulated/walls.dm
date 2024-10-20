@@ -64,6 +64,10 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+		
+/turf/simulated/wall/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/blob_turf_consuming, 2)
 
 //Appearance
 /turf/simulated/wall/examine(mob/user) // If you change this, consider changing the examine_status proc of false walls to match
@@ -173,10 +177,10 @@
 	return
 
 /turf/simulated/wall/blob_act(obj/structure/blob/B)
-	if(prob(50))
-		dismantle_wall()
-	else
-		add_dent(WALL_DENT_HIT)
+	add_dent(WALL_DENT_HIT)
+		
+/turf/simulated/wall/blob_consume()
+	dismantle_wall()
 
 /turf/simulated/wall/rpd_act(mob/user, obj/item/rpd/our_rpd)
 	if(our_rpd.mode == RPD_ATMOS_MODE)

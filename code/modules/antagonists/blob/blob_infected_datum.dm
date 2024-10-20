@@ -61,9 +61,14 @@
 
 
 /datum/antagonist/blob_infected/Destroy(force, ...)
-	add_game_logs("has been deblobized", owner.current)
+	if(!is_tranformed)
+		add_game_logs("has been deblobized", owner.current)
 	stop_process = TRUE
-	return ..()
+	. = ..()
+	qdel(time_to_burst_display)
+	qdel(blob_talk_action)
+	qdel(blob_burst_action)
+	return .
 
 
 /datum/antagonist/blob_infected/add_owner_to_gamemode()
@@ -159,6 +164,7 @@
 	if(!blob_talk_action)
 		blob_talk_action = new
 	blob_talk_action.Grant(antag_mob)
+	GLOB.blob_telepathy_mobs += antag_mob
 	if(!blob_burst_action)
 		blob_burst_action = new
 	blob_burst_action.Grant(antag_mob)
@@ -167,12 +173,9 @@
 /datum/antagonist/blob_infected/proc/remove_blob_actions(mob/living/antag_mob)
 	if(!antag_mob)
 		return
-	if(!blob_talk_action)
-		return
-	blob_talk_action.Remove(antag_mob)
-	if(!blob_burst_action)
-		return
-	blob_burst_action.Remove(antag_mob)
+	blob_talk_action?.Remove(antag_mob)
+	GLOB.blob_telepathy_mobs -= antag_mob
+	blob_burst_action?.Remove(antag_mob)
 
 
 /datum/antagonist/blob_infected/proc/add_burst_display(mob/living/antag_mob)
@@ -252,11 +255,12 @@
 		mode.bursted_blobs_count++
 		C.was_bursted = TRUE
 		kill_borer_inside()
+		var/datum/antagonist/blob_overmind/overmind = transform_to_overmind()
+		owner.remove_antag_datum(/datum/antagonist/blob_infected)
 		C.gib()
 		var/obj/structure/blob/special/core/core = new(location, blob_client)
 		if(!(core.overmind && core.overmind.mind))
 			return
-		var/datum/antagonist/blob_overmind/overmind = transform_to_overmind()
 		core.overmind.mind.add_antag_datum(overmind)
 		core.lateblobtimer()
 		notify_ghosts(
@@ -266,7 +270,6 @@
 		)
 		SSticker?.mode?.process_blob_stages()
 		mode.update_blob_objective()
-		owner.remove_antag_datum(/datum/antagonist/blob_infected)
 
 
 /datum/antagonist/blob_infected/proc/transform_to_overmind()

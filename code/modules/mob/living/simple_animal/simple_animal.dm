@@ -9,6 +9,8 @@
 	universal_speak = 0
 	status_flags = CANPUSH
 
+	hud_type = /datum/hud/simple_animal
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_resting = ""
@@ -359,12 +361,9 @@
 
 
 /mob/living/simple_animal/say_quote(message)
-	var/verb = "says"
-
-	if(speak_emote.len)
-		verb = pick(speak_emote)
-
-	return verb
+	if(speak_emote?.len)
+		return get_verb(speak_emote)
+	return ..()
 
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
@@ -680,6 +679,7 @@
 		add_overlay("[collar_type]tag")
 
 	update_fire()
+	update_wet()
 
 	if(blocks_emissive)
 		add_overlay(get_emissive_block())

@@ -29,9 +29,10 @@
 
 /datum/reagent/blob/shifting_fragments
 	name = "Shifting Fragments"
+	id = "blob_shifting_fragments"
 	color = "#C8963C"
 
-/datum/reagent/blob/shifting_fragments/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
-	exposed_mob.apply_damage(0.7*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+	exposed_mob.apply_damage(0.7*reac_volume, BRUTE, forced = TRUE)

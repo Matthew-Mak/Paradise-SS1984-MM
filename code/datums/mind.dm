@@ -544,6 +544,9 @@
 		var/mob/camera/blob/blob_overmind = current
 		. += "|<b><font color='red'>BLOB Overmind</font></b>|"
 		. += "<br/><b>Total points: <a href='byond://?src=[UID()];blob=set_points'>[blob_overmind.blob_points]</a>/[blob_overmind.max_blob_points]</b>"
+		. += "<br/><b>Infinity points: <a href='byond://?src=[UID()];blob=inf_points'>[(blob_overmind.is_infinity)? "OFF" : "ON"]</a></b>"
+	else if(isblobminion(src))
+		. += "|<b><font color='red'>BLOB Minion</font></b>|"
 	else if(current.can_be_blob())
 		. += "<a href='byond://?src=[UID()];blob=blob'>blobize</a>|<b>NO</b>"
 	. += _memory_edit_role_enabled(ROLE_BLOB)
@@ -2434,9 +2437,9 @@
 				add_conversion_logs(current, "De-blobed")
 
 			if("blob")
-				var/burst_time = input(usr, "Введите время до вылупления","Time:", TIME_TO_BURST_ADDED_HIGHT) as num|null
-				var/need_new_blob = alert(usr,"Нужно ли выбирать блоба из экипажа в случае попытки вылупления за пределами станции?", "", "Да", "Нет") == "Нет"
-				var/start_process = alert(usr,"Начинать отсчет до момента вылупления?", "", "Да", "Нет") == "Да"
+				var/burst_time = tgui_input_number(usr, "Введите время до вылупления","Time:", TIME_TO_BURST_ADDED_HIGHT)
+				var/need_new_blob = tgui_alert(usr, "Нужно ли выбирать блоба из экипажа в случае попытки вылупления за пределами станции?", "", list("Да", "Нет")) == "Нет"
+				var/start_process = tgui_alert(usr,"Начинать отсчет до момента вылупления?", "", list("Да", "Нет")) == "Да"
 				if(isnull(burst_time) || QDELETED(current) || current.stat == DEAD)
 					return
 				var/datum_type = get_blob_infected_type()
@@ -2450,9 +2453,9 @@
 				message_admins("[key_name_admin(usr)] has made [key_name_admin(current)] into a \"Blob\"")
 
 			if("burst")
-				var/warn_blob = alert(usr,"Предупреждать блоба при попытке вылупления за пределами станции?", "", "Да", "Нет") != "Да"
-				var/need_new_blob = alert(usr,"Нужно ли выбирать блоба из экипажа в случае попытки вылупления за пределами станции?", "", "Да", "Нет") == "Да"
-				if(alert(usr,"Вы действительно хотите лопнуть блоба? Это уничтожит персонажа игрока и превратит его в блоба.", "", "Да", "Нет") == "Да")
+				var/warn_blob = tgui_alert(usr,"Предупреждать блоба при попытке вылупления за пределами станции?", "", list("Да", "Нет")) != "Да"
+				var/need_new_blob = tgui_alert(usr,"Нужно ли выбирать блоба из экипажа в случае попытки вылупления за пределами станции?", "", list("Да", "Нет")) == "Да"
+				if(tgui_alert(usr,"Вы действительно хотите лопнуть блоба? Это уничтожит персонажа игрока и превратит его в блоба.", "", list("Да", "Нет")) == "Да")
 					var/datum/antagonist/blob_infected/blob = has_antag_datum(/datum/antagonist/blob_infected)
 					if(!blob)
 						return
@@ -2466,12 +2469,22 @@
 				if(!isblobovermind(src))
 					return
 				var/mob/camera/blob/blob_overmind = current
-				var/blob_points = input(usr, "Введите новое число очков в диапазоне от 0 до [blob_overmind.max_blob_points]","Count:", blob_overmind.blob_points) as num|null
+				var/blob_points = tgui_input_number(usr, "Введите новое число очков в диапазоне от 0 до [blob_overmind.max_blob_points]", "Count:", blob_overmind.blob_points, blob_overmind.max_blob_points, 0)
 				if(isnull(blob_points) || QDELETED(current) || current.stat == DEAD)
 					return
 				blob_overmind.blob_points = clamp(blob_points, 0, blob_overmind.max_blob_points)
 				log_admin("[key_name(usr)] set blob points to [key_name(current)] as [blob_overmind.blob_points]")
 				message_admins("[key_name_admin(usr)] set blob points to [key_name_admin(current)] as [blob_overmind.blob_points]")
+
+			if("inf_points")
+				if(!isblobovermind(src))
+					return
+				var/mob/camera/blob/blob_overmind = current
+				if(QDELETED(current) || current.stat == DEAD)
+					return
+				blob_overmind.is_infinity = !blob_overmind.is_infinity
+				log_admin("[key_name(usr)] make blob points [blob_overmind.is_infinity? "infinity" : "not infinity"] to [key_name(current)]")
+				message_admins("[key_name_admin(usr)] make blob points [blob_overmind.is_infinity? "infinity" : "not infinity"] to [key_name_admin(current)]")
 
 
 	else if(href_list["common"])
@@ -3093,6 +3106,7 @@
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
+	SEND_SIGNAL(src, COMSIG_MOB_MIND_INITIALIZED, mind)
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

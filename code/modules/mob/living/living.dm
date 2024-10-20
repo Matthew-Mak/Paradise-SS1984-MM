@@ -7,6 +7,8 @@
 	faction += "\ref[src]"
 	determine_move_and_pull_forces()
 	gravity_setup()
+	if(unique_name)
+		set_name()
 	if(ventcrawler_trait)
 		var/static/list/ventcrawler_sanity = list(
 			TRAIT_VENTCRAWLER_ALWAYS,
@@ -756,7 +758,9 @@
 	ExtinguishMob()
 	CureAllDiseases(FALSE)
 	fire_stacks = 0
+	fire_stacks = 0
 	on_fire = 0
+	is_wet = FALSE
 	suiciding = 0
 	if(buckled) //Unbuckle the mob and clear the alerts.
 		buckled.unbuckle_mob(src, force = TRUE)
@@ -788,6 +792,7 @@
 	get_up(instant = TRUE)
 
 	update_fire()
+	update_wet()
 	regenerate_icons()
 	restore_blood()
 	if(human_mob)
@@ -1838,6 +1843,9 @@
 		return TRUE
 	return FALSE
 
+/mob/living/examine(mob/user, infix, suffix)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_LIVING_EXAMINE, user, .)
 
 /**
   * Sets the mob's direction lock towards a given atom.
@@ -2322,3 +2330,9 @@
 			. |= RECHARGE_SUCCESSFUL
 
 	to_chat(src, span_notice("You feel [(. & RECHARGE_SUCCESSFUL) ? "raw magical energy flowing through you, it feels good!" : "very strange for a moment, but then it passes."]"))
+
+/mob/living/proc/set_name()
+	if(numba == 0)
+		numba = rand(1, 1000)
+	name = "[name] ([numba])"
+	real_name = name
