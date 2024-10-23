@@ -4,11 +4,17 @@
 	icon_state = "lasergun"
 	item_state = null
 	w_class = WEIGHT_CLASS_NORMAL
+	can_flashlight = TRUE
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = TRUE
+
+/obj/item/gun/energy/laser/ui_action_click(mob/user, datum/action/action, leftclick)
+	if(istype(action, /datum/action/item_action/toggle_gunlight))
+		toggle_gunlight()
+		return TRUE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -25,6 +31,7 @@
 	icon_state = "retro"
 	item_state = "laser"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	can_flashlight = FALSE
 	ammo_x_offset = 3
 
 /obj/item/gun/energy/laser/captain
@@ -34,6 +41,7 @@
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
+	can_flashlight = FALSE
 	ammo_x_offset = 3
 	selfcharge = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -52,6 +60,7 @@
 	item_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
 	origin_tech = "combat=5;materials=4;powerstorage=4"
+	can_flashlight = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 	shaded_charge = FALSE
 	unique_reskin = FALSE
@@ -82,6 +91,7 @@
 	icon_state = "lasercannon"
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
+	can_flashlight = FALSE
 	force = 10
 	flags =  CONDUCT
 	slot_flags = ITEM_SLOT_BACK
@@ -119,6 +129,7 @@
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts. These blasts will penetrate solid objects, but will decrease in power the longer they have to travel."
 	icon_state = "xray"
 	origin_tech = "combat=6;materials=4;magnets=4"
+	can_flashlight = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
 /obj/item/gun/energy/immolator
@@ -127,6 +138,7 @@
 	icon_state = "immolator"
 	item_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/immolator)
+	can_flashlight = FALSE
 	origin_tech = "combat=4;magnets=4;powerstorage=3"
 	shaded_charge = TRUE
 
@@ -158,6 +170,7 @@
 	name = "laser tag gun"
 	desc = "Standard issue weapon of the Imperial Guard"
 	origin_tech = "combat=2;magnets=2"
+	can_flashlight = FALSE
 	clumsy_check = FALSE
 	needs_permit = FALSE
 	ammo_x_offset = 2
