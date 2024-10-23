@@ -288,10 +288,10 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/datum/gas_mixture/env = T.return_air()
 
 	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Plasma : [env.toxins]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
+	t+= "Nitrogen : [env.gases.get(GAS_NITROGEN)]\n"
+	t+= "Oxygen : [env.gases.get(GAS_OXYGEN)]\n"
+	t+= "Plasma : [env.gases.get(GAS_PLASMA)]\n"
+	t+= "CO2: [env.gases.get(GAS_CDO)]\n"
 
 	usr.show_message(t, 1)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status (Location)") //If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -705,7 +705,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				Plasma.air_contents.toxins = 70
+				Plasma.air_contents.gases._set(GAS_PLASMA, 70)
 				Rad.drainratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad

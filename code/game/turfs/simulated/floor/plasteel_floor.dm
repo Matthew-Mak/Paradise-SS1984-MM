@@ -15,8 +15,7 @@
 
 /turf/simulated/floor/plasteel/airless
 	name = "airless floor"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/plasteel/airless/Initialize(mapload)
@@ -45,8 +44,10 @@
 	icon_state = "darkfull"
 
 /turf/simulated/floor/plasteel/dark/telecomms
-	nitrogen = 100
-	oxygen = 0
+	preloaded_gases = list(
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 100,
+	)
 	temperature = 80
 
 /turf/simulated/floor/plasteel/freezer

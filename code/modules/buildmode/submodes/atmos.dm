@@ -4,6 +4,8 @@
 	use_corner_selection = TRUE
 	var/pressure = ONE_ATMOSPHERE
 	var/temperature = T20C
+	var/datum/gaslist/gases = new
+
 	var/oxygen = O2STANDARD
 	var/nitrogen = N2STANDARD
 	var/plasma = 0
@@ -11,6 +13,10 @@
 	var/nitrox = 0
 	var/agentbx = 0
 
+/datum/buildmode_mode/atmos/New(datum/click_intercept/buildmode/newBM)
+	. = ..()
+	gases._set(GAS_OXYGEN, O2STANDARD)
+	gases._set(GAS_NITROGEN, N2STANDARD)
 
 /datum/buildmode_mode/atmos/show_help(mob/user)
 	to_chat(user, "<span class='notice'>***********************************************************</span>")
@@ -25,12 +31,12 @@
 /datum/buildmode_mode/atmos/change_settings(mob/user)
 	pressure = input(user, "Atmospheric Pressure", "Input", ONE_ATMOSPHERE) as num|null
 	temperature = input(user, "Temperature", "Input", T20C) as num|null
-	oxygen = input(user, "Oxygen ratio", "Input", O2STANDARD) as num|null
-	nitrogen = input(user, "Nitrogen ratio", "Input", N2STANDARD) as num|null
-	plasma = input(user, "Plasma ratio", "Input", 0) as num|null
-	cdiox = input(user, "CO2 ratio", "Input", 0) as num|null
-	nitrox = input(user, "N2O ratio", "Input", 0) as num|null
-	agentbx = input(user, "Agent B ratio", "Input", 0) as num|null
+	gases._set(GAS_OXYGEN, input(user, "Oxygen ratio", "Input", O2STANDARD) as num|null)
+	gases._set(GAS_NITROGEN, input(user, "Nitrogen ratio", "Input", N2STANDARD) as num|null)
+	gases._set(GAS_PLASMA, input(user, "Plasma ratio", "Input", 0) as num|null)
+	gases._set(GAS_CDO, input(user, "CO2 ratio", "Input", 0) as num|null)
+	gases._set(GAS_N2O, input(user, "N2O ratio", "Input", 0) as num|null)
+	gases._set(GAS_AGENT_B, input(user, "Agent B ratio", "Input", 0) as num|null)
 
 /datum/buildmode_mode/atmos/proc/ppratio_to_moles(ppratio)
 	// ideal gas equation: Pressure * Volume = Moles * r * Temperature
@@ -50,22 +56,17 @@
 				var/turf/simulated/S = T
 				if(S.air)
 					S.air.temperature = temperature
-					S.air.oxygen = ppratio_to_moles(oxygen)
-					S.air.nitrogen = ppratio_to_moles(nitrogen)
-					S.air.toxins = ppratio_to_moles(plasma)
-					S.air.carbon_dioxide = ppratio_to_moles(cdiox)
-					S.air.sleeping_agent = ppratio_to_moles(nitrox)
-					S.air.agent_b = ppratio_to_moles(agentbx)
+					for(var/id in gases.gases)
+						S.air.gases._set(id, ppratio_to_moles(gases.get(id)))
+
 					S.update_visuals()
 					S.air_update_turf()
 			else if(ctrl_click) // overwrite "default" space air
 				T.temperature = temperature
-				T.oxygen = ppratio_to_moles(oxygen)
-				T.nitrogen = ppratio_to_moles(nitrogen)
-				T.toxins = ppratio_to_moles(plasma)
-				T.carbon_dioxide = ppratio_to_moles(cdiox)
-				T.sleeping_agent = ppratio_to_moles(nitrox)
-				T.agent_b = ppratio_to_moles(agentbx)
+
+				for(var/id in gases.gases)
+					T.air.gases._set(id, ppratio_to_moles(gases.get(id)))
+
 				T.air_update_turf()
 
 		// admin log

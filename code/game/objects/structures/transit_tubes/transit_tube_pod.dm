@@ -31,8 +31,8 @@
 	// Give auto tubes time to align before trying to start moving
 	spawn(5)
 
-	air_contents.oxygen = MOLES_O2STANDARD * 2
-	air_contents.nitrogen = MOLES_N2STANDARD
+	air_contents.gases._set(GAS_OXYGEN, MOLES_O2STANDARD * 2)
+	air_contents.gases._set(GAS_NITROGEN, MOLES_N2STANDARD)
 	air_contents.temperature = T20C
 
 	for(var/obj/structure/transit_tube/tube in loc)

@@ -224,7 +224,7 @@
 	var/datum/gas_mixture/environment = tile.return_air()
 
 	if(scrubbing)
-		if((scrub_O2 && environment.oxygen>0.001) || (scrub_N2 && environment.nitrogen>0.001) || (scrub_CO2 && environment.carbon_dioxide>0.001) || (scrub_Toxins && environment.toxins>0.001) || (environment.sleeping_agent) || (environment.agent_b))
+		if((scrub_O2 && environment.gases.get(GAS_OXYGEN)>0.001) || (scrub_N2 && environment.gases.get(GAS_NITROGEN)>0.001) || (scrub_CO2 && environment.gases.get(GAS_CDO)>0.001) || (scrub_Toxins && environment.gases.get(GAS_PLASMA)>0.001) || (environment.gases.get(GAS_N2O)) || (environment.gases.get(GAS_AGENT_B)))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
@@ -236,25 +236,28 @@
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 			if(scrub_O2)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
-			if(scrub_N2)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
-			if(scrub_Toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-			if(scrub_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
+				filtered_out.gases._set(GAS_OXYGEN, removed.gases.get(GAS_OXYGEN))
+				removed.gases._set(GAS_OXYGEN, 0)
 
-			if(removed.agent_b)
-				filtered_out.agent_b = removed.agent_b
-				removed.agent_b = 0
+			if(scrub_N2)
+				filtered_out.gases._set(GAS_NITROGEN, removed.gases.get(GAS_NITROGEN))
+				removed.gases._set(GAS_NITROGEN, 0)
+
+			if(scrub_Toxins)
+				filtered_out.gases._set(GAS_PLASMA, removed.gases.get(GAS_PLASMA))
+				removed.gases._set(GAS_PLASMA, 0)
+
+			if(scrub_CO2)
+				filtered_out.gases._set(GAS_CDO, removed.gases.get(GAS_CDO))
+				removed.gases._set(GAS_CDO, 0)
+
+			if(removed.gases.get(GAS_AGENT_B))
+				filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
+				removed.gases._set(GAS_AGENT_B, 0)
 
 			if(scrub_N2O)
-				filtered_out.sleeping_agent = removed.sleeping_agent
-				removed.sleeping_agent = 0
+				filtered_out.gases._set(GAS_N2O, removed.gases.get(GAS_N2O))
+				removed.gases._set(GAS_N2O, 0)
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)

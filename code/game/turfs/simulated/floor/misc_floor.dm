@@ -13,8 +13,10 @@
 	icon_state = "bcircuit"
 
 /turf/simulated/floor/bluegrid/telecomms
-	nitrogen = 100
-	oxygen = 0
+	preloaded_gases = list(
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 100,
+	)
 	temperature = 80
 
 /turf/simulated/floor/bluegrid/telecomms/server
@@ -27,8 +29,7 @@
 /turf/simulated/floor/greengrid/airless
 	icon_state = "gcircuit"
 	name = "airless floor"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/greengrid/airless/Initialize(mapload)
@@ -170,8 +171,10 @@
 	return
 
 /turf/simulated/floor/noslip/lavaland
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 

@@ -314,10 +314,10 @@
 	var/atmos_suitable = TRUE
 
 	if(!HAS_TRAIT(src, TRAIT_NO_BREATH))
-		var/tox = environment.toxins
-		var/oxy = environment.oxygen
-		var/n2 = environment.nitrogen
-		var/co2 = environment.carbon_dioxide
+		var/tox = environment.gases.get(GAS_PLASMA)
+		var/oxy = environment.gases.get(GAS_OXYGEN)
+		var/n2 = environment.gases.get(GAS_NITROGEN)
+		var/co2 = environment.gases.get(GAS_CDO)
 
 		if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 			atmos_suitable = FALSE

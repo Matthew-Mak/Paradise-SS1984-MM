@@ -409,6 +409,8 @@
 			take_overall_damage(brute = pressure_damage, used_weapon = "Low Pressure")
 			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 
+	for(var/id in environment.gases.gases)
+		environment.gases.on_touch(src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()

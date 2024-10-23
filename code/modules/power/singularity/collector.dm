@@ -27,13 +27,12 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/process()
 	if(P)
-		if(P.air_contents.toxins <= 0)
+		if(P.air_contents.gases.get(GAS_PLASMA) <= 0)
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_ENGINE)
-			P.air_contents.toxins = 0
+			P.air_contents.gases._set(GAS_PLASMA, 0)
 			eject()
 		else
-			P.air_contents.toxins -= 0.001*drainratio
-	return
+			P.air_contents.gases.add(GAS_PLASMA, -0.001 * drainratio)
 
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
@@ -46,7 +45,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"You turn the [src.name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name_log(user)]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_ENGINE)
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name_log(user)]. [P?"Fuel: [round(P.air_contents.gases.get(GAS_PLASMA)/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_ENGINE)
 			return
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -161,7 +160,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/proc/receive_pulse(var/pulse_strength)
 	if(P && active)
 		var/power_produced = 0
-		power_produced = P.air_contents.toxins*pulse_strength*20
+		power_produced = P.air_contents.gases.get(GAS_PLASMA)*pulse_strength*20
 		add_avail(power_produced)
 		last_power = power_produced
 		return

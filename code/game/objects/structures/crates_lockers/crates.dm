@@ -345,10 +345,10 @@
 	var/datum/gas_mixture/gas = (..())
 	if(!gas)	return null
 	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-	newgas.oxygen = gas.oxygen
-	newgas.carbon_dioxide = gas.carbon_dioxide
-	newgas.nitrogen = gas.nitrogen
-	newgas.toxins = gas.toxins
+	newgas.gases._set(GAS_OXYGEN, gas.gases.get(GAS_OXYGEN))
+	newgas.gases._set(GAS_CDO, gas.gases.get(GAS_CDO))
+	newgas.gases._set(GAS_NITROGEN, gas.gases.get(GAS_NITROGEN))
+	newgas.gases._set(GAS_PLASMA, gas.gases.get(GAS_PLASMA))
 	newgas.volume = gas.volume
 	newgas.temperature = gas.temperature
 	if(newgas.temperature <= target_temp)	return

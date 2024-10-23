@@ -13,14 +13,7 @@
 /turf/return_air()
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
-
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.toxins = toxins
-	GM.sleeping_agent = sleeping_agent
-	GM.agent_b = agent_b
-
+	GM.gases = air.gases.copy()
 	GM.temperature = temperature
 
 	return GM
@@ -31,17 +24,11 @@
 /turf/remove_air(amount)
 	var/datum/gas_mixture/GM = new
 
-	var/sum = oxygen + carbon_dioxide + nitrogen + toxins + sleeping_agent + agent_b
-	if(sum > 0)
-		GM.oxygen = (oxygen / sum) * amount
-		GM.carbon_dioxide = (carbon_dioxide / sum) * amount
-		GM.nitrogen = (nitrogen / sum) * amount
-		GM.toxins = (toxins / sum) * amount
-		GM.sleeping_agent = (sleeping_agent / sum) * amount
-		GM.agent_b = (agent_b / sum) * amount
+	if(air.gases.amount > 0)
+		for(var/id in GM.gases.gases)
+			GM.gases._set(id, GM.gases.get(id) / air.gases.amount * amount)
 
 	GM.temperature = temperature
-
 	return GM
 
 
@@ -49,7 +36,6 @@
 	var/datum/excited_group/excited_group
 	var/excited = 0
 	var/recently_active = 0
-	var/datum/gas_mixture/air
 	var/archived_cycle = 0
 	var/current_cycle = 0
 	var/icy = 0
@@ -65,13 +51,15 @@
 	..()
 	if(!blocks_air)
 		air = new
+		air.gases = to_gaslist(preloaded_gases)
+		if(oxygen)
+			air.gases.add(GAS_OXYGEN, oxygen)
 
-		air.oxygen = oxygen
-		air.carbon_dioxide = carbon_dioxide
-		air.nitrogen = nitrogen
-		air.toxins = toxins
-		air.sleeping_agent = sleeping_agent
-		air.agent_b = agent_b
+		if(nitrogen)
+			air.gases.add(GAS_NITROGEN, nitrogen)
+
+		if(toxins)
+			air.gases.add(GAS_PLASMA, toxins)
 
 		air.temperature = temperature
 
@@ -245,12 +233,7 @@
 
 	if(planetary_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
-		G.oxygen = oxygen
-		G.carbon_dioxide = carbon_dioxide
-		G.nitrogen = nitrogen
-		G.toxins = toxins
-		G.sleeping_agent = sleeping_agent
-		G.agent_b = agent_b
+		G.gases = air.gases.copy()
 		G.temperature = initial(temperature) // Temperature is modified at runtime; we only care about the turf's initial temperature
 		G.archive()
 		if(!air.compare(G))
@@ -298,12 +281,9 @@
 	for (var/turf/simulated/turf in turfs)
 		var/difference = turf.air.total_moles() / 2
 
-		turf.air.oxygen /= 2
-		turf.air.carbon_dioxide /= 2
-		turf.air.nitrogen /= 2
-		turf.air.toxins /= 2
-		turf.air.sleeping_agent /= 2
-		turf.air.agent_b /= 2
+		for(var/id in turf.air.gases.gases)
+			turf.air.gases._set(id, turf.air.gases.get(id) / 2)
+
 		turf.air.temperature /= 2
 		turf.archive()
 
@@ -344,11 +324,13 @@
 /turf/simulated/proc/tile_graphic()
 	if(!air)
 		return
-	if(air.toxins > MOLES_PLASMA_VISIBLE)
+
+	if(air.gases.get(GAS_PLASMA) > MOLES_PLASMA_VISIBLE)
 		return "plasma"
 
-	if(air.sleeping_agent > 1)
+	if(air.gases.get(GAS_N2O) > 1)
 		return "sleeping_agent"
+
 	return null
 
 /turf/simulated/proc/share_air(turf/simulated/T, fire_count, adjacent_turfs_length)
@@ -439,22 +421,14 @@
 	var/list/cached_turf_list = turf_list // cache for super speed
 
 	for(var/turf/simulated/T in cached_turf_list)
-		A.oxygen 			+= T.air.oxygen
-		A.carbon_dioxide	+= T.air.carbon_dioxide
-		A.nitrogen 			+= T.air.nitrogen
-		A.toxins 			+= T.air.toxins
-		A.sleeping_agent 	+= T.air.sleeping_agent
-		A.agent_b 			+= T.air.agent_b
+		for(var/id in T.air.gases.gases)
+			A.gases.add(id, T.air.gases.get(id))
 
 	var/turflen = length(cached_turf_list)
 
 	for(var/turf/simulated/T in cached_turf_list)
-		T.air.oxygen			= A.oxygen / turflen
-		T.air.carbon_dioxide	= A.carbon_dioxide / turflen
-		T.air.nitrogen			= A.nitrogen / turflen
-		T.air.toxins			= A.toxins / turflen
-		T.air.sleeping_agent	= A.sleeping_agent / turflen
-		T.air.agent_b			= A.agent_b / turflen
+		for(var/id in T.air.gases.gases_with(A.gases))
+			T.air.gases._set(id, A.gases.get(id) / turflen)
 
 		T.update_visuals()
 

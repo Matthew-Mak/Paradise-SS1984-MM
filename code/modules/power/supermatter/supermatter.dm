@@ -234,7 +234,7 @@
 		oxygen = 0
 	else
 		//Result of this formula is undefined if we (total moles of removed) -> 0. So, let's roll with zero if no gas was removed.
-		oxygen = clamp((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / removed.total_moles(), 0, 1)
+		oxygen = clamp((removed.gases.get(GAS_OXYGEN) - (removed.gases.get(GAS_NITROGEN) * NITROGEN_RETARDATION_FACTOR)) / removed.total_moles(), 0, 1)
 
 	var/temp_factor
 	var/equilibrium_power
@@ -255,8 +255,8 @@
 	var/old_heat_capacity = removed.heat_capacity()
 
 	if(device_energy)
-		removed.toxins += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
-		removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		removed.gases.add(GAS_PLASMA, max(device_energy / PLASMA_RELEASE_MODIFIER, 0))
+		removed.gases.add(GAS_OXYGEN, max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
 
 	var/heat_capacity = removed.heat_capacity()
 
@@ -389,7 +389,7 @@
 		var/turf/shard_loc = get_turf(src)
 		var/datum/gas_mixture/shard_env = shard_loc.return_air()
 		var/datum/gas_mixture/new_mixture = new
-		new_mixture.toxins = 10000
+		new_mixture.gases._set(GAS_PLASMA, 10000)
 		new_mixture.temperature += power * SHARD_CUT_COEF
 		shard_env.merge(new_mixture)
 		scalpel.uses_left--

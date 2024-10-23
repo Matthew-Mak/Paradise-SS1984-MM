@@ -283,16 +283,16 @@
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.oxygen*GET_PP)
+	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_OXYGEN)*GET_PP)
 
 	cur_tlv = TLV["nitrogen"]
-	var/nitrogen_dangerlevel = cur_tlv.get_danger_level(environment.nitrogen*GET_PP)
+	var/nitrogen_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_NITROGEN)*GET_PP)
 
 	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.carbon_dioxide*GET_PP)
+	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_CDO)*GET_PP)
 
 	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
+	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_PLASMA)*GET_PP)
 
 	cur_tlv = TLV["other"]
 	var/other_dangerlevel = cur_tlv.get_danger_level(environment.total_trace_moles() * GET_PP)
@@ -621,7 +621,7 @@
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
-	var/known_total = environment.oxygen + environment.nitrogen + environment.carbon_dioxide + environment.toxins
+	var/known_total = environment.gases.get(GAS_OXYGEN) + environment.gases.get(GAS_NITROGEN) + environment.gases.get(GAS_CDO) + environment.gases.get(GAS_PLASMA)
 	var/total = environment.total_moles()
 	if(total == 0)
 		return null
@@ -634,20 +634,20 @@
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.oxygen*GET_PP)
-	var/oxygen_percent = environment.oxygen / total * 100
+	var/oxygen_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_OXYGEN)*GET_PP)
+	var/oxygen_percent = environment.gases.get(GAS_OXYGEN) / total * 100
 
 	cur_tlv = TLV["nitrogen"]
-	var/nitrogen_dangerlevel = cur_tlv.get_danger_level(environment.nitrogen*GET_PP)
-	var/nitrogen_percent = environment.nitrogen / total * 100
+	var/nitrogen_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_NITROGEN)*GET_PP)
+	var/nitrogen_percent = environment.gases.get(GAS_NITROGEN) / total * 100
 
 	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.carbon_dioxide*GET_PP)
-	var/co2_percent = environment.carbon_dioxide / total * 100
+	var/co2_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_CDO)*GET_PP)
+	var/co2_percent = environment.gases.get(GAS_CDO) / total * 100
 
 	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
-	var/plasma_percent = environment.toxins / total * 100
+	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.gases.get(GAS_PLASMA)*GET_PP)
+	var/plasma_percent = environment.gases.get(GAS_PLASMA) / total * 100
 
 	cur_tlv = TLV["other"]
 	var/other_moles = total - known_total

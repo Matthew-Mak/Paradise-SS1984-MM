@@ -37,12 +37,13 @@
 	)
 	if(!gasmix)
 		return
-	.["oxygen"] = gasmix.oxygen
-	.["carbon_dioxide"] = gasmix.carbon_dioxide
-	.["nitrogen"] = gasmix.nitrogen
-	.["toxins"] = gasmix.toxins
-	.["sleeping_agent"] = gasmix.sleeping_agent
-	.["agent_b"] = gasmix.agent_b
+
+	.["oxygen"] = gasmix.gases.get(GAS_OXYGEN)
+	.["carbon_dioxide"] = gasmix.gases.get(GAS_CDO)
+	.["nitrogen"] = gasmix.gases.get(GAS_NITROGEN)
+	.["toxins"] = gasmix.gases.get(GAS_PLASMA)
+	.["sleeping_agent"] = gasmix.gases.get(GAS_N2O)
+	.["agent_b"] = gasmix.gases.get(GAS_AGENT_B)
 	.["total_moles"] = gasmix.total_moles()
 	.["temperature"] = gasmix.temperature
 	.["volume"] = gasmix.volume

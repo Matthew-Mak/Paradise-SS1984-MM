@@ -11,8 +11,7 @@
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/simulated/floor/wood/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/wood/screwdriver_act(mob/user, obj/item/I)
@@ -44,8 +43,10 @@
 	return make_plating(make_tile, user)
 
 /turf/simulated/floor/wood/cold
-	oxygen = 22
-	nitrogen = 82
+	preloaded_gases = list(
+		GAS_OXYGEN = 22,
+		GAS_NITROGEN = 82,
+	)
 	temperature = 180
 
 /turf/simulated/floor/wood/dark
@@ -167,8 +168,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/simulated/floor/carpet/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/carpet/Initialize(mapload)

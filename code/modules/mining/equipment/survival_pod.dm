@@ -189,8 +189,7 @@
 	floor_tile = /obj/item/stack/tile/pod/dark
 
 /turf/simulated/floor/pod/dark/outside //used in lavaland ruins
-	oxygen = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface::oxygen //used :: to match outside atmos
-	nitrogen = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface::nitrogen
+	preloaded_gases = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface::preloaded_gases
 	temperature = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface::temperature
 	planetary_atmos = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface::planetary_atmos
 

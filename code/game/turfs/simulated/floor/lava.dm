@@ -220,8 +220,10 @@
 
 /turf/simulated/floor/lava/lava_land_surface
 	temperature = 300
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	planetary_atmos = TRUE
 	baseturf = /turf/simulated/floor/chasm/straight_down/lava_land_surface
 
@@ -301,8 +303,10 @@
 
 // It's not the liquid itself. It's the atmos over it. Don't wanna spend resources on simulating over snow and lava.
 /turf/simulated/floor/lava/lava_land_surface/plasma/cold
-	oxygen = 22
-	nitrogen = 82
+	preloaded_gases = list(
+		GAS_OXYGEN = 22,
+		GAS_NITROGEN = 82,
+	)
 	temperature = 180
 
 /turf/simulated/floor/lava/mapping_lava
@@ -310,8 +314,10 @@
 	icon_state = "mappinglava"
 	baseturf = /turf/simulated/floor/lava/mapping_lava
 	temperature = 300
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	planetary_atmos = TRUE
 
 /turf/simulated/floor/lava/mapping_lava/Initialize(mapload)

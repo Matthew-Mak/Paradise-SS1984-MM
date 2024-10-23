@@ -128,12 +128,8 @@ GLOBAL_VAR_INIT(pipenetwarnings, 10)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
 
-		member.air_temporary.oxygen = air.oxygen * member.volume / air.volume
-		member.air_temporary.nitrogen = air.nitrogen * member.volume / air.volume
-		member.air_temporary.toxins = air.toxins * member.volume / air.volume
-		member.air_temporary.carbon_dioxide = air.carbon_dioxide * member.volume / air.volume
-		member.air_temporary.sleeping_agent = air.sleeping_agent * member.volume / air.volume
-		member.air_temporary.agent_b = air.agent_b * member.volume / air.volume
+		for(var/id in air.gases.gases)
+			member.air_temporary.gases._set(id, air.gases.get(id) * member.volume / air.volume)
 
 		member.air_temporary.temperature = air.temperature
 
@@ -198,21 +194,25 @@ GLOBAL_VAR_INIT(pipenetwarnings, 10)
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			return
+
 		GL += P.air
 		GL += P.other_airs
 		for(var/obj/machinery/atmospherics/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.parent1
 				PL |= V.parent2
+
 		for(var/obj/machinery/atmospherics/trinary/tvalve/T in P.other_atmosmch)
 			if(!T.state)
 				if(src != T.parent2) // otherwise dc'd side connects to both other sides!
 					PL |= T.parent1
 					PL |= T.parent3
+
 			else
 				if(src != T.parent3)
 					PL |= T.parent1
 					PL |= T.parent2
+
 		for(var/obj/machinery/atmospherics/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
@@ -220,24 +220,16 @@ GLOBAL_VAR_INIT(pipenetwarnings, 10)
 	var/total_volume = 0
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
-	var/total_oxygen = 0
-	var/total_nitrogen = 0
-	var/total_toxins = 0
-	var/total_carbon_dioxide = 0
-	var/total_sleeping_agent = 0
-	var/total_agent_b = 0
+
+	var/datum/gaslist/total = new
 
 	for(var/datum/gas_mixture/G in GL)
 		total_volume += G.volume
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()
 
-		total_oxygen += G.oxygen
-		total_nitrogen += G.nitrogen
-		total_toxins += G.toxins
-		total_carbon_dioxide += G.carbon_dioxide
-		total_sleeping_agent += G.sleeping_agent
-		total_agent_b += G.agent_b
+		for(var/id in G.gases.gases)
+			total.add(id, G.gases.get(id))
 
 	if(total_volume > 0)
 
@@ -245,15 +237,11 @@ GLOBAL_VAR_INIT(pipenetwarnings, 10)
 		var/temperature = 0
 
 		if(total_heat_capacity > 0)
-			temperature = total_thermal_energy/total_heat_capacity
+			temperature = total_thermal_energy / total_heat_capacity
 
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/G in GL)
-			G.oxygen = total_oxygen * G.volume / total_volume
-			G.nitrogen = total_nitrogen * G.volume / total_volume
-			G.toxins = total_toxins * G.volume / total_volume
-			G.carbon_dioxide = total_carbon_dioxide * G.volume / total_volume
-			G.sleeping_agent = total_sleeping_agent * G.volume / total_volume
-			G.agent_b = total_agent_b * G.volume / total_volume
+			for(var/id in G.gases.gases)
+				G.gases._set(id, total.get(id)  * G.volume / total_volume)
 
 			G.temperature = temperature

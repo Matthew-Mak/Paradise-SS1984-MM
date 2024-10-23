@@ -18,18 +18,21 @@
 
 /turf/simulated/openspace/airless
 	temperature = TCMB
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 
 /turf/simulated/openspace/lavaland
 	temperature = 300
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	planetary_atmos = TRUE
 
 /turf/simulated/openspace/snow_atmosphere
-	oxygen = 22
-	nitrogen = 82
+	preloaded_gases = list(
+		GAS_OXYGEN = 22,
+		GAS_NITROGEN = 82,
+	)
 	temperature = 180
 	planetary_atmos = TRUE
 

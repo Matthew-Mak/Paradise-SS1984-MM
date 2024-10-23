@@ -239,15 +239,17 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
+				if(G.gases.get(GAS_PLASMA))
+					G.gases.add(GAS_NITROGEN, G.gases.get(GAS_PLASMA))
+					G.gases._set(GAS_PLASMA, 0)
+
 		for(var/thing in T)
 			if(istype(thing, /obj/machinery/atmospherics/unary/vent_pump) || istype(thing, /obj/machinery/atmospherics/unary/vent_scrubber)) //must be an unwelded atmospherics
 				var/obj/machinery/atmospherics/vent = thing
 				if(!vent.welded)
 					vent.set_welded(TRUE)
 					vent.visible_message(span_danger("[vent] was frozen shut!"))
+
 			else if(isliving(thing))
 				var/mob/living/mob = thing
 				mob.ExtinguishMob()

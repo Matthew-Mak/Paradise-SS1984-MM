@@ -263,26 +263,24 @@
 	id = "smoke"
 	result = null
 	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
-	result_amount = 1
+	result_amount = 3
 	mix_message = "The mixture quickly turns into a pall of smoke!"
-	var/forbidden_reagents = list("sugar", "phosphorus", "potassium", "stimulants") //Do not transfer this stuff through smoke.
 
 /datum/chemical_reaction/smoke/on_reaction(datum/reagents/holder, created_volume)
-	for(var/f_reagent in forbidden_reagents)
-		holder.del_reagent(f_reagent)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/smoke_spread/chem/S = new
+	var/turf/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	if(S)
-		S.set_up(holder, location)
-		if(created_volume < 5)
-			S.start(1)
-		if(created_volume >=5 && created_volume < 10)
-			S.start(2)
-		if(created_volume >= 10 && created_volume < 15)
-			S.start(3)
-		if(created_volume >=15)
-			S.start(4)
+
+	var/datum/reagents/to_smoke = new(10000)
+	holder.trans_to(to_smoke, created_volume * 4)
+
+	var/datum/gas_mixture/new_gases = new
+	for(var/datum/reagent/reagent in to_smoke.reagent_list)
+		new_gases.gases.add(reagent.id, reagent.volume)
+
+	new_gases.temperature = to_smoke.chem_temp
+	to_smoke.clear_reagents()
+	location.assume_air(new_gases)
+	location.air_update_turf()
 
 /datum/chemical_reaction/smoke/smoke_powder
 	name = "smoke_powder_smoke"
@@ -290,7 +288,6 @@
 	required_reagents = list("smoke_powder" = 1)
 	min_temp = T0C + 100
 	result_amount = 1
-	forbidden_reagents = list("stimulants")
 	mix_sound = null
 
 /datum/chemical_reaction/smoke_solid

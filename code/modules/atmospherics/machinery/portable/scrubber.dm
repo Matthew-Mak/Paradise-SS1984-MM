@@ -72,17 +72,17 @@
 		filtered_out.temperature = removed.temperature
 
 
-		filtered_out.toxins = removed.toxins
-		removed.toxins = 0
+		filtered_out.gases._set(GAS_PLASMA, removed.gases.get(GAS_PLASMA))
+		removed.gases._set(GAS_PLASMA, 0)
 
-		filtered_out.carbon_dioxide = removed.carbon_dioxide
-		removed.carbon_dioxide = 0
+		filtered_out.gases._set(GAS_CDO, removed.gases.get(GAS_CDO))
+		removed.gases._set(GAS_CDO, 0)
 
-		filtered_out.sleeping_agent = removed.sleeping_agent
-		removed.sleeping_agent = 0
+		filtered_out.gases._set(GAS_N2O, removed.gases.get(GAS_N2O))
+		removed.gases._set(GAS_N2O, 0)
 
-		filtered_out.agent_b = removed.agent_b
-		removed.agent_b = 0
+		filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
+		removed.gases._set(GAS_AGENT_B, 0)
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)
