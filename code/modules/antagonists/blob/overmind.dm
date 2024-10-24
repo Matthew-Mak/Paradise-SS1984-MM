@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(overminds)
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	pass_flags = PASSBLOB
-	faction = list(ROLE_BLOB)
+	verb_say = "states"
 
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/special/core/blob_core = null // The blob overmind's core
@@ -92,8 +92,9 @@ GLOBAL_LIST_EMPTY(overminds)
 		qdel(src)
 		return
 	if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME < world.time))
-		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
+		to_chat(src, span_boldnotice("Вы получили еще одну бесплатную смену штамма."))
 		free_strain_rerolls = TRUE
+	track_z()
 
 
 /mob/camera/blob/Login()
@@ -104,6 +105,15 @@ GLOBAL_LIST_EMPTY(overminds)
 	update_health_hud()
 	sync_lighting_plane_alpha()
 	add_points(0)
+	var/turf/T = get_turf(src)
+	if(isturf(T))
+		update_z(T.z)
+
+	
+/mob/camera/blob/Logout()
+	update_z(null)
+	. = ..()
+
 
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
@@ -127,12 +137,12 @@ GLOBAL_LIST_EMPTY(overminds)
 	var/turf/target_turf = .
 	if(!is_valid_turf(target_turf)) // Allows unplaced blobs to travel through station z-levels
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(src, span_warning("Your destination is invalid. Move somewhere else and try again."))
+			to_chat(src, span_warning("Ваш пункт назначения недействителен. Перейдите в другое место и попробуйте еще раз."))
 		return null
 
 /mob/camera/blob/proc/is_valid_turf(turf/tile)
 	var/area/area = get_area(tile)
-	if((area && !(area.area_flags & BLOBS_ALLOWED)) || !tile || !is_station_level(tile.z) || isgroundlessturf(tile))
+	if((area && !(area.area_flags & BLOBS_ALLOWED)) || !tile || !is_station_level(tile.z))
 		return FALSE
 	return TRUE
 
@@ -140,11 +150,11 @@ GLOBAL_LIST_EMPTY(overminds)
 /mob/camera/blob/get_status_tab_items()
 	. = ..()
 	if(blob_core)
-		. += list("Core Health:", "[blob_core.obj_integrity]")
-		. += list("Power Stored:", "[(is_infinity || SSticker?.mode?.is_blob_infinity_points)? "INF" : blob_points]/[max_blob_points]")
-		. += list("Blobs to Win:", "[GLOB.blobs.len]/[SSticker?.mode.blob_win_count]")
+		. += list(list("Здоровье ядра:", "[blob_core.obj_integrity]"))
+		. += list(list("Ресурсы:", "[(is_infinity || SSticker?.mode?.is_blob_infinity_points)? "INF" : "[blob_points]/[max_blob_points]"]"))
+		. += list(list("Критическая Масса:", "[TOTAL_BLOB_MASS]/[NEEDED_BLOB_MASS]"))
 	if(free_strain_rerolls)
-		. += list("You have [free_strain_rerolls] Free Strain Reroll\s Remaining")
+		. += list(list("Осталось бесплатных смен штамма:", "[free_strain_rerolls]"))
 
 /mob/camera/blob/update_health_hud()
 	if(!blob_core)
@@ -168,7 +178,7 @@ GLOBAL_LIST_EMPTY(overminds)
 
 	if (client)
 		if(GLOB.admin_mutes_assoc[ckey] & MUTE_IC)
-			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
+			to_chat(src, span_boldwarning("Вы не можете писать IC сообщения (мут)."))
 			return
 		if (client.handle_spam_prevention(message, MUTE_IC))
 			return
@@ -226,16 +236,16 @@ GLOBAL_LIST_EMPTY(overminds)
 
 /mob/camera/blob/proc/get_strain_info()
 	. = list()
-	. += span_notice("Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	. += span_notice("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
+	. += span_notice("Ваш штамм: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	. += span_notice("Штамм <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> [blobstrain.description]")
 	if(blobstrain.effectdesc)
-		. += span_notice("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
+		. += span_notice("Штамм <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> [blobstrain.effectdesc]")
 	return .
 
 /mob/camera/blob/examine(mob/user)
 	. = ..()
 	if(blobstrain)
-		. += "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
+		. += "Штамм блоба — <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
 
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
@@ -260,3 +270,7 @@ GLOBAL_LIST_EMPTY(overminds)
 /mob/camera/blob/proc/on_minion_death(mob/living/spore)
 	SIGNAL_HANDLER
 	blobstrain.on_sporedeath(spore)
+
+/mob/camera/blob/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	..()
+	update_z(new_turf?.z)

@@ -1,14 +1,14 @@
 //does aoe brute damage when hitting targets, is immune to explosions
 /datum/blobstrain/reagent/explosive_lattice
-	name = "Explosive Lattice"
-	description = "will attack with small explosions, dealing a medium mix of brute and burn damage to everyone nearby. Spores explode on death."
-	effectdesc = "will also resist explosions, but takes increased damage from fire and other energy sources."
-	analyzerdescdamage = "Does a medium mix of brute and burn damage in a small explosion around its targets.  Spores explode on death."
-	analyzerdesceffect = "Is highly resistant to explosions, but takes increased damage from fire and other energy sources."
+	name = "Взрывная решетка"
+	description = "атакует небольшими взрывами, нанося среднее сочетание урона ожогами и травмами всем, кто находится близко к цели. Споры взрываются при смерти."
+	effectdesc = "также имеет повышенную сопротивляемость взрывам, но получает повышенный урон от огня и других источников энергии."
+	analyzerdescdamage = "Атакует небольшими взрывами, нанося среднее сочетание урона ожогами и травмами всем, кто находится близко к цели. Споры взрываются при смерти."
+	analyzerdesceffect = "Обладает высокой устойчивостью к взрывам, но получает повышенный урон от огня и других источников энергии."
 	color = "#8B2500"
 	complementary_color = "#00668B"
 	blobbernaut_message = "blasts"
-	message = "The blob blasts you"
+	message = "Блоб взрывает тебя"
 	reagent = /datum/reagent/blob/explosive_lattice
 
 /datum/blobstrain/reagent/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
@@ -27,9 +27,9 @@
 		actor.take_overall_damage(10, 10)
 
 /datum/reagent/blob/explosive_lattice
-	name = "Explosive Lattice"
+	name = "Взрывная решетка"
 	id = "blob_explosive_lattice"
-	taste_description = "the bomb"
+	taste_description = "бомба"
 	color = "#8B2500"
 
 /datum/reagent/blob/explosive_lattice/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

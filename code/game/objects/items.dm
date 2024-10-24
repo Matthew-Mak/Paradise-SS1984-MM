@@ -274,6 +274,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 	if(B && B.loc == loc && !QDELETED(src) && !(obj_flags & IGNORE_BLOB_ACT))
 		obj_destruction(MELEE)
 
+/obj/item/blob_vore_act(obj/structure/blob/special/core/voring_core)
+	. = ..()
+	if(QDELETED(src))
+		return FALSE
+	forceMove(voring_core)
 
 /obj/item/examine(mob/user)
 	var/size

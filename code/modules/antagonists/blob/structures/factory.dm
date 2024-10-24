@@ -2,7 +2,7 @@
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
-	desc = "A thick spire of tendrils."
+	desc = "Толстый шпиль щупалец."
 	max_integrity = BLOB_FACTORY_MAX_HP
 	health_regen = BLOB_FACTORY_HP_REGEN
 	point_return = BLOB_REFUND_FACTORY_COST
@@ -22,8 +22,8 @@
 
 /obj/structure/blob/special/factory/scannerreport()
 	if(blobbernaut)
-		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
-	return "Will produce a blob spore every few seconds."
+		return "В настоящее время он поддерживает блобернаута, что делает ее хрупкой и неспособной производить споры."
+	return "Каждые несколько секунд производит споры."
 
 /obj/structure/blob/special/factory/link_to_overmind(mob/camera/blob/owner_overmind)
 	. = ..()
@@ -85,7 +85,7 @@
 		return
 
 	modify_max_integrity(initial(max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
-	visible_message(span_boldwarning("The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!"))
+	visible_message(span_boldwarning("Блобернаут [pick("разрывает", "надрывает", "рвет в клочья")] все на своем пути из фабрики!"))
 	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 	blobbernaut = new_naut

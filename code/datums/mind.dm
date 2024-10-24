@@ -542,9 +542,11 @@
 		. += "|<a href='byond://?src=[UID()];blob=burst'>burst blob</a>"
 	else if(isblobovermind(src))
 		var/mob/camera/blob/blob_overmind = current
-		. += "|<b><font color='red'>BLOB Overmind</font></b>|"
-		. += "<br/><b>Total points: <a href='byond://?src=[UID()];blob=set_points'>[blob_overmind.blob_points]</a>/[blob_overmind.max_blob_points]</b>"
-		. += "<br/><b>Infinity points: <a href='byond://?src=[UID()];blob=inf_points'>[(blob_overmind.is_infinity)? "OFF" : "ON"]</a></b>"
+		if(istype(blob_overmind))
+			. += "|<b><font color='red'>BLOB Overmind</font></b>|"
+			. += "<br/><b>Total points: <a href='byond://?src=[UID()];blob=set_points'>[blob_overmind.blob_points]</a>/[blob_overmind.max_blob_points]</b>"
+			. += "<br/><b>Infinity points: <a href='byond://?src=[UID()];blob=inf_points'>[(blob_overmind.is_infinity)? "ON" : "OFF"]</a></b>"
+			. += "<br/><b>Blob strain: <a href='byond://?src=[UID()];blob=select_strain'>[blob_overmind.blobstrain? "<font color=\"[blob_overmind.blobstrain.color]\">[blob_overmind?.blobstrain?.name]</font>" : "None"]</a></b>"
 	else if(isblobminion(src))
 		. += "|<b><font color='red'>BLOB Minion</font></b>|"
 	else if(current.can_be_blob())
@@ -2485,7 +2487,18 @@
 				blob_overmind.is_infinity = !blob_overmind.is_infinity
 				log_admin("[key_name(usr)] make blob points [blob_overmind.is_infinity? "infinity" : "not infinity"] to [key_name(current)]")
 				message_admins("[key_name_admin(usr)] make blob points [blob_overmind.is_infinity? "infinity" : "not infinity"] to [key_name_admin(current)]")
-
+			
+			if("select_strain")
+				if(!isblobovermind(src))
+					return
+				var/mob/camera/blob/blob_overmind = current
+				if(QDELETED(current) || current.stat == DEAD)
+					return
+				var/strain = tgui_input_list(usr, "Выберите штамм", "Выбор штамма", GLOB.valid_blobstrains, null)
+				if(ispath(strain))
+					blob_overmind.set_strain(strain)
+					log_admin("[key_name(usr)] changed the strain to [strain] for [key_name(current)]")
+					message_admins("[key_name_admin(usr)] changed the strain to [strain] for [key_name_admin(current)]")
 
 	else if(href_list["common"])
 		switch(href_list["common"])

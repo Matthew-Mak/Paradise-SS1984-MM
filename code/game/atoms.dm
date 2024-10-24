@@ -643,6 +643,9 @@
 		return FALSE
 	return TRUE
 
+/atom/proc/blob_vore_act(obj/structure/blob/special/core/voring_core)
+	return TRUE
+
 /atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, global_overlay = TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	if(reagents)

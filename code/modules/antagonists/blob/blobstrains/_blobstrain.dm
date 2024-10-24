@@ -11,13 +11,13 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	/// Any long, blob-tile specific effects
 	var/effectdesc = null
 	/// Short descriptor of what the strain does damage-wise, generally seen in the reroll menu
-	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
+	var/analyzerdescdamage = "Неизвестный. Сообщите об этой ошибке в баг-репорты и в админтикет."
 	/// Short descriptor of what the strain does in general, generally seen in the reroll menu
 	var/analyzerdesceffect
 	/// Blobbernaut attack verb
 	var/blobbernaut_message = "slams"
 	/// Message sent to any mob hit by the blob
-	var/message = "The blob strikes you"
+	var/message = "Блоб бьет вас"
 	/// Gets added onto 'message' if the mob stuck is of type living
 	var/message_living = null
 	/// Stores world.time to figure out when to next give resources
@@ -100,8 +100,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		blob_mob.maxHealth *= max_mob_health_multiplier
 		blob_mob.health *= max_mob_health_multiplier
 		blob_mob.update_icons() //If it's getting a new strain, tell it what it does!
-		to_chat(blob_mob, "Your overmind's blob strain is now: <b><font color=\"[color]\">[name]</b></font>!")
-		to_chat(blob_mob, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
+		var/list/messages = list()
+		messages += "Штамм вашего надразума: <b><font color=\"[color]\">[name]</b></font>!"
+		messages += "Штамм <b><font color=\"[color]\">[name]</b></font> [shortdesc ? "[shortdesc]" : "[description]"]"
+		to_chat(blob_mob, chat_box_red(messages.Join("<br>")))
 
 /datum/blobstrain/proc/on_lose()
 	if(overmind.blob_core)
@@ -155,7 +157,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O, coefficient = 1) //when the blob expands, do this
-	return
+	return TRUE
 
 /datum/blobstrain/proc/tesla_reaction(obj/structure/blob/B, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
 	return TRUE //return 0 to ignore damage
@@ -167,4 +169,4 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/examine(mob/user)
-	return list("<b>Progress to Critical Mass:</b> [span_notice("[GLOB.blobs.len]/[SSticker?.mode.blob_win_count].")]")
+	return list("<b>Прогресс Критической Массы:</b> [span_notice("[TOTAL_BLOB_MASS]/[NEEDED_BLOB_MASS].")]")

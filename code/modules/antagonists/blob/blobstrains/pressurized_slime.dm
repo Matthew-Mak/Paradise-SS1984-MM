@@ -1,15 +1,15 @@
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/blobstrain/reagent/pressurized_slime
-	name = "Pressurized Slime"
-	description = "will do low brute and oxygen damage, high stamina damage, and makes tiles under targets very slippery."
-	effectdesc = "will also make tiles slippery near attacked blobs."
-	analyzerdescdamage = "Does low brute and oxygen damage, high stamina damage, and makes tiles under targets very slippery, extinguishing them. Is resistant to brute attacks."
-	analyzerdesceffect = "When attacked or killed, lubricates nearby tiles, extinguishing anything on them."
+	name = "Сжатая слизь"
+	description = "наносит низкий урон травмами и урон гипоксией, высокий урон выносливости и делает пол под целями очень скользкими, тушая их."
+	effectdesc = "также сделает плитки скользкими рядом с атакованными плитками. Устойчив к грубым атакам."
+	analyzerdescdamage = "Наносит низкий урон травмами и урон гипоксией, высокий урон выносливости и делает пол под целями очень скользкими, тушая их. Устойчив к грубым атакам."
+	analyzerdesceffect = "При нападении или убийстве смазывает близлежащие плитки пола, тушая все на них."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
 	blobbernaut_message = "emits slime at"
-	message = "The blob splashes into you"
-	message_living = ", and you gasp for breath"
+	message = "Блоб плюхается в тебя"
+	message_living = ", и ты задыхаешься"
 	reagent = /datum/reagent/blob/pressurized_slime
 
 /datum/blobstrain/reagent/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
@@ -21,7 +21,7 @@
 
 /datum/blobstrain/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
 	if(damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER)
-		B.visible_message(span_boldwarning("The blob ruptures, spraying the area with liquid!"))
+		B.visible_message(span_boldwarning("Блоб разрывается, обрызгивая область жидкостью!"))
 		extinguisharea(B, 50)
 
 /datum/blobstrain/reagent/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
@@ -38,9 +38,9 @@
 				L.ExtinguishMob()
 
 /datum/reagent/blob/pressurized_slime
-	name = "Pressurized Slime"
+	name = "Сжатая слизь"
 	id = "blob_pressurized_slime"
-	taste_description = "a sponge"
+	taste_description = "губка"
 	color = "#AAAABB"
 
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

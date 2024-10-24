@@ -51,14 +51,14 @@
 	var/mob/camera/blob/blob = overmind
 	var/datum/blobstrain/blobstrain = blob.blobstrain
 	. += span_dangerbigger("Вы блобернаут! Вы должны помогать всем формам блоба в их миссии по уничтожению всего!")
-	. += span_info("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
-	. += span_info("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
-	. += span_info("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	. += span_info("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+	. += span_info("Вы сильны, крепки, и медленно регенерируете в пределах плиток блоба, [span_cultlarge("но вы будете медленно умирать, если их рядом нету")] или если фабрика, создавшая вас, будет разрушена.")
+	. += span_info("Вы можете общаться с другими бернаутами, миньенами, зараженными и надразумами <b>телепатически</b> заместо обычного общения.")
+	. += span_info("Штамм вашего надразума: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	. += span_info("Штамм <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
 
 /datum/objective/blob_minion
 	name = "protect the blob core"
-	explanation_text = "Protect the blob core at all costs."
+	explanation_text = "Защищайте ядро блоба и исполняйте приказы надразумов. Любой ценой."
 	var/datum/weakref/overmind
 
 /datum/objective/blob_minion/check_completion()

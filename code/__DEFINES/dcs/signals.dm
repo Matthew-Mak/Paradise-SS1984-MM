@@ -699,9 +699,9 @@
 ///Called from remove_overlay(cache_index, overlay)
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 #define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
-	/// Return if you override the carbon's health hud with something else
+#define COMSIG_HUMAN_UPDATING_HEALTH_HUD "human_health_hud_update"
+	/// Return if you override the carbon's or human's health hud with something else
 	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
-
 // /mob/living/simple_animal signals
 ///from /mob/living/attack_animal():	(mob/living/simple_animal/M)
 #define COMSIG_SIMPLE_ANIMAL_ATTACKEDBY "simple_animal_attackedby"
@@ -1227,3 +1227,7 @@
 #define	COMSIG_BORER_ENTERED_HOST "borer_on_enter" // when borer entered host
 #define COMSIG_BORER_LEFT_HOST "borer_on_leave" // when borer left host
 
+///from /datum/spawners_menu/ui_act(): (mob/user)
+#define COMSIG_IS_GHOST_CONTROLABLE "is_ghost_controllable"
+	/// Return this to signal that the mob can be controlled by ghosts
+	#define COMPONENT_GHOST_CONTROLABLE (1<<0)

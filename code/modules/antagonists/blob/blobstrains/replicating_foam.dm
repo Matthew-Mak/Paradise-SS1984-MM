@@ -1,12 +1,12 @@
 /datum/blobstrain/reagent/replicating_foam
-	name = "Replicating Foam"
-	description = "will do medium brute damage and occasionally expand again when expanding."
-	shortdesc = "will do medium brute damage."
-	effectdesc = "will also expand when attacked with burn damage, but takes more brute damage."
+	name = "Репликационная пена"
+	description = "наносит средний урон травмами и иногда дополнительно расширяется при расширении."
+	shortdesc = "наносит средний урон травмами."
+	effectdesc = "также будет расширяться при атаке уроном ожогами, но получает больше урона травмами."
 	color = "#7B5A57"
 	complementary_color = "#57787B"
-	analyzerdescdamage = "Does medium brute damage."
-	analyzerdesceffect = "Expands when attacked with burn damage, will occasionally expand again when expanding, and is fragile to brute damage."
+	analyzerdescdamage = "Наносит средний урон травмами."
+	analyzerdesceffect = "Расширяется при атаке уроном ожогами, иногда дополнительно расширяется при расширении и уязвим к урону травмами."
 	reagent = /datum/reagent/blob/replicating_foam
 
 
@@ -24,11 +24,12 @@
 /datum/blobstrain/reagent/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(30))
 		newB.expand(null, null, 0) //do it again!
+	return TRUE
 
 /datum/reagent/blob/replicating_foam
-	name = "Replicating Foam"
+	name = "Репликационная пена"
 	id = "blob_replicating_foam"
-	taste_description = "duplication"
+	taste_description = "дублирование"
 	color = "#7B5A57"
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

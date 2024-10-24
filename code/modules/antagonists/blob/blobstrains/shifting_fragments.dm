@@ -1,10 +1,10 @@
 //does brute damage, shifts away when damaged
 /datum/blobstrain/reagent/shifting_fragments
-	name = "Shifting Fragments"
-	description = "will do medium brute damage."
-	effectdesc = "will also cause blob parts to shift away when attacked."
-	analyzerdescdamage = "Does medium brute damage."
-	analyzerdesceffect = "When attacked, may shift away from the attacker."
+	name = "Смещающиеся фрагменты"
+	description = "нанесит средний урон травмами."
+	effectdesc = "также приведет к смещению плиток при атаке."
+	analyzerdescdamage = "Наносит средний урон травмами."
+	analyzerdesceffect = "При нападении может поменять местами плитки."
 	color = "#C8963C"
 	complementary_color = "#3C6EC8"
 	reagent = /datum/reagent/blob/shifting_fragments
@@ -13,11 +13,13 @@
 	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
+	return TRUE
 
 /datum/blobstrain/reagent/shifting_fragments/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage > 0 && B.get_integrity() - damage > 0 && prob(60-damage))
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage > 0 && B.get_integrity() - damage > 0 && prob(20 + damage))
 		var/list/blobstopick = list()
-		for(var/obj/structure/blob/OB in orange(1, B))
+		var/list/blob_structures = (is_there_multiz())? urange_multiz(1, B, TRUE) : orange(1, B)
+		for(var/obj/structure/blob/OB in blob_structures)
 			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blobstrain.type == B.overmind.blobstrain.type)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
@@ -28,7 +30,7 @@
 	return ..()
 
 /datum/reagent/blob/shifting_fragments
-	name = "Shifting Fragments"
+	name = "Смещающиеся фрагменты"
 	id = "blob_shifting_fragments"
 	color = "#C8963C"
 

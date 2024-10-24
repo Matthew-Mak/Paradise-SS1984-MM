@@ -2,8 +2,8 @@
 	name = "strong blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_shield"
-	desc = "A solid wall of slightly twitching tendrils."
-	var/damaged_desc = "A wall of twitching tendrils."
+	desc = "Сплошная стена слегка подергивающихся щупалец."
+	var/damaged_desc = "Стена дергающихся щупалец."
 	max_integrity = BLOB_STRONG_MAX_HP
 	health_regen = BLOB_STRONG_HP_REGEN
 	brute_resist = BLOB_STRONG_BRUTE_RESIST

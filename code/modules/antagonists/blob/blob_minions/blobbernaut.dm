@@ -4,7 +4,7 @@
  */
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut
 	name = "blobbernaut"
-	desc = "A hulking, mobile chunk of blobmass."
+	desc = "Огромный, подвижный кусок биомассы."
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
@@ -25,12 +25,18 @@
 	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
 	move_resist = MOVE_FORCE_OVERPOWERING
-	hud_type = /datum/hud/blobbernaut
+	hud_type = /datum/hud/simple_animal/blobbernaut
 	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
+
+
+/mob/living/simple_animal/hostile/blob_minion/blobbernaut/Login()
+	. = ..()
+	update_health_hud()
+
 
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/experience_pressure_difference(pressure_difference, direction)
 	if(!HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
@@ -46,12 +52,16 @@
 	/// Is our factory dead?
 	var/orphaned = FALSE
 
+/mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/Initialize(mapload)
+	bruteloss = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
+	. = ..()
+		
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if (!.)
 		return FALSE
 	var/damage_sources = 0
-	var/list/blobs_in_area = range(2, src)
+	var/list/blobs_in_area = (is_there_multiz())? urange_multiz(2, src) : range(2, src)
 
 	if (!(locate(/obj/structure/blob) in blobs_in_area))
 		damage_sources++
@@ -60,13 +70,7 @@
 		damage_sources++
 	else
 		var/particle_colour = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_BLACK
-		if (locate(/obj/structure/blob) in blobs_in_area)
-			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_TILE * seconds_per_tick)
-			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
-			heal_effect.color = particle_colour
-			if(on_fire)
-				adjust_fire_stacks(-1)
-
+		
 		if (locate(/obj/structure/blob/special/core) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_CORE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
@@ -93,7 +97,6 @@
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/proc/assign_key(ckey, datum/blobstrain/blobstrain)
 	key = ckey
 	flick("blobbernaut_produce", src)
-	health = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
 	SEND_SOUND(src, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(src, sound('sound/effects/attackblob.ogg'))
 	log_game("[key] has spawned as Blobbernaut")

@@ -2,14 +2,14 @@
 
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
-	name = "Debris Devourer"
-	description = "will launch accumulated debris into targets. Does very low brute damage without debris-launching."
-	analyzerdescdamage = "Does very low brute damage and may grab onto melee weapons."
-	analyzerdesceffect = "Devours loose items left on the station, and releases them when attacking or attacked."
+	name = "Пожиратель мусора"
+	description = "бросает поглощенные предметы и трупы в цели. Наносит очень низкий урон травмами без запуска объектов."
+	analyzerdescdamage = "Наносит очень низкий урон травмами и может метать поглощенные предметы при атаке."
+	analyzerdesceffect = "Пожирает незакрепленные предметы и трупы, оставленные на станции, и бросат их при атаке и защите."
 	color = "#8B1000"
 	complementary_color = "#00558B"
 	blobbernaut_message = "blasts"
-	message = "The blob blasts you"
+	message = "Блоб бьет тебя"
 
 
 /datum/blobstrain/debris_devourer/attack_living(mob/living/L, list/nearby_blobs)
@@ -26,18 +26,21 @@
 			I.throw_at(get_edge_target_turf(spore,pick(GLOB.alldirs)), 6, 5, spore, TRUE, FALSE, null, 3)
 
 /datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O, coefficient = 1) //when the blob expands, do this
-	for (var/obj/item/I in T)
-		I.forceMove(overmind.blob_core)
+	if(overmind)
+		for (var/atom/A in T)
+			A.blob_vore_act(overmind.blob_core)
+	return TRUE
 
 /datum/blobstrain/debris_devourer/proc/debris_attack(atom/attacking, atom/source)
 	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (prob(40 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
 		var/obj/item/I = length(core.contents) ? pick(core.contents) : null
 		if (!QDELETED(I))
-			I.obj_flags |= IGNORE_BLOB_ACT
+			if(isobj(I))
+				I.obj_flags |= IGNORE_BLOB_ACT
+				addtimer(CALLBACK(src, PROC_REF(remove_protection), I), BLOB_ACT_PROTECTION_TIME)
 			I.forceMove(get_turf(source))
 			I.throw_at(attacking, 6, 5, overmind, TRUE, FALSE, null, 3)
-			addtimer(CALLBACK(src, PROC_REF(remove_protection), I), BLOB_ACT_PROTECTION_TIME)
 
 /datum/blobstrain/debris_devourer/proc/remove_protection(obj/item)
 	item.obj_flags &= ~IGNORE_BLOB_ACT
@@ -53,16 +56,16 @@
 	. = ..()
 	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (isobserver(user))
-		. += span_notice("Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]")
+		. += span_notice("Поглощенный мусор в настоящее время снижает получаемый урон на [round(max(min(DEBRIS_DENSITY, 10),0))]")
 	else
 		switch (round(max(min(DEBRIS_DENSITY, 10),0)))
 			if (0)
-				. += span_notice("There is not currently enough absorbed debris to reduce damage.")
+				. += span_notice("В настоящее время поглощенного мусора недостаточно, чтобы уменьшить урон.")
 			if (1 to 3)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a very low amount.") // these roughly correspond with force description strings
+				. += span_notice("Поглощенный мусор в настоящее время снижает получаемый урон на очень небольшую величину.") // these roughly correspond with force description strings
 			if (4 to 7)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a low amount.")
+				. += span_notice("Поглощенный мусор в настоящее время незначительно снижает получаемый урон.")
 			if (8 to 10)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a medium amount.")
+				. += span_notice("Поглощенный мусор в настоящее время снижает получаемый урон на среднюю величину.")
 
 #undef DEBRIS_DENSITY

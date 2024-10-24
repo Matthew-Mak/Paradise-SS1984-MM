@@ -2,7 +2,7 @@
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
-	desc = "A huge, pulsating yellow mass."
+	desc = "Огромная пульсирующая желтая масса."
 	max_integrity = BLOB_CORE_MAX_HP
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 90)
 	explosion_block = 6
@@ -50,10 +50,14 @@
 	SSticker?.mode?.blob_died()
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
+	for(var/atom/movable/atom as anything in contents)
+		if (atom && !QDELETED(atom) && istype(atom))
+			atom.forceMove(get_turf(src))
+			atom.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 6, 5, src, TRUE, FALSE, null, 3)
 	return ..()
 
 /obj/structure/blob/special/core/scannerreport()
-	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
+	return "Управляет расширением блоба, постепенно расширяется и поддерживает близлежащие споры и блобернаутов."
 
 /obj/structure/blob/special/core/update_overlays()
 	. = ..()
@@ -117,9 +121,9 @@
 	if(!new_overmind)
 		// sendit
 		if(is_offspring)
-			candidates = SSghost_spawns.poll_candidates("Do you want to play as a blob offspring?", ROLE_BLOB, TRUE, source = src)
+			candidates = SSghost_spawns.poll_candidates("Вы хотите поиграть за потомка блоба?", ROLE_BLOB, TRUE, source = src)
 		else
-			candidates = SSghost_spawns.poll_candidates("Do you want to play as a blob?", ROLE_BLOB, TRUE, source = src)
+			candidates = SSghost_spawns.poll_candidates("Вы хотите поиграть за блоба?", ROLE_BLOB, TRUE, source = src)
 
 		if(length(candidates))
 			C = pick(candidates)

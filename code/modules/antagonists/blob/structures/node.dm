@@ -2,7 +2,7 @@
 	name = "blob node"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
-	desc = "A large, pulsating yellow mass."
+	desc = "Большая пульсирующая желтая масса."
 	max_integrity = BLOB_NODE_MAX_HP
 	health_regen = BLOB_NODE_HP_REGEN
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 25, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 65, "acid" = 90)
@@ -20,7 +20,7 @@
 
 
 /obj/structure/blob/special/node/scannerreport()
-	return "Gradually expands and sustains nearby blob spores and blobbernauts."
+	return "Постепенно расширяется и поддерживает близлежащие споры и блобернаутов."
 
 /obj/structure/blob/special/node/update_icon()
 	. = ..()

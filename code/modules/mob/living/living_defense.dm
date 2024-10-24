@@ -85,6 +85,13 @@
 		)
 	return shock_damage
 
+/mob/living/blob_vore_act(obj/structure/blob/special/core/voring_core)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_BLOB_ZOMBIFIED) || QDELETED(src))
+		return FALSE
+	if(stat == DEAD)
+		forceMove(voring_core)
+
 
 /mob/living/emp_act(severity)
 	..()
@@ -271,6 +278,7 @@
 		is_wet = TRUE
 		visible_message(span_warning("[src.declent_ru(NOMINATIVE)] намока[pluralize_ru(src.gender,"ет","ют")]!"), \
 						span_userdanger("[pluralize_ru(src.gender,"Ты намокаешь","Вы намокаете")]!"))
+		AddComponent(/datum/component/slippery, 5 SECONDS)
 		update_wet()
 		SEND_SIGNAL(src, COMSIG_LIVING_WET)
 		return TRUE
@@ -278,6 +286,7 @@
 
 /mob/living/proc/DryMob()
 	if(is_wet)
+		qdel(GetComponent(/datum/component/slippery))
 		is_wet = FALSE
 		wet_stacks = 0
 		update_wet()

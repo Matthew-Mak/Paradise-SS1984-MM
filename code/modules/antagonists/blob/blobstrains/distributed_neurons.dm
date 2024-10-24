@@ -1,27 +1,27 @@
 //kills unconscious targets and turns them into blob zombies, produces fragile spores when killed.  Spore produced by factories are sentient.
 /datum/blobstrain/reagent/distributed_neurons
-	name = "Distributed Neurons"
-	description = "will do medium-low toxin damage and turns unconscious targets into blob zombies."
-	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do medium-low toxin damage and will kill any unconscious targets when attacked.  Spores produced by factories are sentient."
-	analyzerdescdamage = "Does medium-low toxin damage and kills unconscious humans."
-	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
+	name = "Распределенные нейроны"
+	description = "наносит средне-низкий урон токсинами и превращает бессознательные цели в зомби блоба."
+	effectdesc = "при убийстве также производит хрупкие споры.  Споры, производимые фабриками, разумны."
+	shortdesc = "наносит средне-низкий урон токсинами и убьет все цели, находящиеся без сознания, при атаке. Споры, производимые фабриками, разумны."
+	analyzerdescdamage = "Наносит средне-низкий урон токсинами и убивает людей, находящихся без сознания."
+	analyzerdesceffect = "При разрушении производит споры.  Споры, производимые фабриками, разумны."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
-	message_living = ", and you feel tired"
+	message_living = "и ты чувствуешь усталость"
 	reagent = /datum/reagent/blob/distributed_neurons
 
 /datum/blobstrain/reagent/distributed_neurons/damage_reaction(obj/structure/blob/blob_tile, damage, damage_type, damage_flag)
 	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && blob_tile.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
-		blob_tile.visible_message(span_boldwarning("A spore floats free of the blob!"))
+		blob_tile.visible_message(span_boldwarning("Спора вылетает из блоба!"))
 		blob_tile.overmind.create_spore(blob_tile.loc, /mob/living/simple_animal/hostile/blob_minion/spore/minion/weak)
 	return ..()
 
 /datum/reagent/blob/distributed_neurons
-	name = "Distributed Neurons"
+	name = "Распределенные нейроны"
 	id = "blob_distributed_neurons"
 	color = "#E88D5D"
-	taste_description = "fizzing"
+	taste_description = "шипящий"
 
 /datum/reagent/blob/distributed_neurons/reaction_mob(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	. = ..()

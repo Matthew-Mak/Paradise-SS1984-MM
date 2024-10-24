@@ -3,7 +3,7 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
-	desc = "A thick wall of writhing tendrils."
+	desc = "Толстая стена извивающихся щупалец."
 	density = FALSE
 	opacity = TRUE
 	anchored = TRUE
@@ -65,6 +65,7 @@
 		atmosblock = FALSE
 		air_update_turf(1)
 	GLOB.blobs -= src
+	SSticker?.mode?.legit_blobs -= src
 	if(overmind)
 		overmind.all_blobs -= src
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
@@ -162,11 +163,11 @@
 
 /obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)
-		var/list/dirs = list(1,2,4,8)
-		for(var/i = 1 to 4)
+		var/list/dirs = (is_there_multiz())? GLOB.cardinals_multiz.Copy() : GLOB.cardinal.Copy()
+		for(var/i = 1 to dirs.len)
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
-			T = get_step(src, dirn)
+			T = get_step_multiz(src, dirn)
 			if(!(locate(/obj/structure/blob) in T))
 				break
 			else
@@ -204,14 +205,20 @@
 		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
+			var/offstation = FALSE
 			var/area/Ablob = get_area(B)
 			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
-				overmind.blobs_legit += B
+				overmind.blobs_legit |= B
+				SSticker?.mode?.legit_blobs |= B
 			else if(controller)
-				B.balloon_alert(overmind, "off-station, won't count!")
+				B.balloon_alert(overmind, "вне станции, не считается!")
+				offstation = TRUE
 			B.update_blob()
+			var/reaction_result = TRUE
 			if(B.overmind && expand_reaction)
-				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
+				reaction_result = B.overmind.blobstrain.expand_reaction(src, B, T, controller, offstation)
+			if(reaction_result && is_there_multiz() && check_level_trait(T.z, ZTRAIT_DOWN) && !isopenspaceturf(T))
+				T.ChangeTurf(/turf/simulated/openspace)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -225,7 +232,8 @@
 
 /obj/structure/blob/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	return checkpass(mover, PASSBLOB)
+	var/mob/mover_mob = mover
+	return checkpass(mover, PASSBLOB) || (istype(mover_mob) && mover_mob.stat == DEAD)
 
 
 /obj/structure/blob/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
@@ -271,6 +279,7 @@
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if(ROLE_BLOB in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+		to_chat(M, span_danger("Вы не можете навредить структурам блоба"))
 		return
 	..()
 
@@ -333,12 +342,13 @@
 	arrived.blob_act(src)
 
 
-/obj/structure/blob/proc/change_to(type, controller)
+/obj/structure/blob/proc/change_to(type, controller, point_return = 0)
 	if(!ispath(type))
 		CRASH("change_to(): invalid type for blob")
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.update_blob()
 	B.setDir(dir)
+	B.point_return += point_return
 	qdel(src)
 	return B
 
@@ -346,14 +356,15 @@
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		to_chat(user, "<b>Анализатор подает один звуковой сигнал, затем сообщает:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[GLOB.blobs.len]/[SSticker?.mode.blob_win_count].")]")
+			to_chat(user, "<b>Прогресс Критической Массы:</b> [span_notice("[TOTAL_BLOB_MASS]/[NEEDED_BLOB_MASS].")]")
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+			to_chat(user, "<b>Ядро блоба нейтрализовано. Критическая масса более не достижима.</b>")
 		to_chat(user, typereport(user).Join("\n"))
+		return ATTACK_CHAIN_PROCEED_SUCCESS
 	else
 		return ..()
 
@@ -362,63 +373,49 @@
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
-		. += "<b>Your HUD displays an extensive report...</b><br>"
+		. += "<b>Ваш HUD отображает обширный отчет...</b><br>"
 		if(overmind)
 			. += overmind.blobstrain.examine(user)
 		else
-			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
+			. += "<b>Ядро блоба нейтрализовано. Критическая масса более не достижима.</b>"
 		. += chemeffectreport(user)
 		. += typereport(user)
 	else
 		if((user == overmind || isobserver(user)) && overmind)
 			. += overmind.blobstrain.examine(user)
-		. += "It seems to be made of [get_chem_name()]."
+		. += "Кажется, он состоит из [get_chem_name()]."
 
 
 /obj/structure/blob/proc/scannerreport()
-	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
+	return "Обычная плитка. Похоже, кто-то забыл переопределить этот процесс, сообщите администратору и составьте баг-репорт."
 
-
-/obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
-		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[GLOB.blobs.len]/[SSticker?.mode.blob_win_count].")]")
-			to_chat(user, chemeffectreport(user).Join("\n"))
-		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
-		to_chat(user, typereport(user).Join("\n"))
-	else
-		return ..()
 
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
-		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font>[span_notice(".")]</b>",
-		"<b>Material Effects:</b> [span_notice("[overmind.blobstrain.analyzerdescdamage]")]",
-		"<b>Material Properties:</b> [span_notice("[overmind.blobstrain.analyzerdesceffect || "N/A"]")]")
+		. += list("<b>Материал: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font>[span_notice(".")]</b>",
+		"<b>Эффект материала:</b> [span_notice("[overmind.blobstrain.analyzerdescdamage]")]",
+		"<b>Свойства материала:</b> [span_notice("[overmind.blobstrain.analyzerdesceffect || "N/A"]")]")
 	else
-		. += "<b>No Material Detected!</b>"
+		. += "<b>Материал не найден!</b>"
 
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
-	return list("<b>Blob Type:</b> [span_notice("[uppertext(initial(name))]")]",
-							"<b>Health:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
-							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
+	return list("<b>Тип плитки:</b> [span_notice("[uppertext(initial(name))]")]",
+							"<b>Здоровье:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
+							"<b>Эффекты:</b> [span_notice("[scannerreport()]")]")
 
 
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blobstrain.name
-	return "some kind of organic tissue"
+	return "какая-то органическая материя"
 
 
 /obj/structure/blob/proc/get_chem_desc()
 	if(overmind)
 		return overmind.blobstrain.description
-	return "something unknown"
+	return "что-то неизвестное"
 

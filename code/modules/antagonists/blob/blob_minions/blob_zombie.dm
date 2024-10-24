@@ -1,30 +1,32 @@
 /// A shambling mob made out of a crew member
 /mob/living/simple_animal/hostile/blob_minion/zombie
 	name = "blob zombie"
-	desc = "A shambling corpse animated by the blob."
+	desc = "Шаркающий труп, оживленный блобом."
 	icon_state = "zombie"
 	icon_living = "zombie"
 	health_doll_icon = "blobpod"
-	health = 70
-	maxHealth = 70
+	health = BLOBMOB_ZOMBIE_HEALTH
+	maxHealth = BLOBMOB_ZOMBIE_HEALTH
 	verb_say = list("gurgles", "groans")
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
-	melee_damage_lower = 10
-	melee_damage_upper = 15
-	obj_damage = 20
+	melee_damage_lower = BLOBMOB_ZOMBIE_DMG_LOWER
+	melee_damage_upper = BLOBMOB_ZOMBIE_DMG_UPPER
+	obj_damage = BLOBMOB_ZOMBIE_OBJ_DMG
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "ударяет"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	deathmessage = 	"collapses to the ground!"
+	deathmessage = 	"падает на землю!"
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
+	speed = BLOBMOB_ZOMBIE_SPEED_MOD
 	/// The dead body we have inside
 	var/mob/living/carbon/human/corpse
 
 
 /mob/living/simple_animal/hostile/blob_minion/zombie/death(gibbed)
+	REMOVE_TRAIT(corpse, TRAIT_BLOB_ZOMBIFIED, BLOB_ZOMBIE_TRAIT)
 	corpse?.forceMove(loc)
 	death_burst()
 	return ..()
@@ -54,6 +56,10 @@
 	. = ..()
 	death()
 
+/mob/living/simple_animal/hostile/blob_minion/zombie/update_overlays()
+	. = ..()
+	set_up_zombie_appearance()
+
 //Sets up our appearance
 /mob/living/simple_animal/hostile/blob_minion/zombie/proc/set_up_zombie_appearance()
 	copy_overlays(corpse, TRUE)
@@ -70,6 +76,7 @@
 
 /// Store a body so that we can drop it on death
 /mob/living/simple_animal/hostile/blob_minion/zombie/proc/consume_corpse(mob/living/carbon/human/new_corpse)
+	ADD_TRAIT(new_corpse, TRAIT_BLOB_ZOMBIFIED, BLOB_ZOMBIE_TRAIT)
 	if(new_corpse.wear_suit)
 		maxHealth += new_corpse.getarmor(attack_flag = MELEE)
 		health = maxHealth
@@ -85,7 +92,7 @@
 /// Dynamic changeling reentry
 /mob/living/simple_animal/hostile/blob_minion/zombie/proc/on_corpse_revived()
 	SIGNAL_HANDLER
-	visible_message(span_boldwarning("[src] bursts from the inside!"))
+	visible_message(span_boldwarning("[src] разрывается изнутри!"))
 	death()
 
 /// Blob-created zombies will ping for player control when they make a zombie

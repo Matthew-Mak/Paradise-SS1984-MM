@@ -2,6 +2,7 @@
 	name = "storage blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
+	desc = "Тонкий шпиль из плотно сплетенных щупалец."
 	max_integrity = BLOB_STORAGE_MAX_HP
 	fire_resist = BLOB_STORAGE_FIRE_RESIST
 	point_return = BLOB_REFUND_STORAGE_COST

@@ -45,6 +45,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_ghost_clicked))
 	RegisterSignal(parent, COMSIG_LIVING_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+	RegisterSignal(parent, COMSIG_IS_GHOST_CONTROLABLE, PROC_REF(on_ghost_controlable_check))
 
 /datum/component/ghost_direct_control/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_LIVING_EXAMINE, COMSIG_MOB_LOGIN))
@@ -148,3 +149,8 @@
 	to_chat(harbinger, span_boldnotice(assumed_control_message))
 	after_assumed_control?.Invoke(harbinger)
 	qdel(src)
+
+
+/datum/component/ghost_direct_control/proc/on_ghost_controlable_check(mob/user)
+	SIGNAL_HANDLER
+	return COMPONENT_GHOST_CONTROLABLE

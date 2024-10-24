@@ -103,7 +103,7 @@
 	SIGNAL_HANDLER
 	if (isnull(overmind))
 		return
-	status_items += list("Blobs to Win:", "[length(GLOB.blobs)]/[SSticker?.mode.blob_win_count]")
+	status_items += list(list("Критическая Масса:", "[TOTAL_BLOB_MASS]/[NEEDED_BLOB_MASS]"))
 
 /// If we feel the gentle caress of a blob, we feel better
 /datum/component/blob_minion/proc/on_blob_touched(mob/living/minion)
@@ -114,6 +114,8 @@
 		var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(parent)) // hello yes you are being healed
 		heal_effect.color = isnull(overmind) ? COLOR_BLACK : overmind.blobstrain.complementary_color
 	minion.heal_overall_damage(minion.maxHealth * BLOBMOB_HEALING_MULTIPLIER)
+	if(minion.on_fire)
+		minion.adjust_fire_stacks(-1)
 	return COMPONENT_CANCEL_BLOB_ACT
 
 /// If we feel the fearsome bite of open flame, we feel worse

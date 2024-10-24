@@ -15,13 +15,26 @@
 
 /obj/structure/blob/special/proc/reinforce_area(seconds_per_tick) // Used by cores and nodes to upgrade their surroundings
 	if(strong_reinforce_range)
-		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
-			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
-				B.change_to(/obj/structure/blob/shield/core, overmind)
+		if(is_there_multiz())
+			for(var/obj/structure/blob/normal/B in urange_multiz(strong_reinforce_range, src))
+				reinforce_tile(B, /obj/structure/blob/shield/core, seconds_per_tick)
+		else
+			for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
+				reinforce_tile(B, /obj/structure/blob/shield/core, seconds_per_tick)
+				
 	if(reflector_reinforce_range)
-		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
-			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
-				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
+		if(is_there_multiz())
+			for(var/obj/structure/blob/shield/B in urange_multiz(reflector_reinforce_range, src))
+				reinforce_tile(B, /obj/structure/blob/shield/reflective/core, seconds_per_tick)
+		else
+			for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
+				reinforce_tile(B, /obj/structure/blob/shield/reflective/core, seconds_per_tick)
+
+
+/obj/structure/blob/special/proc/reinforce_tile(obj/structure/blob/B, type, seconds_per_tick)
+	if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
+		B.change_to(type, overmind, B.point_return)
+
 
 /obj/structure/blob/special/proc/pulse_area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	if(QDELETED(pulsing_overmind))
@@ -31,14 +44,18 @@
 	if(prob(70*(1/BLOB_EXPAND_CHANCE_MULTIPLIER)) && expand())
 		expanded = TRUE
 	var/list/blobs_to_affect = list()
-	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
-		blobs_to_affect += B
+	if(is_there_multiz())
+		for(var/obj/structure/blob/blob in urange_multiz(claim_range, src, 1))
+			blobs_to_affect += blob
+	else
+		for(var/obj/structure/blob/B in urange(claim_range, src, 1))
+			blobs_to_affect += B
 	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
 		if(!is_location_within_transition_boundaries(get_turf(B)))
 			continue
-		if(!B.overmind && prob(30))
+		if(!B.overmind && overmind && prob(30))
 			B.link_to_overmind(pulsing_overmind) //reclaim unclaimed, non-core blobs.
 			B.update_blob()
 		var/distance = get_dist(get_turf(src), get_turf(B))

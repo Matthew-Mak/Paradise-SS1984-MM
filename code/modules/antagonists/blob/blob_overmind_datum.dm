@@ -65,7 +65,6 @@
 /proc/get_blob_help_messages(datum/blobstrain/blob_reagent_datum)
 	var/list/messages = list()
 	messages += "<b>Как надразум, вы можете управлять блобом!</b>"
-	messages += "Ваш реагент: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>"
 	messages += blob_reagent_datum.overmind.get_strain_info()
 	messages += "<b>Вы можете расширяться, атакуя людей, повреждая объекты или размещая простую плитку, если клетка свободна.</b>"
 	messages += "<i>Обычная плитка</i> будет расширять ваше влияние и может быть улучшена до специальной плитки, выполняющей определённую функцию."

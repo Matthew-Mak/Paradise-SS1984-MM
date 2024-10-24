@@ -14,7 +14,7 @@
 
 /obj/structure/blob/normal/scannerreport()
 	if(compromised_integrity)
-		return "Currently weak to brute damage."
+		return "В настоящее время слаб к урону травмами."
 	return "N/A"
 
 /obj/structure/blob/normal/update_name()
@@ -24,11 +24,11 @@
 /obj/structure/blob/normal/update_desc()
 	. = ..()
 	if(compromised_integrity)
-		desc = "A thin lattice of slightly twitching tendrils."
+		desc = "Тонкая решетка слегка подергивающихся щупалец."
 	else if(overmind)
-		desc = "A thick wall of writhing tendrils."
+		desc = "Толстая стена извивающихся щупалец."
 	else
-		desc = "A thick wall of lifeless tendrils."
+		desc = "Толстая стена извивающихся щупалец."
 
 /obj/structure/blob/normal/update_icon_state()
 	icon_state = "blob[(compromised_integrity) ? "_damaged" : null]"

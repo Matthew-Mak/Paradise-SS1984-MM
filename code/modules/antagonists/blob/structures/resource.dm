@@ -2,7 +2,7 @@
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
-	desc = "A thin spire of slightly swaying tendrils."
+	desc = "Тонкий шпиль слегка покачивающихся щупалец."
 	max_integrity = BLOB_RESOURCE_MAX_HP
 	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
@@ -11,7 +11,7 @@
 	var/point_rate = BLOB_RESOURCE_POINT_RATE
 
 /obj/structure/blob/special/resource/scannerreport()
-	return "Gradually supplies the blob with resources, increasing the rate of expansion."
+	return "Постепенно снабжает блоба ресурсами, увеличивая скорость расширения."
 
 /obj/structure/blob/special/resource/link_to_overmind(mob/camera/blob/owner_overmind)
 	. = ..()

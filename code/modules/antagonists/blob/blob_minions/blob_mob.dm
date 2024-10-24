@@ -1,7 +1,7 @@
 /// Root of shared behaviour for mobs spawned by blobs, is abstract and should not be spawned
 /mob/living/simple_animal/hostile/blob_minion
 	name = "Blob Error"
-	desc = "A nonfunctional fungal creature created by bad code or celestial mistake. Point and laugh."
+	desc = "Нефункциональное грибковое существо, созданное плохим кодом или небесной ошибкой. Показывайте и смейтесь."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_head"
 	unique_name = TRUE
@@ -23,6 +23,7 @@
 	fire_damage = 3
 	tts_seed = "Earth"
 	tts_atom_say_effect = SOUND_EFFECT_NONE
+	a_intent = INTENT_HARM
 
 
 /mob/living/simple_animal/hostile/blob_minion/ComponentInitialize()
@@ -41,9 +42,44 @@
 /mob/living/simple_animal/hostile/blob_minion/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	return
 
+/mob/living/simple_animal/hostile/blob_minion/can_z_move(direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	var/obj/structure/blob/s_blob = locate(/obj/structure/blob) in start
+	var/obj/structure/blob/d_blob = locate(/obj/structure/blob) in destination
+	var/check = !(z_move_flags & ZMOVE_FALL_CHECKS)
+	if(s_blob && d_blob)
+		return check
+	. = ..()
+
+/mob/living/simple_animal/hostile/blob_minion/move_up()
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+	if((locate(/obj/structure/blob) in current_turf) && (locate(/obj/structure/blob) in above_turf))
+		if(zMove(UP, above_turf, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
+			to_chat(src, span_notice("You move upwards."))
+			return
+	. = ..()
+
+/mob/living/simple_animal/hostile/blob_minion/move_down()
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+	if((locate(/obj/structure/blob) in current_turf) && (locate(/obj/structure/blob) in below_turf))
+		if(zMove(DOWN, below_turf, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
+			to_chat(src, span_notice("You move down."))
+			return
+	. = ..()
+	
+
+/mob/living/simple_animal/hostile/blob_minion/
+
 /// Associates this mob with a specific blob factory node
 /mob/living/simple_animal/hostile/blob_minion/proc/link_to_factory(obj/structure/blob/special/factory/factory)
 	RegisterSignal(factory, COMSIG_QDELETING, PROC_REF(on_factory_destroyed))
+
+/mob/living/simple_animal/hostile/blob_minion/attack_animal(mob/living/simple_animal/M)
+	if(ROLE_BLOB in M.faction)
+		to_chat(M, span_danger("Вы не можете навредить другому порождению блоба"))
+		return
+	..()
 
 /// Called when our factory is destroyed
 /mob/living/simple_animal/hostile/blob_minion/proc/on_factory_destroyed()

@@ -3,7 +3,7 @@
  */
 /mob/living/simple_animal/hostile/blob_minion/spore
 	name = "blob spore"
-	desc = "A floating, fragile spore."
+	desc = "Плавающая хрупкая спора."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	icon_living = "blobpod"
@@ -16,15 +16,16 @@
 	verb_yell = "psychically screams"
 	melee_damage_lower = BLOBMOB_SPORE_DMG_LOWER
 	melee_damage_upper = BLOBMOB_SPORE_DMG_UPPER
-	obj_damage = 20
+	obj_damage = BLOBMOB_SPORE_OBJ_DMG
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "ударяет"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	deathmessage = "explodes into a cloud of gas!"
+	deathmessage = "взрывается облаком газа!"
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = TRUE
+	speed = BLOBMOB_SPORE_SPEED_MOD
 	/// Size of cloud produced from a dying spore
-	var/death_cloud_size = 1
+	var/death_cloud_size = 2
 	/// Type of mob to create
 	var/mob/living/zombie_type = /mob/living/simple_animal/hostile/blob_minion/zombie
 
@@ -69,7 +70,10 @@
 
 /// Become a zombie
 /mob/living/simple_animal/hostile/blob_minion/spore/proc/zombify(mob/living/carbon/human/target)
-	visible_message(span_warning("The corpse of [target.name] suddenly rises!"))
+	if(HAS_TRAIT(target, TRAIT_NO_TRANSFORM))
+		return
+
+	visible_message(span_warning("Тело [target.name] внезапно поднимается!"))
 	var/mob/living/simple_animal/hostile/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
 	blombie.set_name()
 	if (istype(blombie)) // In case of badmin
@@ -123,7 +127,7 @@
 	maxHealth = 15
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	death_cloud_size = 0
+	death_cloud_size = 1
 
 /mob/living/simple_animal/hostile/blob_minion/spore/minion/weak/zombify()
 	return

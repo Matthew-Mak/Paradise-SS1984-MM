@@ -277,3 +277,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPECIES_LIMBS "only_species_limbs"
 /// Phohibits using the "Book Of Babel"
 #define TRAIT_NO_BABEL "cannot_use_babel"
+
+#define TRAIT_BLOB_ZOMBIFIED "blob_zombified"

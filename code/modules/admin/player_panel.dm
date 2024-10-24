@@ -425,7 +425,7 @@
 		if(blob_infected && blob_infected.len)
 			var/datum/game_mode/mode = SSticker.mode
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			dat += "<tr><td><i>Progress: [GLOB.blobs.len]/[mode.blob_win_count]</i></td></tr>"
+			dat += "<tr><td><i>Progress: [mode.legit_blobs.len]/[mode.blob_win_count]</i></td></tr>"
 			dat += "<tr><td><a href='byond://?src=[UID()];edit_blob_win_count=1'>Edit Win Count</a><br></tr>"
 			dat += "<tr><td><a href='byond://?src=[UID()];send_warning=1'>Send warning to all living blobs</a><br></td></tr>"
 			dat += "<tr><td><a href='byond://?src=[UID()];burst_all_blobs=1'>Burst all blobs</a><br></td></tr>"

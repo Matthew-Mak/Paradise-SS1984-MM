@@ -50,6 +50,9 @@
 
 #define isblobbernaut(M) istype((M), /mob/living/simple_animal/hostile/blob_minion/blobbernaut)
 
+#define TOTAL_BLOB_MASS  SSticker?.mode?.legit_blobs?.len
+#define NEEDED_BLOB_MASS  SSticker?.mode?.blob_win_count
+
 //Few global vars to track the blob
 GLOBAL_LIST_EMPTY(blobs)
 GLOBAL_LIST_EMPTY(blob_cores)
@@ -141,7 +144,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOB_CORE_SPLIT_COST 100
 
 #define BLOB_REFUND_STRONG_COST 4 // Points refunded when destroying the structure
-#define BLOB_REFUND_REFLECTOR_COST 8
+#define BLOB_REFUND_REFLECTOR_COST 4
 #define BLOB_REFUND_RESOURCE_COST 15
 #define BLOB_REFUND_FACTORY_COST 25
 #define BLOB_REFUND_NODE_COST 25
@@ -162,8 +165,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOBMOB_HEALING_MULTIPLIER 0.0125 // Multiplies by -maxHealth and heals the blob by this amount every blob_act
 #define BLOBMOB_SPORE_HEALTH 30 // Base spore health
 #define BLOBMOB_SPORE_SPAWN_COOLDOWN (8 SECONDS)
-#define BLOBMOB_SPORE_DMG_LOWER 2
-#define BLOBMOB_SPORE_DMG_UPPER 4
+#define BLOBMOB_SPORE_DMG_LOWER 3
+#define BLOBMOB_SPORE_DMG_UPPER 7
+#define BLOBMOB_SPORE_OBJ_DMG 20
+#define BLOBMOB_SPORE_SPEED_MOD -1.5
+#define BLOBMOB_ZOMBIE_HEALTH 70 // Base spore health
+#define BLOBMOB_ZOMBIE_DMG_LOWER 10
+#define BLOBMOB_ZOMBIE_DMG_UPPER 15
+#define BLOBMOB_ZOMBIE_OBJ_DMG 20
+#define BLOBMOB_ZOMBIE_SPEED_MOD -1
 #define BLOBMOB_BLOBBERNAUT_RESOURCE_COST 40 // Purchase price for making a blobbernaut
 #define BLOBMOB_BLOBBERNAUT_HEALTH 200 // Base blobbernaut health
 #define BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER 20 // Damage without active overmind (core dead or xenobio mob)

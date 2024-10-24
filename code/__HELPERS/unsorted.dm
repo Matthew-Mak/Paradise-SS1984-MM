@@ -1581,6 +1581,29 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(areas)
 			. |= T.loc
 
+/proc/urange_multiz(dist=0, atom/center=usr, orange=0, areas=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+	var/list/stations_z = levels_by_trait(STATION_LEVEL)
+	var/min_z = max(center.z - dist, stations_z[1])
+	var/max_z = min(center.z + dist, stations_z[length(stations_z)])
+	var/list/turfs = RANGE_TURFS_MULTIZ(dist, center, min_z, max_z)
+	if(orange)
+		turfs -= get_turf(center)
+	. = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		. += T
+		. += T.contents
+		if(areas)
+			. |= T.loc
+
+/proc/is_there_multiz()
+	return SSmapping?.map_datum?.traits?.len > 1
+
 
 /proc/screen_loc2turf(scr_loc, turf/origin)
 	var/tX = splittext(scr_loc, ",")

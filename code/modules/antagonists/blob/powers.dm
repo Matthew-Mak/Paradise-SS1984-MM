@@ -40,36 +40,53 @@
 /mob/camera/blob/proc/create_special(price, blobstrain, min_separation, needs_node, turf/tile)
 	if(!tile)
 		tile = get_turf(src)
+
 	var/obj/structure/blob/blob = (locate(/obj/structure/blob) in tile)
 	if(!blob)
 		to_chat(src, span_warning("Тут нет плитки!"))
 		balloon_alert(src, "тут нет плитки!")
 		return FALSE
+
 	if(!istype(blob, /obj/structure/blob/normal))
 		to_chat(src, span_warning("Невозможно использовать на этой плитке. Найдите обычную плитку."))
 		balloon_alert(src, "нужна обычная плитка!")
 		return FALSE
+
+	var/area/area = get_area(src)
+	if(!(area.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
+		to_chat(src, span_warning("Эта плитка должна быть размещена на станции!"))
+		balloon_alert(src, "нельзя поставить вне станции!")
+		return FALSE
+
 	if(needs_node)
-		var/area/area = get_area(src)
-		if(!(area.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
-			to_chat(src, span_warning("Эта плитка должна быть размещена на станции!"))
-			balloon_alert(src, "нельзя поставить вне станции!")
-			return FALSE
-		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, tile)))
+		if(nodes_required && node_check(tile))
 			to_chat(src, span_warning("Вам нужно разместить эту плитку ближе к узлу или ядру!"))
 			balloon_alert(src, "слишком далеко от узла или ядра!")
 			return FALSE //handholdotron 2000
+
 	if(min_separation)
-		for(var/obj/structure/blob/other_blob in orange(min_separation, tile))
+		for(var/obj/structure/blob/other_blob in get_sep_tile(tile, min_separation))
 			if(other_blob.type == blobstrain)
 				to_chat(src, span_warning("Поблизости находится ресурсная плитка, отойдите на расстояние более [min_separation] плиток от неё!"))
 				other_blob.balloon_alert(src, "слишком близко!")
 				return FALSE
+
 	if(!can_buy(price))
 		return FALSE
+
 	var/obj/structure/blob/node = blob.change_to(blobstrain, src)
 	return node
 
+
+/mob/camera/blob/proc/node_check(turf/tile)
+	if(is_there_multiz())
+		return !(locate(/obj/structure/blob/special/node) in urange_multiz(BLOB_NODE_PULSE_RANGE, tile, TRUE)) && !(locate(/obj/structure/blob/special/core) in urange_multiz(BLOB_CORE_PULSE_RANGE, tile, TRUE))
+	return !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, tile))
+
+/mob/camera/blob/proc/get_sep_tile(turf/tile, min_separation)
+	if(is_there_multiz())
+		return urange_multiz(min_separation, tile, TRUE)
+	return orange(min_separation, tile)
 
 /** Creates a shield to reflect projectiles */
 /mob/camera/blob/proc/create_shield(turf/tile)
@@ -104,7 +121,7 @@
 		return FALSE
 
 	to_chat(src, span_warning("Вы выделяете отражающую слизь на крепкую плитку, позволяя ей отражать энергетические снаряды ценой снижения прочности."))
-	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
+	shield = shield.change_to(/obj/structure/blob/shield/reflective, src, shield.point_return)
 	shield.balloon_alert(src, "улучшено в [shield.name]!")
 
 /** Preliminary check before polling ghosts. */
@@ -113,6 +130,7 @@
 	var/obj/structure/blob/special/factory/factory = locate(/obj/structure/blob/special/factory) in current_turf
 	if(!factory)
 		to_chat(src, span_warning("Вы должны быть на фабрике блоба!"))
+		balloon_alert(src, "нужна фабрика!")
 		return FALSE
 	if(factory.blobbernaut || factory.is_creating_blobbernaut) //if it already made or making a blobbernaut, it can't do it again
 		to_chat(src, span_warning("Эта фабрика уже создает блобернаута."))
@@ -157,8 +175,6 @@
 	assume_direct_control(blobber)
 	factory.assign_blobbernaut(blobber)
 	blobber.assign_key(ghost.key, blobstrain)
-	blobber.AIStatus = AI_OFF
-	blobber.LoseTarget()
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
 /// When one of our boys attacked something, we sometimes want to perform extra effects
@@ -176,15 +192,18 @@
 
 	if(!blob)
 		to_chat(src, span_warning("Вы должны быть на узле!"))
+		balloon_alert(src, "нужно быть на узле!")
 		return FALSE
 
 	if(!blob_core)
 		to_chat(src, span_userdanger("У вас нет ядра и вы на пороге смерти. Покойтесь с миром!"))
+		balloon_alert(src, "у вас нет ядра!")
 		return FALSE
 
 	var/area/area = get_area(tile)
 	if(isspaceturf(tile) || area && !(area.area_flags & BLOBS_ALLOWED))
 		to_chat(src, span_warning("Вы не можете переместить свое ядро сюда!"))
+		balloon_alert(src, "нельзя переместить сюда!")
 		return FALSE
 
 	if(!can_buy(BLOB_POWER_RELOCATE_COST))
@@ -198,7 +217,7 @@
 	blob.setDir(old_dir)
 
 /** Searches the tile for a blob and removes it. */
-/mob/camera/blob/proc/remove_blob(turf/tile)
+/mob/camera/blob/proc/remove_blob(turf/tile, atom/location)
 	var/obj/structure/blob/blob = locate() in tile
 
 	if(!blob)
@@ -223,13 +242,20 @@
 	return TRUE
 
 /** Expands to nearby tiles */
-/mob/camera/blob/proc/expand_blob(turf/tile)
+/mob/camera/blob/proc/expand_blob(turf/tile, atom/location)
 	if(world.time < last_attack)
 		return FALSE
 	var/list/possible_blobs = list()
+	var/turf/T
 
-	for(var/obj/structure/blob/blob in range(tile, 1))
-		possible_blobs += blob
+	if(is_there_multiz())
+		T = get_turf(location)
+		for(var/obj/structure/blob/blob in urange_multiz(1, T))
+			possible_blobs += blob
+	else
+		T = tile
+		for(var/obj/structure/blob/blob in range(1, T))
+			possible_blobs += blob
 
 	if(!length(possible_blobs))
 		to_chat(src, span_warning("Рядом с целью нету плиток блоба!"))
@@ -239,7 +265,7 @@
 		return FALSE
 
 	var/attack_success
-	for(var/mob/living/player in tile)
+	for(var/mob/living/player in T)
 		if(!player.can_blob_attack())
 			continue
 		if(ROLE_BLOB in player.faction) //no friendly/dead fire
@@ -248,17 +274,17 @@
 			attack_success = TRUE
 		blobstrain.attack_living(player, possible_blobs)
 
-	var/obj/structure/blob/blob = locate() in tile
+	var/obj/structure/blob/blob = locate() in T
 
 	if(blob)
 		if(attack_success) //if we successfully attacked a turf with a blob on it, only give an attack refund
-			blob.blob_attack_animation(tile, src)
+			blob.blob_attack_animation(T, src)
 			add_points(BLOB_ATTACK_REFUND)
 		else
 			to_chat(src, span_warning("Здесь уже есть плитка!"))
 			add_points(BLOB_EXPAND_COST) //otherwise, refund all of the cost
 	else
-		directional_attack(tile, possible_blobs, attack_success)
+		directional_attack(T, possible_blobs, attack_success)
 
 	if(attack_success)
 		last_attack = world.time + CLICK_CD_MELEE
@@ -272,7 +298,7 @@
 	var/list/diagonal_blobs = list()
 
 	for(var/obj/structure/blob/blob in possible_blobs)
-		if(get_dir(blob, tile) in GLOB.cardinal)
+		if(get_dir_multiz(blob, tile) in GLOB.cardinals_multiz)
 			cardinal_blobs += blob
 		else
 			diagonal_blobs += blob
@@ -309,16 +335,24 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
+	var/area/Ablob = get_area(T)
+	if(isspaceturf(T) || Ablob && !(Ablob.area_flags & BLOBS_ALLOWED))
+		to_chat(src, span_warning("Вы не можете поделиться вне станции!"))
+		balloon_alert(src, "нельзя поделиться вне станции!")
+		return FALSE
 	if(split_used)
 		to_chat(src, span_warning("Вы уже произвели потомка."))
+		balloon_alert(src, "вы уже поделились!")
 		return
 	if(is_offspring)
 		to_chat(src, span_warning("Потомки блоба не могут производить потомков."))
+		balloon_alert(src, "вы сами потомок блоба!")
 		return
 
 	var/obj/structure/blob/N = (locate(/obj/structure/blob) in T)
 	if(N && !istype(N, /obj/structure/blob/special/node))
 		to_chat(src, span_warning("Для создания вашего потомка необходим узел."))
+		balloon_alert(src, "необходим узел!")
 		return
 
 	if(!can_buy(BLOB_CORE_SPLIT_COST))
