@@ -7,7 +7,7 @@
 	telegraph_message = "<span class='danger'>Вы замечаете мелкие частицы в воздухе</span>"
 
 	weather_message = "<span class='userdanger'><i>Вы ощущаете поток неизвестных мелких частиц, которые проникают сквозь любую одежду. Спасти вас может только чудо.</i></span>"
-	weather_overlay = "ash_storm"
+	weather_overlay = "blob_storm"
 	weather_duration_lower = 30 SECONDS
 	weather_duration_upper = 1 MINUTES
 	weather_color = COLOR_PALE_GREEN_GRAY

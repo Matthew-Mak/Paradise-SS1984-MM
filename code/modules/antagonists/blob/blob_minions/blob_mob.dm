@@ -85,3 +85,7 @@
 /mob/living/simple_animal/hostile/blob_minion/proc/on_factory_destroyed()
 	SIGNAL_HANDLER
 	to_chat(src, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
+
+
+/mob/living/simple_animal/hostile/blob_minion/can_be_blob()
+	return FALSE	

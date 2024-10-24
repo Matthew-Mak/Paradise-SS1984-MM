@@ -1,5 +1,5 @@
-#define CLUSTERBUSTER_PAYLOAD_POWER 0.9
-#define SEGMENTATION_PAYLOAD_DECREASE 1.5
+#define CLUSTERBUSTER_PAYLOAD_POWER 0.8
+#define SEGMENTATION_PAYLOAD_DECREASE 1.8
 ////////////////////
 //Clusterbang
 ////////////////////

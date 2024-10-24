@@ -195,7 +195,10 @@
 		if(!A.can_blob_attack())
 			continue
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.blobstrain.attack_living(A)
+			var/mob/living/mob = A
+			if(ROLE_BLOB in mob.faction) //no friendly fire
+				continue
+			overmind.blobstrain.attack_living(mob)
 			continue // Don't smack them twice though
 		A.blob_act(src) //also hit everything in the turf
 
