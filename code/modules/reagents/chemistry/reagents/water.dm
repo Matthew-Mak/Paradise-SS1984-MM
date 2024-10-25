@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(diseases_carrier_reagents, list(
 	drink_name = "Glass of Water"
 	drink_desc = "The father of all refreshments."
 	var/water_temperature = COLD_WATER_TEMPERATURE	// As reagents don't have a temperature value, we'll just use 10 celsius.
+	has_touch_effect = TRUE
 
 /datum/reagent/water/reaction_mob(mob/living/M, method = REAGENT_TOUCH, volume)
 	M.water_act(volume, water_temperature, src, method)
@@ -60,6 +61,7 @@ GLOBAL_LIST_INIT(diseases_carrier_reagents, list(
 	harmless = TRUE
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "floor cleaner"
+	has_touch_effect = TRUE
 
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
@@ -109,6 +111,7 @@ GLOBAL_LIST_INIT(diseases_carrier_reagents, list(
 	drink_desc = "Are you sure this is tomato juice?"
 	taste_description = "<span class='warning'>blood</span>"
 	taste_mult = 1.3
+	has_touch_effect = TRUE
 
 /datum/reagent/blood/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(data && data["diseases"])
@@ -278,6 +281,7 @@ GLOBAL_LIST_INIT(diseases_carrier_reagents, list(
 	drink_name = "Glass of Water"
 	drink_desc = "The father of all refreshments."
 	taste_description = "water"
+	has_touch_effect = TRUE
 
 /datum/reagent/holywater/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE

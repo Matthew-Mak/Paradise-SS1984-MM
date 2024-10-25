@@ -160,17 +160,20 @@
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_description = "metal"
+	has_touch_effect = TRUE
 
 /datum/reagent/iron/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NO_BLOOD) && !HAS_TRAIT(H, TRAIT_NO_BLOOD_RESTORE) && H.blood_volume < BLOOD_VOLUME_NORMAL)
 			H.blood_volume += 0.8
+
 	return ..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(M.has_bane(BANE_IRON) && holder && holder.chem_temp < 150) //If the target is weak to cold iron, then poison them.
 		M.reagents.add_reagent("toxin", volume)
+
 	..()
 
 //foam
@@ -303,17 +306,20 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	taste_description = "the rainbow"
+	has_touch_effect = TRUE
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NO_BLOOD) && !HAS_TRAIT(H, TRAIT_EXOTIC_BLOOD))
 			H.dna.species.blood_color = "#[num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
+
 	return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/simple_animal/M, method=REAGENT_TOUCH, volume)
     if(isanimal(M))
         M.color = pick(GLOB.random_color_list)
+
     ..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, volume)
@@ -329,6 +335,7 @@
 	reagent_state = LIQUID
 	color = "#960096"
 	taste_description = "the 2559 Autumn release of the Le Jeune Homme catalogue for professional hairdressers"
+	has_touch_effect = TRUE
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, volume)
 	if(ishuman(M))
@@ -340,6 +347,7 @@
 		head_organ.sec_hair_colour = rand_hex_color()
 		H.update_hair()
 		H.update_fhair()
+
 	..()
 
 /datum/reagent/hairgrownium
@@ -350,6 +358,7 @@
 	color = "#5DDA5D"
 	penetrates_skin = TRUE
 	taste_description = "someone's beard"
+	has_touch_effect = TRUE
 
 /datum/reagent/hairgrownium/reaction_mob(mob/living/M, volume)
 	if(ishuman(M))
@@ -359,6 +368,7 @@
 		head_organ.f_style = random_facial_hair_style(H.gender, head_organ.dna.species.name)
 		H.update_hair()
 		H.update_fhair()
+
 	..()
 
 /datum/reagent/super_hairgrownium
@@ -369,6 +379,7 @@
 	color = "#5DD95D"
 	penetrates_skin = TRUE
 	taste_description = "multiple beards"
+	has_touch_effect = TRUE
 
 /datum/reagent/super_hairgrownium/reaction_mob(mob/living/M, volume)
 	if(ishuman(M))
@@ -411,6 +422,7 @@
 	color = "#FF83A5"
 	process_flags = ORGANIC | SYNTHETIC // That's the power of love~
 	taste_description = "<font color='pink'><b>love</b></font>"
+	has_touch_effect = TRUE
 
 /datum/reagent/love/on_mob_add(mob/living/L)
 	..()
@@ -666,6 +678,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
+	has_touch_effect = TRUE
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=REAGENT_TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))

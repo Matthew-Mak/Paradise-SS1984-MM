@@ -23,11 +23,8 @@
 
 	on = FALSE
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/scrub_O2 = 0
-	var/scrub_N2 = 0
-	var/scrub_CO2 = 1
-	var/scrub_Toxins = 0
-	var/scrub_N2O = 0
+
+	var/list/scrub_gases = list(GAS_CDO)
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
@@ -42,8 +39,7 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on
 	on = TRUE
-	scrub_N2O = TRUE
-	scrub_Toxins = TRUE
+	scrub_gases = list(GAS_CDO, GAS_N2O, GAS_PLASMA)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
@@ -79,13 +75,16 @@
 	var/amount = idle_power_usage
 
 	if(scrubbing)
-		if(scrub_CO2)
+		if(GAS_CDO in scrub_gases)
 			amount += idle_power_usage
-		if(scrub_Toxins)
+
+		if(GAS_PLASMA in scrub_gases)
 			amount += idle_power_usage
-		if(scrub_N2)
+
+		if(GAS_NITROGEN in scrub_gases)
 			amount += idle_power_usage
-		if(scrub_N2O)
+
+		if(GAS_N2O in scrub_gases)
 			amount += idle_power_usage
 	else
 		amount = active_power_usage
@@ -160,11 +159,11 @@
 		"power" = on,
 		"scrubbing" = scrubbing,
 		"widenet" = widenet,
-		"filter_o2" = scrub_O2,
-		"filter_n2" = scrub_N2,
-		"filter_co2" = scrub_CO2,
-		"filter_toxins" = scrub_Toxins,
-		"filter_n2o" = scrub_N2O,
+		"filter_o2" = (GAS_OXYGEN in scrub_gases),
+		"filter_n2" = (GAS_NITROGEN in scrub_gases),
+		"filter_co2" = (GAS_CDO in scrub_gases),
+		"filter_toxins" = (GAS_PLASMA in scrub_gases),
+		"filter_n2o" = (GAS_N2O in scrub_gases),
 		"sigtype" = "status"
 	)
 	if(frequency == ATMOS_VENTSCRUB)
@@ -224,7 +223,18 @@
 	var/datum/gas_mixture/environment = tile.return_air()
 
 	if(scrubbing)
-		if((scrub_O2 && environment.gases.get(GAS_OXYGEN)>0.001) || (scrub_N2 && environment.gases.get(GAS_NITROGEN)>0.001) || (scrub_CO2 && environment.gases.get(GAS_CDO)>0.001) || (scrub_Toxins && environment.gases.get(GAS_PLASMA)>0.001) || (environment.gases.get(GAS_N2O)) || (environment.gases.get(GAS_AGENT_B)))
+		var/will_remove_not_all = FALSE
+		var/list/default = list(GAS_OXYGEN, GAS_NITROGEN, GAS_CDO, GAS_PLASMA)
+		for(var/id in default)
+			if(id in scrub_gases && environment.gases.get(id) > 0.001)
+				will_remove_not_all = TRUE
+				break
+
+		for(var/id in environment.gases - default)
+			will_remove_not_all = TRUE
+			break
+
+		if(will_remove_not_all)
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
@@ -235,29 +245,10 @@
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
-			if(scrub_O2)
-				filtered_out.gases._set(GAS_OXYGEN, removed.gases.get(GAS_OXYGEN))
-				removed.gases._set(GAS_OXYGEN, 0)
 
-			if(scrub_N2)
-				filtered_out.gases._set(GAS_NITROGEN, removed.gases.get(GAS_NITROGEN))
-				removed.gases._set(GAS_NITROGEN, 0)
-
-			if(scrub_Toxins)
-				filtered_out.gases._set(GAS_PLASMA, removed.gases.get(GAS_PLASMA))
-				removed.gases._set(GAS_PLASMA, 0)
-
-			if(scrub_CO2)
-				filtered_out.gases._set(GAS_CDO, removed.gases.get(GAS_CDO))
-				removed.gases._set(GAS_CDO, 0)
-
-			if(removed.gases.get(GAS_AGENT_B))
-				filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
-				removed.gases._set(GAS_AGENT_B, 0)
-
-			if(scrub_N2O)
-				filtered_out.gases._set(GAS_N2O, removed.gases.get(GAS_N2O))
-				removed.gases._set(GAS_N2O, 0)
+			for(var/id in scrub_gases)
+				filtered_out.gases._set(id, removed.gases.get(id))
+				removed.gases._set(id, 0)
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -305,29 +296,54 @@
 		scrubbing = !scrubbing
 
 	if(signal.data["o2_scrub"] != null)
-		scrub_O2 = text2num(signal.data["o2_scrub"])
+		if(text2num(signal.data["o2_scrub"]))
+			scrub_gases += GAS_OXYGEN
+
 	if(signal.data["toggle_o2_scrub"])
-		scrub_O2 = !scrub_O2
+		if(GAS_OXYGEN in scrub_gases)
+			scrub_gases.Remove(GAS_OXYGEN)
+		else
+			scrub_gases.Add(GAS_OXYGEN)
 
 	if(signal.data["n2_scrub"] != null)
-		scrub_N2 = text2num(signal.data["n2_scrub"])
+		if(text2num(signal.data["n2_scrub"]))
+			scrub_gases += GAS_NITROGEN
+
 	if(signal.data["toggle_n2_scrub"])
-		scrub_N2 = !scrub_N2
+		if(GAS_NITROGEN in scrub_gases)
+			scrub_gases.Remove(GAS_NITROGEN)
+		else
+			scrub_gases.Add(GAS_NITROGEN)
 
 	if(signal.data["co2_scrub"] != null)
-		scrub_CO2 = text2num(signal.data["co2_scrub"])
+		if(text2num(signal.data["co2_scrub"]))
+			scrub_gases += GAS_CDO
+
 	if(signal.data["toggle_co2_scrub"])
-		scrub_CO2 = !scrub_CO2
+		if(GAS_CDO in scrub_gases)
+			scrub_gases.Remove(GAS_CDO)
+		else
+			scrub_gases.Add(GAS_CDO)
 
 	if(signal.data["tox_scrub"] != null)
-		scrub_Toxins = text2num(signal.data["tox_scrub"])
+		if(text2num(signal.data["tox_scrub"]))
+			scrub_gases += GAS_PLASMA
+
 	if(signal.data["toggle_tox_scrub"])
-		scrub_Toxins = !scrub_Toxins
+		if(GAS_PLASMA in scrub_gases)
+			scrub_gases.Remove(GAS_PLASMA)
+		else
+			scrub_gases.Add(GAS_PLASMA)
 
 	if(signal.data["n2o_scrub"] != null)
-		scrub_N2O = text2num(signal.data["n2o_scrub"])
+		if(text2num(signal.data["n2o_scrub"]))
+			scrub_gases += GAS_N2O
+
 	if(signal.data["toggle_n2o_scrub"])
-		scrub_N2O = !scrub_N2O
+		if(GAS_N2O in scrub_gases)
+			scrub_gases.Remove(GAS_N2O)
+		else
+			scrub_gases.Add(GAS_N2O)
 
 	if(signal.data["init"] != null)
 		name = signal.data["init"]

@@ -34,6 +34,21 @@
 	if(!amount)
 		return TRUE
 
+/proc/gas_name_by_id(id)
+	switch (id)
+		if(GAS_CDO)
+			return "Carbon Dioxide"
+		if(GAS_N2O)
+			return "N2O"
+		if(GAS_AGENT_B)
+			return "Agent B"
+		else
+			if(!(id in GLOB.chemical_reagents_list))
+				return "ERROR"
+			else
+				var/datum/reagent/reagent = GLOB.chemical_reagents_list[id]
+				return reagent.name
+
 /datum/gas/proc/on_breath(mob/living/carbon/human/breather)
 	if(!istype(breather))
 		return
@@ -48,8 +63,10 @@
 	if(!prob(100 * amount / 0.1))
 		return
 
+	var/datum/reagents/holder = new
 	var/datum/reagent/R = GLOB.chemical_reagents_list[id]
 	var/datum/reagent/reagent = new R.type
+	reagent.holder = holder
 	reagent.volume = amount
 
 	var/is_in = breather.reagents.has_reagent(id)
@@ -70,13 +87,27 @@
 	if(!(id in GLOB.chemical_reagents_list))
 		return
 
+	var/datum/reagents/holder = new
 	var/datum/reagent/R = GLOB.chemical_reagents_list[id]
 	var/datum/reagent/reagent = new R.type
-	reagent.reaction_mob(target, REAGENT_TOUCH, amount * GASES_TOUCH_PERCENTAGE)
-	return amount * GASES_TOUCH_PERCENTAGE
+	reagent.holder = holder
+
+	if(!reagent.has_touch_effect)
+		return
+
+	var/use_amount = amount * GASES_TOUCH_PERCENTAGE
+
+	if(use_amount < 1 && !prob(100 * use_amount))
+		return
+
+	reagent.reaction_mob(target, REAGENT_TOUCH, use_amount)
+	return use_amount
 
 /datum/gas/not_reagent/on_breath(mob/living/breather)
-	return 0;
+	return amount * BREATH_NON_REAGENT_USE
+
+/datum/gas/not_reagent/on_touch(mob/living/carbon/human/target)
+	return 0
 
 /datum/gas/not_reagent/plasma
 

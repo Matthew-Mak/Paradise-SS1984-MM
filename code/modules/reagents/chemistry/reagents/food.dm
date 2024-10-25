@@ -264,10 +264,12 @@
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "<span class='userdanger'>PURE FIRE</span>"
+	has_touch_effect = TRUE
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
 	if(prob(5))
 		M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
+
 	return ..()
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
@@ -281,32 +283,39 @@
 				if(victim.wear_mask.flags_cover & MASKCOVERSEYES)
 					eyes_covered = TRUE
 					safe_thing = victim.wear_mask
+
 				if(victim.wear_mask.flags_cover & MASKCOVERSMOUTH)
 					mouth_covered = TRUE
 					safe_thing = victim.wear_mask
+
 				if(isclothing(victim.wear_mask))
 					var/obj/item/clothing/cloth = victim.wear_mask
 					if(cloth.clothing_flags & BLOCK_CAPSAICIN)
 						mouth_covered = TRUE
 						eyes_covered = TRUE
 						safe_thing = victim.wear_mask
+
 			if(victim.head)
 				if(victim.head.flags_cover & MASKCOVERSEYES)
 					eyes_covered = TRUE
 					safe_thing = victim.head
+
 				if(victim.head.flags_cover & MASKCOVERSMOUTH)
 					mouth_covered = TRUE
 					safe_thing = victim.head
+
 				if(isclothing(victim.head))
 					var/obj/item/clothing/cloth = victim.head
 					if(cloth.clothing_flags & BLOCK_CAPSAICIN)
 						mouth_covered = TRUE
 						eyes_covered = TRUE
 						safe_thing = victim.head
+
 			if(victim.glasses)
 				eyes_covered = TRUE
 				if(!safe_thing)
 					safe_thing = victim.glasses
+
 			if( eyes_covered && mouth_covered )
 				to_chat(victim, span_danger("Your [safe_thing] protects you from the pepperspray!"))
 				return
@@ -314,6 +323,7 @@
 				to_chat(victim, span_danger("Your [safe_thing] protect you from most of the pepperspray!"))
 				if(prob(20))
 					victim.emote("scream")
+
 				victim.EyeBlurry(6 SECONDS)
 				victim.EyeBlind(2 SECONDS)
 				victim.Confused(6 SECONDS)
@@ -325,6 +335,7 @@
 				to_chat(victim, span_danger("Your [safe_thing] partially protects your eyes from the pepperspray!"))
 				if(prob(20))
 					victim.emote("scream")
+
 				victim.EyeBlurry(4 SECONDS)
 				victim.EyeBlind(2 SECONDS)
 				victim.Confused(4 SECONDS)
@@ -335,6 +346,7 @@
 			else // Oh dear :D
 				if(prob(20))
 					victim.emote("scream")
+
 				to_chat(victim, span_danger("You're sprayed directly in the eyes with pepperspray!"))
 				victim.EyeBlurry(10 SECONDS)
 				victim.EyeBlind(4 SECONDS)
@@ -696,6 +708,7 @@
 	description = "A strong tasting substance that can induce partial blindness."
 	color = "#c0c9a0"
 	taste_description = "pungency"
+	has_touch_effect = TRUE
 
 /datum/reagent/consumable/onion/reaction_mob(mob/living/M, method = REAGENT_TOUCH, volume)
 	if(method == REAGENT_TOUCH)
@@ -705,8 +718,10 @@
 			else
 				if(!M.AmountEyeBlurry())
 					to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+
 				M.EyeBlind(4 SECONDS)
 				M.EyeBlurry(10 SECONDS)
+
 	..()
 
 /datum/reagent/consumable/chocolate

@@ -273,9 +273,20 @@
 	var/datum/reagents/to_smoke = new(10000)
 	holder.trans_to(to_smoke, created_volume * 4)
 
+	var/n2o = min(to_smoke.get_reagent_amount("oxygen"), to_smoke.get_reagent_amount("nitrogen") / 2)
+	to_smoke.add_reagent("oxygen", -n2o)
+	to_smoke.add_reagent("nitrogen", -n2o * 2)
+
+	var/cdo = min(to_smoke.get_reagent_amount("oxygen") / 2, to_smoke.get_reagent_amount("carbon"))
+	to_smoke.add_reagent("oxygen", -cdo * 2)
+	to_smoke.add_reagent("carbon", -cdo)
+
 	var/datum/gas_mixture/new_gases = new
 	for(var/datum/reagent/reagent in to_smoke.reagent_list)
 		new_gases.gases.add(reagent.id, reagent.volume)
+
+	new_gases.gases.add(GAS_N2O, n2o)
+	new_gases.gases.add(GAS_CDO, cdo)
 
 	new_gases.temperature = to_smoke.chem_temp
 	to_smoke.clear_reagents()

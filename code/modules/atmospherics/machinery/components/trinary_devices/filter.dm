@@ -143,11 +143,16 @@
 
 		switch(filter_type)
 			if(FILTER_TOXINS)
-				filtered_out.gases._set(GAS_PLASMA, removed.gases.get(GAS_PLASMA))
-				removed.gases._set(GAS_PLASMA, 0)
-
 				filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
 				removed.gases._set(GAS_AGENT_B, 0)
+
+				for(var/id in removed.gases.gases)
+					if(id == GAS_OXYGEN || id == GAS_NITROGEN)
+						continue
+
+					if(id in GLOB.chemical_reagents_list)
+						filtered_out.gases._set(id, removed.gases.get(id))
+						removed.gases._set(id, 0)
 
 			if(FILTER_OXYGEN)
 				filtered_out.gases._set(GAS_OXYGEN, removed.gases.get(GAS_OXYGEN))

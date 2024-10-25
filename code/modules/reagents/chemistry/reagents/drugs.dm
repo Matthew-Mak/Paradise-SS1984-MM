@@ -630,6 +630,7 @@
 	addiction_chance_additional = 20
 	addiction_threshold = 10
 	taste_description = "flips"
+	has_touch_effect = TRUE
 
 /datum/reagent/fliptonium/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -661,6 +662,7 @@
 /datum/reagent/fliptonium/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(method == REAGENT_INGEST || method == REAGENT_TOUCH)
 		M.SpinAnimation(speed = 12, loops = -1)
+
 	..()
 
 /datum/reagent/fliptonium/on_mob_delete(mob/living/M)

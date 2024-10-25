@@ -15,7 +15,11 @@
 		if(T.active_hotspot)
 			burning = 1
 
-	to_chat(usr, "<span class='notice'>@[target.x],[target.y]: O:[GM.gases.get(GAS_OXYGEN)] T:[GM.gases.get(GAS_PLASMA)] N:[GM.gases.get(GAS_NITROGEN)] C:[GM.gases.get(GAS_CDO)] N2O: [GM.gases.get(GAS_N2O)] Agent B: [GM.gases.get(GAS_AGENT_B)] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span class='warning'>BURNING</span>"):(null)]</span>")
+	var/message = "@[target.x],[target.y]:"
+	for(var/id in GM.gases.gases)
+		message += " " + gas_name_by_id(id) + ":[GM.gases.get(id)]"
+	message += "w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?(span_warning("BURNING")):(null)]"
+	to_chat(usr, span_notice(message))
 
 	message_admins("[key_name_admin(usr)] has checked the air status of [target]")
 	log_admin("[key_name(usr)] has checked the air status of [target]")

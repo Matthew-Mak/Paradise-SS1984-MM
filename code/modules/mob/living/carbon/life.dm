@@ -94,10 +94,13 @@
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src, 0)
 
-		breath.gases.breath(src)
+	var/datum/gaslist/rest = breath.gases.breath(src)
+	var/datum/gas_mixture/rest_gasmixt = new
+	rest_gasmixt.gases = rest
+	var/turf/simulated/T = get_turf(src)
+	T.assume_air(rest_gasmixt)
 
 	check_breath(breath)
-
 
 	if(breath)
 		loc.assume_air(breath)

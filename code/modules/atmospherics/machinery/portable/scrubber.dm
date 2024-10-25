@@ -71,18 +71,11 @@
 
 		filtered_out.temperature = removed.temperature
 
-
-		filtered_out.gases._set(GAS_PLASMA, removed.gases.get(GAS_PLASMA))
-		removed.gases._set(GAS_PLASMA, 0)
-
-		filtered_out.gases._set(GAS_CDO, removed.gases.get(GAS_CDO))
-		removed.gases._set(GAS_CDO, 0)
-
-		filtered_out.gases._set(GAS_N2O, removed.gases.get(GAS_N2O))
-		removed.gases._set(GAS_N2O, 0)
-
-		filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
-		removed.gases._set(GAS_AGENT_B, 0)
+		var/list/normal_gases = list(GAS_OXYGEN, GAS_NITROGEN)
+		for(var/id in removed.gases.gases)
+			if(!(id in normal_gases))
+				filtered_out.gases._set(id, removed.gases.get(id))
+				removed.gases._set(id, 0)
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)

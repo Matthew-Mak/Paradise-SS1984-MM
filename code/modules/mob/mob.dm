@@ -96,14 +96,10 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t+= "<span class='warning'>Temperature: [environment.temperature] \n</span>"
-	t+= "<span class='notice'>Nitrogen: [environment.gases.get(GAS_NITROGEN)] \n</span>"
-	t+= "<span class='notice'>Oxygen: [environment.gases.get(GAS_OXYGEN)] \n</span>"
-	t+= "<span class='notice'>Plasma : [environment.gases.get(GAS_PLASMA)] \n</span>"
-	t+= "<span class='notice'>Carbon Dioxide: [environment.gases.get(GAS_CDO)] \n</span>"
-	t+= "<span class='notice'>N2O: [environment.gases.get(GAS_N2O)] \n</span>"
-	t+= "<span class='notice'>Agent B: [environment.gases.get(GAS_AGENT_B)] \n</span>"
+	var/t = span_notice("Coordinates: [x],[y] \n")
+	t += span_warning("Temperature: [environment.temperature] \n")
+	for(var/id in environment.gases.gases)
+		t += span_notice(gas_name_by_id(id) + ": [environment.gases.get(id)] \n")
 
 	usr.show_message(t, 1)
 

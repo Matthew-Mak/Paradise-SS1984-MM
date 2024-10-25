@@ -153,6 +153,7 @@
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
+	has_touch_effect = TRUE
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method = REAGENT_TOUCH, reac_volume, show_message = 1)
 	to_chat(M, "<span class='warning'>This item is currently non-functional.</span>")

@@ -126,13 +126,14 @@
 	return gases
 
 /datum/gaslist/proc/breath(mob/living/breather)
+	var/datum/gaslist/rest = new
 	for(var/id in gases)
 		var/datum/gas/gas = get_gas(id)
-		gas.on_breath(breather)
+		var/used = gas.on_breath(breather)
+		rest.add(id, gas.amount - used)
+		gas.amount -= used
 
 /datum/gaslist/proc/on_touch(mob/living/target)
-	/*
 	for(var/id in gases)
 		var/datum/gas/gas = get_gas(id)
 		add(id, -gas.on_touch(target))
-	*/
