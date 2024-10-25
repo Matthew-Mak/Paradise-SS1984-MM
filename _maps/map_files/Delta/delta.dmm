@@ -1309,6 +1309,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "ann" = (
@@ -45296,6 +45297,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/item/pen,
 /turf/simulated/floor/carpet,
 /area/maintenance/casino)
 "foa" = (
@@ -53951,6 +53953,7 @@
 	color = ""
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/cheesie,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "hqC" = (
@@ -62919,6 +62922,7 @@
 	dir = 1;
 	id_tag = "ops"
 	},
+/obj/item/pen/red,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "jAa" = (
@@ -64860,6 +64864,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dust,
+/obj/structure/chair{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "jYB" = (
@@ -69519,6 +69526,7 @@
 "llu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/pen,
 /turf/simulated/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -75718,6 +75726,17 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/medical/research/nhallway)
+"mIa" = (
+/obj/effect/decal/cleanable/dust,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "dark";
+	dir = 5;
+	tag = "icon-vault (NORTHEAST)"
+	},
+/area/maintenance/fpmaint)
 "mIg" = (
 /obj/effect/spawner/window/reinforced,
 /obj/structure/cable,
@@ -101322,6 +101341,9 @@
 	color = "";
 	dir = 1
 	},
+/obj/structure/chair{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "svg" = (
@@ -106468,7 +106490,6 @@
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/aisat_interior)
 "tFX" = (
-/obj/structure/barricade/wooden,
 /obj/machinery/door/airlock{
 	locked = 1;
 	name = "Trading room";
@@ -156032,7 +156053,7 @@ xqJ
 cbs
 bvG
 dLj
-aVS
+ceP
 baF
 baF
 baF
@@ -157807,7 +157828,7 @@ moG
 qwp
 gtK
 jYs
-ncf
+mIa
 aRF
 eOR
 bvG
