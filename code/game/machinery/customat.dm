@@ -413,8 +413,8 @@
 		inserting = FALSE
 		return
 
-	insert(user, I, cost)
 	inserting = FALSE
+	insert(user, I, cost)
 
 /obj/machinery/customat/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM && COOLDOWN_FINISHED(src, emp_cooldown) && COOLDOWN_FINISHED(src, alarm_cooldown))
