@@ -155,7 +155,7 @@
 	return 1
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
-	if(!giver)
+	if(!giver || !giver.gases)
 		return 0
 
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)

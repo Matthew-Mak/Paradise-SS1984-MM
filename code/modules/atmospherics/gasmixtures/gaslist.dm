@@ -44,6 +44,9 @@
 
 /datum/gaslist/proc/gas_heatcap(id)
 	var/datum/gas/gas = get_gas(id)
+	if(!gas)
+		return 0
+
 	return gas.heatcap()
 
 /datum/gaslist/proc/heatcap()
