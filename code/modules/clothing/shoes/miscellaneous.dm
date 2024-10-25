@@ -412,42 +412,6 @@
 	if(paintable)
 		AddComponent(/datum/component/spraycan_paintable)
 
-/obj/item/clothing/shoes/footwraps/yellow
-	name = "yellow cloth footwraps"
-	icon_state = "yellow_wrap"
-	item_state = "yellow_wrap"
-	paintable = FALSE
-
-/obj/item/clothing/shoes/footwraps/silver
-	name = "silver cloth footwraps"
-	icon_state = "silver_wrap"
-	item_state = "silver_wrap"
-	paintable = FALSE
-
-/obj/item/clothing/shoes/footwraps/red
-	name = "red cloth footwraps"
-	icon_state = "red_wrap"
-	item_state = "red_wrap"
-	paintable = FALSE
-
-/obj/item/clothing/shoes/footwraps/blue
-	name = "blue cloth footwraps"
-	icon_state = "blue_wrap"
-	item_state = "blue_wrap"
-	paintable = FALSE
-
-/obj/item/clothing/shoes/footwraps/black
-	name = "black cloth footwraps"
-	icon_state = "black_wrap"
-	item_state = "black_wrap"
-	paintable = FALSE
-
-/obj/item/clothing/shoes/footwraps/brown
-	name = "brown cloth footwraps"
-	icon_state = "brown_wrap"
-	item_state = "brown_wrap"
-	paintable = FALSE
-
 /obj/item/clothing/shoes/footwraps/goliath
 	name = "goliath hide footwraps"
 	desc = "These wraps, made from goliath hide, make your feet feel snug and secure, while still being breathable and light."
@@ -465,7 +429,6 @@
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 15, "energy" = 10, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 15, "acid" = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	paintable = FALSE
-
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"

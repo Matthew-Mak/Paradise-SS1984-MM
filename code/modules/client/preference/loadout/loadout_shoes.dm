@@ -77,19 +77,3 @@
 /datum/gear/shoes/footwraps/New()
 	..()
 	gear_tweaks += new /datum/gear_tweak/color(parent = src)
-
-/datum/gear/shoes/footwraps_precolored
-	display_name = "cloth footwraps pre-colored, select"
-	path = /obj/item/clothing/shoes/footwraps/yellow
-
-/datum/gear/shoes/footwraps_precolored/New()
-	..()
-	var/list/feet = list("yellow" = /obj/item/clothing/shoes/footwraps/yellow,
-						 "silver" = /obj/item/clothing/shoes/footwraps/silver,
-						 "red" = /obj/item/clothing/shoes/footwraps/red,
-						 "blue" = /obj/item/clothing/shoes/footwraps/blue,
-						 "black" = /obj/item/clothing/shoes/footwraps/black,
-						 "brown" = /obj/item/clothing/shoes/footwraps/brown,
-						 )
-	gear_tweaks += new /datum/gear_tweak/path(feet, src)
-
