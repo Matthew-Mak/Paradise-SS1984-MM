@@ -9,6 +9,7 @@
 	origin_tech = "combat=4;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
+	gun_light_overlay = "lasergun_light"
 	shaded_charge = TRUE
 
 /obj/item/gun/energy/laser/ui_action_click(mob/user, datum/action/action, leftclick)

@@ -88,6 +88,7 @@
 	sawn_desc = "Come with me if you want to live."
 	sawn_state = SAWN_INTACT
 	fire_sound = 'sound/weapons/gunshots/1shotgun.ogg'
+	gun_light_overlay = "riotshotgun_light"
 
 /obj/item/gun/projectile/shotgun/riot/update_overlays()
 	. = ..()
