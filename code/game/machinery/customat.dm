@@ -155,8 +155,6 @@
 	/// Direct ref to the trunk pipe underneath us
 	var/obj/structure/disposalpipe/trunk/trunk
 
-	/// If true, there is somebody who is inserting sth right now.
-	var/inserting = FALSE
 
 /obj/machinery/customat/proc/set_up_components()
 	component_parts = list()
@@ -389,10 +387,6 @@
 	inserted_items_count++
 
 /obj/machinery/customat/proc/try_insert(mob/user, obj/item/I, from_tube = FALSE)
-	if(inserting)
-		return
-
-	inserting = TRUE
 	var/cost = 100
 	if(from_tube)
 		if(I.name in remembered_costs)
@@ -404,10 +398,10 @@
 		var/input_cost = tgui_input_number(user, "Пожалуйста, выберите цену для этого товара. Цена не может быть ниже 0 и выше 1000000 кредитов.", "Выбор цены", 0, 1000000, 0)
 		if(!input_cost)
 			to_chat(user, span_warning("Цена не указанна!"))
-			inserting = FALSE
 			return
 
 		cost = input_cost
+
 	if(!user)
 		return
 
