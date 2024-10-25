@@ -408,12 +408,17 @@
 			return
 
 		cost = input_cost
-	if(user && get_dist(get_turf(user), get_turf(src)) > 1)
-		to_chat(user, span_warning("Вы слишком далеко!"))
-		inserting = FALSE
+	if(!user)
 		return
 
-	inserting = FALSE
+	if(!Adjacent(user))
+		to_chat(user, span_warning("Вы слишком далеко!"))
+		return
+
+	if(!user.is_in_hands(I))
+		to_chat(user, span_warning("Нечего положить внутрь!"))
+		return
+
 	insert(user, I, cost)
 
 /obj/machinery/customat/attackby(obj/item/I, mob/user, params)
