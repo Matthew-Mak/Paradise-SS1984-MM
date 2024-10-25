@@ -160,7 +160,7 @@
 	language = LANGUAGE_UNATHI
 	default_language = LANGUAGE_UNATHI
 
-	speed_mod = -0.80
+	speed_mod = -0.50
 
 	inherent_traits = list(
 		TRAIT_HAS_LIPS,
@@ -176,7 +176,7 @@
 		INTERNAL_ORGAN_KIDNEYS = /obj/item/organ/internal/kidneys/unathi,
 		INTERNAL_ORGAN_BRAIN = /obj/item/organ/internal/brain/unathi,
 		INTERNAL_ORGAN_APPENDIX = /obj/item/organ/internal/appendix,
-		INTERNAL_ORGAN_EYES = /obj/item/organ/internal/eyes/unathi,
+		INTERNAL_ORGAN_EYES = /obj/item/organ/internal/eyes/unathi/ash_walker,
 		INTERNAL_ORGAN_EARS = /obj/item/organ/internal/ears,
 	)
 
@@ -218,19 +218,29 @@
 	)
 	brute_mod = 1.15
 	burn_mod = 1.15
-	speed_mod = -0.60 //less fast as ash walkers
+	speed_mod = -0.37 //less fast as ash walkers
 	punchdamagelow = 4
 	punchdamagehigh = 7
 	punchstunthreshold = 7 //still can stun people pretty often
 	toolspeedmod = -0.1 //they're smart and efficient unlike other lizards
 	surgeryspeedmod = -0.1	//shaman is slightly better at surgeries
 
+	has_organ = list(
+		INTERNAL_ORGAN_HEART = /obj/item/organ/internal/heart/unathi,
+		INTERNAL_ORGAN_LUNGS = /obj/item/organ/internal/lungs/unathi/ash_walker,
+		INTERNAL_ORGAN_LIVER = /obj/item/organ/internal/liver/unathi,
+		INTERNAL_ORGAN_KIDNEYS = /obj/item/organ/internal/kidneys/unathi,
+		INTERNAL_ORGAN_BRAIN = /obj/item/organ/internal/brain/unathi,
+		INTERNAL_ORGAN_APPENDIX = /obj/item/organ/internal/appendix,
+		INTERNAL_ORGAN_EYES = /obj/item/organ/internal/eyes/unathi/ash_walker_shaman,
+		INTERNAL_ORGAN_EARS = /obj/item/organ/internal/ears,
+	)
 
 /datum/species/unathi/ashwalker/shaman/on_species_gain(mob/living/carbon/human/owner)
 	. = ..()
 	var/obj/effect/proc_holder/spell/touch/healtouch/healtouch = locate() in owner.mob_spell_list
 	if(!healtouch)
-		owner.AddSpell(new healtouch)
+		owner.AddSpell(new /obj/effect/proc_holder/spell/touch/healtouch)
 	var/datum/action/innate/anvil_finder/finder = locate() in owner.actions
 	if(!finder)
 		finder = new

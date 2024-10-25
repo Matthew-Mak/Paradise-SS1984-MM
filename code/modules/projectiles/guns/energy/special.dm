@@ -62,7 +62,7 @@
 	item_state = "gun"
 	fire_sound = 'sound/effects/stealthoff.ogg'
 	materials = list(MAT_GOLD = 2000, MAT_BLUESPACE = 1500, MAT_DIAMOND = 800, MAT_URANIUM = 500, MAT_GLASS = 500)
-	origin_tech = "materials=5;biotech=6;powerstorage=6;enginerring=5"
+	origin_tech = "materials=5;biotech=6;powerstorage=6;engineering=5"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/alpha, /obj/item/ammo_casing/energy/flora/beta, /obj/item/ammo_casing/energy/flora/gamma)
 	modifystate = TRUE
 	ammo_x_offset = 1
@@ -140,6 +140,17 @@
 	origin_tech = "combat=4;magnets=4;syndicate=2"
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+
+/obj/item/gun/energy/kinetic_accelerator/crossbow/toy
+	name = "toy energy crossbow"
+	desc = "Игрушечное оружие, сделанное из тагерного пистолета со стильным дизайном контрабандного арбалета."
+	icon_state = "crossbowtoy"
+	w_class = WEIGHT_CLASS_SMALL
+	materials = list(MAT_METAL=4000)
+	origin_tech = "combat=4;magnets=4"
+	suppressed = 0
+	overheat_time = 8 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/bolttoy)
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large/cyborg
 	desc = "One and done!"
