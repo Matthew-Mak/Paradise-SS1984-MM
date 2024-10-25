@@ -25,6 +25,11 @@
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 
 	var/list/scrub_gases = list(GAS_CDO)
+	var/scrub_O2 = 0
+	var/scrub_N2 = 0
+	var/scrub_CO2 = 1
+	var/scrub_Toxins = 0
+	var/scrub_N2O = 0
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
@@ -36,6 +41,24 @@
 	connect_types = list(1,3) //connects to regular and scrubber pipes
 
 	multitool_menu_type = /datum/multitool_menu/idtag/freq/vent_scrubber
+
+/obj/machinery/atmospherics/unary/vent_scrubber/New()
+	. = ..()
+
+	if(scrub_O2)
+		scrub_gases.Add(GAS_OXYGEN)
+
+	if(scrub_N2)
+		scrub_gases.Add(GAS_NITROGEN)
+
+	if(!scrub_CO2)
+		scrub_gases.Remove(GAS_CDO)
+
+	if(scrub_Toxins)
+		scrub_gases.Add(GAS_PLASMA)
+
+	if(scrub_N2O)
+		scrub_gases.Add(GAS_N2O)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on
 	on = TRUE
