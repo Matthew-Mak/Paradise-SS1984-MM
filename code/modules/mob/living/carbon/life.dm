@@ -89,16 +89,22 @@
 					breath_moles = environment.total_moles() * BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
+
+			if(breath)
+				var/datum/gaslist/rest = breath.gases.breath(src)
+				var/datum/gas_mixture/rest_gasmixt = new
+				rest_gasmixt.gases = rest
+				loc.assume_air(rest_gasmixt)
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src, 0)
 
-	var/datum/gaslist/rest = breath.gases.breath(src)
-	var/datum/gas_mixture/rest_gasmixt = new
-	rest_gasmixt.gases = rest
-	var/turf/simulated/T = get_turf(src)
-	T.assume_air(rest_gasmixt)
+			if(breath)
+				var/datum/gaslist/rest = breath.gases.breath(src)
+				var/datum/gas_mixture/rest_gasmixt = new
+				rest_gasmixt.gases = rest
+				internal.assume_air(rest_gasmixt)
 
 	check_breath(breath)
 
