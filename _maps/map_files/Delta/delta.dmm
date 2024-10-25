@@ -19746,6 +19746,10 @@
 /area/maintenance/banya)
 "cml" = (
 /obj/machinery/vending/autodrobe,
+/obj/machinery/camera{
+	c_tag = "Clown Office";
+	dir = 4
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -19996,13 +20000,13 @@
 /turf/simulated/floor/plasteel,
 /area/quartermaster/sorting)
 "cnq" = (
-/obj/machinery/camera{
-	c_tag = "Clown Office"
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/clown,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
@@ -24383,11 +24387,11 @@
 "cHz" = (
 /obj/structure/bed,
 /obj/item/bedsheet/mime,
-/obj/machinery/camera{
-	c_tag = "Mime Office"
-	},
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -80475,6 +80479,10 @@
 /area/space)
 "nGG" = (
 /obj/machinery/vending/autodrobe,
+/obj/machinery/camera{
+	c_tag = "Mime Office";
+	dir = 8
+	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
 	icon_state = "tranquillite"
