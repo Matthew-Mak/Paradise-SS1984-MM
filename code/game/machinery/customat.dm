@@ -402,7 +402,7 @@
 
 		cost = input_cost
 
-	if(!user)
+	if(!user || user.stat)
 		return
 
 	if(!Adjacent(user))
