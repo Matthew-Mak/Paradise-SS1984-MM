@@ -391,7 +391,7 @@
 					if(H.has_pain())
 						H.emote("scream")
 
-				bodypart.take_damage(clamp(volume / length(H.bodyparts) * damage_coef, 0, volume), BURN)
+				H.apply_damage(clamp(volume / length(H.bodyparts) * damage_coef, 0, volume), BURN, def_zone = bodypart)
 		else
 			to_chat(H, span_warning("The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!"))
 			if(volume >= 10)
