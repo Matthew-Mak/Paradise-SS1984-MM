@@ -222,6 +222,7 @@
 		return FALSE
 
 	enraged = TRUE
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/proc/unrage()
 	enraged = FALSE
