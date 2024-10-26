@@ -173,10 +173,10 @@
 	ui_interact(user)
 
 /obj/machinery/bodyscanner/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/card/id))
-		if (inserted_id)
+	if(istype(I, /obj/item/card/id))
+		if(inserted_id)
 			user.balloon_alert(user, "занято")
-		else if (user.drop_transfer_item_to_loc(I, src))
+		else if(user.drop_transfer_item_to_loc(I, src))
 			inserted_id = I
 			user.balloon_alert(user, "карта вставлена")
 
@@ -407,9 +407,9 @@
 			P.info += "<br><br><b>Notes:</b><br>"
 			P.name = "Body Scan - [name]"
 			isPrinting = FALSE
-		if ("insurance")
+		if("insurance")
 			do_insurance_collection(usr, occupant, inserted_id ? inserted_id.associated_account_number : null)
-		if ("eject_id")
+		if("eject_id")
 			eject_id()
 		else
 			return FALSE

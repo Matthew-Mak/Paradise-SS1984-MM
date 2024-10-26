@@ -156,7 +156,7 @@ log transactions
 
 /obj/machinery/atm/ui_interact(mob/user, datum/tgui/ui = null)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, "ATM", name)
 		ui.open()
 
@@ -229,12 +229,12 @@ log transactions
 				var/new_insurance_type = params["new_insurance_type"]
 				var/req_money = 0
 				switch (new_insurance_type)
-					if (INSURANCE_TYPE_STANDART)
+					if(INSURANCE_TYPE_STANDART)
 						req_money = INSURANCE_STANDART_COST
-					if (INSURANCE_TYPE_DELUXE)
+					if(INSURANCE_TYPE_DELUXE)
 						req_money = INSURANCE_DELUXE_COST
 
-				if (authenticated_account.charge(req_money))
+				if(authenticated_account.charge(req_money))
 					usr.balloon_alert("Тип страховки изменен")
 					authenticated_account.insurance_type = new_insurance_type
 				else
@@ -327,7 +327,7 @@ log transactions
 
 		if("insurance_replenishment")
 			authenticated_account.insurance_auto_replen = !authenticated_account.insurance_auto_replen
-			if (authenticated_account.insurance_auto_replen)
+			if(authenticated_account.insurance_auto_replen)
 				to_chat(usr, "[bicon(src)]" + span_warning("Автопополнение страховки включено!"))
 			else
 				to_chat(usr, "[bicon(src)]" + span_warning("Автопополнение страховки отключено!"))

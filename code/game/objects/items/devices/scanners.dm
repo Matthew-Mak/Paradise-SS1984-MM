@@ -341,7 +341,7 @@ REAGENT SCANNER
 	var/mob/user = usr
 	if(!istype(user))
 		return
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
 	print_report(user)
 
@@ -392,7 +392,7 @@ REAGENT SCANNER
 			. += "<span class='notice'>Нужно подойти ближе, чтобы прочесть содержимое.</span>"
 
 /proc/medical_scan_action(mob/living/user, atom/target, var/obj/item/healthanalyzer/scanner, var/mode, var/advanced)
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не достаточно ловки, чтобы использовать это устройство.</span>")
 		return
 
@@ -414,19 +414,19 @@ REAGENT SCANNER
 		return "<span class='highlight'>[jointext(., "<br>")]</span>"
 
 	var/mob/living/carbon/human/scan_subject = null
-	if (ishuman(target))
+	if(ishuman(target))
 		scan_subject = target
-	else if (istype(target, /obj/structure/closet/body_bag))
+	else if(istype(target, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/B = target
 		if(!B.opened)
 			var/list/scan_content = list()
 			for(var/mob/living/L in B.contents)
 				scan_content.Add(L)
 
-			if (scan_content.len == 1)
+			if(scan_content.len == 1)
 				for(var/mob/living/carbon/human/L in scan_content)
 					scan_subject = L
-			else if (scan_content.len > 1)
+			else if(scan_content.len > 1)
 				to_chat(user, "<span class='warning'>[scanner] обнаружил несколько субъектов внутри [target], слишком близко для нормального сканирования.</span>")
 				return
 			else
@@ -627,12 +627,12 @@ REAGENT SCANNER
 		. += "Гены стабильны."
 
 	var/datum/money_account/acc = get_insurance_account(H)
-	if (acc)
+	if(acc)
 		. += "Тип страховки - [acc.insurance_type]"
 	else
 		. += "Аккаунт не обнаружен"
 	. += "Требуемое количество очков страховки: [get_req_insurance(H)]"
-	if (acc)
+	if(acc)
 		. += "Текущее количество очков страховки: [acc.insurance]"
 
 // This is the output to the chat
@@ -684,7 +684,7 @@ REAGENT SCANNER
 
 		var/obj/item/card/id/id = I
 
-		if (!id.associated_account_number)
+		if(!id.associated_account_number)
 			to_chat(user, span_warning("Не обнаружено привязанного аккаунта."))
 			return ATTACK_CHAIN_PROCEED
 

@@ -638,8 +638,9 @@ SUBSYSTEM_DEF(jobs)
 /datum/controller/subsystem/jobs/proc/CreateMoneyAccount(mob/living/H, rank, datum/job/job)
 	var/money_amount = rand(job.min_start_money, job.max_start_money)
 	var/datum/money_account/M = create_account(H.real_name, money_amount, null, job, TRUE)
-	if (H.dna)
+	if(H.dna)
 		GLOB.dna2account[H.dna] = M
+
 	var/remembered_info = ""
 
 	remembered_info += "<b>Номер вашего аккаунта:</b> #[M.account_number]<br>"
@@ -667,17 +668,17 @@ SUBSYSTEM_DEF(jobs)
 
 	H.mind.initial_account.insurance_type = job.insurance_type
 	switch (job.insurance_type)
-		if (INSURANCE_TYPE_NONE)
+		if(INSURANCE_TYPE_NONE)
 			H.mind.initial_account.insurance = INSURANCE_NONE
-		if (INSURANCE_TYPE_BUDGETARY)
+		if(INSURANCE_TYPE_BUDGETARY)
 			H.mind.initial_account.insurance = INSURANCE_BUDGETARY
-		if (INSURANCE_TYPE_STANDART)
+		if(INSURANCE_TYPE_STANDART)
 			H.mind.initial_account.insurance = INSURANCE_STANDART
-		if (INSURANCE_TYPE_EXTENDED)
+		if(INSURANCE_TYPE_EXTENDED)
 			H.mind.initial_account.insurance = INSURANCE_EXTENDED
-		if (INSURANCE_TYPE_DELUXE)
+		if(INSURANCE_TYPE_DELUXE)
 			H.mind.initial_account.insurance = INSURANCE_DELUXE
-		if (INSURANCE_TYPE_NT_SPECIAL)
+		if(INSURANCE_TYPE_NT_SPECIAL)
 			H.mind.initial_account.insurance = INSURANCE_NT_SPECIAL
 
 	spawn(0)

@@ -1,7 +1,7 @@
 
 /proc/send_insurance_alert(datum/money_account/acc, amount_spent)
 	var/obj/machinery/message_server/message_server = find_pda_server()
-	if (message_server)
+	if(message_server)
 		message_server.send_pda_message(acc.owner_name, "Insurance NT Department", "Медицинской страховки недостаточно на покрытие расходов на лечение. С вашего счета списанно [amount_spent] кредитов.")
 
 // if have id -> acc from id
@@ -9,9 +9,9 @@
 
 /proc/get_insurance_account(mob/living/carbon/human/user)
 	var/obj/item/card/id/user_id = user.get_id_card()
-	if (istype(user_id) && user_id.associated_account_number)
+	if(istype(user_id) && user_id.associated_account_number)
 		return get_money_account(user_id.associated_account_number)
-	if (user.dna in GLOB.dna2account)
+	if(user.dna in GLOB.dna2account)
 		return GLOB.dna2account[user.dna]
 	else
 		return null
@@ -22,18 +22,18 @@
 		return FALSE
 
 	var/list/access = user?.get_access()
-	if (user && !(ACCESS_MEDICAL in access))
+	if(user && !(ACCESS_MEDICAL in access))
 		target.visible_message("Недостаточно доступа для списания страховки.")
 		return FALSE
 
 	var/req = get_req_insurance(target)
 	var/datum/money_account/acc = get_insurance_account(target)
 
-	if (!acc)
+	if(!acc)
 		target.visible_message("Аккаунт не обнаружен.")
 		return FALSE
 
-	if (!COOLDOWN_FINISHED(acc, insurance_collecting))
+	if(!COOLDOWN_FINISHED(acc, insurance_collecting))
 		target.visible_message("С цели недавно уже списывалась страховка. Подождите немного.")
 		return FALSE
 	COOLDOWN_START(acc, insurance_collecting, 60 SECONDS)
@@ -41,26 +41,26 @@
 	var/from_insurance = min(acc.insurance, req)
 	var/from_money_acc = (req - from_insurance) * 2
 
-	if (from_money_acc)
-		if (!acc.insurance_auto_replen)
+	if(from_money_acc)
+		if(!acc.insurance_auto_replen)
 			target.visible_message(span_warning("Страховки не хватает на оплату лечения. Автопополнение страховки отключено."))
 			return FALSE
-		if (!acc.charge(from_money_acc))
+		if(!acc.charge(from_money_acc))
 			target.visible_message(span_warning("Страховки не хватает на оплату лечения. Автопополнение страховки провалилось."))
 			return FALSE
 
-	if (from_money_acc)
+	if(from_money_acc)
 		send_insurance_alert(acc)
 
 	acc.addInsurancePoints(-from_insurance)
 
-	if (connected_acc)
+	if(connected_acc)
 		var/datum/money_account/money_account = attempt_account_access_nosec(connected_acc)
-		if (money_account)
+		if(money_account)
 			money_account.money += round(round(req / 2))
 
 	target.visible_message("Страховка списанна в размере: [req].")
-	if (from_money_acc)
+	if(from_money_acc)
 		target.visible_message("Страховки не хватило. [from_money_acc / 2] недостающих очков страховки восполнено за счет [from_money_acc] кредитов со счета пациента.")
 
 	return TRUE
@@ -99,22 +99,22 @@
 
 	var/missed_organs = 0
 	for (var/organ in user.dna.species.has_organ)
-		if (!(organ in user.internal_organs_slot))
+		if(!(organ in user.internal_organs_slot))
 			missed_organs++
 
 	insurance += missed_organs * REQ_INSURANCE_LOST_ORGAN
 
 	var/missed_limbs = 0
 	for (var/limb in user.dna.species.has_limbs)
-		if (!(user.bodyparts_by_name[limb] in user.bodyparts))
+		if(!(user.bodyparts_by_name[limb] in user.bodyparts))
 			missed_limbs++
 
 	insurance += missed_limbs * REQ_INSURANCE_LOST_LIMB
 
-	if (user.health < HEALTH_THRESHOLD_CRIT)
+	if(user.health < HEALTH_THRESHOLD_CRIT)
 		insurance += REQ_INSURANCE_CRIT
 
-	if (user.stat == DEAD)
+	if(user.stat == DEAD)
 		insurance += REQ_INSURANCE_DEATH
 
 	return insurance
