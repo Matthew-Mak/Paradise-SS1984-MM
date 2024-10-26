@@ -57,7 +57,7 @@
 /datum/vampire_subclass/umbrae/on_blood_sucking(mob/living/carbon/human/H)
 	var/list/lights = list()
 	for(var/obj/machinery/light/L in GLOB.machines)
-		if(L.status)
+		if(L.status && L.z == H.z)
 			lights += L
 
 	var/obj/machinery/light/L = pick(lights)
