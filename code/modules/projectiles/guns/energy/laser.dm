@@ -26,6 +26,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 	needs_permit = 0
+	can_flashlight = FALSE
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -71,6 +72,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	can_charge = FALSE
 	origin_tech = null
+	can_flashlight = FALSE
 
 /obj/item/gun/energy/laser/cyborg/newshot()
 	..()
@@ -83,6 +85,7 @@
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
+	can_flashlight = FALSE
 
 ///Laser Cannon
 

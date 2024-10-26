@@ -16,3 +16,4 @@
 	item_state = "armcannonlase"
 	selfcharge = TRUE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	can_flashlight = FALSE

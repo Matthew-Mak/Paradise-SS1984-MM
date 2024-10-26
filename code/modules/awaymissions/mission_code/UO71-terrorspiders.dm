@@ -188,6 +188,7 @@
 	origin_tech = null
 	can_charge = FALSE
 	selfcharge = TRUE	// Selfcharge is enabled and disabled, and used as the away mission tracker
+	can_flashlight = FALSE
 
 /obj/item/gun/energy/laser/awaymission_aeg/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = FALSE)
 	if(is_away_level(new_turf?.z))
