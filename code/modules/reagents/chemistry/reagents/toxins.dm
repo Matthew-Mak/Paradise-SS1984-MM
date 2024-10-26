@@ -363,8 +363,6 @@
 /datum/reagent/acid/reaction_mob(mob/living/M, method = REAGENT_TOUCH, volume)
 	if(ishuman(M) && !isgrey(M))
 		var/mob/living/carbon/human/H = M
-		var/protection_coeff = H.getarmor(attack_flag = ACID)
-
 		if(method == REAGENT_TOUCH)
 			if(volume >= 5)
 				var/damage_coef = 0
