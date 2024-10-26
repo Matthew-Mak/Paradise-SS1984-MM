@@ -114,11 +114,10 @@
 	tint = 1
 
 /obj/item/clothing/glasses/meson/heart
-	name = "Heart Meson Glasses"
+	name = "\improper Heart Meson Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_meson"
 	item_state = "heart_meson"
-	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -194,7 +193,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE //don't render darkness while wearing these
 
 /obj/item/clothing/glasses/science/heart
-	name = "Heart Science Glasses"
+	name = "\improper Heart Science Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_science"
 	item_state = "heart_science"

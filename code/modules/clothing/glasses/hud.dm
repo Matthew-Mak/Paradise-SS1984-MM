@@ -87,7 +87,6 @@ MEDICAL
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_med"
 	item_state = "heart_med"
-	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/health/patch
 	name = "\improper Medical HUD Eyepatch"
@@ -169,7 +168,7 @@ DIAGNOSTIC
 	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/diagnostic/heart
-	name = "\improper Heart Medical Glasses"
+	name = "\improper Heart Diagnostic Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_diagnostic"
 	item_state = "heart_diagnostic"
@@ -276,7 +275,7 @@ SECURITY
 	)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/heart
-	name = "Heart Security Glasses"
+	name = "\improper Heart Security Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_sec"
 	item_state = "heart_sec"
@@ -381,11 +380,10 @@ HYDROPONIC
 	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/heart
-	name = "Heart Hydroponic Glasses"
+	name = "\improper Heart Hydroponic Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_hydro"
 	item_state = "heart_hydro"
-	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/hydroponic/night
 	name = "\improper Night Vision Hydroponic HUD"
@@ -451,11 +449,10 @@ SKILLS
 	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/skills/heart
-	name = "Heart Skills Glasses"
+	name = "\improper Heart Skills Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_skill"
 	item_state = "heart_skill"
-	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/skills/sunglasses
 	name = "skills sunglasses"
