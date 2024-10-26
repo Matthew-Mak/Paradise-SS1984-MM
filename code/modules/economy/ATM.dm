@@ -79,7 +79,7 @@ log transactions
 	for(var/obj/machinery/computer/account_database/DB in GLOB.machines)
 		if(DB.stat & NOPOWER || !DB.activated)
 			continue
-		if(is_station_level(src) && is_station_level(DB))
+		if(is_station_level(z) && is_station_level(DB.z))
 			linked_db = DB
 			break
 		else
