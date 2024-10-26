@@ -78,7 +78,7 @@
 	if(blocks_air || !air) // Fuck off
 		return
 
-	var/datum/gaslist/agases = 0
+	var/datum/gaslist/agases = new
 	var/atemp = TCMB
 
 	var/turf_count = 0
