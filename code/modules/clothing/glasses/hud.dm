@@ -169,11 +169,10 @@ DIAGNOSTIC
 	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/diagnostic/heart
-	name = "Heart Medical Glasses"
+	name = "\improper Heart Medical Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_diagnostic"
 	item_state = "heart_diagnostic"
-	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "\improper Night Vision Diagnostic HUD"
@@ -281,6 +280,9 @@ SECURITY
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_sec"
 	item_state = "heart_sec"
+
+/obj/item/clothing/glasses/hud/security/sunglasses/heart/read_only
+	examine_extensions = EXAMINE_HUD_SECURITY_READ
 
 /obj/item/clothing/glasses/hud/security/sunglasses/tacticool
 	name = "security tactical glasses"

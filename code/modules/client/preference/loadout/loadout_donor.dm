@@ -253,7 +253,7 @@
 	donator_tier = 4
 	cost = 2
 	slot = ITEM_SLOT_EYES
-	allowed_roles = list(JOB_TITLE_CHIEF, JOB_TITLE_ENGINEER, JOB_TITLE_ATMOSTECH, JOB_TITLE_MECHANIC, JOB_TITLE_QUARTERMASTER, JOB_TITLE_MINER, JOB_TITLE_CAPTAIN)
+	allowed_roles = list(JOB_TITLE_CHIEF, JOB_TITLE_ENGINEER, JOB_TITLE_ATMOSTECH, JOB_TITLE_MECHANIC, JOB_TITLE_QUARTERMASTER, JOB_TITLE_MINER, JOB_TITLE_CAPTAIN, JOB_TITLE_ENGINEER_TRAINEE)
 
 /datum/gear/donor/heart_science
 	display_name = "Heart Science Glasses"
@@ -261,7 +261,7 @@
 	donator_tier = 4
 	cost = 2
 	slot = ITEM_SLOT_EYES
-	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_SCIENTIST, JOB_TITLE_ROBOTICIST, JOB_TITLE_RD, JOB_TITLE_GENETICIST, JOB_TITLE_CHEMIST)
+	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_SCIENTIST, JOB_TITLE_ROBOTICIST, JOB_TITLE_RD, JOB_TITLE_GENETICIST, JOB_TITLE_CHEMIST, JOB_TITLE_SCIENTIST_STUDENT)
 
 /datum/gear/donor/heart_health
 	display_name = "Heart Medical Glasses"
@@ -269,10 +269,10 @@
 	donator_tier = 4
 	cost = 2
 	slot = ITEM_SLOT_EYES
-	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_CMO, JOB_TITLE_INTERN, JOB_TITLE_PARAMEDIC, JOB_TITLE_VIROLOGIST, JOB_TITLE_BLUESHIELD, JOB_TITLE_PSYCHIATRIST, JOB_TITLE_DOCTOR)
+	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_CMO, JOB_TITLE_INTERN, JOB_TITLE_PARAMEDIC, JOB_TITLE_VIROLOGIST, JOB_TITLE_BLUESHIELD, JOB_TITLE_PSYCHIATRIST, JOB_TITLE_DOCTOR, JOB_TITLE_CORONER)
 
 /datum/gear/donor/heart_diagnostic
-	display_name = "Heart Medical Glasses"
+	display_name = "Heart Diagnostic Glasses"
 	path = /obj/item/clothing/glasses/hud/diagnostic/heart
 	donator_tier = 4
 	cost = 2
@@ -286,6 +286,14 @@
 	cost = 2
 	slot = ITEM_SLOT_EYES
 	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_DETECTIVE, JOB_TITLE_PILOT, JOB_TITLE_HOS, JOB_TITLE_WARDEN, JOB_TITLE_BLUESHIELD, JOB_TITLE_JUDGE, JOB_TITLE_OFFICER)
+
+/datum/gear/donor/heartsec_read
+	display_name = "Heart Security Glasses"
+	path = /obj/item/clothing/glasses/hud/security/sunglasses/heart/read_only
+	donator_tier = 4
+	cost = 2
+	slot = ITEM_SLOT_EYES
+	allowed_roles = list(JOB_TITLE_LAWYER)
 
 /datum/gear/donor/heart_hydroponic
 	display_name = "Heart Hydroponic Glasses"
@@ -301,7 +309,7 @@
 	donator_tier = 4
 	cost = 2
 	slot = ITEM_SLOT_EYES
-	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_REPRESENTATIVE, JOB_TITLE_BLUESHIELD, JOB_TITLE_HOP, JOB_TITLE_QUARTERMASTER, JOB_TITLE_JUDGE)
+	allowed_roles = list(JOB_TITLE_CAPTAIN, JOB_TITLE_REPRESENTATIVE, JOB_TITLE_BLUESHIELD, JOB_TITLE_HOP)
 
 /datum/gear/donor/night_dress
 	display_name = "night dress, select"
