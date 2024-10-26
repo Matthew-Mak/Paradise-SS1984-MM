@@ -592,7 +592,7 @@
     blackbox_message = "Toggle item description tips on hover"
 
 /datum/preference_toggle/toggle_take_out_of_the_round_without_obj
-    name = "Переключить разрешение выводить вас из раунда"
+    name = "Вывод из игры без цели"
     description = "Переключает разрешение другим игрокам выводить вас из раунда без соответствующей цели."
     preftoggle_bitflag = PREFTOGGLE_2_GIB_WITHOUT_OBJECTIVE
     preftoggle_toggle = PREFTOGGLE_TOGGLE2
