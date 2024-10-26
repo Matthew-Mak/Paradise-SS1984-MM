@@ -367,11 +367,11 @@
 			if(volume > 25)
 				var/should_burn_head = TRUE
 				if(H.wear_mask && ((H.wear_mask.resistance_flags & ACID_PROOF) || (H.wear_mask.armor.acid != 100)))
-					to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid!</span>")
+					to_chat(H, span_danger("Your [H.wear_mask] protects you from the acid!"))
 					should_burn_head = FALSE
 
 				if(H.head && ((H.wear_mask.resistance_flags & ACID_PROOF) || (H.wear_mask.armor.acid != 100)))
-					to_chat(H, "<span class='danger'>Your [H.head] protects you from the acid!</span>")
+					to_chat(H, span_danger("Your [H.head] protects you from the acid!"))
 					should_burn_head = FALSE
 
 				if(should_burn_head && prob(75))
