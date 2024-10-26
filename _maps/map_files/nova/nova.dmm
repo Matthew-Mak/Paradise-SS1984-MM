@@ -24120,6 +24120,7 @@
 /area/bridge)
 "dyb" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -25615,8 +25616,11 @@
 	},
 /area/security/brigstaff)
 "dKd" = (
-/obj/machinery/vending/tool,
 /obj/effect/decal/cleanable/dust,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-dead";
+	tag = "plant-dead"
+	},
 /turf/simulated/floor/carpet,
 /area/maintenance/casino)
 "dKf" = (
@@ -40094,11 +40098,10 @@
 	},
 /area/medical/cryo)
 "fON" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-dead";
-	tag = "plant-dead"
-	},
 /obj/effect/decal/cleanable/dust,
+/obj/structure/sign/poster/contraband/revolver{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet,
 /area/maintenance/casino)
 "fOQ" = (
@@ -57300,6 +57303,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/obey{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plasteel,
 /area/security/permabrig)
 "itq" = (
@@ -57850,6 +57856,9 @@
 "ixi" = (
 /obj/structure/chair{
 	dir = 1
+	},
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_x = 32
 	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -59360,6 +59369,9 @@
 /obj/item/storage/box/bodybags{
 	pixel_x = 2;
 	pixel_y = 4
+	},
+/obj/structure/sign/fire{
+	pixel_y = 32
 	},
 /turf/simulated/floor/plasteel{
 	dir = 5;
@@ -61418,7 +61430,7 @@
 /area/medical/cmostore)
 "jbh" = (
 /obj/machinery/door/morgue{
-	name = "Chapel Morgue";
+	name = "Crematorium";
 	req_access = list(22)
 	},
 /obj/machinery/door/firedoor,
@@ -82452,7 +82464,8 @@
 "mkD" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Customs";
-	req_access = list(1)
+	req_access = list(1);
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -84391,16 +84404,21 @@
 	req_access = list(1);
 	color = "red"
 	},
-/obj/item/gun/projectile/automatic/pistol/enforcer,
 /obj/structure/window/reinforced{
 	color = "red";
 	dir = 4
 	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	pixel_y = 0;
+	pixel_x = -2
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	pixel_y = 0;
 	pixel_x = 2
 	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	pixel_x = 4
+/obj/item/gun/projectile/automatic/pistol/enforcer/lethal{
+	pixel_y = 0;
+	pixel_x = 6
 	},
 /turf/simulated/floor/plasteel{
 	dir = 5;
@@ -101105,14 +101123,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/casino)
 "oYP" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Warden's Office";
-	req_access = list(3);
-	security_level = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security{
+	name = "Warden's Bedroom";
+	req_access = list(3);
+	security_level = 1
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "redfull";
 	tag = "icon-redfull (NORTHWEST)"
@@ -107906,10 +107924,10 @@
 /turf/simulated/floor/plating,
 /area/security/range)
 "pWy" = (
-/obj/effect/spawner/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/effect/spawner/window/reinforced/plasma,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "pWE" = (
@@ -111246,6 +111264,7 @@
 	dir = 4
 	},
 /obj/machinery/telepad_cargo,
+/obj/effect/decal/warning_stripes/yellow/hollow,
 /turf/simulated/floor/plasteel{
 	dir = 4;
 	icon_state = "yellow"
@@ -118288,6 +118307,16 @@
 	icon_state = "neutralfull"
 	},
 /area/hallway/primary/central/east)
+"ryC" = (
+/obj/item/radio/intercom{
+	name = "west station intercom (General)";
+	pixel_x = 28
+	},
+/turf/simulated/floor/plasteel{
+	dir = 4;
+	icon_state = "blue"
+	},
+/area/hallway/primary/central/nw)
 "ryD" = (
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -119063,15 +119092,14 @@
 	},
 /area/quartermaster/office)
 "rEE" = (
-/obj/item/radio/intercom{
-	name = "west station intercom (General)";
-	pixel_x = -28
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/punch_shit{
+	pixel_y = -32
 	},
 /turf/simulated/floor/plasteel{
-	dir = 8;
-	icon_state = "blue"
+	icon_state = "darkgrey"
 	},
-/area/hallway/primary/central/nw)
+/area/maintenance/gambling_den)
 "rEG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -132537,8 +132565,8 @@
 /area/maintenance/fore)
 "typ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random_spawners/cobweb_left_rare,
+/obj/machinery/vending/tool,
 /turf/simulated/floor/plating,
 /area/maintenance/electrical)
 "tyr" = (
@@ -137469,6 +137497,10 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/spray/cleaner/janitor,
+/obj/item/hair_dye_bottle{
+	pixel_y = -10;
+	pixel_x = -6
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "dark"
@@ -146111,6 +146143,7 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
+/obj/item/lightreplacer,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -187758,7 +187791,7 @@ kKA
 clX
 wpX
 rij
-rEE
+rxW
 rxW
 rxW
 aTR
@@ -188273,7 +188306,7 @@ clX
 cpV
 pYy
 ePZ
-ePZ
+ryC
 ePZ
 ePZ
 ePZ
@@ -188530,7 +188563,7 @@ rDn
 uWp
 jwA
 kNb
-jEL
+kNb
 jEL
 jEL
 jEL
@@ -203436,7 +203469,7 @@ xOP
 rfk
 vuh
 wfZ
-pKC
+wfZ
 pKC
 pKC
 pKC
@@ -203692,8 +203725,8 @@ obz
 hgS
 oQW
 xZx
-sVx
 uiv
+sVx
 uiv
 uiv
 uiv
@@ -252254,7 +252287,7 @@ xlU
 shG
 sJt
 qgm
-lRC
+rEE
 yev
 aKx
 dLa
