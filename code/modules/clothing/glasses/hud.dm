@@ -83,7 +83,7 @@ MEDICAL
 	prescription_upgradable = FALSE
 
 /obj/item/clothing/glasses/hud/health/heart
-	name = "Heart Medical Glasses"
+	name = "\improper Heart Medical Glasses"
 	desc = "Модные очки в форме сердечек с встроенным ИЛС под рабочие нужды."
 	icon_state = "heart_med"
 	item_state = "heart_med"
