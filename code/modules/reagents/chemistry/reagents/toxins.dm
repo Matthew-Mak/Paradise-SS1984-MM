@@ -364,32 +364,36 @@
 	if(ishuman(M) && !isgrey(M))
 		var/mob/living/carbon/human/H = M
 		if(method == REAGENT_TOUCH)
-			if(volume >= 5)
-				var/damage_coef = 0
-				var/isDamaged = FALSE
-				for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
-					damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
-					if(damage_coef > 0 && !isDamaged)
-						isDamaged = TRUE
-						if(H.has_pain())
-							H.emote("scream")
+			if(volume > 25)
+				var/should_burn_head = TRUE
+				if(H.wear_mask && ((H.wear_mask.resistance_flags & ACID_PROOF) || (H.wear_mask.armor.acid != 100)))
+					to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid!</span>")
+					should_burn_head = FALSE
 
-					H.apply_damage(clamp((volume - 5) * 3, 8, 75) * damage_coef / length(H.bodyparts), BURN, def_zone = bodypart)
+				if(H.head && ((H.wear_mask.resistance_flags & ACID_PROOF) || (H.wear_mask.armor.acid != 100)))
+					to_chat(H, "<span class='danger'>Your [H.head] protects you from the acid!</span>")
+					should_burn_head = FALSE
 
-			if(volume > 9 && (H.wear_mask || H.head))
-				if(H.wear_mask && !(H.wear_mask.resistance_flags & ACID_PROOF))
-					to_chat(H, "<span class='danger'>Your [H.wear_mask.name] melts away!</span>")
-					qdel(H.wear_mask)
-					H.update_inv_wear_mask()
+				if(should_burn_head && prob(75))
+					H.emote("scream")
+					var/obj/item/organ/external/affecting = H.get_organ(BODY_ZONE_HEAD)
+					if(affecting)
+						affecting.take_damage(5, BRUTE)
+						affecting.take_damage(10, FIRE)
+						affecting.disfigure()
 
-				if(H.head && !(H.head.resistance_flags & ACID_PROOF))
-					to_chat(H, "<span class='danger'>Your [H.head.name] melts away!</span>")
-					qdel(H.head)
-					H.update_inv_head()
+			var/damage_coef = 0
+			var/isDamaged = FALSE
+			for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
+				damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
+				if(damage_coef > 0 && !isDamaged)
+					isDamaged = TRUE
+					if(H.has_pain())
+						H.emote("scream")
 
-				return
+					bodypart.take_damage(clamp(volume / length(H.bodyparts) * damage_coef, 0, volume), BURN)
 		else
-			to_chat(H, "<span class='warning'>The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
+			to_chat(H, span_warning("The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!"))
 			if(volume >= 10)
 				H.adjustFireLoss(min(max(4, (volume - 10) * 2), 20))
 				H.emote("scream")
