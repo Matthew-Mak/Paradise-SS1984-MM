@@ -2454,36 +2454,6 @@
 /turf/simulated/floor/carpet/black,
 /area/centcom/bridge)
 "beG" = (
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = 7
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = 7
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = 7
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = 7
-	},
-/obj/item/gun/energy/gun/advtaser{
-	pixel_y = 7
-	},
 /obj/structure/rack/gunrack,
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -24;
@@ -2498,6 +2468,36 @@
 	pixel_y = -11
 	},
 /obj/effect/decal/warning_stripes/white,
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/advtaser{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -4756,24 +4756,24 @@
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/green/hollow,
 /obj/item/gun/projectile/automatic/m90{
-	pixel_y = -4;
-	name = "\improper DAE 5.56 Compact GL"
+	name = "\improper DAE 5.56 Compact GL";
+	pixel_x = -6
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_y = 8;
-	name = "\improper DAE 5.56 Compact GL"
+	name = "\improper DAE 5.56 Compact GL";
+	pixel_x = -6
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_y = -4;
-	name = "\improper DAE 5.56 Compact GL"
+	name = "\improper DAE 5.56 Compact GL";
+	pixel_x = 6
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_y = 8;
-	name = "\improper DAE 5.56 Compact GL"
+	name = "\improper DAE 5.56 Compact GL";
+	pixel_x = 6
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_y = 8;
-	name = "\improper DAE 5.56 Compact GL"
+	name = "\improper DAE 5.56 Compact GL";
+	pixel_x = 6
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -10466,53 +10466,48 @@
 	},
 /area/syndicate_mothership)
 "eTs" = (
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = 2
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = 2
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = 2
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = 2
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = 2
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/gun/projectile/automatic/pistol/enforcer{
-	icon_state = "enforcer_black";
-	pixel_x = -2;
-	pixel_y = 7
-	},
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/white,
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/pistol/enforcer{
+	icon_state = "enforcer_black";
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -13022,17 +13017,37 @@
 /area/centcom/jail)
 "gcn" = (
 /obj/structure/rack/gunrack,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
-/obj/item/gun/projectile/automatic/sfg,
 /obj/effect/decal/warning_stripes/red/hollow,
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/sfg{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -21060,6 +21075,36 @@
 /obj/item/ammo_box/magazine/sfg9mm,
 /obj/item/ammo_box/magazine/sfg9mm,
 /obj/effect/decal/warning_stripes/red/hollow,
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
+/obj/item/ammo_box/magazine/sfg9mm{
+	pixel_x = 8
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -31353,17 +31398,35 @@
 	},
 /area/centcom/specops)
 "ozP" = (
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
-/obj/item/gun/projectile/automatic/lasercarbine,
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/blue/hollow,
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/lasercarbine{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -31511,23 +31574,26 @@
 	},
 /area/syndicate_mothership)
 "oEt" = (
-/obj/item/gun/energy/gun/pdw9{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/gun/energy/gun/pdw9,
-/obj/item/gun/energy/gun/pdw9{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/gun/energy/gun/pdw9{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/gun/energy/gun/pdw9,
-/obj/item/gun/energy/gun/pdw9,
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/green/hollow,
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/pdw9{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -33626,26 +33692,26 @@
 /turf/simulated/floor/wood,
 /area/centcom/zone1)
 "pDr" = (
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = 8
-	},
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = 8
-	},
 /obj/structure/rack/gunrack,
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = -2
-	},
-/obj/item/gun/energy/gun/nuclear{
-	pixel_y = 8
-	},
 /obj/effect/decal/warning_stripes/red/hollow,
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = -6
+	},
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = 6
+	},
+/obj/item/gun/energy/gun/nuclear{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -39716,12 +39782,10 @@
 /area/centcom/supply)
 "sqO" = (
 /obj/item/gun/energy/sniperrifle{
-	pixel_x = 3;
-	pixel_y = 8
+	pixel_x = -6
 	},
 /obj/item/gun/energy/sniperrifle{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 6
 	},
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/red/hollow,
@@ -39912,13 +39976,23 @@
 /turf/simulated/floor/carpet/arcade,
 /area/centcom/zone1)
 "svw" = (
-/obj/item/gun/projectile/automatic/ar,
-/obj/item/gun/projectile/automatic/ar,
-/obj/item/gun/projectile/automatic/ar,
-/obj/item/gun/projectile/automatic/ar,
-/obj/item/gun/projectile/automatic/ar,
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/red/hollow,
+/obj/item/gun/projectile/automatic/ar{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/ar{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/ar{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/automatic/ar{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/automatic/ar{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -50598,32 +50672,26 @@
 	},
 /area/syndicate_mothership)
 "xjB" = (
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/gun/projectile/shotgun/automatic/combat{
-	pixel_x = 3;
-	pixel_y = -2
-	},
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/blue/hollow,
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = -6
+	},
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = 6
+	},
+/obj/item/gun/projectile/shotgun/automatic/combat{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
