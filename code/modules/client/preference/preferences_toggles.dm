@@ -601,5 +601,3 @@
     disable_message = "Другие игроки больше не имеют права выводить вас из раунда без цели."
     blackbox_message = "Переключение разрешения выводить игрока из раунда"
 
-/datum/preference_toggle/toggle_take_out_of_the_round_without_obj/set_toggles(client/user)
-	. = ..()
