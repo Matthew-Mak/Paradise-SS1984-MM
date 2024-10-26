@@ -385,13 +385,13 @@
 			var/damage_coef = 0
 			var/isDamaged = FALSE
 			for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
-				damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
+				damage_coef = (100 - clamp(H.getarmor_organ(bodypart, ACID), 0, 100)) / 100
 				if(damage_coef > 0 && !isDamaged)
 					isDamaged = TRUE
 					if(H.has_pain())
 						H.emote("scream")
 
-					bodypart.take_damage(clamp(volume / length(H.bodyparts) * damage_coef, 0, volume), BURN)
+				bodypart.take_damage(clamp(volume / length(H.bodyparts) * damage_coef, 0, volume), BURN)
 		else
 			to_chat(H, span_warning("The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!"))
 			if(volume >= 10)
