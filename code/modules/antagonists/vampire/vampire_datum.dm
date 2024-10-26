@@ -292,7 +292,7 @@
 						to_chat(cur, span_notice("You feel a burning sensation in your [bodypart.name] as your veins begin to recover!"))
 						bodypart.stop_internal_bleeding()
 
-				if (bloodtotal >= REQ_BLOOD_FOR_SUBCLASS_ACT)
+				if(bloodtotal >= REQ_BLOOD_FOR_SUBCLASS_ACT)
 					subclass?.on_blood_sucking(owner)
 
 				to_chat(cur, span_boldnotice("Вы накопили [bloodtotal] единиц[declension_ru(bloodtotal, "у", "ы", "")] крови[bloodusable != old_bloodusable ? ", и теперь вам доступно [bloodusable] единиц[declension_ru(bloodusable, "а", "ы", "")] крови" : ""]."))
