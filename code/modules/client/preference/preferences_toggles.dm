@@ -603,4 +603,3 @@
 
 /datum/preference_toggle/toggle_take_out_of_the_round_without_obj/set_toggles(client/user)
 	. = ..()
-	log_admin("[user.ckey] " + (user.prefs.toggles2 & PREFTOGGLE_2_GIB_WITHOUT_OBJECTIVE ? "enabled" : "disabled") + " permission to take him/her out of the round.")
