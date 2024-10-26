@@ -300,7 +300,7 @@
 		old_self_heat_capacity = heat_capacity()
 
 	for(var/id in delta_gaslist.gases)
-		gases.add(id, -delta_gaslist[id])
+		gases.add(id, -delta_gaslist.get(id))
 
 	var/moved_moles = delta_gaslist.amount
 	last_share = 0
