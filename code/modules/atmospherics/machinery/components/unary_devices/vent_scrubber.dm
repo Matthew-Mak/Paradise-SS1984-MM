@@ -253,7 +253,7 @@
 				will_remove_not_all = TRUE
 				break
 
-		for(var/id in environment.gases)
+		for(var/id in environment.gases.gases)
 			if(id in default)
 				continue
 
