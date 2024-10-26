@@ -4637,9 +4637,8 @@
 "cgX" = (
 /obj/machinery/door/poddoor/shutters/invincible{
 	dir = 2;
-	id_tag = "CC_Armory_shotgun"
+	id_tag = "CC_Armory_DAE"
 	},
-/obj/effect/decal/warning_stripes/red,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -4756,19 +4755,25 @@
 "cjN" = (
 /obj/structure/rack/gunrack,
 /obj/effect/decal/warning_stripes/green/hollow,
-/obj/item/gun/projectile/automatic/m90,
-/obj/item/gun/projectile/automatic/m90,
 /obj/item/gun/projectile/automatic/m90{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = -4;
+	name = "\improper DAE 5.56 Compact GL"
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = 8;
+	name = "\improper DAE 5.56 Compact GL"
 	},
 /obj/item/gun/projectile/automatic/m90{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = -4;
+	name = "\improper DAE 5.56 Compact GL"
+	},
+/obj/item/gun/projectile/automatic/m90{
+	pixel_y = 8;
+	name = "\improper DAE 5.56 Compact GL"
+	},
+/obj/item/gun/projectile/automatic/m90{
+	pixel_y = 8;
+	name = "\improper DAE 5.56 Compact GL"
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -10573,10 +10578,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/evac)
-"eWz" = (
-/obj/structure/lattice,
-/turf/space,
-/area/centcom/specops)
 "eWA" = (
 /turf/space{
 	icon_state = "black"
@@ -11883,8 +11884,8 @@
 /area/centcom/zone3)
 "fBu" = (
 /obj/machinery/door_control/secure{
-	id = "CC_Armory_shotgun";
-	name = "Shotguns";
+	id = "CC_Armory_DAE";
+	name = "DAE";
 	pixel_x = -24;
 	pixel_y = 24;
 	req_access = list(114)
@@ -16144,16 +16145,6 @@
 	icon_state = "grimy"
 	},
 /area/syndicate_mothership)
-"hDk" = (
-/obj/effect/decal/warning_stripes/red,
-/obj/machinery/door/poddoor/shutters/invincible{
-	dir = 2;
-	id_tag = "CC_Armory_shotgun"
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
 "hDO" = (
 /obj/structure/toilet,
 /turf/simulated/floor/plasteel{
@@ -20444,7 +20435,6 @@
 	dir = 2;
 	id_tag = "CC_Armory_NG"
 	},
-/obj/effect/decal/warning_stripes/red,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -39323,7 +39313,6 @@
 	},
 /area/syndicate_mothership/cargo)
 "seQ" = (
-/obj/effect/decal/warning_stripes/red,
 /obj/machinery/door/poddoor/shutters/invincible{
 	dir = 2;
 	id_tag = "CC_Armory_PDW"
@@ -43369,16 +43358,18 @@
 "tYP" = (
 /obj/structure/rack,
 /obj/effect/decal/warning_stripes/green/hollow,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
-/obj/item/ammo_box/magazine/m556,
 /obj/item/ammo_box/a40mm,
 /obj/item/ammo_box/a40mm,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
+/obj/item/ammo_box/magazine/m556,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -98785,7 +98776,7 @@ nAN
 nAN
 nAN
 nAN
-fID
+mVX
 mVX
 mVX
 mVX
@@ -106227,7 +106218,7 @@ cAo
 iGP
 nAN
 cjN
-hDk
+cgX
 rTJ
 hBW
 lYK
@@ -109810,8 +109801,8 @@ tgn
 nFb
 uSN
 uSN
-eWz
-eWz
+jMD
+jMD
 nAN
 eHW
 eHW
@@ -110066,10 +110057,10 @@ nAN
 uSN
 uSN
 uSN
-eWz
+jMD
 mVX
 mVX
-eWz
+jMD
 eHW
 eHW
 eHW
