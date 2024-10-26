@@ -363,26 +363,33 @@
 /datum/reagent/acid/reaction_mob(mob/living/M, method = REAGENT_TOUCH, volume)
 	if(ishuman(M) && !isgrey(M))
 		var/mob/living/carbon/human/H = M
+		var/protection_coeff = H.getarmor(attack_flag = ACID)
+
 		if(method == REAGENT_TOUCH)
-			if(volume > 25)
-				if(H.wear_mask)
-					to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid!</span>")
-					return
+			if(volume >= 5)
+				var/damage_coef = 0
+				var/isDamaged = FALSE
+				for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
+					damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
+					if(damage_coef > 0 && !isDamaged)
+						isDamaged = TRUE
+						if(H.has_pain())
+							H.emote("scream")
 
-				if(H.head)
-					to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid!</span>")
-					return
+					H.apply_damage(clamp((volume - 5) * 3, 8, 75) * damage_coef / length(H.bodyparts), BURN, def_zone = bodypart)
 
-				if(prob(75))
-					H.take_organ_damage(5, 10)
-					H.emote("scream")
-					var/obj/item/organ/external/affecting = H.get_organ(BODY_ZONE_HEAD)
-					if(affecting)
-						affecting.disfigure()
-				else
-					H.take_organ_damage(5, 10)
-			else
-				H.take_organ_damage(5, 10)
+			if(volume > 9 && (H.wear_mask || H.head))
+				if(H.wear_mask && !(H.wear_mask.resistance_flags & ACID_PROOF))
+					to_chat(H, "<span class='danger'>Your [H.wear_mask.name] melts away!</span>")
+					qdel(H.wear_mask)
+					H.update_inv_wear_mask()
+
+				if(H.head && !(H.head.resistance_flags & ACID_PROOF))
+					to_chat(H, "<span class='danger'>Your [H.head.name] melts away!</span>")
+					qdel(H.head)
+					H.update_inv_head()
+
+				return
 		else
 			to_chat(H, "<span class='warning'>The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 			if(volume >= 10)
