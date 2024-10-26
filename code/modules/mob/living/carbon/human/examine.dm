@@ -427,7 +427,8 @@
 		msg += "\n[p_they(TRUE)] [p_are()] [pose]"
 
 	if(client && mind && !mind.offstation_role) // No ashwalkers, monkeys etc
-		msg += "\n" + (user.client.prefs.toggles2 & PREFTOGGLE_2_GIB_WITHOUT_OBJECTIVE ? "Вы можете вывести этого игрока без игры не имея соответствующей цели." : ("Вы " + span_warning("НЕ") + " можете вывести этого игрока без игры не имея соответствующей цели."))
+		var/permission_granted = client.prefs.toggles2 & PREFTOGGLE_2_GIB_WITHOUT_OBJECTIVE
+		msg += "\n<div class='examine'>[span_info("Вы[permission_granted ? "" : " [span_warning("НЕ")]"] можете вывести этого игрока из игры не имея соответствующей цели.")]</div>"
 
 	. = list(msg)
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
