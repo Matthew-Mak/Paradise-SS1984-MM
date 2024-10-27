@@ -196,7 +196,7 @@ Works together with spawning an observer, noted above.
 	if(!target)
 		return FALSE
 
-	if(!isghost(src)) // parent calls
+	if(!isobserver(src)) // parent calls
 		var/mob/dead/observer/observer = ghostize()
 
 		if(!observer)

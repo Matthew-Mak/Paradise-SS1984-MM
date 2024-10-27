@@ -114,7 +114,7 @@
 
 	if(card)
 		faction = card.faction.Copy()
-		
+
 	sradio = new(src)
 
 	if(card)
@@ -137,14 +137,14 @@
 	add_verb(src, /mob/living/silicon/pai/proc/choose_verbs)
 	add_verb(src, /mob/living/silicon/pai/proc/pai_change_voice)
 
-	var/datum/action/innate/pai_soft/P = new
+	var/datum/action/innate/pai_soft/pai_soft = new
 	var/datum/action/innate/pai_soft/pai_choose_chassis/pai_choose_chassis_action = new
 	var/datum/action/innate/pai_soft/pai_fold_out/pai_fold_out_action = new
 	var/datum/action/innate/pai_soft/pai_fold_up/pai_fold_up_action = new
 	var/datum/action/innate/pai_soft/pai_change_voice/pai_change_voice_action = new
 	var/datum/action/innate/pai_soft/pai_suicide/pai_suicide_action = new
 
-	P.Grant(src)
+	pai_soft.Grant(src)
 	pai_choose_chassis_action.Grant(src)
 	pai_fold_out_action.Grant(src)
 	pai_fold_up_action.Grant(src)
