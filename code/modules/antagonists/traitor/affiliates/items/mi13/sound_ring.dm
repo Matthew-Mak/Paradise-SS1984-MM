@@ -96,7 +96,7 @@
 		return
 
 	if(!COOLDOWN_FINISHED(ring, operation_cooldown))
-		user.balloon_alert(user, "Идет перезарядка")
+		user.balloon_alert(user, "перезарядка")
 		return
 
 	ring.breaking = TRUE
