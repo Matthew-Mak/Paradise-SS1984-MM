@@ -10,11 +10,14 @@
 	lefthand_file = 'icons/obj/affiliates_l.dmi'
 	righthand_file = 'icons/obj/affiliates_r.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	/// The mind of the target into which we must inject the injector according to the objective.
 	var/datum/mind/target = null
+	/// If TRUE, we can inject it in anybody.
 	var/free_inject = FALSE
-	var/isAdvanced = FALSE
+	/// If true, will make you advanced vampire. (All 4 paths)
+	var/advanced = FALSE
+	/// If TRUE, the injector is used, so we can't use it again.
 	var/used = FALSE
-	var/used_state = "hemophagus_extract_used"
 	origin_tech = "biotech=7;syndicate=3"
 
 /obj/item/hemophagus_extract/attack(mob/living/target, mob/living/user, def_zone)
@@ -45,10 +48,10 @@
 	target.mind.add_antag_datum(vamp)
 	var/datum/antagonist/vampire/vampire = target.mind.has_antag_datum(/datum/antagonist/vampire)
 	vampire.upgrade_tiers -= /obj/effect/proc_holder/spell/vampire/self/specialize
-	if(isAdvanced)
+	if(advanced)
 		vamp.add_subclass(SUBCLASS_ADVANCED, TRUE)
 
-	vampire.add_objective((!isAdvanced) ? /datum/objective/blood : /datum/objective/blood/ascend)
+	vampire.add_objective((!advanced) ? /datum/objective/blood : /datum/objective/blood/ascend)
 	used = TRUE
 	item_state = "inj_used"
 	update_icon(UPDATE_ICON_STATE)
@@ -79,10 +82,10 @@
 
 /obj/item/hemophagus_extract/self/advanced
 	name = "Advances Hemophagus Essence Auto Injector"
-	isAdvanced = TRUE
+	advanced = TRUE
 
 /obj/item/hemophagus_extract/update_icon_state()
- 	icon_state = used ? used_state : initial(icon_state)
+ 	icon_state = initial(icon_state) + (used ? "_used" : "")
 
 #undef FREE_INJECT_TIME
 #undef TARGET_INJECT_TIME

@@ -9,9 +9,11 @@
 	item_state = "inj_ful"
 	lefthand_file = 'icons/obj/affiliates_l.dmi'
 	righthand_file = 'icons/obj/affiliates_r.dmi'
-	var/used_state = "cling_extract_used"
-	var/datum/mind/target
+	/// The mind of the target into which we must inject the injector according to the objective.
+	var/datum/mind/target = null
+	/// If TRUE, we can inject it in anybody.
 	var/free_inject = FALSE
+	/// If TRUE, the injector is used, so we can't use it again.
 	var/used = FALSE
 	origin_tech = "biotech=7;syndicate=3"
 
@@ -88,7 +90,7 @@
 	free_inject = TRUE
 
 /obj/item/cling_extract/update_icon_state()
-	icon_state = used ? used_state : initial(icon_state)
+	icon_state = initial(icon_state) + (used ? "_used" : "")
 
 #undef FREE_INJECT_TIME
 #undef TARGET_INJECT_TIME

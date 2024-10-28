@@ -120,12 +120,17 @@
 			to_chat(mind.current, span_info("Аплинк будет активирован через 20 минут от начала смены.\n\
 			Спасибо что выбрали Gorlex Maraduers.\n\
 			Слава синдикату!"))
-			sleep(20 MINUTES - SSticker.round_start_time)
-			if(!istype(affiliate, /datum/affiliate/gorlex))
-				return
+			addtimer(CALLBACK(src, PROC_REF(finish_giving_affiliate), mind, TRUE), 20 MINUTES - SSticker.round_start_time)
+			return
 
+	finish_giving_affiliate()
+
+/datum/antagonist/traitor/proc/finish_giving_affiliate(datum/mind/mind, isGorlex = FALSE)
 	var/datum/antagonist/traitor/traitor = mind.has_antag_datum(/datum/antagonist/traitor)
 	if(!traitor)
+		return
+
+	if(isGorlex && !istype(affiliate, /datum/affiliate/gorlex))
 		return
 
 	affiliate.traitor = traitor
