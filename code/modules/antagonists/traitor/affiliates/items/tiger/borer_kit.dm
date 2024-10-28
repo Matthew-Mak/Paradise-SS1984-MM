@@ -289,14 +289,20 @@
 /obj/effect/proc_holder/spell/msg_for_borers/create_new_targeting()
 	return new /datum/spell_targeting/self
 
-/obj/effect/proc_holder/spell/msg_for_borers/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/msg_for_borers/can_cast(mob/user = usr, charge_check = TRUE, show_message = FALSE)
+	if(!..())
+		return FALSE
+
 	if(!ishuman(user))
-		return
+		return FALSE
 
 	if(user.mind?.miming)
 		to_chat(user, span_warning("Вы не можете общаться, пока не нарушите обет молчания."))
-		return
+		return FALSE
 
+	return TRUE
+
+/obj/effect/proc_holder/spell/msg_for_borers/cast(list/targets, mob/user = usr)
 	var/say = tgui_input_text(user, "Что вы хотите сообщить?", "Сообшение борерам")
 	if(!say)
 		return
@@ -340,14 +346,21 @@
 /obj/effect/proc_holder/spell/pm_for_borer/create_new_targeting()
 	return new /datum/spell_targeting/borer
 
-/obj/effect/proc_holder/spell/pm_for_borer/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/pm_for_borer/can_cast(mob/user = usr, charge_check = TRUE, show_message = FALSE)
+	if(!..())
+		return FALSE
+
 	if(!ishuman(user))
-		return
+		return FALSE
 
 	if(user.mind?.miming)
 		to_chat(user, span_warning("Вы не можете общаться, пока не нарушите обет молчания."))
-		return
+		return FALSE
 
+	return TRUE
+
+
+/obj/effect/proc_holder/spell/pm_for_borer/cast(list/targets, mob/user = usr)
 	var/say = tgui_input_text(user, "Что вы хотите сообщить?", "[targets[1]]")
 
 	if(!say)
