@@ -33,7 +33,7 @@
 		return
 
 	if(target.blood_volume < BLOOD_HARVEST_VOLUME)
-		user.balloon_alert(target, "Недостаточно крови!")
+		user.balloon_alert(target, "недостаточно крови!")
 		return
 
 	if(!target.mind)
