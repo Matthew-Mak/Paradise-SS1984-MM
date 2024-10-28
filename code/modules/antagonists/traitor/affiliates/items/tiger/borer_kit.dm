@@ -143,7 +143,7 @@
 	var/op_type = tgui_alert(user, "Сканер бореров", "Выберите тип операции", list("Сканирование станции", "Поиск борера"))
 
 	if(!op_type)
-		user.balloon_alert(user, "Сканирвание отменено")
+		user.balloon_alert(user, "сканирвание отменено")
 		return
 
 	COOLDOWN_START(src, scan_cooldown, scan_cooldown_time)
