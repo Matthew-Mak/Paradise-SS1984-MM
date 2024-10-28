@@ -8,7 +8,7 @@
 		usr.balloon_alert(usr, "Уже улучшено")
 		return ATTACK_CHAIN_PROCEED
 
-	usr.balloon_alert(usr, "Улучшено")
+	usr.balloon_alert(usr, "улучшено")
 	playsound(src, "sound/machines/boop.ogg", 50, TRUE)
 	U.get_intelligence_data = TRUE
 	SStgui.update_uis(U)
