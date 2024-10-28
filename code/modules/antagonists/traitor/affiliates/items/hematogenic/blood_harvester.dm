@@ -29,7 +29,7 @@
 		return
 
 	if(HAS_TRAIT(target, TRAIT_NO_BLOOD) || HAS_TRAIT(target, TRAIT_EXOTIC_BLOOD))
-		user.balloon_alert(target, "Кровь не обнаружена!")
+		user.balloon_alert(target, "кровь не обнаружена!")
 		return
 
 	if(target.blood_volume < BLOOD_HARVEST_VOLUME)
