@@ -37,7 +37,7 @@
 		return
 
 	if(!target.mind)
-		user.balloon_alert(target, "Разум не обнаружен!")
+		user.balloon_alert(target, "разум не обнаружен!")
 		return
 
 	return TRUE
