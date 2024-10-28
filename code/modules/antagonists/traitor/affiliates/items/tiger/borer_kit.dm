@@ -170,7 +170,7 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		user.balloon_alert(user, "Перезарядка не завершена")
+		user.balloon_alert(user, "перезарядка не завершена")
 		return
 
 	var/mob/living/simple_animal/borer/borer = target
