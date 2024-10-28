@@ -41,7 +41,7 @@
 	if(istype(target, /obj/item/camera_bug/spy_monitor))
 		var/obj/item/camera_bug/spy_monitor/monitor = target
 		network = monitor.network
-		user.balloon_alert(user, "Подключено")
+		user.balloon_alert(user, "подключено")
 		return
 
 	hook(user, target)
