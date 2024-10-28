@@ -33,8 +33,6 @@
 
 	if(!mind.has_antag_datum(/datum/antagonist/traitor))
 		var/datum/antagonist/traitor/traitor_datum = new /datum/antagonist/traitor
-		//traitor_datum.give_objectives = FALSE
-		// traitor_datum.give_uplink = FALSE
 		traitor_datum.gen_affiliate = FALSE
 		mind.add_antag_datum(traitor_datum)
 

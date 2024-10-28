@@ -13,6 +13,10 @@
 	return
 
 /obj/item/invasive_beacon/afterattack(atom/target, mob/user, proximity, params)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "слишком далеко")
+		return
+
 	var/obj/mecha/mecha = target
 	var/obj/spacepod/pod = target
 
@@ -30,22 +34,22 @@
 			mecha.occupant.forceMove(get_turf(mecha))
 			mecha.occupant.Knockdown(6 SECONDS)
 			mecha.occupant.electrocute_act(30, mecha)
-			mecha.occupant.throw_at(pick(orange(2)))
+			mecha.occupant.throw_at(pick(orange(3)))
 			mecha.occupant = null
 
 	else if(istype(pod))
 		do_sparks(5, 1, pod)
 		pod.unlocked = TRUE
-
 		user.visible_message(span_warning("[user] hacked [pod] using [src]."), span_info("You hacked [pod] using [src]."))
 
 		if(pod.pilot) // It is not ejecting passangers
-			to_chat(pod.pilot, span_danger("You were thrown out of [pod]."))
+			var/mob/living/victim = pod.pilot
+			to_chat(victim, span_danger("You were thrown out of [pod]."))
 
 			pod.eject_pilot()
-			pod.pilot.Knockdown(6 SECONDS)
-			pod.pilot.electrocute_act(30, pod)
-			pod.pilot.throw_at(pick(orange(2)))
+			victim.Knockdown(6 SECONDS)
+			victim.electrocute_act(30, pod)
+			victim.throw_at(pick(orange(3)))
 	else
 		user.balloon_alert(user, "невозможно взломать")
 		return

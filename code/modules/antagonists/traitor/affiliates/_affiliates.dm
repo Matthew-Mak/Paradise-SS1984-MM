@@ -123,7 +123,7 @@
 			addtimer(CALLBACK(src, PROC_REF(finish_giving_affiliate), mind, TRUE), 20 MINUTES - SSticker.round_start_time)
 			return
 
-	finish_giving_affiliate()
+	finish_giving_affiliate(mind)
 
 /datum/antagonist/traitor/proc/finish_giving_affiliate(datum/mind/mind, isGorlex = FALSE)
 	var/datum/antagonist/traitor/traitor = mind.has_antag_datum(/datum/antagonist/traitor)

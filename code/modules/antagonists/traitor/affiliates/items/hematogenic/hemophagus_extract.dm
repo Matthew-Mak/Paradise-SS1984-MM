@@ -81,7 +81,7 @@
  	free_inject = TRUE
 
 /obj/item/hemophagus_extract/self/advanced
-	name = "Advances Hemophagus Essence Auto Injector"
+	name = "Elder Vampire Essence Auto Injector"
 	advanced = TRUE
 
 /obj/item/hemophagus_extract/update_icon_state()

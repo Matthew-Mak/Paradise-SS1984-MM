@@ -6,35 +6,32 @@
 	item_state = "disk"
 	lefthand_file = 'icons/obj/affiliates_l.dmi'
 	righthand_file = 'icons/obj/affiliates_r.dmi'
-	origin_tech = "programming=4;syndicate=2"
 	w_class = WEIGHT_CLASS_TINY
 	var/datum/research/files
 
 /obj/item/proprietary_ssd/Initialize()
 	. = ..()
 	files = new /datum/research()
+	update_techs()
 
-/obj/item/proprietary_ssd/attack(mob/living/target, mob/living/user, def_zone)
+/obj/item/proprietary_ssd/attack(atom/target, mob/living/user, def_zone)
 	return
 
 /obj/item/proprietary_ssd/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target, /obj/machinery/r_n_d/destructive_analyzer))
 		return
 
-	if(get_dist(user, target) > 1)
-		user.balloon_alert(user, "слишком далеко")
+	if(!user.Adjacent(target))
 		return
 
 	if(!istype(target, /obj/machinery/r_n_d/server))
 		user.balloon_alert(user, "это не сервер")
 		return
 
-
 	var/obj/machinery/r_n_d/server/server = target
-
 	server.AI_notify_hack()
 	if(do_after(user, 30 SECONDS, target, max_interact_count = 1))
-		origin_tech = ""
+		do_sparks(5, TRUE, target)
 		for(var/I in server.files.known_tech)
 			var/datum/tech/T = server.files.known_tech[I]
 
@@ -46,6 +43,7 @@
 				var/datum/tech/copy = T.copyTech()
 				files.known_tech[T.id] = copy
 
+		update_techs()
 
 		server.files.RefreshResearch()
 		files.RefreshResearch()
@@ -70,6 +68,8 @@
 				current_design = rnd_server.files.known_designs[j]
 				rnd_server.files.known_designs -= current_design.id
 
+			do_sparks(5, TRUE, rnd_server)
+
 			investigate_log("[key_name_log(user)] deleted all technology on this server.", INVESTIGATE_RESEARCH)
 
 
@@ -84,6 +84,9 @@
 			for(var/j in rnd_console.files.known_designs)
 				current_design = rnd_console.files.known_designs[j]
 				rnd_console.files.known_designs -= current_design.id
+
+			do_sparks(5, TRUE, rnd_console)
+			rnd_console.flicker()
 
 			investigate_log("[key_name_log(user)] deleted all technology on this console.", INVESTIGATE_RESEARCH)
 
@@ -100,9 +103,9 @@
 				current_design = rnd_mechfab.local_designs.known_designs[j]
 				rnd_mechfab.local_designs.known_designs -= current_design.id
 
-			investigate_log("[key_name_log(user)] deleted all technology on this fabricator.", INVESTIGATE_RESEARCH)
+			do_sparks(5, TRUE, rnd_mechfab)
 
-	return
+			investigate_log("[key_name_log(user)] deleted all technology on this fabricator.", INVESTIGATE_RESEARCH)
 
 /obj/item/proprietary_ssd/examine(mob/user)
 	. = ..()
@@ -113,3 +116,13 @@
 		. += span_info("[T.name]: [T.level]")
 		sum_of_techs += T.level
 	. += span_info("Сумма технологий: [sum_of_techs]")
+
+
+/obj/item/proprietary_ssd/proc/update_techs()
+	origin_tech = ""
+	for(var/id in files.known_tech)
+		var/datum/tech/tech = files.known_tech[id]
+		if(origin_tech != "")
+			origin_tech += ";"
+
+		origin_tech += id + "=[max(id == "syndicate" ? 3 : 0, tech.level)]"

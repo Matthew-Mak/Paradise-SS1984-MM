@@ -52,6 +52,10 @@
 	mar_master?.adjustBrainLoss(rand(5, 15))
 	mar_master?.emote("scream")
 	mar_master?.Knockdown(3 SECONDS)
+	do_sparks(5, TRUE, imp_in)
+	if(mar_master)
+		do_sparks(5, TRUE, mar_master)
+
 	detach()
 	. = ..()
 
@@ -72,6 +76,8 @@
 
 	else if(charge < max_charge)
 		charge++
+	else if(isprocessing)
+		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/implant/marionette/proc/assume_control(mob/living/carbon/human/mar_master, obj/item/implant/mar_master/master_imp)
 	var/mar_master_key = mar_master.key
@@ -118,6 +124,9 @@
 	detach_action.master_body = mar_master
 	detach_action.Grant(imp_in)
 
+	if(!isprocessing)
+		START_PROCESSING(SSprocessing, src)
+
 /obj/item/implant/marionette/proc/detach()
 	controlling = FALSE
 	detach_action.target = null
@@ -162,7 +171,9 @@
 	mar_master.Knockdown(1)
 	mar_master = null
 	master_imp = null
-	return
+
+	if(!isprocessing)
+		START_PROCESSING(SSprocessing, src)
 
 /obj/item/implanter/marionette
 	name = "bio-chip implanter (marionette)"
@@ -210,30 +221,33 @@
 			imp_in.balloon_alert(imp_in, "имплант не найден")
 			return
 
-		var/found = FALSE
-		for (var/mob/M in GLOB.human_list)
+		for (var/mob/living/M in GLOB.human_list)
 			var/obj/item/implant/marionette/imp = locate(/obj/item/implant/marionette) in M
+
+			if(imp?.code != code)
+				continue
 
 			if(imp in connected_imps)
 				imp_in.balloon_alert(imp_in, "уже подключен")
 				return
 
-			if(imp?.code == code)
-				connected_imps += imp
-				imp_in.balloon_alert(imp_in, "имплант подключен")
-				found = TRUE
+			connected_imps += imp
+			imp_in.balloon_alert(imp_in, "имплант подключен")
+			return
 
-		if(!found)
-			imp_in.balloon_alert(imp_in, "имплант не найден")
-
+		imp_in.balloon_alert(imp_in, "имплант не найден")
 		return
-
 	else
 		var/list/marionettes = list()
 		for (var/obj/item/implant/marionette/imp in connected_imps)
 			var/mob/M = imp.imp_in
-			if(M && M.stat != DEAD)
-				marionettes[M.real_name] = imp
+			if(!M)
+				continue
+
+			if(M.stat == DEAD)
+				continue
+
+			marionettes[M.real_name] = imp
 
 		var/choosen = input(imp_in, "Выберите к кому вы хотите подключиться.", "Подключение", null) as null|anything in marionettes
 		if(!choosen)
@@ -249,6 +263,14 @@
 
 		if(imp.controlling)
 			imp_in.balloon_alert(imp_in, "целевой имплант занят")
+			return
+
+		if(get_dist(imp_in, imp.imp_in) > imp.max_dist)
+			imp_in.balloon_alert(imp_in, "слишком далеко")
+			return
+
+		if(imp.charge < 10)
+			imp_in.balloon_alert(imp_in, "низкий заряд")
 			return
 
 		cur_connection = imp
