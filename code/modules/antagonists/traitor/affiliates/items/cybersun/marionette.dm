@@ -5,7 +5,7 @@
 	icon_icon = 'icons/obj/affiliates.dmi'
 	button_icon_state = "brain1"
 
-/datum/action/innate/cult/comm/Activate()
+/datum/action/innate/detach/Activate()
 	var/obj/item/implant/marionette/imp = locate(/obj/item/implant/marionette) in target
 	imp.detach()
 	return
