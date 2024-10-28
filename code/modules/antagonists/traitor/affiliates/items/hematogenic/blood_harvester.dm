@@ -21,7 +21,7 @@
 /obj/item/blood_harvester/proc/can_harvest(mob/living/carbon/human/target, mob/user)
 	. = FALSE
 	if(!istype(target))
-		user.balloon_alert(src, "Не подходящая цель")
+		user.balloon_alert(src, "неподходящая цель")
 		return
 
 	if(used)
@@ -33,7 +33,7 @@
 		return
 
 	if(target.blood_volume < BLOOD_HARVEST_VOLUME)
-		user.balloon_alert(target, "Недостаточно крови!")
+		user.balloon_alert(target, "недостаточно крови!")
 		return
 
 	if(!target.mind)

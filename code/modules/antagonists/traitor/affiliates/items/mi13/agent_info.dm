@@ -60,14 +60,14 @@
 		info += choise + " является членом гильдии воров.<br>"
 
 /obj/item/paper/agent_info/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks, view = TRUE)
-	if (isobserver(user))
+	if(isobserver(user))
 		return ..()
 
 	if(!is_MI13_agent(user))
 		to_chat(user, span_warning("Вы не можете разобрать содержимое."))
 		return
 
-	if (info)
+	if(info)
 		return ..()
 
 	if(choose_agent(user))

@@ -47,5 +47,5 @@
 			pod.pilot.electrocute_act(30, pod)
 			pod.pilot.throw_at(pick(orange(2)))
 	else
-		user.balloon_alert(user, "Невозможно взломать")
+		user.balloon_alert(user, "невозможно взломать")
 		return

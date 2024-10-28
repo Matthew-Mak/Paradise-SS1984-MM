@@ -137,13 +137,13 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		user.balloon_alert(user, "Перезарядка не завершена")
+		user.balloon_alert(user, "перезарядка не завершена")
 		return
 
 	var/op_type = tgui_alert(user, "Сканер бореров", "Выберите тип операции", list("Сканирование станции", "Поиск борера"))
 
 	if(!op_type)
-		user.balloon_alert(user, "Сканирвание отменено")
+		user.balloon_alert(user, "сканирвание отменено")
 		return
 
 	COOLDOWN_START(src, scan_cooldown, scan_cooldown_time)
@@ -163,14 +163,14 @@
 		var/mob/living/carbon/human/host = target
 		target = host.has_brain_worms()
 		if(!target)
-			user.balloon_alert(user, "Бореров не обнаружено")
+			user.balloon_alert(user, "бореров не обнаружено")
 			return
 
 	if(!isborer(target))
 		return
 
 	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		user.balloon_alert(user, "Перезарядка не завершена")
+		user.balloon_alert(user, "перезарядка не завершена")
 		return
 
 	var/mob/living/simple_animal/borer/borer = target
