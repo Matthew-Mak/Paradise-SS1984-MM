@@ -5,7 +5,7 @@
 		return
 
 	if(U.get_intelligence_data)
-		usr.balloon_alert(usr, "Уже улучшено")
+		usr.balloon_alert(usr, "уже улучшено")
 		return ATTACK_CHAIN_PROCEED
 
 	usr.balloon_alert(usr, "улучшено")
