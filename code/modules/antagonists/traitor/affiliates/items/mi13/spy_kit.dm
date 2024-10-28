@@ -117,7 +117,7 @@
 	if(!istype(user))
 		return
 
-	if (!user.Adjacent(parent))
+	if(!user.Adjacent(parent))
 		return
 
 	if(user.stat)
