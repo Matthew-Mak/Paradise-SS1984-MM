@@ -13,7 +13,7 @@
 	. = ..()
 
 	if(changing)
-		user.balloon_alert(user, "Подождите")
+		user.balloon_alert(user, "подождите")
 		return
 
 	changing = TRUE
