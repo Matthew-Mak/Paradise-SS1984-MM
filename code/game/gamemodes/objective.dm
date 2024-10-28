@@ -2080,9 +2080,6 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 	explanation_text = "Взломайте искусственный интеллект и расширьте его функционал при помощи специального устройства, которое вы можете получить в аплинке. После взлома помогите ему уничтожить станцию."
 	var/made = FALSE
 
-/datum/objective/make_ai_malf/New(text, datum/team/team_to_join)
-	. = ..()
-
 /datum/objective/make_ai_malf/on_objective_gain()
 	var/datum/antagonist/traitor/traitor = owner?.has_antag_datum(/datum/antagonist/traitor)
 	if(traitor)

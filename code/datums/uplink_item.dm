@@ -773,7 +773,7 @@
 	desc = "A modern, burst firing, mag-fed combat shotgun, that uses 12g ammo. Holds a 12/24 round drums, perfect for cleaning out crowds of people in narrow corridors. Welcome to the Minotaur's labyrinth!"
 	item = /obj/item/gun/projectile/automatic/shotgun/minotaur
 	cost = 80
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 0
 	made_by = AFFIL_WAFFLE
@@ -801,7 +801,7 @@
 	desc = "A legendary high power pistol that uses 7 rounds .50AE magazines."
 	item = /obj/item/gun/projectile/automatic/pistol/deagle
 	cost = 50
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	made_by = AFFIL_WAFFLE
 
@@ -810,7 +810,7 @@
 	desc = "A fully-loaded lightweight blowback-operated submachine gun that uses 30-rounds 9mm magazines."
 	item = /obj/item/gun/projectile/automatic/mini_uzi
 	cost = 60
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	made_by = AFFIL_WAFFLE
 
@@ -819,7 +819,7 @@
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/projectile/automatic/c20r
 	cost = 70
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 40
 	made_by = AFFIL_WAFFLE
@@ -829,7 +829,7 @@
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
 	item = /obj/item/gun/projectile/automatic/m90
 	cost = 80
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 50
 	made_by = AFFIL_WAFFLE
@@ -839,7 +839,7 @@
 	desc = "A fully-loaded Aussec Armory belt-fed machine gun. This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
 	item = /obj/item/gun/projectile/automatic/l6_saw
 	cost = 175
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 0
 	made_by = AFFIL_WAFFLE
@@ -857,7 +857,7 @@
 	item = /obj/item/gun/projectile/automatic/sniper_rifle/syndicate
 	cost = 100
 	surplus = 25
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	made_by = AFFIL_WAFFLE
 
@@ -868,7 +868,7 @@
 	cost = 40
 	surplus = 0
 	can_discount = FALSE
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	made_by = AFFIL_WAFFLE
 
@@ -877,7 +877,7 @@
 	desc = "A miniature energy crossbow that is small enough both to fit into a pocket and to slip into a backpack unnoticed by observers. Fires bolts tipped with toxin, a poisonous substance that is the product of a living organism. Stuns enemies for a short period of time. Recharges automatically."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 48
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 50
 	made_by = AFFIL_WAFFLE
@@ -996,7 +996,7 @@
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/gun/projectile/automatic/c20r/toy
 	cost = 20
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 0
 	made_by = AFFIL_DONK
@@ -1006,7 +1006,7 @@
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/gun/projectile/automatic/l6_saw/toy
 	cost = 50
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	uplinktypes = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 	surplus = 0
 	made_by = AFFIL_DONK
@@ -2253,7 +2253,7 @@
 	name = "Desert Eagle"
 	desc = "A badass gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50AE ammo. Kill with style."
 	item = /obj/item/gun/projectile/automatic/pistol/deagle/gold
-	exclude_from_affiliate = list(AFFIL_TIGER)
+	exclude_from_affiliate = list(AFFIL_MI13, AFFIL_TIGER)
 	cost = 50
 	made_by = AFFIL_WAFFLE
 
