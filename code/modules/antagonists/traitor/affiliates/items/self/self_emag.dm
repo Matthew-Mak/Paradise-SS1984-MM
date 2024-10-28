@@ -84,7 +84,7 @@
 		target = core.brain.brainmob
 
 	if(!issilicon(target))
-		user.balloon_alert(user, "Неподходящая цель")
+		user.balloon_alert(user, "неподходящая цель")
 		return
 
 	do_sparks(3, 1, target)
