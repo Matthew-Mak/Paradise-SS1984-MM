@@ -163,7 +163,7 @@
 		var/mob/living/carbon/human/host = target
 		target = host.has_brain_worms()
 		if(!target)
-			user.balloon_alert(user, "Бореров не обнаружено")
+			user.balloon_alert(user, "бореров не обнаружено")
 			return
 
 	if(!isborer(target))
