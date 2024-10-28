@@ -67,7 +67,7 @@
 		to_chat(user, span_warning("Вы не можете разобрать содержимое."))
 		return
 
-	if (info)
+	if(info)
 		return ..()
 
 	if(choose_agent(user))
