@@ -137,7 +137,7 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		user.balloon_alert(user, "Перезарядка не завершена")
+		user.balloon_alert(user, "перезарядка не завершена")
 		return
 
 	var/op_type = tgui_alert(user, "Сканер бореров", "Выберите тип операции", list("Сканирование станции", "Поиск борера"))
