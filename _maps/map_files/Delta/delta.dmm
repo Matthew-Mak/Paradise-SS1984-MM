@@ -59552,7 +59552,7 @@
 	dir = 8
 	},
 /obj/item/trash/fried_vox,
-/obj/structure/sign/banya{
+/obj/structure/sign/bathhouse{
 	pixel_x = -32
 	},
 /turf/simulated/floor/plasteel{
