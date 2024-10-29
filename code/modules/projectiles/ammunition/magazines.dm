@@ -290,8 +290,8 @@
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
 /obj/item/ammo_box/magazine/m10mm/blood
-	name = "pistol magazine (10mm incendiary)"
-	icon_state = "9x19blood"
+	name = "pistol magazine (10mm blood)"
+	icon_state = "9x19pI"
 	desc = "Магазин для пистолета. Заряжен патронами, поглощающими кровь."
 	ammo_type = /obj/item/ammo_casing/c10mm/blood
 

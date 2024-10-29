@@ -11,7 +11,7 @@
 	righthand_file = 'icons/obj/affiliates_r.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=5;syndicate=1"
-	reagents = new
+	reagents = new(BLOOD_HARVEST_VOLUME)
 	/// If TRUE, there is blood inside.
 	var/used = FALSE
 	/// The mind of the one whose blood is harvested.
@@ -106,7 +106,7 @@
 			return
 
 		var/new_gender = tgui_alert(user, "Вколоть или выпить?", "Выбор действия", list("Выпить", "Вколоть"))
-		if(new_gender != "Вколоть")
+		if(new_gender == "Вколоть")
 			inject_blood(user, target)
 			return
 

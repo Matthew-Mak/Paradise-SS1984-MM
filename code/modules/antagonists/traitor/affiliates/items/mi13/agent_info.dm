@@ -26,7 +26,7 @@
 	var/datum/antagonist/changeling/changeling = target?.mind?.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/antagonist/thief/thief = target?.mind?.has_antag_datum(/datum/antagonist/thief)
 
-	if(!traitor && !vampire && !changeling)
+	if(!traitor && !vampire && !changeling && !thief)
 		info = "Согласно последним разведданным, " + choise + " не имеет никаких прямых связей с синдикатом."
 		return
 

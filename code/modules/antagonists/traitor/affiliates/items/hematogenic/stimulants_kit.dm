@@ -88,6 +88,7 @@
 /datum/reagent/hemat_white_russian/on_mob_add(mob/living/carbon/human/H)
 	if(H.dna && (H.dna.species.reagent_tag & PROCESS_ORG))
 		H.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hemat_white_russian)
+
 	. = ..()
 
 /datum/reagent/hemat_white_russian/on_mob_delete(mob/living/carbon/human/H)

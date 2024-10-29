@@ -375,6 +375,7 @@
 
 /obj/item/storage/box/syndie_kit/borer/populate_contents()
 	new /obj/item/reagent_containers/food/snacks/egg/borer(src)
+	new /obj/item/reagent_containers/food/snacks/egg/borer(src)
 	new /obj/item/borer_scanner(src)
 	new /obj/item/implanter/borer(src)
 
