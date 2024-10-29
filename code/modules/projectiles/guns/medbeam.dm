@@ -129,7 +129,6 @@
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
 		if(mounted && next_step == user_turf)
-
 			continue //Mechs are dense and thus fail the check
 		if(next_step.density)
 			qdel(dummy)
