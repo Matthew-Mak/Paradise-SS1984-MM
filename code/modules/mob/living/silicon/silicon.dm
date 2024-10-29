@@ -38,7 +38,7 @@
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
-	LAZYADD(GLOB.silicon_mob_list, src)
+	GLOB.silicon_mob_list |= src
 
 	add_language(LANGUAGE_GALACTIC_COMMON)
 
@@ -65,7 +65,7 @@
 		COMSIG_CANCELLED_ALARM
 	))
 
-	LAZYREMOVE(GLOB.silicon_mob_list, src)
+	GLOB.silicon_mob_list -= src
 
 	QDEL_NULL(atmos_control)
 	QDEL_NULL(crew_monitor)
