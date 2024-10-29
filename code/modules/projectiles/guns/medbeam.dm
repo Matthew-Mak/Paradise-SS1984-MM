@@ -113,7 +113,7 @@
 	var/turf/user_turf = user.loc
 	if(mounted)
 		user_turf = get_turf(user)
-	else if(!istype(user_turf))
+	if(!istype(user_turf))
 		return FALSE
 	var/obj/dummy = new(user_turf)
 	dummy.pass_flags |= (PASSTABLE|PASSGLASS|PASSGRILLE|PASSFENCE) //Grille/Glass so it can be used through common windows
