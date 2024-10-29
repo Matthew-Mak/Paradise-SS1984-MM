@@ -183,7 +183,7 @@
 		if(PSD.default)
 			installed_software[PSD.id] = PSD
 
-	gps?.tracking = FALSE
+	gps.tracking = FALSE
 
 	active_software = installed_software["mainmenu"] // Default us to the main menu
 	SStgui.close_user_uis(src)
@@ -324,7 +324,7 @@
 	if(ismob(card.loc))
 		var/mob/holder = card.loc
 		holder.drop_item_ground(card)
-		
+
 	else if(is_pda(card.loc))
 		var/obj/item/pda/holder = card.loc
 		holder.pai = null
