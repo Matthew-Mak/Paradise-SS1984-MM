@@ -557,7 +557,7 @@
 		if(!length(traitor_datum.objectives))
 			. += "<br>Objectives are empty! <a href='byond://?src=[UID()];traitor=autoobjectives'>Randomize!</a>"
 	else
-		. += "<a href='byond://?src=[UID()];traitor=traitor'>just traitor</a>|<a href='byond://?src=[UID()];traitor=traitor_choose_affil'>traitor with affiliate</a>|<a href='byond://?src=[UID()];traitor=traitor_affil'>traitor with specific affiliate</a>|<b>NO</b>"
+		. += "<a href='byond://?src=[UID()];traitor=traitor'>normal traitor</a>|<a href='byond://?src=[UID()];traitor=traitor_choose_affil'>traitor with affiliate</a>|<a href='byond://?src=[UID()];traitor=traitor_affil'>traitor with specific affiliate</a>|<b>NO</b>"
 
 	. += _memory_edit_role_enabled(ROLE_TRAITOR)
 	// Contractor
