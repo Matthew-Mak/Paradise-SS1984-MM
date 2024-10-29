@@ -364,7 +364,7 @@
 		return FALSE
 	if(!thisjob.character_old_enough(client))
 		var/datum/species/species = GLOB.all_species[client?.prefs.species]
-		var/msg = "Должность [rank] недоступна в связи с недостаточным возрастом персонажа ([client?.prefs.age]). Минимальный возраст - [species.age_sheet[thisjob.min_age_type]]"
+		var/msg = "Должность [rank] недоступна в связи с недостаточным возрастом персонажа ([client?.prefs.age]). Минимальный возраст - [get_age_limits(species, thisjob.min_age_type)]"
 		to_chat(src, msg)
 		alert(msg)
 		return FALSE
