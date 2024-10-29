@@ -13,6 +13,8 @@
 	var/heart_rate_decrease = 0
 	var/heart_rate_stop = 0
 	var/penetrates_skin = FALSE //Whether or not a reagent penetrates the skin
+	/// Whether or not a reagent ignore clothes
+	var/ignore_clothes = FALSE
 	//Processing flags, defines the type of mobs the reagent will affect
 	//By default, all reagents will ONLY affect organics, not synthetics. Re-define in the reagent's definition if the reagent is meant to affect synths
 	var/process_flags = ORGANIC

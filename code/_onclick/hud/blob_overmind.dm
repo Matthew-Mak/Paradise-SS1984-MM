@@ -128,12 +128,9 @@
 /atom/movable/screen/blob/ReadaptStrain/MouseEntered(location,control,params)
 	if(hud && hud.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
-		if(B.free_strain_rerolls)
-			name = "[initial(name)] (FREE)"
-			desc = "Случайно меняет ваш штамм бесплатно."
-		else
-			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
-			desc = "Позволяет вам выбрать новый штамм из [BLOB_POWER_REROLL_CHOICES] случайных вариантов за [BLOB_POWER_REROLL_COST] ресурсов."
+		var/cost = (B.free_strain_rerolls)? "FREE" : BLOB_POWER_REROLL_COST
+		name = "[initial(name)] ([cost])"
+		desc = "Позволяет вам выбрать новый штамм из [BLOB_POWER_REROLL_CHOICES] случайных вариантов за [cost] ресурсов."
 	..()
 
 /atom/movable/screen/blob/ReadaptStrain/Click()

@@ -77,7 +77,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOB_EXPAND_CHANCE_MULTIPLIER 1 // Increase this value to make blobs naturally expand faster
 #define BLOB_REINFORCE_CHANCE 2.5 // The seconds_per_tick chance for cores/nodes to reinforce their surroundings
 #define BLOB_REAGENTATK_VOL 25 // Amount of strain-reagents that get injected when the blob attacks: main source of blob damage
+#define BLOB_REAGENSPORE_VOL 10
 #define BLOB_BONUS_POINTS 60
+#define BLOB_REAGENTS_METABOLISM 1
 
 
 // Structure properties
@@ -111,7 +113,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 #define BLOB_RESOURCE_MIN_DISTANCE 4 // Minimum distance between resource blobs
 #define BLOB_RESOURCE_GATHER_DELAY (4 SECONDS) // Gather points when pulsed outside this interval
 #define BLOB_RESOURCE_GATHER_ADDED_DELAY (0.25 SECONDS) // Every additional resource blob adds this amount to the gather delay
-#define BLOB_RESOURCE_POINT_RATE 2
+#define BLOB_RESOURCE_POINT_RATE 1
 
 #define BLOB_REGULAR_MAX_HP 25
 #define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile

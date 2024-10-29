@@ -15,7 +15,7 @@
 
 /datum/blobstrain/reagent/radioactive_gel/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == ENERGY || damage_flag == LASER) && prob(damage))
-		for(var/mob/living/l in range(6, B))
+		for(var/mob/living/l in range(5, B))
 			l.apply_effect(damage, IRRADIATE)
 	return ..()
 

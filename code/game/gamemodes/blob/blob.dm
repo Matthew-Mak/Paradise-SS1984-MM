@@ -221,14 +221,16 @@
 		if(SSweather)
 			blob_stage = BLOB_STAGE_STORM
 			SSweather.run_weather(/datum/weather/blob_storm)
+		show_warning("Вы набрали критическую массу и ощущаете практически бесконечный приток ресурсов.")
+		is_blob_infinity_points = TRUE
 
 	addtimer(CALLBACK(src, PROC_REF(process_blob_stages)), STAGES_CALLBACK_TIME)
 
 
 /datum/game_mode/proc/show_warning(message)
-	for(var/datum/mind/blob in blobs["infected"])
+	for(var/datum/mind/blob in (blobs["infected"] + blobs["offsprings"]))
 		if(blob.current.stat != DEAD)
-			to_chat(blob.current, "<span class='warning'>[message]</span>")
+			to_chat(blob.current, span_warning("[message]"))
 
 
 /datum/game_mode/proc/burst_blobs()

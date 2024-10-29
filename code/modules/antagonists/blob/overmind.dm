@@ -77,6 +77,9 @@ GLOBAL_LIST_EMPTY(overminds)
 	resource_blobs = null
 	factory_blobs = null
 	node_blobs = null
+	for(var/mob/living/simple_animal/hostile/blob_minion/mob as anything in blob_mobs)
+		if(istype(mob) && !mob.factory_linked)
+			mob.death()
 	blob_mobs = null
 	GLOB.overminds -= src
 	QDEL_LIST_ASSOC_VAL(strain_choices)

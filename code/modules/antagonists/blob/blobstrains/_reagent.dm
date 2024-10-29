@@ -19,9 +19,17 @@
 	var/mob_protection = living_attacking.getarmor(null, BIO) * 0.01
 	reagent.reaction_mob(living_attacking, REAGENT_TOUCH, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL + blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
-/datum/blobstrain/reagent/on_sporedeath(mob/living/simple_animal/hostile/spore)
-	var/burst_range = (spore.type == /mob/living/simple_animal/hostile/blob_minion/spore) ? 1 : 0
-	do_chem_smoke(range = burst_range, holder = spore, location = get_turf(spore), reagent_type = reagent.type)
+/datum/blobstrain/reagent/on_sporedeath(mob/living/simple_animal/hostile/blob_minion/spore/spore)
+	var/burst_range = (istype(spore)) ? spore.death_cloud_size : 1
+	do_blob_chem_smoke(range = burst_range, holder = spore, reagent_volume = BLOB_REAGENSPORE_VOL, location = get_turf(spore), reagent_type = reagent.type)
+
+
+/proc/do_blob_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE)
+	var/smoke_type = /datum/effect_system/fluid_spread/smoke/chem/quick
+	var/lifetime = /obj/effect/particle_effect/fluid/smoke/chem/quick::lifetime
+	var/volume = reagent_volume * (lifetime /(1 SECONDS))
+	do_chem_smoke(range, amount, holder, location, reagent_type, smoke_type, reagent_volume = volume, log = log)
+
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
@@ -30,6 +38,8 @@
 	color = COLOR_WHITE
 	taste_description = "Это баг"
 	penetrates_skin = TRUE
+	ignore_clothes = TRUE
+	metabolization_rate = BLOB_REAGENTS_METABOLISM
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
 /datum/reagent/blob/proc/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=REAGENT_TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

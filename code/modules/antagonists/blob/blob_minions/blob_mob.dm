@@ -24,6 +24,8 @@
 	tts_seed = "Earth"
 	tts_atom_say_effect = SOUND_EFFECT_NONE
 	a_intent = INTENT_HARM
+	/// Is blob mob linked to factory
+	var/factory_linked = FALSE
 
 
 /mob/living/simple_animal/hostile/blob_minion/ComponentInitialize()
@@ -73,6 +75,7 @@
 
 /// Associates this mob with a specific blob factory node
 /mob/living/simple_animal/hostile/blob_minion/proc/link_to_factory(obj/structure/blob/special/factory/factory)
+	factory_linked = TRUE
 	RegisterSignal(factory, COMSIG_QDELETING, PROC_REF(on_factory_destroyed))
 
 /mob/living/simple_animal/hostile/blob_minion/attack_animal(mob/living/simple_animal/M)
