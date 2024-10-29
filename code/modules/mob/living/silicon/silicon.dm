@@ -37,17 +37,21 @@
 	var/obj/item/radio/common_radio
 
 /mob/living/silicon/New()
+	. = ..()
 	GLOB.silicon_mob_list |= src
-	..()
+
 	add_language(LANGUAGE_GALACTIC_COMMON)
-	init_subsystems()
+	
 	RegisterSignal(SSalarm, COMSIG_TRIGGERED_ALARM, PROC_REF(alarm_triggered))
 	RegisterSignal(SSalarm, COMSIG_CANCELLED_ALARM, PROC_REF(alarm_cancelled))
 
 /mob/living/silicon/Initialize()
 	. = ..()
+	init_subsystems()
+
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
+
 	diag_hud_set_status()
 	diag_hud_set_health()
 

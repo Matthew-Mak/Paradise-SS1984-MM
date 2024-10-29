@@ -151,7 +151,7 @@
 	pai_change_voice_action.Grant(src)
 	pai_suicide_action.Grant(src)
 
-	//. PDA
+	/// PDA
 	pda = new(src)
 	pda.ownjob = "Personal Assistant"
 	pda.owner = "[src]"
@@ -321,9 +321,10 @@
 
 
 /mob/living/silicon/pai/proc/force_fold_out()
-	if(istype(card.loc, /mob))
+	if(ismob(card.loc))
 		var/mob/holder = card.loc
 		holder.drop_item_ground(card)
+		
 	else if(is_pda(card.loc))
 		var/obj/item/pda/holder = card.loc
 		holder.pai = null
@@ -423,6 +424,7 @@
 /mob/living/silicon/pai/post_lying_on_rest()
 	if(stat == DEAD)
 		return
+
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
 	update_icons()
 
