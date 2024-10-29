@@ -36,7 +36,7 @@
 
 	var/obj/item/radio/common_radio
 
-/mob/living/silicon/Initialize()
+/mob/living/silicon/Initialize(mapload)
 	. = ..()
 	LAZYADD(GLOB.silicon_mob_list, src)
 
@@ -73,7 +73,7 @@
 	QDEL_NULL(power_monitor)
 	QDEL_NULL(gps)
 	QDEL_NULL(blueprints)
-	
+
 	return ..()
 
 /mob/living/silicon/proc/alarm_triggered(src, class, area/A, list/O, obj/alarmsource)
