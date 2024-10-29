@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell))
 	var/sparks_amt = 0
 
 	///Determines if the spell has smoke, and if so what effect the smoke has. See spell defines.
-	var/smoke_type = SMOKE_NONE
+	var/smoke_type  = SMOKE_NONE
 	var/smoke_amt = 0
 
 	var/critfailchance = 0

@@ -649,7 +649,7 @@
 	energy_drain = 50
 	range = MECHA_MELEE | MECHA_RANGED
 	var/obj/item/gun/medbeam/mech/mbeam
-
+	var/mob/beamtarget
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/Initialize(mapload)
 	. = ..()
@@ -660,13 +660,15 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/process()
-    mbeam.process()
-
-/obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
-	if(!mbeam.process_fire(target, chassis))
+	if(!mbeam.process_fire(beamtarget, chassis.occupant))
 		STOP_PROCESSING(SSobj, src)
 		return
 
+	chassis.use_power(energy_drain)
+	mbeam.process()
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
+	beamtarget = target
 	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/detach()

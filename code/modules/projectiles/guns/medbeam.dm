@@ -13,6 +13,7 @@
 	var/active = FALSE
 	var/datum/beam/current_beam = null
 	var/mounted = FALSE
+	var/old_target
 	weapon_weight = WEAPON_MEDIUM
 
 
@@ -72,7 +73,7 @@
 	if(isliving(user))
 		add_fingerprint(user)
 
-	var/old_target = current_target
+	old_target = current_target
 	if(old_target)
 		LoseTarget()
 
