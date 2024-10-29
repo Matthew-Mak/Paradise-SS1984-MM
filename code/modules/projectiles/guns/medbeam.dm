@@ -146,6 +146,7 @@
 				stack_trace("beam without an owner! [B]")
 				continue
 			if(B.owner.origin != current_beam.origin)
+				next_step.visible_message(span_boldwarning("The medbeams cross and EXPLODE!"))
 				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8)
 				qdel(dummy)
 				return FALSE
