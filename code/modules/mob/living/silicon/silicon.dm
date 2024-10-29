@@ -6,7 +6,7 @@
 	weather_immunities = list(TRAIT_WEATHER_IMMUNE)
 	wet_immunity = TRUE
 	var/syndicate = 0
-	var/obj/item/gps/cyborg/gps = new
+	var/obj/item/gps/cyborg/gps
 	var/const/MAIN_CHANNEL = "Main Frequency"
 	var/lawchannel = MAIN_CHANNEL // Default channel on which to state laws
 	var/list/stating_laws = list()// Channels laws are currently being stated on
