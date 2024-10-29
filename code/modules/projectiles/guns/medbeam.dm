@@ -125,6 +125,7 @@
 				if(!blocker.density || !(blocker.flags & ON_BORDER))
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
+					qdel(dummy)
 					continue
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
@@ -147,7 +148,7 @@
 				continue
 			if(B.owner.origin != current_beam.origin)
 				next_step.visible_message(span_boldwarning("The medbeams cross and EXPLODE!"))
-				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8)
+				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, cause = src)
 				qdel(dummy)
 				return FALSE
 		previous_step = next_step
