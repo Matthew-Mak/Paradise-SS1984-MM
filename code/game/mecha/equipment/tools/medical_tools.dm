@@ -639,3 +639,37 @@
 		if(M.equipment.len < M.max_equip)
 			return TRUE
 	return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun
+	name = "medical beamgun"
+	desc = "Delivers volatile medical nanites in a focused beam. Don't cross the beams!"
+	icon_state = "mech_beamgun"
+	origin_tech = "bluespace=6;biotech=6;power=6"
+	equip_cooldown = 1.5 SECONDS
+	energy_drain = 50
+	range = MECHA_MELEE | MECHA_RANGED
+	var/obj/item/gun/medbeam/mech/mbeam
+
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/Initialize(mapload)
+	. = ..()
+	mbeam = new(src)
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/Destroy(force)
+	QDEL_NULL(mbeam)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/process()
+    mbeam.process()
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
+	if(!mbeam.process_fire(target, chassis))
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	START_PROCESSING(SSobj, src)
+
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/detach()
+    STOP_PROCESSING(SSobj, src)
+    mbeam.LoseTarget()
+    return ..()

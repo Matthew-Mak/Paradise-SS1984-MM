@@ -12,7 +12,7 @@
 	var/max_range = 8
 	var/active = FALSE
 	var/datum/beam/current_beam = null
-
+	var/mounted = FALSE
 	weapon_weight = WEAPON_MEDIUM
 
 
@@ -77,7 +77,7 @@
 		LoseTarget()
 
 	if(old_target == target || !isliving(target))
-		return
+		return FALSE
 
 	current_target = target
 	active = TRUE
@@ -85,7 +85,7 @@
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
-
+	return TRUE
 
 /obj/item/gun/medbeam/process()
 	if(!ishuman(loc) && !isrobot(loc))
@@ -111,7 +111,9 @@
 
 /obj/item/gun/medbeam/proc/los_check(atom/movable/user, mob/target)
 	var/turf/user_turf = user.loc
-	if(!istype(user_turf))
+	if(mounted)
+		user_turf = get_turf(user)
+	else if(!istype(user_turf))
 		return FALSE
 	var/obj/dummy = new(user_turf)
 	dummy.pass_flags |= (PASSTABLE|PASSGLASS|PASSGRILLE|PASSFENCE) //Grille/Glass so it can be used through common windows
@@ -124,9 +126,11 @@
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
 					continue
-				qdel(dummy)
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
+		if(mounted && next_step == user_turf)
+
+			continue //Mechs are dense and thus fail the check
 		if(next_step.density)
 			qdel(dummy)
 			return FALSE
@@ -143,13 +147,13 @@
 				stack_trace("beam without an owner! [B]")
 				continue
 			if(B.owner.origin != current_beam.origin)
-				next_step.visible_message(span_boldwarning("The medbeams cross and EXPLODE!"))
-				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, cause = src)
+				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8)
 				qdel(dummy)
 				return FALSE
 		previous_step = next_step
 	qdel(dummy)
 	return TRUE
+
 
 
 /obj/item/gun/medbeam/proc/on_beam_hit(mob/living/target)
@@ -172,3 +176,5 @@
 /obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)
 	return
 
+/obj/item/gun/medbeam/mech
+	mounted = TRUE
