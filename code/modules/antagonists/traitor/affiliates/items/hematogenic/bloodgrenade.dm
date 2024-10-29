@@ -5,7 +5,6 @@
 	icon_state = "bloody"
 	item_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
-	force = 2.0
 	var/radius = 4
 	var/max_beams = 10
 	var/process_time = 6 SECONDS
@@ -37,6 +36,9 @@
 		if(HAS_TRAIT(H, TRAIT_NO_BLOOD))
 			continue
 
+		if(HAS_TRAIT(H, TRAIT_EXOTIC_BLOOD))
+			continue
+
 		if(H.stat)
 			continue
 
@@ -45,7 +47,7 @@
 		beam_number++
 		H.bleed(drain_amount)
 		H.Beam(src, icon_state = "drainbeam", time = 2 SECONDS)
-		H.adjustBruteLoss(15)
+		H.adjustBruteLoss(rand(10, 20))
 		if(drain_amount >= 90)
 			to_chat(H, span_warning("<b>Вы чувствуете, как ваша жизненная сила уходит!</b>"))
 

@@ -21,7 +21,7 @@
 	origin_tech = "biotech=7;syndicate=3"
 
 /obj/item/hemophagus_extract/attack(mob/living/target, mob/living/user, def_zone)
-	return
+	return ATTACK_CHAIN_BLOCKED
 
 /obj/item/hemophagus_extract/afterattack(atom/target, mob/user, proximity, params)
 	if(used)

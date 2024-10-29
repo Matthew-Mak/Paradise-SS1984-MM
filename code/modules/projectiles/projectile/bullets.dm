@@ -227,10 +227,22 @@
 	damage = 25
 
 /obj/item/projectile/bullet/midbullet3/blood/on_hit(atom/target, blocked = 0, hit_zone)
-	if(..() && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H)
-			H.bleed(100)
+	. = ..(target, blocked, hit_zone)
+	if(!.)
+		return
+
+	if(!ishuman(target))
+		return
+
+	if(HAS_TRAIT(target, TRAIT_NO_BLOOD))
+		return
+
+	if(HAS_TRAIT(target, TRAIT_EXOTIC_BLOOD))
+		return
+
+	var/mob/living/carbon/human/H = target
+	if(H)
+		H.bleed(75)
 
 /obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
 	if(..(target, blocked))
