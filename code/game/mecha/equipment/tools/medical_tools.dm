@@ -665,7 +665,6 @@
 		return
 
 	chassis.use_power(energy_drain)
-	mbeam.process()
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
 	beamtarget = target
