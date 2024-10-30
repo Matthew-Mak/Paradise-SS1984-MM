@@ -660,7 +660,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/process()
-	if(!mbeam.process_fire(beamtarget, chassis.occupant))
+	if(!mbeam.process_fire(beamtarget, loc))
 		STOP_PROCESSING(SSobj, src)
 		return
 
