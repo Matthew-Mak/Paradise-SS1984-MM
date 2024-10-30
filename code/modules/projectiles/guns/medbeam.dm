@@ -1,6 +1,6 @@
 /obj/item/gun/medbeam
 	name = "Medical Beamgun"
-	desc = "Delivers volatile medical nanites in a focused beam. Don't cross the beams!"
+	desc = "Передает целебные наниты своим сфокусированным лучом. Не пересекайте лучи!"
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
@@ -61,7 +61,7 @@
 	SIGNAL_HANDLER
 
 	if(active && isliving(loc))
-		to_chat(loc, span_warning("You lose control of the beam!"))
+		to_chat(loc, span_warning("Вы потеряли контроль над лучем!"))
 
 	current_beam = null
 	active = FALSE //skip qdelling the beam again if we're doing this proc
@@ -147,7 +147,7 @@
 				stack_trace("beam without an owner! [B]")
 				continue
 			if(B.owner.origin != current_beam.origin)
-				next_step.visible_message(span_boldwarning("The medbeams cross and EXPLODE!"))
+				next_step.visible_message(span_boldwarning("Лучи пересекаются и ВЗРЫВАЮТСЯ!"))
 				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, cause = src)
 				qdel(dummy)
 				return FALSE

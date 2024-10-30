@@ -642,7 +642,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun
 	name = "medical beamgun"
-	desc = "Delivers volatile medical nanites in a focused beam. Don't cross the beams!"
+	desc = "Передает целебные наниты своим сфокусированным лучом прямо из вашего уютного меха. Не пересекайте лучи!"
 	icon_state = "mech_beamgun"
 	origin_tech = "bluespace=6;biotech=6;powerstorage=6"
 	equip_cooldown = 1.5 SECONDS
