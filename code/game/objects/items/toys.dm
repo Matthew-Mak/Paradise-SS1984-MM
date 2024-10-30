@@ -891,6 +891,33 @@
 
 	desc = "Это уставшая кукла РД."
 
+/obj/item/toy/plushie/gsbplushie
+	name = "GSBussy"
+	desc = "Глуповатого вида кукла, что держит в руках книгу Космического закона и имитацию револьвера Unica-6. \
+			На задней части имеется следующая надпись: \
+			«Кукла-аниматроник GSBussy, лимитированная серия. Произведено ######» - часть текста невозможно разобрать."
+	icon_state = "GSBussy_doll"
+	item_state = "GSBussy_doll"
+	COOLDOWN_DECLARE(cooldown)
+
+/obj/item/toy/plushie/gsbplushie/attack_self(mob/user)
+	. = ..()
+
+	if(. || !COOLDOWN_FINISHED(src, cooldown))
+		return .
+
+	var/message
+	playsound(loc, 'sound/items/GSBussy.ogg', 30, TRUE)
+	message = pick("Я просто стояла рядом с автолатом и Уника исчезла...", ".ы ПОО-МММ-ОО-Г-Г-ГИТ-Е-Е-ее-Ее А-а-А-Р-р-Ан-Н-Еу-С-С!",
+	"ОТВЕЧАЙ, ГДЕ ТЫ ПОТЕРЯЛ СВОЙ ЧЁРТОВ ГОЛОВНОЙ УБОР?! КАЗНИТЬ ЕГО!", "Какой-то Д двадц...",
+	"Обыскивайте всех подряд! Летальте всех, кого считаете слишком опасным для нелетала!", "Мим теслу запускает! ЗАДЕРЖАТЬ!!!",
+	"Подмогу в туалет брига!", "Почему над унитазом установлены 3 камеры?")
+
+/obj/item/toy/plushie/gsbplushie/attack(mob/living/target, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
+	. = ..()
+	if(ATTACK_CHAIN_SUCCESS_CHECK(.))
+		playsound(loc, 'sound/items/GSBussy.ogg', 10, TRUE)
+
 /obj/item/toy/plushie/greyplushie
 	name = "Плюшевый грей"
 	desc = "Плюшевая кукла грея в толстовке. Кукла входит в серию \"Пришелец\" и имеет свитер, большую голову и мультяшные глаза. Любит мехов."
