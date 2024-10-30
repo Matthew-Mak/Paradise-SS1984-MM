@@ -659,9 +659,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/process()
-	if(chassis.occupant)
-		if(chassis)
-			chassis.use_power(energy_drain)
+	if(chassis)
+		chassis.use_power(energy_drain)
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
 	if(!mbeam.process_fire(target, loc))
