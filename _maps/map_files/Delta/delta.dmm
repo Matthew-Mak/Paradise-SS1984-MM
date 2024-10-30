@@ -42405,7 +42405,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/turf/simulated/floor/carpet/airless,
+/turf/simulated/floor/carpet,
 /area/maintenance/trading)
 "eFE" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -48976,6 +48976,23 @@
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
 /area/maintenance/brig)
+"ggT" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plasteel{
+	icon_state = "barber"
+	},
+/area/civilian/barber)
 "ghg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/ants,
@@ -50501,7 +50518,7 @@
 "gBy" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/airless,
+/turf/simulated/floor/carpet,
 /area/maintenance/trading)
 "gBA" = (
 /obj/structure/cable{
@@ -56799,7 +56816,7 @@
 /area/maintenance/engineering)
 "hYA" = (
 /obj/machinery/computer/arcade,
-/turf/simulated/floor/carpet/airless,
+/turf/simulated/floor/carpet,
 /area/maintenance/trading)
 "hYL" = (
 /obj/machinery/door/morgue{
@@ -60391,11 +60408,11 @@
 "iSH" = (
 /obj/structure/table/wood,
 /obj/item/whetstone,
+/obj/item/storage/fancy/glowsticks_box,
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -24
+	pixel_x = -22
 	},
-/obj/item/storage/fancy/glowsticks_box,
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	icon_state = "neutral"
@@ -88428,6 +88445,9 @@
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/suit/hooded/wintercoat/medical,
 /obj/item/clothing/suit/hooded/wintercoat/security,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/trading)
 "pxR" = (
@@ -96211,7 +96231,7 @@
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/carpet/airless,
+/turf/simulated/floor/carpet,
 /area/maintenance/trading)
 "rez" = (
 /obj/structure/window/reinforced{
@@ -107439,6 +107459,7 @@
 /area/maintenance/starboardsolar)
 "tJT" = (
 /obj/machinery/vending/clothing,
+/obj/machinery/light/small,
 /turf/simulated/floor/wood/fancy/light,
 /area/civilian/barber)
 "tJX" = (
@@ -158402,7 +158423,7 @@ rLY
 cwa
 oBA
 hSo
-paj
+ggT
 iTZ
 doO
 cED
