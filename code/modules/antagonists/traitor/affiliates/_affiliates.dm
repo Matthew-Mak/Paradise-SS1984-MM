@@ -21,6 +21,8 @@
 	var/normal_objectives = 0
 	/// Traitor datum that owns src
 	var/datum/antagonist/traitor/traitor
+	/// Type of escape objective
+	var/escape_type = /datum/objective/escape
 
 /// If your affiliate need special effects, it is place for them
 /datum/affiliate/proc/finalize_affiliate(datum/mind/owner)
@@ -54,6 +56,9 @@
 		else
 			new_objective = new objective
 		traitor.add_objective(new_objective)
+
+	if(escape_type)
+		traitor.add_objective(escape_type)
 
 /datum/affiliate/proc/get_weight(mob/living/carbon/human/H)
 	return 3

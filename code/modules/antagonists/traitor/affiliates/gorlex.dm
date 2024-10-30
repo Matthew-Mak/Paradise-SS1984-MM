@@ -16,20 +16,12 @@
 			Возможны помехи от агентов других корпораций - действуйте на свое усмотрение."
 	icon_state = "gorlex"
 	hij_obj = /datum/objective/nuclear/traitor
-	objectives = list(/datum/objective/assassinate/headofstaff,
-						/datum/objective/assassinate/headofstaff,
-						/datum/objective/assassinate/procedure,
-						list(/datum/objective/assassinate = 85, /datum/objective/destroy = 15),
-						/datum/objective/assassinate,
-						/datum/objective/die
-						)
+	normal_objectives = 5
 	can_take_bonus_objectives = FALSE
+	escape_type = /datum/objective/die
 
 /datum/affiliate/gorlex/finalize_affiliate(datum/mind/owner)
 	. = ..()
-	add_discount_item(/datum/uplink_item/device_tools/stims, 0.7)
-	add_discount_item(/datum/uplink_item/suits/hardsuit, 0.75)
-
 	var/datum/atom_hud/antag/gorlhud = GLOB.huds[ANTAG_HUD_AFFIL_GORLEX]
 	gorlhud.join_hud(owner.current)
 	set_antag_hud(owner.current, "hudaffilgorlex")
@@ -52,13 +44,13 @@
 
 	return 0
 
-/datum/affiliate/gorlex/give_bonus_objectives(datum/mind/mind)
-	if(!can_take_bonus_objectives)
-		return
+/datum/affiliate/mi13/give_default_objective()
+	traitor.add_objective(pickweight(list(
+		/datum/objective/assassinate/headofstaff = 30,
+		/datum/objective/assassinate/procedure = 20,
+		/datum/objective/assassinate = 45,
+		/datum/objective/destroy = 5,
+	)))
 
-	var/datum/antagonist/traitor/traitor = mind?.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor)
-		return
-
-	traitor.add_objective(/datum/objective/assassinate)
-	traitor.add_objective(/datum/objective/assassinate)
+/datum/affiliate/gorlex/give_bonus_objectives()
+	return

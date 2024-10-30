@@ -43,13 +43,6 @@ GLOBAL_LIST_INIT(cybersun_theft_objectives_weights, list(
 						/datum/objective/escape,
 						)
 
-/datum/affiliate/cybersun/finalize_affiliate()
-	. = ..()
-	for(var/path in subtypesof(/datum/uplink_item/implants))
-		add_discount_item(path, 0.8)
-
-	add_discount_item(/datum/uplink_item/device_tools/hacked_module, 2/3)
-
 /datum/affiliate/cybersun/proc/gen_default_objective()
 	if(prob(40))
 		if(length(active_ais()) && prob(100 / length(GLOB.player_list)))

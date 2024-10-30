@@ -7,6 +7,7 @@
 					"Убить определенное количество членов экипажа",
 					"Украсть определенное количество ценных предметов")
 	can_take_bonus_objectives = TRUE
+	escape_type = null
 
 /datum/affiliate/contractor/get_weight(mob/living/carbon/human/H)
 	return 0

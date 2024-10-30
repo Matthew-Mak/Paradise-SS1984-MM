@@ -70,6 +70,8 @@
 	var/list/affiliate
 	/// Empty list means it is available for every in game affiliates.
 	var/list/exclude_from_affiliate
+	/// Used to balance prices depending on the contaffiliate.
+	var/list/discount_for_affiliate
 	/// Chance of being included in the surplus crate (when pick() selects it).
 	var/surplus = 100
 	/// Whether item can be on sales category.
@@ -352,6 +354,7 @@
 	item = /obj/item/CQC_manual/chef
 	cost = 30
 	job = list(JOB_TITLE_CHEF)
+	discount_for_affiliate = list(AFFIL_MI13 = 0.8)
 	surplus = 0 //because it's useless for all non-chefs
 	made_by = AFFIL_MI13
 
@@ -897,6 +900,7 @@
 	item = /obj/item/melee/energy/sword/saber
 	cost = 40
 	made_by = AFFIL_TIGER
+	discount_for_affiliate = list(AFFIL_TIGER = 0.7)
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -1325,6 +1329,7 @@
 	name = "CQC Manual"
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing. Does not restrict weapon usage, but cannot be used alongside Gloves of the North Star."
 	item = /obj/item/CQC_manual
+	discount_for_affiliate = list(AFFIL_MI13 = 0.8)
 	cost = 50
 	can_discount = FALSE
 
@@ -1614,6 +1619,7 @@
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 	exclude_from_affiliate = list(AFFIL_GORLEX)
+	discount_for_affiliate = list(AFFIL_MI13 = 0.8)
 	made_by = AFFIL_MI13
 
 /datum/uplink_item/stealthy_tools/syndie_kit/counterfeiter_bundle
@@ -1938,6 +1944,7 @@
 	item = /obj/item/storage/box/syndie_kit/hardsuit
 	cost = 33
 	exclude_from_affiliate = list(AFFIL_MI13)
+	discount_for_affiliate = list(AFFIL_GORLEX = 0.75)
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
 /datum/uplink_item/suits/chameleon_hardsuit
@@ -1988,6 +1995,7 @@
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
 	exclude_from_affiliate = list(AFFIL_SELF)
+	discount_for_affiliate = list(AFFIL_CYBERSUN = 2/3)
 	cost = 38
 
 /datum/uplink_item/device_tools/magboots
@@ -2104,6 +2112,7 @@
 	item = /obj/item/reagent_containers/hypospray/autoinjector/stimulants
 	cost = 28
 	excludefrom = list(UPLINK_TYPE_NUCLEAR)
+	discount_for_affiliate = list(AFFIL_GORLEX = 0.7)
 	made_by = AFFIL_HEMATOGENIC
 
 // IMPLANTS
@@ -2111,6 +2120,7 @@
 /datum/uplink_item/implants
 	category = "Implants"
 	made_by = AFFIL_CYBERSUN
+	discount_for_affiliate = list(AFFIL_CYBERSUN = 0.8)
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -2154,6 +2164,7 @@
 	can_discount = FALSE
 	surplus = 0
 	made_by = AFFIL_HEMATOGENIC
+	discount_for_affiliate = list(AFFIL_TIGER = 0.75)
 
 /datum/uplink_item/implants/adrenal/prototype
 	name = "Prototype Adrenal Implant"
@@ -2161,6 +2172,7 @@
 	item = /obj/item/implanter/adrenalin/prototype
 	cost = 16
 	made_by = AFFIL_HEMATOGENIC
+	discount_for_affiliate = list(AFFIL_TIGER = 0.7)
 
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"

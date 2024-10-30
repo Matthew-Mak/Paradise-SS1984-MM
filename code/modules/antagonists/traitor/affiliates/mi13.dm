@@ -14,14 +14,7 @@ GLOBAL_LIST_INIT(mi13_theft_objectives_weights, list(
 					"Выглядеть стильно")
 	slogan = "Да, я Бонд. Джеймс Бонд."
 	icon_state = "mi13"
-	normal_objectives = 3
-	objectives = list(
-//					/datum/objective/steal/documents,
-//					list(/datum/objective/steal = 30, /datum/objective/maroon/blueshield = 70), // blueshield also has CQC.
-					/datum/objective/maroon/agent,
-					/datum/objective/maroon/agent,
-					/datum/objective/escape
-					)
+	normal_objectives = 5
 
 /proc/is_MI13_agent(mob/living/user)
 	var/datum/antagonist/traitor/traitor = user?.mind?.has_antag_datum(/datum/antagonist/traitor)
@@ -32,14 +25,8 @@ GLOBAL_LIST_INIT(mi13_theft_objectives_weights, list(
 	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
 	traitor.assign_exchange_role(SSticker.mode.exchange_red)
 	uplink.get_intelligence_data = TRUE
-	for(var/path in subtypesof(/datum/uplink_item/stealthy_tools))
-		add_discount_item(path, 0.8)
 
-	add_discount_item(/datum/uplink_item/stealthy_weapons/cqc, 0.8)
-
-/datum/affiliate/mi13/give_bonus_objectives(datum/mind/mind)
-	var/datum/antagonist/traitor/traitor = mind?.has_antag_datum(/datum/antagonist/traitor)
-
+/datum/affiliate/mi13/give_bonus_objectives()
 	traitor.add_objective(/datum/objective/steal)
 	traitor.add_objective(/datum/objective/steal)
 

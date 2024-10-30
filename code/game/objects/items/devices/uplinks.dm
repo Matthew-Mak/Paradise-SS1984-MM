@@ -91,7 +91,11 @@ GLOBAL_LIST_EMPTY(world_uplinks)
 			if((length(uplink_item.exclude_from_affiliate) && uplink_item.exclude_from_affiliate.Find(affiliate?.name) && uplink_type != UPLINK_TYPE_ADMIN))
 				continue
 
-			cats[cats.len]["items"] += list(list("name" = sanitize(uplink_item.name), "desc" = sanitize(uplink_item.description()), "cost" = uplink_item.cost, "hijack_only" = uplink_item.hijack_only, "obj_path" = ref(uplink_item), "refundable" = uplink_item.refundable))
+			var/cost_share = 1
+			if(length(uplink_item.discount_for_affiliate) && uplink_item.discount_for_affiliate.Find(affiliate?.name))
+				cost_share = uplink_item.discount_for_affiliate[affiliate?.name]
+
+			cats[cats.len]["items"] += list(list("name" = sanitize(uplink_item.name), "desc" = sanitize(uplink_item.description()), "cost" = round(uplink_item.cost * cost_share), "hijack_only" = uplink_item.hijack_only, "obj_path" = ref(uplink_item), "refundable" = uplink_item.refundable))
 
 	uplink_cats = cats
 
@@ -447,6 +451,7 @@ GLOBAL_LIST_EMPTY(world_uplinks)
 			if(can_bonus_objectives)
 				if(ui.user.mind.has_antag_datum(/datum/antagonist/traitor))
 					can_bonus_objectives = FALSE
+					affiliate.can_take_bonus_objectives = FALSE
 					affiliate.give_bonus_objectives(ui.user.mind)
 					SStgui.update_uis(src)
 
