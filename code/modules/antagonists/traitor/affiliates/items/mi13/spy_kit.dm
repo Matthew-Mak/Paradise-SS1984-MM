@@ -111,7 +111,7 @@
 
 	examine_list += span_warning("Вы видите небольшое устройство с микрофоном и камерой.")
 
-/datum/component/spy_bug/proc/on_altclick(mob/living/carbon/human/user)
+/datum/component/spy_bug/proc/on_altclick(datum/source, mob/living/carbon/human/user)
 	SIGNAL_HANDLER
 
 	if(!istype(user))

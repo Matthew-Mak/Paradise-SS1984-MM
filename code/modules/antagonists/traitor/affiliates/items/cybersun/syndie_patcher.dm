@@ -23,8 +23,8 @@
 			var/mob/prev_robot = target
 			var/mob/living/silicon/robot/syndicate/saboteur/robot = new(get_turf(target))
 			prev_robot.mind?.transfer_to(robot)
-			robot.reset_module()
-			robot.laws.zeroth_law = new(laws)
+			robot.laws.zeroth_law_borg = new(laws)
+			robot.laws.sorted_laws.Cut()
 			QDEL_NULL(prev_robot)
 			qdel(src)
 

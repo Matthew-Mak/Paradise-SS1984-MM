@@ -12,17 +12,17 @@
 	qdel(src)
 
 /obj/item/borer_scanner // Looks like normal analyzer
-	desc = "A hand-held environmental scanner which reports current gas levels."
-	name = "analyzer"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "atmos"
-	item_state = "analyzer"
-	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	name = /obj/item/analyzer::name
+	desc = /obj/item/analyzer::desc
+	icon = /obj/item/analyzer::icon
+	icon_state = /obj/item/analyzer::icon_state
+	item_state = /obj/item/analyzer::item_state
+	w_class = /obj/item/analyzer::w_class
+	flags = /obj/item/analyzer::flags
 	slot_flags = ITEM_SLOT_BELT
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
+	throwforce = /obj/item/analyzer::throwforce
+	throw_speed = /obj/item/analyzer::throw_speed
+	throw_range = /obj/item/analyzer::throw_range
 	origin_tech = "magnets=1;engineering=1;biotech=3;syndicate=1"
 	var/scan_cooldown_time = 3 SECONDS
 	COOLDOWN_DECLARE(scan_cooldown)
