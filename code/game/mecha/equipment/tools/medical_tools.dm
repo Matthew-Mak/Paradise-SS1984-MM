@@ -649,7 +649,6 @@
 	energy_drain = 50
 	range = MECHA_MELEE | MECHA_RANGED
 	var/obj/item/gun/medbeam/mech/mbeam
-	var/mob/beamtarget
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/Initialize(mapload)
 	. = ..()
@@ -664,7 +663,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/beamgun/action(mob/target)
 	beamtarget = target
-	if(!mbeam.process_fire(beamtarget, loc))
+	if(!mbeam.process_fire(target, loc))
 		STOP_PROCESSING(SSobj, src)
 		return
 
