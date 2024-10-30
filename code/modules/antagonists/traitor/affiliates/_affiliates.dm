@@ -169,3 +169,26 @@
 
 /datum/affiliate/proc/give_default_objective()
 	traitor.forge_single_objective()
+
+/datum/affiliate/proc/gen_steal_objective(list/weights)
+	var/list/possible = list()
+	var/list/blacklist = list()
+	for(var/datum/objective/steal/steal_objective in traitor.owner.get_all_objectives())
+		if(!steal_objective.steal_target)
+			continue
+
+		blacklist.Add(steal_objective.steal_target.typepath)
+
+	for(var/O in GLOB.potential_theft_objectives)
+		if(O in blacklist)
+			continue
+
+		possible[O] = 1
+
+	for(var/O in weights)
+		if(O in blacklist)
+			continue
+
+		possible[O] = weights[O]
+
+	return pick_weight_n_take(possible)

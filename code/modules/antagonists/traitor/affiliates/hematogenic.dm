@@ -1,3 +1,8 @@
+GLOBAL_LIST_INIT(hematogenic_theft_objectives_weights, list(
+	/datum/theft_objective/highrisk/defib = 3,
+	/datum/theft_objective/highrisk/hypospray = 3,
+))
+
 /datum/affiliate/hematogenic
 	name = AFFIL_HEMATOGENIC
 	affil_info = list("Фармацевтическая мега корпорация подозревающаяся в связях с вампирами.",
@@ -15,25 +20,38 @@
 	icon_state = "hematogenic"
 	hij_obj = /datum/objective/blood/ascend
 	normal_objectives = 2
-	objectives = list(/datum/objective/harvest_blood,
-					/datum/objective/steal/hypo_or_defib,
-					list(/datum/objective/steal = 50, /datum/objective/steal/hypo_or_defib = 30, /datum/objective/new_mini_vampire = 20),
+	objectives = list(list(/datum/objective/harvest_blood = 80, /datum/objective/new_mini_vampire = 20),
 					/datum/objective/escape
 					)
 
 /datum/affiliate/hematogenic/get_weight(mob/living/carbon/human/H)
 	return (!ismachineperson(H) && H.mind?.assigned_role != JOB_TITLE_CHAPLAIN) * 2
 
-/datum/affiliate/hematogenic/give_default_objective()
+/datum/affiliate/hematogenic/proc/gen_default_objective()
 	if(prob(60))
-		if(prob(5))
-			traitor.add_objective(/datum/objective/debrain)
+		if(length(active_ais()) && prob(100 / length(GLOB.player_list)))
+			return /datum/objective/destroy
+
+		else if(prob(5))
+			return /datum/objective/debrain
 
 		else if(prob(10))
-			traitor.add_objective(/datum/objective/protect)
+			return /datum/objective/protect
 
 		else
-			traitor.add_objective(/datum/objective/maroon)
+			return /datum/objective/maroon
 
+	else
+		return /datum/objective/steal
+
+/datum/affiliate/hematogenic/give_default_objective()
+	var/obj_type = gen_default_objective()
+	if(obj_type != /datum/objective/steal)
+		traitor.add_objective(obj_type)
+		return
+
+	var/target_type = gen_steal_objective(GLOB.hematogenic_theft_objectives_weights)
+	if(target_type)
+		traitor.add_objective(/datum/objective/steal, target_override = target_type)
 	else
 		traitor.add_objective(/datum/objective/steal)

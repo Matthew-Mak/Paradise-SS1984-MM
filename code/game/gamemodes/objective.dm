@@ -871,6 +871,8 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 	martyr_compatible = FALSE
 	var/type_theft_flag = THEFT_FLAG_HIGHRISK
 
+/datum/objective/steal/New(text, datum/team/team_to_join)
+	. = ..()
 
 /datum/objective/steal/proc/get_theft_list_objectives(type_theft_flag)
 	switch(type_theft_flag)
@@ -897,36 +899,34 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 		else
 			return GLOB.potential_theft_objectives
 
+/datum/objective/steal/proc/choose_target(target_type, list/target_blacklist = list())
+	. = FALSE
+	var/datum/theft_objective/new_theft_objective = new target_type
+	for(var/datum/mind/player in get_owners())
+		if((player.assigned_role in new_theft_objective.protected_jobs))
+			return
+
+	if(!new_theft_objective.check_objective_conditions())
+		return
+
+	if(new_theft_objective.id in target_blacklist)
+		return
+
+	steal_target = new_theft_objective
+	steal_target.generate_explanation_text(src)
+
+	if(steal_target.special_equipment)
+		give_kit(steal_target.special_equipment)
+
+	return TRUE
 
 /datum/objective/steal/find_target(list/target_blacklist)
 	var/list/temp = get_theft_list_objectives(type_theft_flag)
 	var/list/theft_types = temp.Copy()
 	while(!steal_target && length(theft_types))
 		var/thefttype = pick_n_take(theft_types)
-		var/datum/theft_objective/new_theft_objective = new thefttype
-
-		var/has_invalid_owner = FALSE
-		for(var/datum/mind/player in get_owners())
-			if((player.assigned_role in new_theft_objective.protected_jobs))
-				has_invalid_owner = TRUE
-				break
-
-		if(has_invalid_owner)
-			continue
-
-		if(!new_theft_objective.check_objective_conditions())
-			continue
-
-		if(new_theft_objective.id in target_blacklist)
-			continue
-
-		steal_target = new_theft_objective
-		steal_target.generate_explanation_text(src)
-
-		if(steal_target.special_equipment)
-			give_kit(steal_target.special_equipment)
-
-		return TRUE
+		if(choose_target(thefttype, target_blacklist))
+			return TRUE
 
 	explanation_text = "Free Objective."
 	return FALSE

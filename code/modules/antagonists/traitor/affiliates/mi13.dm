@@ -1,3 +1,8 @@
+GLOBAL_LIST_INIT(mi13_theft_objectives_weights, list(
+	/datum/theft_objective/highrisk/blueprints = 2,
+	/datum/theft_objective/highrisk/documents = 2,
+))
+
 /datum/affiliate/mi13
 	name = AFFIL_MI13
 	affil_info = list("Агенство специализирующееся на добыче и продаже секретной информации и разработок.",
@@ -27,6 +32,9 @@
 	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
 	traitor.assign_exchange_role(SSticker.mode.exchange_red)
 	uplink.get_intelligence_data = TRUE
+	for(var/path in subtypesof(/datum/uplink_item/stealthy_tools))
+		add_discount_item(path, 0.8)
+
 	add_discount_item(/datum/uplink_item/stealthy_weapons/cqc, 0.8)
 
 /datum/affiliate/mi13/give_bonus_objectives(datum/mind/mind)
@@ -35,22 +43,31 @@
 	traitor.add_objective(/datum/objective/steal)
 	traitor.add_objective(/datum/objective/steal)
 
-/datum/affiliate/mi13/give_default_objective()
+/datum/affiliate/mi13/proc/gen_default_objective()
 	if(prob(40))
 		if(length(active_ais()) && prob(100 / length(GLOB.player_list)))
-			traitor.add_objective(/datum/objective/destroy)
+			return /datum/objective/destroy
 
 		else if(prob(5))
-			traitor.add_objective(/datum/objective/debrain)
+			return /datum/objective/debrain
 
-		else if(prob(10))
-			traitor.add_objective(/datum/objective/protect)
-
-		else if(prob(5))
-			traitor.add_objective(/datum/objective/steal/documents)
+		else if(prob(15))
+			return /datum/objective/protect
 
 		else
-			traitor.add_objective(/datum/objective/maroon)
+			return pickweight(list(/datum/objective/maroon = 40, /datum/objective/maroon/agent = 60))
 
+	else
+		return /datum/objective/steal
+
+/datum/affiliate/mi13/give_default_objective()
+	var/obj_type = gen_default_objective()
+	if(obj_type != /datum/objective/steal)
+		traitor.add_objective(obj_type)
+		return
+
+	var/target_type = gen_steal_objective(GLOB.mi13_theft_objectives_weights)
+	if(target_type)
+		traitor.add_objective(/datum/objective/steal, target_override = target_type)
 	else
 		traitor.add_objective(/datum/objective/steal)

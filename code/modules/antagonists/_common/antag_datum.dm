@@ -331,9 +331,9 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Arguments:
  * * objective_type - A type path of an objective, for example: /datum/objective/steal
  * * explanation_text - the explanation text that will be passed into the objective's `New()` proc
- * * mob/target_override - a target for the objective
+ * * target_override - a target for the objective
  */
-/datum/antagonist/proc/add_objective(objective_type, explanation_text = "", mob/target_override = null)
+/datum/antagonist/proc/add_objective(objective_type, explanation_text = "", target_override = null)
 	var/datum/objective/new_objective = objective_type
 	if(ispath(objective_type))
 		new_objective = new objective_type(explanation_text)
@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	var/found_valid_target = FALSE
 
-	if(target_override)
+	if(!istype(new_objective, /datum/objective/steal) && target_override)
 		new_objective.target = target_override
 		found_valid_target = TRUE
 
@@ -354,9 +354,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(istype(new_objective, /datum/objective/steal))
 			var/datum/objective/steal/our_objective = new_objective
 			var/list/steal_target_ids = list()
+			if(target_override)
+				our_objective.choose_target(target_override)
+
 			for(var/datum/objective/steal/steal_objective in owner.get_all_objectives())
 				if(!steal_objective.steal_target?.id)
 					continue
+
 				steal_target_ids |= steal_objective.steal_target.id
 
 			if(our_objective.find_target(target_blacklist = steal_target_ids))
