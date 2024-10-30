@@ -892,7 +892,7 @@
 	desc = "Это уставшая кукла РД."
 
 /obj/item/toy/plushie/gsbplushie
-	name = "GSBussy"
+	name = "GSBussy doll"
 	desc = "Глуповатого вида кукла, что держит в руках книгу Космического закона и имитацию револьвера Unica-6. \
 			На задней части имеется следующая надпись: \
 			«Кукла-аниматроник GSBussy, лимитированная серия. Произведено ######» - часть текста невозможно разобрать."
@@ -913,10 +913,21 @@
 	"Обыскивайте всех подряд! Летальте всех, кого считаете слишком опасным для нелетала!", "Мим теслу запускает! ЗАДЕРЖАТЬ!!!",
 	"Подмогу в туалет брига!", "Почему над унитазом установлены 3 камеры?")
 
+	user.visible_message(span_notice(message))
+	COOLDOWN_START(src, cooldown, 3 SECONDS)
+
 /obj/item/toy/plushie/gsbplushie/attack(mob/living/target, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
 	. = ..()
 	if(ATTACK_CHAIN_SUCCESS_CHECK(.))
+		var/message
 		playsound(loc, 'sound/items/GSBussy.ogg', 10, TRUE)
+		message = pick("Я просто стояла рядом с автолатом и Уника исчезла...", ".ы ПОО-МММ-ОО-Г-Г-ГИТ-Е-Е-ее-Ее А-а-А-Р-р-Ан-Н-Еу-С-С!",
+		"ОТВЕЧАЙ, ГДЕ ТЫ ПОТЕРЯЛ СВОЙ ЧЁРТОВ ГОЛОВНОЙ УБОР?! КАЗНИТЬ ЕГО!", "Какой-то Д двадц...",
+		"Обыскивайте всех подряд! Летальте всех, кого считаете слишком опасным для нелетала!", "Мим теслу запускает! ЗАДЕРЖАТЬ!!!",
+		"Подмогу в туалет брига!", "Почему над унитазом установлены 3 камеры?")
+
+		user.visible_message(span_notice(message))
+		COOLDOWN_START(src, cooldown, 3 SECONDS)
 
 /obj/item/toy/plushie/greyplushie
 	name = "Плюшевый грей"
