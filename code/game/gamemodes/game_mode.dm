@@ -720,9 +720,9 @@
 
 /datum/game_mode/proc/apocalypse()
 	set_security_level(SEC_LEVEL_DELTA)
-	GLOB.priority_announcement.Announce("Обнаружена угроза класса 'Разрушитель миров'. Моделирование пути решения угрозы начато, ожидайте", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
+	GLOB.priority_announcement.Announce("Обнаружена угроза класса 'Разрушитель миров'. Моделирование пути противостояния угрозе начато, ожидайте.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(50 SECONDS)
-	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайщее время", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
+	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайщее время.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(30 SECONDS)
 	var/obj/singularity/narsie/N = locate(/obj/singularity/narsie) in GLOB.poi_list
 	var/obj/singularity/ratvar/R = locate(/obj/singularity/ratvar) in GLOB.poi_list
@@ -732,21 +732,18 @@
 		SSshuttle.emergency.canRecall = FALSE
 		return
 	if(N)
-		if(SSticker.cultdat.name == "Cult of Nar'Sie")
-			play_cinematic(/datum/cinematic/cult_arm, world)
-			sleep(15 SECONDS)
-			SSticker.force_ending = TRUE
-			return
-		if(SSticker.cultdat.name == "Cult of Kha'Rin")
-			play_cinematic(/datum/cinematic/cult_arm_kharin, world)
-			sleep(15 SECONDS)
-			SSticker.force_ending = TRUE
-			return
-		if(SSticker.cultdat.name == "Cult of Mortality")
-			play_cinematic(/datum/cinematic/cult_arm_reaper, world)
-			sleep(15 SECONDS)
-			SSticker.force_ending = TRUE
-			return
+		var/datum/cinematic/cinema
+		switch(SSticker.cultdat.name)
+			if("Cult of Nar'Sie")
+				cinema = /datum/cinematic/cult_arm
+			if("Cult of Kha'Rin")
+				cinema = /datum/cinematic/cult_arm_kharin
+			if("Cult of Mortality")
+				cinema = /datum/cinematic/cult_arm_reaper
+		play_cinematic(cinema, world)
+		sleep(15 SECONDS)
+		SSticker.force_ending = TRUE
+		return
 	if(R)
 		play_cinematic(/datum/cinematic/cult_arm_ratvar, world)
 		sleep(15 SECONDS)
