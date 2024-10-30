@@ -126,8 +126,8 @@
 				if(!blocker.density || !(blocker.flags & ON_BORDER))
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
-					qdel(dummy)
 					continue
+					qdel(dummy)
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
 		if(mounted && next_step == user_turf)
