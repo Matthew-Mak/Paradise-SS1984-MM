@@ -126,7 +126,7 @@
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
 					continue
-					qdel(dummy)
+				qdel(dummy)
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
 		if(mounted && next_step == user_turf)
