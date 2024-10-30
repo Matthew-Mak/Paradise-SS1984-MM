@@ -96,7 +96,7 @@
 		LoseTarget()
 		return
 
-	if(world.time <= last_check+check_delay)
+	if(world.time <= last_check + check_delay)
 		return
 
 	last_check = world.time
@@ -126,7 +126,7 @@
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
 					continue
-					qdel(dummy)
+				qdel(dummy)
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
 		if(mounted && next_step == user_turf)
