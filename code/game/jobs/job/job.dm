@@ -66,9 +66,10 @@
 	var/spawn_ert = 0
 	var/syndicate_command = 0
 
-	var/money_factor = 1 // multiplier of starting funds
-	var/random_money_factor = FALSE // is miltiplier randomized (from 4x to 0.25x for now)
-
+	var/salary = 0
+	var/min_start_money = 0
+	var/max_start_money = 0
+	
 	var/outfit = null
 
 	/////////////////////////////////
@@ -76,6 +77,9 @@
 	/////////////////////////////////
 	var/required_objectives=list() // Objectives that are ALWAYS added.
 	var/optional_objectives=list() // Objectives that are SOMETIMES added.
+
+	var/insurance = INSURANCE_STANDART
+	var/insurance_type = INSURANCE_TYPE_STANDART
 
 //Only override this proc
 /datum/job/proc/after_spawn(mob/living/carbon/human/H)

@@ -11,6 +11,9 @@
 		stack_trace("Item with no donator tier in loadout donor items: [display_name].")
 		return TRUE
 
+	if(!cl.prefs) // DB loading, skip this check now
+		return TRUE
+
 	if(cl?.donator_level >= donator_tier)
 		return TRUE
 
@@ -233,6 +236,24 @@
 	cost = 1
 	allowed_roles = list(JOB_TITLE_REPRESENTATIVE)
 
+/datum/gear/donor/strip/syndi
+	display_name = "strip, Syndicate"
+	path = /obj/item/clothing/accessory/head_strip/syndicate
+	donator_tier = 3
+	cost = 1
+
+/datum/gear/donor/strip/comrad
+	display_name = "strip, SSSP"
+	path = /obj/item/clothing/accessory/head_strip/comrad
+	donator_tier = 3
+	cost = 1
+
+/datum/gear/donor/strip/federal
+	display_name = "strip, TSF"
+	path = /obj/item/clothing/accessory/head_strip/federal
+	donator_tier = 3
+	cost = 1
+
 /datum/gear/donor/heartglasses
 	display_name = "heart-shaped glasses, color"
 	path = /obj/item/clothing/glasses/heart
@@ -389,4 +410,9 @@
 	display_name = "Short maid costume"
 	path = /obj/item/clothing/under/maid/short
 
+/datum/gear/donor/rdplushie
+	donator_tier = 3
+	cost = 1
+	display_name = "RD doll"
+	path = /obj/item/toy/plushie/rdplushie
 

@@ -5,8 +5,8 @@
 	school = "transmutation"
 	base_cooldown = 6 SECONDS
 	clothes_req = FALSE
-	selection_activated_message = "<span class='notice'>Вы готовите благословение. Нажмите на цель, чтобы благословить её.</span>"
-	selection_deactivated_message = "<span class='notice'>Вы решили благословить экипаж в другой раз.</span>"
+	selection_activated_message = span_notice("Вы готовите благословение. Нажмите на цель, чтобы благословить её.")
+	selection_deactivated_message = span_notice("Вы решили благословить экипаж в другой раз.")
 	cooldown_min = 2 SECONDS
 	action_icon_state = "shield"
 	need_active_overlay = TRUE

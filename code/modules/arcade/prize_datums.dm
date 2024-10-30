@@ -284,7 +284,7 @@ GLOBAL_DATUM_INIT(global_prizes, /datum/prizes, new())
 /datum/prize_item/enforce
 	name = "Foam Force Enforce"
 	desc = "Точная копия стандартного вооружения службы безопасности НТ."
-	typepath = /obj/item/ammo_box/magazine/toy/enforcer
+	typepath = /obj/item/gun/projectile/automatic/toy/pistol/enforcer
 	cost = 350
 
 /datum/prize_item/shotgun
@@ -296,11 +296,11 @@ GLOBAL_DATUM_INIT(global_prizes, /datum/prizes, new())
 /datum/prize_item/bike
 	name = "Awesome Bike!"
 	desc = "Я прикупил огромный байк..."
-	typepath = /obj/vehicle/motorcycle
+	typepath = /obj/vehicle/ridden/motorcycle
 	cost = 2500
 
 /datum/prize_item/speedbike
 	name = "Awesome Speedbike!"
 	desc = "Спорим, что вы не сможете его купить? XD"
-	typepath =/obj/vehicle/space/speedbike/red
-	cost = 10000	//max stack + 1 tickets.
+	typepath =/obj/vehicle/ridden/speedbike/red
+	cost = 10000
