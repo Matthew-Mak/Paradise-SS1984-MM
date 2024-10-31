@@ -473,6 +473,10 @@
 		if(CIH?.examine_extensions)
 			have_hud_exam |= CIH.examine_extensions
 
+		var/obj/item/organ/internal/brain/mobs_brain = H.get_organ_slot(INTERNAL_ORGAN_BRAIN)
+		if(mobs_brain?.smart_mind)
+			have_hud_exam |= EXAMINE_HUD_SCIENCE
+
 		return (have_hud_exam & hud_exam)
 
 	else if(isrobot(M) || isAI(M)) //Stand-in/Stopgap to prevent pAIs from freely altering records, pending a more advanced Records system

@@ -292,7 +292,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/g
 
 	. = ..(user, "", "It is a [size] item.")
 
-	if(user.research_scanner) //Mob has a research scanner active.
+	var/obj/item/organ/internal/brain/mobs_brain = user.get_organ_slot(INTERNAL_ORGAN_BRAIN)
+	if(user.research_scanner || mobs_brain?.smart_mind) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
 
 		if(origin_tech)

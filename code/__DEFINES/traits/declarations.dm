@@ -268,3 +268,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPECIES_LIMBS "only_species_limbs"
 /// Phohibits using the "Book Of Babel"
 #define TRAIT_NO_BABEL "cannot_use_babel"
+/// Improves the function of some cyberimps for the Grey species
+/// Rename and split into several if you want to make a different functionality to another species/etc
+#define TRAIT_ADVANCED_CYBERIMPLANTS "advanced_cyberimplants"
+/// Any movement of non-item objects or mobs expends stamina (10 run, 5 walk)
+#define TRAIT_WEAK_PULLING "weak_pulling"
+/// Makes species acid proof(not it's items), affects: acetic, sulfiric, fluorosulfuric acids
+#define TRAIT_ACID_PROTECTED "acid_protected"
+/// Species with no vocal cords can't speak without translator
+#define TRAIT_NO_VOCAL_CORDS "no_vocal_cords"

@@ -28,6 +28,8 @@
 	return "\[Species: [english_list(whitelisted_species)]\] "
 
 
+ // TAJARAN //
+
 /datum/gear/racial/taj
 	display_name = "embroidered veil"
 	description = "A common traditional nano-fiber veil worn by many Tajaran, It is rare and offensive to see it on other races."
@@ -94,4 +96,26 @@
 	path = /obj/item/clothing/glasses/hud/skills/tajblind
 	allowed_roles = list(JOB_TITLE_HOP, JOB_TITLE_CAPTAIN)
 
+
+// GREY //
+
+/datum/gear/racial/language_chip
+	display_name = "selected language chip"
+	description = "Крошечный чип-переводчик с индикатором, содержащий в себе один из языков. Разработан греями, устанавливается в импланты-переводчики."
+	path = /obj/item/translator_chip/sol
+	whitelisted_species = list(SPECIES_GREY)
+
+
+/datum/gear/racial/language_chip/New()
+	. = ..()
+
+	var/list/available_chips = list()
+	for(var/path in subtypesof(/obj/item/translator_chip))
+		var/obj/item/translator_chip/chip = path
+		if(chip.stored_language == TRAIT_WINGDINGS) // you can select it in the prefs, so no need to double
+			continue
+
+		available_chips[chip.stored_language_rus] = chip
+
+	gear_tweaks += new /datum/gear_tweak/path(available_chips, src)
 

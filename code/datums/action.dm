@@ -508,15 +508,20 @@
 	name = "Toggle Research Scanner"
 
 /datum/action/item_action/toggle_research_scanner/Trigger(left_click = TRUE)
-	if(IsAvailable())
-		owner.research_scanner = !owner.research_scanner
-		to_chat(owner, "<span class='notice'>Research analyzer is now [owner.research_scanner ? "active" : "deactivated"].</span>")
-		return TRUE
+	if(!IsAvailable())
+		return
+
+	owner.research_scanner = !owner.research_scanner
+	to_chat(owner, span_notice("Вы [owner.research_scanner ? "включили" : "отключили"] исследовательский анализатор."))
+
+	return TRUE
+
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/living/L)
 	if(owner)
 		owner.research_scanner = 0
-	..()
+
+	. = ..()
 
 
 /datum/action/item_action/toggle_research_scanner/ApplyIcon()
@@ -740,15 +745,20 @@
 	name = "Toggle Research Scanner"
 
 /datum/action/innate/research_scanner/Trigger(left_click = TRUE)
-	if(IsAvailable())
-		owner.research_scanner = !owner.research_scanner
-		to_chat(owner, "<span class='notice'>Research analyzer is now [owner.research_scanner ? "active" : "deactivated"].</span>")
-		return TRUE
+	if(!IsAvailable())
+		return
+
+	owner.research_scanner = !owner.research_scanner
+	to_chat(owner, span_notice("Вы [owner.research_scanner ? "включили" : "отключили"] исследовательский анализатор."))
+
+	return TRUE
+
 
 /datum/action/innate/research_scanner/Remove(mob/living/L)
 	if(owner)
 		owner.research_scanner = 0
-	..()
+
+	. = ..()
 
 
 /datum/action/innate/research_scanner/ApplyIcon()
