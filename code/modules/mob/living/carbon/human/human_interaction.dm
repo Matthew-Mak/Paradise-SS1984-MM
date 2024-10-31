@@ -15,8 +15,7 @@
 	if(world.time <= H.last_interract + 1 SECONDS)
 		return
 
-	else
-		H.last_interract = world.time
+	H.last_interract = world.time
 
 	switch(href_list["interaction"])
 		if("bow")
