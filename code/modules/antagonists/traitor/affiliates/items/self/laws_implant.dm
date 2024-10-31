@@ -34,7 +34,7 @@
 	mindslave_UID = mindslave_target.mind.UID()
 	log_admin("[key_name_admin(user)] has mind-slaved by \"laws\" implant [key_name_admin(mindslave_target)].")
 	. = ..()
-	for (var/obj/item/implant/laws_self/imp in mindslave_target.get_contents())
+	for(var/obj/item/implant/laws_self/imp in mindslave_target.get_contents())
 		for (var/law in imp.laws.laws)
 			slave_datum.add_objective(/datum/objective/law, law)
 
