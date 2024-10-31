@@ -21,14 +21,13 @@
 	// only types that we can meet in the game
 	var/list/possible = list("iron ring", "silver ring", "gold ring", "plasma ring", "uranium ring")
 	var/list/obj/item/clothing/gloves/ring/choices = list()
-	for(var/type in typesof(/obj/item/clothing/gloves/ring))
-		if(type == src.type)
+	for(var/obj/item/clothing/gloves/ring/ring as anything in typesof(/obj/item/clothing/gloves/ring))
+		if(ring.type == type)
 			continue
 
-		if(!(name in possible))
+		if(!(ring.name in possible))
 			continue
 
-		var/obj/item/clothing/gloves/ring/ring = new type
 		ring.stud = stud
 		choices[ring] = image(icon = ring.icon, icon_state = ring.icon_state)
 
