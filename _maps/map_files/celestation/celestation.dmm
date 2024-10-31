@@ -29523,9 +29523,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/deliveryChute{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -29533,6 +29530,10 @@
 /obj/structure/sign/directions/floor/alt{
 	dir = 6;
 	pixel_y = 32
+	},
+/obj/structure/disposaloutlet{
+	dir = 8;
+	eject_range = 2
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -55182,9 +55183,6 @@
 	},
 /area/turret_protected/aisat_interior/secondary)
 "jfp" = (
-/obj/machinery/disposal/deliveryChute{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -55192,6 +55190,10 @@
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "CargoTransfer"
+	},
+/obj/structure/disposaloutlet{
+	dir = 1;
+	eject_range = 2
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -101469,6 +101471,13 @@
 	icon_state = "whitepurple"
 	},
 /area/toxins/misc_lab)
+"sio" = (
+/obj/structure/disposaloutlet{
+	dir = 8;
+	eject_range = 2
+	},
+/turf/space/openspace,
+/area/space)
 "siv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -318982,7 +318991,7 @@ orm
 orm
 rOC
 orm
-orm
+sio
 orm
 orm
 orm
