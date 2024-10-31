@@ -61,7 +61,7 @@
 	SIGNAL_HANDLER
 
 	if(active && isliving(loc))
-		to_chat(loc, span_warning("Вы потеряли контроль над лучем!"))
+		balloon_alert(loc, "контроль потерян")
 
 	current_beam = null
 	active = FALSE //skip qdelling the beam again if we're doing this proc
