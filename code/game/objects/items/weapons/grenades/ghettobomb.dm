@@ -159,7 +159,7 @@
 		if(!burned_out)
 			to_chat(user, span_notice("[src] already has a wick"))
 			return ATTACK_CHAIN_PROCEED
-		if(I.use(5))
+		if(!I.use(5))
 			to_chat(user, span_notice("You need at least five lengths of cable to make a wick."))
 			return ATTACK_CHAIN_PROCEED
 		to_chat(user, span_notice("You made a new wick from the cable"))
