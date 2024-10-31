@@ -1984,7 +1984,7 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 /datum/objective/release_synthetic
 	var/req_amount = 2
 	var/list/datum/mind/already_free = 0
-	var/allowed_types =	SYNTH_TYPE_ALL
+	var/allowed_types = SYNTH_TYPE_ALL
 
 /datum/objective/release_synthetic/New()
 	. = ..()
