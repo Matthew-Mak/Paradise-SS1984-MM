@@ -68,9 +68,9 @@
 			changing = FALSE
 			return
 
-	usr.visible_message(span_warning("[usr] changes the look of his ring!"), span_notice("[selected_chameleon] selected."))
+	user.visible_message(span_warning("[user] changes the look of his ring!"), span_notice("[selected_chameleon] selected."))
 	playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
-	to_chat(usr, span_notice("Смена маскировки..."))
+	to_chat(user, span_notice("Смена маскировки..."))
 	update_icon(UPDATE_ICON_STATE)
 	changing = FALSE
 
