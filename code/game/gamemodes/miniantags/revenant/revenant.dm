@@ -130,7 +130,7 @@
 
 	for(var/mob/M in GLOB.mob_list)
 		var/rendered = "<span class='revennotice'><b>[src]</b> [(isobserver(M) ? ("([ghost_follow_link(src, ghost=M)])") : "")] says, \"[message]\"</span>"
-		if(istype(M, /mob/living/simple_animal/revenant) || isobserver(M))
+		if(isrevenant(M) || isobserver(M))
 			to_chat(M, rendered)
 
 
@@ -355,7 +355,7 @@
 	var/total_essence = 0
 
 	for(var/datum/mind/player in get_owners())
-		if(!istype(player.current, /mob/living/simple_animal/revenant) || QDELETED(player.current))
+		if(!isrevenant(player.current) || QDELETED(player.current))
 			continue
 
 		var/mob/living/simple_animal/revenant/revenant = player.current

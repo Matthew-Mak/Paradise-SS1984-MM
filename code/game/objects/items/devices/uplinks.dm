@@ -559,10 +559,10 @@ GLOBAL_LIST_EMPTY(world_uplinks)
 		malfs += ismalfAI(M)
 		borers += isborer(M)
 		morphs += ismorph(M)
-		revenants += istype(M, /mob/living/simple_animal/revenant)
+		revenants += isrevenant(M)
 		demons += isdemon(M)
-		shadow_demons += istype(M, /mob/living/simple_animal/demon/shadow)
-		pulse_demons += istype(M, /mob/living/simple_animal/demon/pulse_demon)
+		shadow_demons += isshadowdemon(M)
+		pulse_demons += ispulsedemon(M)
 
 		crew += ishuman(M)
 

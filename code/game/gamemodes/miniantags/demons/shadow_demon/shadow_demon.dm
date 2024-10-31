@@ -286,7 +286,7 @@
 /datum/objective/wrap/check_completion()
 	var/wrap_count = 0
 	for(var/datum/mind/player in get_owners())
-		if(!istype(player.current, /mob/living/simple_animal/demon/shadow) || QDELETED(player.current))
+		if(!isshadowdemon(player.current) || QDELETED(player.current))
 			continue
 
 		var/mob/living/simple_animal/demon/shadow/demon = player.current

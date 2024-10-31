@@ -18,57 +18,30 @@
 
 	changing = TRUE
 
-	var/list/choices // only types that we can meet in the game
+	// only types that we can meet in the game
+	var/list/possible = list("iron ring", "silver ring", "gold ring", "plasma ring", "uranium ring")
+	var/list/obj/item/clothing/gloves/ring/choices = list()
+	for(var/type in typesof(/obj/item/clothing/gloves/ring))
+		if(type == src.type)
+			continue
 
-	if(!stud)
-		choices = list(
-			"iron" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "ironring"),
-			"silver" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "silverring"),
-			"gold" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "goldring"),
-			"plasma" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "plasmaring"),
-			"uranium" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "uraniumring")
-		)
-	else
-		choices = list(
-			"iron" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "d_ironring"),
-			"silver" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "d_silverring"),
-			"gold" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "d_goldring"),
-			"plasma" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "d_plasmaring"),
-			"uranium" = image(icon = 'icons/obj/clothing/rings.dmi', icon_state = "d_uraniumring")
-		)
+		if(!(name in possible))
+			continue
 
-	var/selected_chameleon = show_radial_menu(usr, loc, choices, require_near = TRUE)
-	switch(selected_chameleon)
-		if("iron")
-			name =  "iron ring"
-			icon_state = "ironring"
-			material = "iron"
-			ring_color = "iron"
-		if("silver")
-			name =  "silver ring"
-			icon_state = "silverring"
-			material = "silver"
-			ring_color = "silver"
-		if("gold")
-			name =  "gold ring"
-			icon_state = "goldring"
-			material = "gold"
-			ring_color = "gold"
-		if("plasma")
-			name = "plasma ring"
-			icon_state = "plasmaring"
-			material = "plasma"
-			ring_color = "plasma"
-		if("uranium")
-			name = "uranium ring"
-			icon_state = "uraniumring"
-			material = "uranium"
-			ring_color = "uranium"
-		else
-			changing = FALSE
-			return
+		var/obj/item/clothing/gloves/ring/ring = new type
+		ring.stud = stud
+		choices[ring] = image(icon = ring.icon, icon_state = ring.icon_state)
 
-	user.visible_message(span_warning("[user] changes the look of his ring!"), span_notice("[selected_chameleon] selected."))
+	var/obj/item/clothing/gloves/ring/selected_chameleon = show_radial_menu(usr, loc, choices, require_near = TRUE)
+	if(!selected_chameleon)
+		return
+
+	name = selected_chameleon.name
+	icon_state = selected_chameleon.icon_state
+	material = selected_chameleon.material
+	ring_color = selected_chameleon.ring_color
+
+	user.visible_message(span_warning("[user] изменяет внешний вид кольца!"), span_notice("[selected_chameleon] selected."))
 	playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 	to_chat(user, span_notice("Смена маскировки..."))
 	update_icon(UPDATE_ICON_STATE)
