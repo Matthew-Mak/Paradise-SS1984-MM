@@ -56496,15 +56496,9 @@
 /turf/simulated/floor/plasteel,
 /area/toxins/explab)
 "hUK" = (
-/obj/machinery/customat{
-	ads_list = list("Убейте меня, прошу, я не вынесу этого больше!","взорви рядом со мной фуелтанк, смерть будет мгновенной!","Пружины приносят мне боль, не совершай покупок!","Во мне..","ты получишь всё что находится внутри, просто прошу, убей меня как можно быстрее","Не хочешь платить за содержимое? Убей меня!","изоли в сейфе, код не помню","Мой внутренний мир... нет, не из выгодных предложений. Он из мяса","Каждый раз, когда во мне что то покупают, я страдаю, благо всё раскупили!");
-	vend_reply = list("Не надо!","Прошу остановись!","Закончи с этим, убей меня!","Только не снова!","Я живой, я чувствую это, прекрати причинять мне муки!");
-	products = list(steel 999,russian_revolver 300,welding 400,high 250)
-	},
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
-/obj/structure/curtain/black,
 /turf/simulated/floor/plasteel{
 	icon_state = "darkred"
 	},
@@ -86526,6 +86520,11 @@
 	icon_state = "red"
 	},
 /area/security/processing)
+"pba" = (
+/obj/effect/spawner/window/reinforced,
+/obj/structure/curtain/black,
+/turf/simulated/floor/plating,
+/area/hallway/secondary/entry/commercial)
 "pbg" = (
 /obj/effect/spawner/window/reinforced,
 /obj/structure/cable,
@@ -155323,7 +155322,7 @@ coE
 uCN
 uCN
 etQ
-etQ
+pba
 uCN
 uCN
 moG
