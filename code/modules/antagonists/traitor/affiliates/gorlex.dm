@@ -37,8 +37,13 @@
 	switch (H.dna.species.type)
 		if(/datum/species/human)
 			return 1
+
+		if(/datum/species/nucleation)
+			return 1
+
 		if(/datum/species/machine)
 			return 0.2
+
 		if(/datum/species/slime)
 			return 0.2
 
