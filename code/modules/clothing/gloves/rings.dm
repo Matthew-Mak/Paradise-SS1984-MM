@@ -36,9 +36,11 @@
 		if(stud)
 			to_chat(user, span_warning("The [name] already has a gem."))
 			return ATTACK_CHAIN_PROCEED
+
 		if(!diamond.use(1))
 			to_chat(user, span_warning("You need at least one diamond to fill the socket."))
 			return ATTACK_CHAIN_PROCEED
+
 		stud = TRUE
 		update_icon()
 		to_chat(user, span_notice("You socket the diamond into [src]."))
