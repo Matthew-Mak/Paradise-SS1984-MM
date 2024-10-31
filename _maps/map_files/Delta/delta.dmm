@@ -7279,17 +7279,6 @@
 /obj/structure/falsewall,
 /turf/simulated/floor/plating,
 /area/maintenance/banya)
-"bci" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
-	},
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "bck" = (
 /obj/effect/decal/warning_stripes/red,
 /obj/structure/closet/firecloset,
@@ -7551,6 +7540,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Barber Shop"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plasteel{
 	icon_state = "barber"
 	},
@@ -15324,15 +15314,6 @@
 	icon_state = "darkblue"
 	},
 /area/turret_protected/aisat)
-"bTz" = (
-/obj/machinery/door/airlock{
-	id_tag = "toilet4";
-	name = "Toilet"
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "bTA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -46413,13 +46394,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/theatre)
-"fBT" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "fBZ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -51940,19 +51914,6 @@
 	icon_state = "dark"
 	},
 /area/hallway/secondary/exit)
-"gOJ" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "gOL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/wood,
@@ -53302,17 +53263,6 @@
 	icon_state = "whitebluefull"
 	},
 /area/medical/reception)
-"hfn" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "hfp" = (
 /obj/effect/spawner/window/reinforced/plasma,
 /obj/structure/cable,
@@ -54960,23 +54910,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/maintenance/asmaint4)
-"hBD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "hBH" = (
 /obj/machinery/atmospherics/unary/outlet_injector/on{
 	dir = 8;
@@ -59065,29 +58998,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/crew_quarters/sleep)
-"iBD" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/door_control{
-	desiredstate = 1;
-	id = "toilet4";
-	name = "Toilet Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	specialfunctions = 4
-	},
-/obj/effect/landmark/start/civilian,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "iBE" = (
 /obj/item/flashlight/lamp{
 	layer = 4;
@@ -63406,11 +63316,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/kitchen)
-"jBV" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "jBX" = (
 /obj/machinery/light{
 	dir = 4
@@ -70986,23 +70891,6 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/carpet/black,
 /area/bridge/vip)
-"lzG" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "lzH" = (
 /obj/structure/falsewall,
 /turf/simulated/floor/plating,
@@ -78169,14 +78057,6 @@
 	},
 /turf/simulated/floor/wood/fancy/light,
 /area/crew_quarters/captain/bedroom)
-"ngu" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "ngy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plasteel{
@@ -91261,15 +91141,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/crew_quarters/kitchen)
-"qbf" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "qbl" = (
 /obj/effect/decal/warning_stripes/yellow,
 /obj/machinery/navbeacon{
@@ -92244,18 +92115,6 @@
 	icon_state = "vault"
 	},
 /area/engineering/mechanic_workshop/hangar)
-"qlf" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/obj/item/twohanded/required/kirbyplants,
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "qlu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -94501,23 +94360,6 @@
 	icon_state = "tranquillite"
 	},
 /area/maintenance/kitchen)
-"qKv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "qKI" = (
 /obj/effect/decal/warning_stripes/yellow/hollow,
 /turf/simulated/floor/plasteel{
@@ -95557,9 +95399,6 @@
 "qWR" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
-	},
-/obj/machinery/newscaster{
-	pixel_x = -32
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "neutralfull"
@@ -101862,6 +101701,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/civilian/vacantoffice)
 "svh" = (
@@ -112034,28 +111874,6 @@
 	icon_state = "dark"
 	},
 /area/crew_quarters/chief)
-"uLa" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/door_control{
-	desiredstate = 1;
-	id = "toilet3";
-	name = "Toilet Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	specialfunctions = 4
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "uLk" = (
 /obj/effect/decal/warning_stripes/south,
 /obj/effect/decal/warning_stripes/north,
@@ -118845,15 +118663,6 @@
 	icon_state = "whiteredfull"
 	},
 /area/security/medbay)
-"wpb" = (
-/obj/structure/sink{
-	layer = 4;
-	pixel_y = 26
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "wpk" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -121390,15 +121199,6 @@
 /obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor/plasteel,
 /area/storage/secure)
-"wUE" = (
-/obj/machinery/door/airlock{
-	id_tag = "toilet3";
-	name = "Toilet"
-	},
-/turf/simulated/floor/plasteel{
-	icon_state = "neutralfull"
-	},
-/area/space)
 "wUT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -147068,9 +146868,9 @@ aaq
 aaq
 aaq
 aaq
-uLa
-cDs
-iBD
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
@@ -147325,9 +147125,9 @@ aaq
 aaq
 aaq
 aaq
-wUE
-cDs
-bTz
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
@@ -147582,9 +147382,9 @@ aaq
 aaq
 aaq
 aaq
-bci
-qlf
-hfn
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
@@ -147839,9 +147639,9 @@ aaq
 aaq
 aaq
 aaq
-ngu
-lzG
-gOJ
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
@@ -148096,9 +147896,9 @@ aaq
 aaq
 aaq
 aaq
-wpb
-hBD
-jBV
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
@@ -148353,9 +148153,9 @@ aaq
 aaq
 aaq
 aaq
-fBT
-qKv
-qbf
+aaq
+aaq
+aaq
 aaq
 aaq
 aaq
