@@ -913,7 +913,7 @@
 	"Обыскивайте всех подряд! Летальте всех, кого считаете слишком опасным для нелетала!", "Мим теслу запускает! ЗАДЕРЖАТЬ!!!",
 	"Подмогу в туалет брига!", "Почему над унитазом установлены 3 камеры?")
 
-	user.visible_message(span_notice(message))
+	visible_message(span_notice(message))
 	COOLDOWN_START(src, cooldown, 3 SECONDS)
 
 /obj/item/toy/plushie/gsbplushie/attack(mob/living/target, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
@@ -926,7 +926,7 @@
 		"Обыскивайте всех подряд! Летальте всех, кого считаете слишком опасным для нелетала!", "Мим теслу запускает! ЗАДЕРЖАТЬ!!!",
 		"Подмогу в туалет брига!", "Почему над унитазом установлены 3 камеры?")
 
-		user.visible_message(span_notice(message))
+		visible_message(span_notice(message))
 		COOLDOWN_START(src, cooldown, 3 SECONDS)
 
 /obj/item/toy/plushie/greyplushie
