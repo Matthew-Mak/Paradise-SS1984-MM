@@ -23441,11 +23441,7 @@
 	pixel_y = 8;
 	pixel_x = -15
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "cHw" = (
 /obj/structure/disposalpipe/segment,
@@ -41219,11 +41215,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "eqA" = (
 /obj/structure/sign/securearea{
@@ -41704,11 +41696,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "ewt" = (
 /obj/structure/cable{
@@ -46197,11 +46185,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "fzv" = (
 /obj/structure/cable{
@@ -46563,11 +46547,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "fDB" = (
 /obj/machinery/hologram/holopad,
@@ -56801,7 +56781,7 @@
 /obj/effect/mapping_helpers/table_flip{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "hZn" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -61683,7 +61663,7 @@
 	color = "";
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "jjv" = (
 /obj/structure/cable{
@@ -63112,6 +63092,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable{
+	icon = 'icons/effects/crayondecal.dmi';
+	icon_state = "i";
+	color = "771919";
+	pixel_x = 36
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark";
 	dir = 5;
@@ -67395,11 +67381,7 @@
 	pixel_y = -10
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "kEp" = (
 /turf/simulated/floor/plasteel{
@@ -72057,11 +72039,7 @@
 	dir = 8
 	},
 /obj/structure/holosign/barrier/engineering,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "lNC" = (
 /obj/structure/disposalpipe/segment,
@@ -75895,11 +75873,7 @@
 	pixel_y = 7;
 	pixel_x = -4
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "mGL" = (
 /obj/structure/cable{
@@ -90424,11 +90398,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "pSY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -112759,11 +112729,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "uWG" = (
 /obj/structure/window/reinforced{
@@ -120939,11 +120905,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plasteel{
-	icon_state = "dark";
-	dir = 5;
-	tag = "icon-vault (NORTHEAST)"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/maintenance/fpmaint)
 "wQV" = (
 /obj/structure/filingcabinet,
@@ -121278,6 +121240,26 @@
 	icon_state = "darkblue"
 	},
 /area/construction/hallway)
+"wVO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable{
+	icon = 'icons/effects/crayondecal.dmi';
+	icon_state = "d";
+	color = "771919";
+	pixel_x = 31
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "dark";
+	dir = 5;
+	tag = "icon-vault (NORTHEAST)"
+	},
+/area/maintenance/fpmaint)
 "wVP" = (
 /obj/structure/falsewall,
 /turf/simulated/floor/plating,
@@ -122029,6 +122011,21 @@
 	icon_state = "whiteblue"
 	},
 /area/assembly/robotics)
+"xeW" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable{
+	icon = 'icons/effects/crayondecal.dmi';
+	icon_state = "e";
+	color = "771919";
+	pixel_x = 35
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/fpmaint)
 "xfd" = (
 /obj/machinery/camera{
 	c_tag = "Research South Hallway";
@@ -155121,7 +155118,7 @@ coE
 coE
 uCN
 uCN
-etQ
+pba
 pba
 uCN
 uCN
@@ -156680,9 +156677,9 @@ tbc
 bhV
 ahF
 pQE
+wVO
 jzM
-jzM
-nnM
+xeW
 ihU
 fjA
 nLK
