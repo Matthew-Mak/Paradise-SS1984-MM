@@ -163,7 +163,7 @@
 		return ATTACK_CHAIN_PROCEED
 
 	if(clone_next)
-		var/list/temp_tech = ConvertReqString2List(I.origin_tech)
+		var/list/temp_tech = ConvertReqString2List(initial(I.origin_tech))
 		var/techs_sum = 0
 		for(var/T in temp_tech)
 			techs_sum += temp_tech[T]
