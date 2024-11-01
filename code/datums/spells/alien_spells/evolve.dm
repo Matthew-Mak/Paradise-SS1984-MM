@@ -31,15 +31,18 @@
 
 /obj/effect/proc_holder/spell/alien_spell/evolve/can_cast(mob/living/carbon/alien/user, charge_check, show_message)
 	if(!user.can_evolve)
-		to_chat(user, span_warning("We have nowhere to evolve further!"))
+		if(show_message)
+			to_chat(user, span_warning("We have nowhere to evolve further!"))
 		return FALSE
 
 	if(user.evolution_points < user.max_evolution_points)
-		to_chat(user, span_warning("We are not ready to evolve yet!"))
+		if(show_message)
+			to_chat(user, span_warning("We are not ready to evolve yet!"))
 		return FALSE
 
 	if(user.has_brain_worms())
-		to_chat(user, span_warning("We cannot perform this ability at the present time!"))
+		if(show_message)
+			to_chat(user, span_warning("We cannot perform this ability at the present time!"))
 		return FALSE
 
 	return TRUE
@@ -74,7 +77,7 @@
 	playsound_xenobuild(user.loc)
 	SSblackbox.record_feedback("tally", "alien_growth", 1, "[new_xeno]")
 	qdel(user)
-	return TRUE
+
 
 /obj/effect/proc_holder/spell/alien_spell/evolve/larva/cast(list/targets, mob/living/carbon/alien/larva/user)
 	to_chat(user, span_boldnotice("You are growing into a beautiful alien! It is time to choose a caste."))
@@ -114,16 +117,16 @@
 		to_chat(user, span_warning("We have too many praetorians."))
 
 
-/obj/effect/proc_holder/spell/alien_spell/evolve/queen/cast(list/targets, mob/living/carbon/user)
-	var/mob/living/carbon/alien/spell_owner = user
-	if(!istype(spell_owner))
-		return
-	if(spell_owner.queen_count >= spell_owner.queen_maximum)
-		to_chat(user, span_warning("We already have a queen."))
-		return
-	else
-		if(..())
-			spell_owner.queen_count++
+/obj/effect/proc_holder/spell/alien_spell/evolve/queen/can_cast(mob/living/carbon/alien/user, charge_check, show_message)
+	if(user.queen_count >= user.queen_maximum)
+		if(show_message)
+			to_chat(user, span_warning("We already have a queen."))
+		return FALSE
+
+
+/obj/effect/proc_holder/spell/alien_spell/evolve/queen/cast(list/targets, mob/living/carbon/alien/user)
+	..()
+	user.queen_count++
 
 
 #undef LIVING_PLAYERS_COUNT_FOR_1_PRAETORIAN
