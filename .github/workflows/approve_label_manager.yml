@@ -1,7 +1,7 @@
 name: Approve Label Manager
 
 on:
-  pull_request:
+  pull_request_review:
     types: [submitted, dismissed]
 
 env:
@@ -16,26 +16,25 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            return context.payload.pull_request.labels?
-            .some(label => label.name === process.env.APPROVE_LABEL);
+            return context.payload.pull_request.labels?.some(label => label.name == '${{ env.APPROVE_LABEL }}');
 
       - name: Add label
         uses: jburgess/AddRemovePrLabels@v1.0.4
         if: |
-          github.event.action === 'submitted' &&
-          github.event.review.state === 'approved' &&
-          !steps.check_approve_label.outputs.result
+          (github.event.action == 'submitted' &&
+          github.event.review.state == 'approved') &&
+          steps.check_approve_label.outputs.result == 'false'
         with:
           githubToken: '${{ secrets.GITHUB_TOKEN }}'
-          labelsToAdd: ${{ env.APPROVE_LABEL }}
+          labelsToAdd: '${{ env.APPROVE_LABEL }}'
 
       - name: Remove label
         uses: jburgess/AddRemovePrLabels@v1.0.4
         if: |
-          (github.event.action === 'dismissed' || 
-          (github.event.action === 'submitted' && 
-          github.event.review.state !== 'approved')) && 
-          steps.check_approve_label.outputs.result
+          github.event.action == 'dismissed' || 
+          (github.event.action == 'submitted' && 
+          github.event.review.state != 'approved') && 
+          steps.check_approve_label.outputs.result == 'true'
         with:
           githubToken: '${{ secrets.GITHUB_TOKEN }}'
-          labelsToRemove: ${{ env.APPROVE_LABEL }}
+          labelsToRemove: '${{ env.APPROVE_LABEL }}'
