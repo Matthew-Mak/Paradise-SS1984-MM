@@ -661,7 +661,6 @@
 #include "code\datums\spells\alien_spells\corrosive_acid_spit.dm"
 #include "code\datums\spells\alien_spells\evolve.dm"
 #include "code\datums\spells\alien_spells\impregnate.dm"
-#include "code\datums\spells\alien_spells\larva_evolve.dm"
 #include "code\datums\spells\alien_spells\lay_alien_eggs.dm"
 #include "code\datums\spells\alien_spells\neurotoxin_spit.dm"
 #include "code\datums\spells\alien_spells\open_vent_alien.dm"

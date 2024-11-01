@@ -1,26 +1,27 @@
 #define LIVING_PLAYERS_COUNT_FOR_1_PRAETORIAN 25
 
 /obj/effect/proc_holder/spell/alien_spell/evolve
+	name = "Evolve"
 	desc = "Evolve into reporting this issue."
 	action_icon_state = "larva2"
 	action_icon = 'icons/mob/alien.dmi'
-	action_icon_state = "AlienMMI"
-	var/queen_check = FALSE
 	var/evolution_path = /mob/living/carbon/alien/larva
 
 
+/obj/effect/proc_holder/spell/alien_spell/evolve/larva
+	desc = "Evolve into a fully grown Alien."
+	action_icon_state = "alienh_running"
+
+
 /obj/effect/proc_holder/spell/alien_spell/evolve/praetorian
-	name = "Evolve"
 	desc = "Become a Praetorian, Royal Guard to the Queen."
 	action_icon_state = "aliens_running"
 	evolution_path = /mob/living/carbon/alien/humanoid/praetorian
 
 
 /obj/effect/proc_holder/spell/alien_spell/evolve/queen
-	name = "Evolve"
 	desc = "Evolve into an Alien Queen."
 	action_icon_state = "alienq_running"
-	queen_check = TRUE
 	evolution_path = /mob/living/carbon/alien/humanoid/queen/large
 
 
@@ -31,22 +32,15 @@
 /obj/effect/proc_holder/spell/alien_spell/evolve/cast(list/targets, mob/living/carbon/alien/user)
 	if(!user.can_evolve)
 		to_chat(user, span_warning("We have nowhere to evolve further!"))
-		return
+		return FALSE
 
 	if(user.evolution_points < user.max_evolution_points)
 		to_chat(user, span_warning("We are not ready to evolve yet!"))
-		return
+		return FALSE
 
 	if(user.has_brain_worms())
 		to_chat(user, span_warning("We cannot perform this ability at the present time!"))
-		return
-
-	if(queen_check)
-		if(user.queen_count >= user.queen_maximum)
-			to_chat(user, span_warning("We already have a queen."))
-			return
-		else
-			user.queen_count++
+		return FALSE
 
 	to_chat(user, span_noticealien("You begin to evolve!"))
 	user.visible_message(span_alertalien("[user] begins to twist and contort!"))
@@ -76,6 +70,29 @@
 	playsound_xenobuild(user.loc)
 	SSblackbox.record_feedback("tally", "alien_growth", 1, "[new_xeno]")
 	qdel(user)
+	return TRUE
+
+/obj/effect/proc_holder/spell/alien_spell/evolve/larva/cast(list/targets, mob/living/carbon/alien/larva/user)
+	to_chat(user, span_boldnotice("You are growing into a beautiful alien! It is time to choose a caste."))
+	to_chat(user, span_notice("There are three to choose from:"))
+	to_chat(user, span_notice("<B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."))
+	to_chat(user, span_notice("<B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."))
+	to_chat(user, span_notice("<B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."))
+	var/static/list/to_evolve = list("Hunter" = image(icon = 'icons/mob/alien.dmi', icon_state = "alienh_running"),
+								"Sentinel" = image(icon = 'icons/mob/alien.dmi', icon_state = "aliens_running"),
+								"Drone" = image(icon = 'icons/mob/alien.dmi', icon_state = "aliend_running"))
+	var/choosen_type = show_radial_menu(user, user, to_evolve, src, radius = 40)
+	if(!choosen_type)
+		return
+	switch(choosen_type)
+		if("Hunter")
+			evolution_path = /mob/living/carbon/alien/humanoid/hunter
+		if("Sentinel")
+			evolution_path = /mob/living/carbon/alien/humanoid/sentinel
+		if("Drone")
+			evolution_path = /mob/living/carbon/alien/humanoid/drone
+	..()
+
 
 /obj/effect/proc_holder/spell/alien_spell/evolve/praetorian/cast(list/targets, mob/living/carbon/user)
 	var/mob/living/carbon/alien/spell_owner = user
@@ -91,5 +108,18 @@
 		..()
 	else
 		to_chat(user, span_warning("We have too many praetorians."))
+
+
+/obj/effect/proc_holder/spell/alien_spell/evolve/queen/cast(list/targets, mob/living/carbon/user)
+	var/mob/living/carbon/alien/spell_owner = user
+	if(!istype(spell_owner))
+		return
+	if(spell_owner.queen_count >= spell_owner.queen_maximum)
+		to_chat(user, span_warning("We already have a queen."))
+		return
+	else
+		if(..())
+			spell_owner.queen_count++
+
 
 #undef LIVING_PLAYERS_COUNT_FOR_1_PRAETORIAN
