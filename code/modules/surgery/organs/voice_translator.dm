@@ -89,9 +89,6 @@
 	. = ..()
 
 	for(var/lang in given_languages)
-		if(lang == TRAIT_WINGDINGS)
-			continue
-
 		target.add_language(lang)
 
 
@@ -100,9 +97,6 @@
 		return
 
 	for(var/lang in given_languages)
-		if(lang == TRAIT_WINGDINGS)
-			continue
-
 		target.remove_language(lang)
 
 	. = ..()
@@ -181,12 +175,15 @@
 	if(!user || !chip)
 		return FALSE
 
-	if(owner) //if translator inside someone
+	if(owner && chip.stored_language) //if translator inside someone
 		owner.remove_language(chip.stored_language)
 
 	user.put_in_hands(chip)
 	LAZYREMOVE(stored_chips, chip)
-	LAZYREMOVE(given_languages, chip.stored_language)
+
+	if(chip.stored_language)
+		LAZYREMOVE(given_languages, chip.stored_language)
+
 	LAZYREMOVE(given_languages_rus, chip.stored_language_rus)
 	remove_wingdings_chip(chip)
 
@@ -203,11 +200,11 @@
 		user.balloon_alert(user, "нет места под чип!")
 		return
 
-	if(!chip.stored_language)
+	if(!chip.stored_language_rus)
 		user.balloon_alert(user, "чип пустой!")
 		return
 
-	if(chip.stored_language in given_languages)
+	if(chip.stored_language_rus in given_languages_rus)
 		user.balloon_alert(user, "чип уже установлен!")
 		return
 
@@ -218,35 +215,45 @@
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/install_chip(mob/living/user, obj/item/translator_chip/chip)
 	user.drop_transfer_item_to_loc(chip, src)
 	LAZYADD(stored_chips, chip)
-	LAZYADD(given_languages, chip.stored_language)
+
+	if(chip.stored_language)
+		LAZYADD(given_languages, chip.stored_language)
+
 	LAZYADD(given_languages_rus, chip.stored_language_rus)
 	handle_wingdings_chip(chip)
 
-	if(owner)
+	if(owner && chip.stored_language)
 		owner.add_language(chip.stored_language)
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/handle_wingdings_chip(obj/item/translator_chip/chip)
-	if(!owner)
-		return
-
-	if(!(chip.stored_language == TRAIT_WINGDINGS))
+	if(!(chip.wingdings_decoder))
 		return
 
 	if(!decoder)
 		decoder = new(src)
 
-	decoder.Grant(owner)
+	if(owner)
+		decoder.Grant(owner)
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/remove_wingdings_chip(obj/item/translator_chip/chip)
-	if(!(chip.stored_language == TRAIT_WINGDINGS))
+	if(!(chip.wingdings_decoder))
+		return
+
+	can_wingdings = FALSE
+
+	if(!decoder)
 		return
 
 	if(owner)
 		decoder.Remove(owner)
 
-	can_wingdings = FALSE
+	var/datum/action/item_action/organ_action/wingdings_decoder/used_decoder = locate() in actions
+	if(used_decoder)
+		used_decoder.Destroy()
+
+	decoder = null
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/screwdriver_act(mob/living/user, obj/item/I)
@@ -304,9 +311,6 @@
 
 	to_chat(owner, span_notice("<font color=green>[capitalize(declent_ru(NOMINATIVE))] снова работает!</font>"))
 	for(var/lang in given_languages)
-		if(lang == TRAIT_WINGDINGS)
-			continue
-
 		owner.add_language(lang)
 
 	decoder.update_button_state()
@@ -318,9 +322,6 @@
 	to_chat(owner, span_warning("[capitalize(declent_ru(NOMINATIVE))] временно вышел из строя от воздействия ЭМИ!"))
 	do_sparks(3, FALSE, owner)
 	for(var/lang in given_languages)
-		if(lang == TRAIT_WINGDINGS)
-			continue
-
 		owner.remove_language(lang)
 
 	decoder.update_button_state()
@@ -368,7 +369,7 @@
 		return FALSE
 
 	var/obj/item/organ/internal/cyberimp/mouth/translator/translator = owner.get_organ_slot(INTERNAL_ORGAN_SPEECH_TRANSLATOR)
-	if(!translator || !(TRAIT_WINGDINGS in translator.given_languages))
+	if(!translator)
 		Remove(owner)
 
 	if(!translator.active)
@@ -434,6 +435,7 @@
 	origin_tech = "materials=1;programming=2"
 	var/stored_language
 	var/stored_language_rus
+	var/wingdings_decoder = FALSE
 	ru_names = list(
 		NOMINATIVE = "языковой чип",
 		GENITIVE = "языкового чипа",
@@ -445,7 +447,7 @@
 
 
 /obj/item/translator_chip/attack_self(mob/living/user)
-	if(stored_language)
+	if(stored_language_rus)
 		return
 
 	var/list/available_languages = list()
@@ -453,7 +455,7 @@
 		available_languages[chip.stored_language_rus] = chip
 
 	var/answer = tgui_input_list(user, "Выберите язык для загрузки в чип:", "Выбор прошивки", available_languages)
-	if(!answer || stored_language) //double check to prevent multispec
+	if(!answer || stored_language_rus) //double check to prevent multispec
 		return
 
 	update_chip(available_languages[answer])
@@ -462,6 +464,7 @@
 /obj/item/translator_chip/proc/update_chip(obj/item/translator_chip/chip)
 	stored_language = chip.stored_language
 	stored_language_rus = chip.stored_language_rus
+	wingdings_decoder = chip.wingdings_decoder
 	update_icon(UPDATE_ICON_STATE)
 
 
@@ -479,7 +482,7 @@
 
 /obj/item/translator_chip/update_icon_state()
 	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
-		if(stored_language != chip.stored_language)
+		if(stored_language_rus != chip.stored_language_rus)
 			continue
 
 		icon_state = chip.icon_state
@@ -560,8 +563,9 @@
 
 /obj/item/translator_chip/wingdings
 	icon_state = "chip_wingdings"
-	stored_language = TRAIT_WINGDINGS //weird but works
+	stored_language = null
 	stored_language_rus = "Вингдингс"
+	wingdings_decoder = TRUE
 
 /*	One day it will become a reality
 

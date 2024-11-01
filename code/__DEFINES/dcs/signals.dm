@@ -713,6 +713,8 @@
 #define COMSIG_OBJ_RELEASED "obj_released"
 ///from [/obj/structure/sink/attack_hand]
 #define COMSIG_SINK_ACT "sink_act"
+	/// returns on succes of species special sink_act()
+	#define COMSIG_SINK_ACT_SUCCESS (1<<0)
 
 // /obj/machinery signals
 

@@ -64,6 +64,7 @@
 /datum/species/grey/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
 	H.gene_stability -= GREYS_ADDITIONAL_GENE_STABILITY
+	UnregisterSignal(H, COMSIG_SINK_ACT)
 
 
 /datum/species/grey/handle_dna(mob/living/carbon/human/H, remove = FALSE)
@@ -152,7 +153,7 @@
 	if(source.has_pain())
 		source.emote("scream")
 
-	return TRUE
+	return COMSIG_SINK_ACT_SUCCESS
 
 
 #undef GREYS_ADDITIONAL_GENE_STABILITY

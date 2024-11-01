@@ -266,7 +266,7 @@
 	if(istype(tool, /obj/item/translator_chip))
 		var/obj/item/translator_chip/chip = tool
 
-		if(!chip.stored_language)
+		if(!chip.stored_language_rus)
 			to_chat(user, span_warning("Chip must be activated to connect with translator!"))
 			return SURGERY_STEP_INCOMPLETE
 
@@ -274,7 +274,7 @@
 			to_chat(user, span_warning("There is no place in translator to another language chip!"))
 			return SURGERY_STEP_INCOMPLETE
 
-		if(chip.stored_language in translator.given_languages)
+		if(chip.stored_language_rus in translator.given_languages_rus)
 			to_chat(user, span_warning("This language chip already installed!"))
 			return SURGERY_STEP_INCOMPLETE
 
