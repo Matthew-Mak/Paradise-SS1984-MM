@@ -29,7 +29,7 @@
 	return new /datum/spell_targeting/self
 
 
-/obj/effect/proc_holder/spell/alien_spell/evolve/cast(list/targets, mob/living/carbon/alien/user)
+/obj/effect/proc_holder/spell/alien_spell/evolve/can_cast(mob/living/carbon/alien/user, charge_check, show_message)
 	if(!user.can_evolve)
 		to_chat(user, span_warning("We have nowhere to evolve further!"))
 		return FALSE
@@ -42,6 +42,10 @@
 		to_chat(user, span_warning("We cannot perform this ability at the present time!"))
 		return FALSE
 
+	return TRUE
+
+
+/obj/effect/proc_holder/spell/alien_spell/evolve/cast(list/targets, mob/living/carbon/alien/user)
 	to_chat(user, span_noticealien("You begin to evolve!"))
 	user.visible_message(span_alertalien("[user] begins to twist and contort!"))
 
