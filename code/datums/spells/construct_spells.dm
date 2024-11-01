@@ -95,7 +95,7 @@
 
 /obj/effect/proc_holder/spell/aoe/conjure/build/pylon
 	name = "Cult Pylon"
-	desc = "Это заклинание призывает хрупкий кристал из Редспейса. Неплохой источник освещения."
+	desc = "Это заклинание призывает хрупкий кристал из Редспейса. Неплохой источник освещения и лечения."
 	action_icon_state = "pylon"
 	action_background_icon_state = "bg_cult"
 	school = "conjuration"
@@ -144,7 +144,7 @@
 
 
 /obj/effect/forcefield/holy
-	desc = "Этот щит так и светится! Не похоже что его можно будет убрать так просто."
+	desc = "Этот щит так и светится! Не похоже, что его можно будет убрать так просто."
 	name = "holy field"
 	icon = 'icons/effects/cult_effects.dmi'
 	icon_state = "holy_field"
@@ -189,7 +189,7 @@
 
 /obj/effect/proc_holder/spell/projectile/magic_missile/lesser
 	name = "Lesser Magic Missile"
-	desc = "Это заклинание выпускает несколько медленно движущихся магических снарядов по ближайшим целям."
+	desc = "Это заклинание выпускает несколько медленно движущихся оглушающих снарядов по ближайшим целям."
 	action_background_icon_state = "bg_cult"
 	school = "evocation"
 	base_cooldown = 40 SECONDS
