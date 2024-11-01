@@ -58,7 +58,6 @@
 	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
 		var/obj/machinery/atmospherics/pipe = user.loc
 		if(!new_xeno.ventcrawler_trait)
-
 			new_xeno.stop_ventcrawling(message = FALSE)
 			new_xeno.visible_message(
 				span_notice("[new_xeno.name] с грохотом вываливается из вентиляции!"),
