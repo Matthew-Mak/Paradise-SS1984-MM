@@ -50,9 +50,30 @@
 
 	to_chat(user, span_noticealien("You begin to evolve!"))
 	user.visible_message(span_alertalien("[user] begins to twist and contort!"))
+
 	var/mob/living/carbon/alien/new_xeno = new evolution_path(user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.name
+
+	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+		var/obj/machinery/atmospherics/pipe = user.loc
+		if(!new_xeno.ventcrawler_trait)
+
+			new_xeno.stop_ventcrawling(message = FALSE)
+			new_xeno.visible_message(
+				span_notice("[new_xeno.name] с грохотом вываливается из вентиляции!"),
+				span_notice("Вы с грохотом вываливаетесь из вентиляции."),
+			)
+
+			var/turf/simulated/floor/turf = get_turf(new_xeno)
+			if(istype(turf))
+				playsound(turf, "sound/effects/clang.ogg", 50, TRUE)
+				turf.break_tile_to_plating()
+				pipe?.deconstruct()
+		else
+			new_xeno.move_into_vent(pipe, message = FALSE)
+
+
 	playsound_xenobuild(user.loc)
 	SSblackbox.record_feedback("tally", "alien_growth", 1, "[new_xeno]")
 	qdel(user)
