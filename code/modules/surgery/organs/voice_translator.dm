@@ -449,8 +449,7 @@
 		return
 
 	var/list/available_languages = list()
-	for(var/path in subtypesof(/obj/item/translator_chip))
-		var/obj/item/translator_chip/chip = path
+	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
 		available_languages[chip.stored_language_rus] = chip
 
 	var/answer = tgui_input_list(user, "Выберите язык для загрузки в чип:", "Выбор прошивки", available_languages)
@@ -479,8 +478,7 @@
 
 
 /obj/item/translator_chip/update_icon_state()
-	for(var/path in subtypesof(/obj/item/translator_chip))
-		var/obj/item/translator_chip/chip = path
+	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
 		if(stored_language != chip.stored_language)
 			continue
 

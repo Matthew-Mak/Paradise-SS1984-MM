@@ -58,6 +58,7 @@
 /datum/species/grey/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.gene_stability += GREYS_ADDITIONAL_GENE_STABILITY
+	RegisterSignal(H, COMSIG_SINK_ACT, PROC_REF(sink_act))
 
 
 /datum/species/grey/on_species_loss(mob/living/carbon/human/H)
@@ -140,6 +141,18 @@
 /datum/species/grey/get_species_runechat_color(mob/living/carbon/human/H)
 	var/obj/item/organ/internal/eyes/E = H.get_int_organ(/obj/item/organ/internal/eyes)
 	return E.eye_colour
+
+
+/datum/species/grey/proc/sink_act(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	var/grey_message = pick("Вы не ожидали, что в раковине окажется вода!", "Вы слишком поздно понимаете, что совершили ошибку!", "Вы чувствуете адскую боль по всему телу!")
+	source.adjustFireLoss(30 * source.get_permeability_protection())
+	to_chat(source, span_danger("[grey_message]"))
+	if(source.has_pain())
+		source.emote("scream")
+
+	return TRUE
 
 
 #undef GREYS_ADDITIONAL_GENE_STABILITY

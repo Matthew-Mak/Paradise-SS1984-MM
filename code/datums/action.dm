@@ -507,9 +507,10 @@
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
 
+
 /datum/action/item_action/toggle_research_scanner/Trigger(left_click = TRUE)
-	if(!IsAvailable())
-		return
+	if(!..())
+		return FALSE
 
 	owner.research_scanner = !owner.research_scanner
 	to_chat(owner, span_notice("Вы [owner.research_scanner ? "включили" : "отключили"] исследовательский анализатор."))
@@ -744,10 +745,7 @@
 /datum/action/innate/research_scanner
 	name = "Toggle Research Scanner"
 
-/datum/action/innate/research_scanner/Trigger(left_click = TRUE)
-	if(!IsAvailable())
-		return
-
+/datum/action/innate/research_scanner/Activate()
 	owner.research_scanner = !owner.research_scanner
 	to_chat(owner, span_notice("Вы [owner.research_scanner ? "включили" : "отключили"] исследовательский анализатор."))
 

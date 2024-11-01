@@ -588,14 +588,7 @@
 	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 
-	if(isgrey(user)) // no water??
-		var/mob/living/carbon/human/H = user
-		var/grey_message = pick("Вы не ожидали, что в раковине окажется вода!", "Вы слишком поздно понимаете, что совершили ошибку!", "Вы чувствуете адскую боль по всему телу!")
-		H.adjustFireLoss(30 * H.get_permeability_protection())
-		to_chat(H, span_danger("[grey_message]"))
-		if(H.has_pain())
-			H.emote("scream")
-
+	if(SEND_SIGNAL(user, COMSIG_SINK_ACT) & TRUE) // special sink acts
 		return
 
 	if(washing_face)

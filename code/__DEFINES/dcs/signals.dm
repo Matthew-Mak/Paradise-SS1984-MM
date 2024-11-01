@@ -711,6 +711,8 @@
 #define COMSIG_OBJ_POSSESSED "obj_possessed"
 ///from base of /proc/release(): (mob/user)
 #define COMSIG_OBJ_RELEASED "obj_released"
+///from [/obj/structure/sink/attack_hand]
+#define COMSIG_SINK_ACT "sink_act"
 
 // /obj/machinery signals
 

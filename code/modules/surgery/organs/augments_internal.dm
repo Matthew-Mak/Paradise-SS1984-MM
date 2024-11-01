@@ -333,13 +333,13 @@
 	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 
-/obj/item/organ/internal/cyberimp/chest/nutriment/insert(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
+/obj/item/organ/internal/cyberimp/chest/nutriment/plus/insert(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
 	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
 		hunger_modificator = 0.2
 	. = ..()
 
 
-/obj/item/organ/internal/cyberimp/chest/nutriment/remove(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
+/obj/item/organ/internal/cyberimp/chest/nutriment/plus/remove(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
 	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
 		hunger_modificator = initial(hunger_modificator)
 	. = ..()

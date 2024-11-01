@@ -58,12 +58,12 @@
 			var/stamina_damage = 0
 			var/small_pushed = TRUE
 			// Handle pulling all non /obj/item stuff or tiny mobs
-			if(pulling && istype(pulling, /mob/living))
+			if(pulling && isliving(pulling))
 				var/mob/living/pulled_mob = pulling
 				if(pulled_mob.mob_size) // small or bigger mobs
 					small_pushed = FALSE
 
-			if(pulling && !(small_pushed || (istype(pulling, /obj/item))))
+			if(pulling && !(small_pushed || isitem(pulling)))
 				if(m_intent == MOVE_INTENT_WALK)
 					stamina_damage += PULL_STAMINADAM_WALK
 				else
@@ -75,7 +75,7 @@
 
 			// Handle pushing, NOT swapping sides with mobs in help intent
 			if(now_pushing)
-				if(!(istype(now_pushing, /mob/living) && a_intent == INTENT_HELP))
+				if(!(isliving(now_pushing) && a_intent == INTENT_HELP))
 					if(m_intent == MOVE_INTENT_WALK)
 						stamina_damage += PUSH_STAMINADAM_WALK
 					else

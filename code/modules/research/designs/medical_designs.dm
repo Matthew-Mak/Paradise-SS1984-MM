@@ -625,7 +625,7 @@
 
 /datum/design/voice_retranslator
 	name = "Psionic Voice Retranslator"
-	desc = "Имлпант для перевода псионической речи греев в более понятные звуковые волны. Разработан специально для греев."
+	desc = "Имплант для перевода псионической речи греев в более понятные звуковые волны. Разработан специально для греев."
 	id = "ci_retranslator"
 	req_tech = list("materials" = 5, "programming" = 6, "biotech" = 6, "engineering" = 6, "abductor" = 4)
 	build_type = PROTOLATHE | MECHFAB

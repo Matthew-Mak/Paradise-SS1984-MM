@@ -110,8 +110,7 @@
 	. = ..()
 
 	var/list/available_chips = list()
-	for(var/path in subtypesof(/obj/item/translator_chip))
-		var/obj/item/translator_chip/chip = path
+	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
 		if(chip.stored_language == TRAIT_WINGDINGS) // you can select it in the prefs, so no need to double
 			continue
 

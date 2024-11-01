@@ -314,7 +314,7 @@
 		choises[chip.stored_language_rus] = image(icon = chip.icon, icon_state = chip.icon_state)
 
 	if(!choises)
-		to_chat(user, span_notice("You can't find anything to uninstall from speech translator."))
+		to_chat(user, span_notice("You can't find anything to uninstall from the speech translator."))
 		return SURGERY_STEP_INCOMPLETE
 
 	var/choise
