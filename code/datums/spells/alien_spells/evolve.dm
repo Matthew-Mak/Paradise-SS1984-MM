@@ -52,7 +52,7 @@
 	to_chat(user, span_noticealien("You begin to evolve!"))
 	user.visible_message(span_alertalien("[user] begins to twist and contort!"))
 
-	var/mob/living/carbon/alien/new_xeno = new evolution_path(user.loc)
+	var/mob/living/carbon/alien/new_xeno = new evolution_path(get_turf(user))
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.name
 
