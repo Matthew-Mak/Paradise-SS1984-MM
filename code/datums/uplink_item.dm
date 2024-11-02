@@ -93,7 +93,10 @@
 	. = ..()
 	desc += " Предоставлено "
 	if(!made_by)
-		desc += (!made_by) ? pick(subtypesof(/datum/affiliate)) : (made_by + ".")
+		var/datum/affiliate/aff = pick(subtypesof(/datum/affiliate))
+		desc += aff.name
+	else
+		desc += made_by + "."
 
 /datum/uplink_item/Destroy(force)
 	if(force)
