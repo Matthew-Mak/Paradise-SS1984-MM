@@ -57,7 +57,7 @@
 
 	if(owner)
 		var/losstime = 40 SECONDS
-		if(TRAIT_ADVANCED_CYBERIMPLANTS in owner.dna?.species.inherent_traits)
+		if(HAS_TRAIT(owner, TRAIT_ADVANCED_CYBERIMPLANTS))
 			losstime /= 2
 
 		owner.LoseBreath(losstime)
@@ -396,11 +396,11 @@
 /obj/item/organ/internal/lungs/cybernetic/upgraded/insert(mob/living/carbon/human/target, special)
 	. = ..()
 
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
+	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		target.physiology.oxy_mod -= 0.5
 
 /obj/item/organ/internal/lungs/cybernetic/upgraded/remove(mob/living/carbon/human/target, special)
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
+	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		target.physiology.oxy_mod += 0.5
 
 	. = ..()

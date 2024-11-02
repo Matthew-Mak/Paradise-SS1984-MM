@@ -6,7 +6,7 @@
 	icon_state = "antennae"
 	parent_organ_zone = BODY_ZONE_HEAD
 	slot = INTERNAL_ORGAN_HIVENODE
-	whitelisted_species = list(SPECIES_WRYN)
+	species_restrictions = list(SPECIES_WRYN)
 
 /obj/item/organ/internal/wryn/hivenode/insert(mob/living/carbon/human/M, special = ORGAN_MANIPULATION_DEFAULT)
 	..()

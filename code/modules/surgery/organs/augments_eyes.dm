@@ -49,7 +49,7 @@
 
 	to_chat(owner, span_warning("Static obfuscates your vision!"))
 
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in owner.dna?.species.inherent_traits)
+	if(HAS_TRAIT(owner, TRAIT_ADVANCED_CYBERIMPLANTS))
 		owner.EyeBlurry(1.5 SECONDS)
 	else
 		owner.flash_eyes(3, visual = TRUE)

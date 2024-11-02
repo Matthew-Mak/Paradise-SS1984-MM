@@ -180,12 +180,12 @@
 /obj/item/organ/internal/heart/cybernetic/upgraded/insert(mob/living/carbon/target, special)
 	. = ..()
 
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
+	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		target.stam_regen_start_modifier *= 0.5
 
 
 /obj/item/organ/internal/heart/cybernetic/upgraded/remove(mob/living/carbon/human/target, special)
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in target.dna?.species.inherent_traits)
+	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		target.stam_regen_start_modifier /= 0.5
 
 	. = ..()
@@ -274,7 +274,7 @@
 	if(emp_proof)
 		return
 
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in owner.dna?.species.inherent_traits)
+	if(HAS_TRAIT(owner, TRAIT_ADVANCED_CYBERIMPLANTS))
 		Stop()
 	else
 		necrotize()

@@ -108,10 +108,11 @@
 	retranslator.insert(H)
 
 	var/translator_pref = H.client.prefs.speciesprefs
-	var/command_roles = FALSE
 
 	if(!HAS_TRAIT(H, TRAIT_WINGDINGS))
 		return handle_loadout_chip(H, retranslator)
+
+	var/command_roles = FALSE
 
 	if(ismindshielded(H) || J.is_command || J.supervisors == "the captain")
 		command_roles = TRUE

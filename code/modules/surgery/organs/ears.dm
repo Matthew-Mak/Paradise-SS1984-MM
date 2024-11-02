@@ -64,7 +64,7 @@
 	var/mob/living/carbon/C = owner
 	var/losstime = 120 SECONDS
 
-	if(TRAIT_ADVANCED_CYBERIMPLANTS in C.dna?.species.inherent_traits)
+	if(HAS_TRAIT(C, TRAIT_ADVANCED_CYBERIMPLANTS))
 		losstime /= 3
 
 	C.AdjustDeaf(losstime)

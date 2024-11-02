@@ -526,7 +526,7 @@
 	if(!istype(H))
 		return FALSE // skip check
 
-	if(TRAIT_ACID_PROTECTED in H.dna?.species.inherent_traits)
+	if(HAS_TRAIT(H, TRAIT_ACID_PROTECTED))
 		return TRUE // acid proof species
 
 	return FALSE

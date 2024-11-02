@@ -82,12 +82,19 @@
 
 	stored_languages = LAZYCOPY(affected_mob.languages)
 
-	for(var/datum/language/lan as anything in affected_mob.languages)
+	var/obj/item/organ/internal/cyberimp/mouth/translator/translator = affected_mob.get_organ_slot(INTERNAL_ORGAN_SPEECH_TRANSLATOR)
+	if(translator?.given_languages)
+		stored_languages ^= translator.given_languages // you can't forget it, because it's on the chip in translator
+
+	for(var/datum/language/lan as anything in stored_languages)
 		affected_mob.remove_language(lan.name)
 
 
 /datum/disease/virus/babylonian_fever/proc/store_language(datum/signal_source, language_name)
 	SIGNAL_HANDLER
+
+	if(SEND_SIGNAL(signal_source, COMSIG_CHECK_LANG_IN_TRANSLATOR, language_name) & COMSIG_LANG_STORED)
+		return DISEASE_MOB_LANGUAGE_PROCESSED
 
 	var/datum/language/new_language = GLOB.all_languages[language_name]
 	LAZYOR(stored_languages, new_language)
@@ -96,6 +103,9 @@
 
 /datum/disease/virus/babylonian_fever/proc/remove_language(datum/signal_source, language_name)
 	SIGNAL_HANDLER
+
+	if(SEND_SIGNAL(signal_source, COMSIG_CHECK_LANG_IN_TRANSLATOR, language_name) & COMSIG_LANG_STORED)
+		return DISEASE_MOB_LANGUAGE_PROCESSED
 
 	var/datum/language/rem_language = GLOB.all_languages[language_name]
 	LAZYREMOVE(stored_languages, rem_language)

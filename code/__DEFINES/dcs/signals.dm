@@ -780,6 +780,9 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/item/organ/internal/remove]:
 #define COMSIG_ORGAN_REMOVED "organ_removed"
+///from [/obj/item/organ/internal/cyberimp/mouth/translator/check_lang]
+#define COMSIG_CHECK_LANG_IN_TRANSLATOR "check_language"
+	#define COMSIG_LANG_STORED (1<<0)
 
 /// Defib-specific signals
 

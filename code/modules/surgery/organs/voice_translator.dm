@@ -17,7 +17,7 @@
 	slot = INTERNAL_ORGAN_SPEECH_TRANSLATOR
 	w_class = WEIGHT_CLASS_TINY
 	/// List of languages, stored in this translator
-	var/list/given_languages
+	var/list/datum/language/given_languages
 	/// Russian list of languages, stored in this translator
 	var/list/given_languages_rus
 	/// What types of translator storage upgrades can be attached to this translator. Empty = nothing
@@ -46,11 +46,10 @@
 	desc = "Необычный инопланетный имплант с маленьким экранчиком. Судя по всему, создан специально для греев."
 	icon = 'icons/obj/voice_translator.dmi'
 	icon_state = "pvr_implant"
-	given_languages = list(LANGUAGE_GALACTIC_COMMON)
-	given_languages_rus = list("Общегалактический")
+	given_languages = list()
 	upgrade_with = list(/obj/item/translator_upgrade/grey_retraslator)
 	origin_tech = "materials=2;biotech=3;engineering=3;programming=3;abductor=2"
-	whitelisted_species = list(SPECIES_GREY, SPECIES_ABDUCTOR)
+	species_restrictions = list(SPECIES_GREY, SPECIES_ABDUCTOR)
 	ru_names = list(
 		NOMINATIVE = "ретранслятор псионического голоса",
 		GENITIVE = "ретранслятора псионического голоса",
@@ -59,6 +58,26 @@
 		INSTRUMENTAL = "ретранслятором псионического голоса",
 		PREPOSITIONAL = "ретрансляторе псионического голоса",
 	)
+
+
+/obj/item/organ/internal/cyberimp/mouth/translator/New()
+	if(!..())
+		return
+
+	if(!LAZYLEN(given_languages))
+		return
+
+	for(var/lang_name in given_languages)
+		LAZYADD(given_languages, GLOB.all_languages[lang_name])
+
+	return TRUE
+
+
+/obj/item/organ/internal/cyberimp/mouth/translator/grey_retraslator/New()
+	LAZYADD(given_languages, GLOB.all_languages[LANGUAGE_GALACTIC_COMMON]) // basic galcom for greys
+	LAZYADD(given_languages_rus, "Общегалактический")
+
+	. = ..()
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/examine(mob/user)
@@ -88,18 +107,30 @@
 /obj/item/organ/internal/cyberimp/mouth/translator/insert(mob/living/carbon/target, special)
 	. = ..()
 
-	for(var/lang in given_languages)
-		target.add_language(lang)
+	RegisterSignal(target, COMSIG_CHECK_LANG_IN_TRANSLATOR, PROC_REF(check_language))
+
+	for(var/datum/language/lang as anything in given_languages)
+		target.add_language(lang.name)
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/remove(mob/living/carbon/target, special)
 	if(!istype(target))
 		return
 
-	for(var/lang in given_languages)
-		target.remove_language(lang)
+	UnregisterSignal(target, COMSIG_CHECK_LANG_IN_TRANSLATOR)
+
+	for(var/datum/language/lang as anything in given_languages)
+		target.remove_language(lang.name)
 
 	. = ..()
+
+
+/obj/item/organ/internal/cyberimp/mouth/translator/proc/check_language(mob/living/carbon/C, language_name)
+	SIGNAL_HANDLER
+
+	for(var/datum/language/lang as anything in given_languages)
+		if(language_name == lang.name)
+			return COMSIG_LANG_STORED
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/update_desc(updates)
@@ -176,7 +207,7 @@
 		return FALSE
 
 	if(owner && chip.stored_language) //if translator inside someone
-		owner.remove_language(chip.stored_language)
+		owner.remove_language(chip.stored_language.name)
 
 	user.put_in_hands(chip)
 	LAZYREMOVE(stored_chips, chip)
@@ -223,7 +254,7 @@
 	handle_wingdings_chip(chip)
 
 	if(owner && chip.stored_language)
-		owner.add_language(chip.stored_language)
+		owner.add_language(chip.stored_language.name)
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/handle_wingdings_chip(obj/item/translator_chip/chip)
@@ -310,8 +341,8 @@
 		return
 
 	to_chat(owner, span_notice("<font color=green>[capitalize(declent_ru(NOMINATIVE))] снова работает!</font>"))
-	for(var/lang in given_languages)
-		owner.add_language(lang)
+	for(var/datum/language/lang as anything in given_languages)
+		owner.add_language(lang.name)
 
 	decoder.update_button_state()
 
@@ -321,8 +352,8 @@
 	can_wingdings = FALSE
 	to_chat(owner, span_warning("[capitalize(declent_ru(NOMINATIVE))] временно вышел из строя от воздействия ЭМИ!"))
 	do_sparks(3, FALSE, owner)
-	for(var/lang in given_languages)
-		owner.remove_language(lang)
+	for(var/datum/language/lang as anything in given_languages)
+		owner.remove_language(lang.name)
 
 	decoder.update_button_state()
 
@@ -433,7 +464,7 @@
 	icon_state = "chip_empty"
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;programming=2"
-	var/stored_language
+	var/datum/language/stored_language
 	var/stored_language_rus
 	var/wingdings_decoder = FALSE
 	ru_names = list(
@@ -444,6 +475,12 @@
 		INSTRUMENTAL = "языковым чипом",
 		PREPOSITIONAL = "языковом чипе",
 		)
+
+
+/obj/item/translator_chip/New()
+	. = ..()
+	if(stored_language)
+		stored_language = GLOB.all_languages[stored_language]
 
 
 /obj/item/translator_chip/attack_self(mob/living/user)
@@ -462,7 +499,9 @@
 
 
 /obj/item/translator_chip/proc/update_chip(obj/item/translator_chip/chip)
-	stored_language = chip.stored_language
+	if(chip.stored_language)
+		stored_language = GLOB.all_languages[chip.stored_language]
+
 	stored_language_rus = chip.stored_language_rus
 	wingdings_decoder = chip.wingdings_decoder
 	update_icon(UPDATE_ICON_STATE)
