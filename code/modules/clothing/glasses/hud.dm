@@ -459,7 +459,7 @@ SKILLS
 
 /obj/item/clothing/glasses/hud/blueshield
 	name = "blueshield HUD glasses"
-	desc = "A HUD with multiple functions."
+	desc = "Солнечные очки с многорежимным проекционным дисплеем."
 	actions_types = list(/datum/action/item_action/switch_hud)
 	icon_state = "sunhudmed"
 	origin_tech = "magnets=4;combat=4;engineering=4;biotech=4"
@@ -469,29 +469,24 @@ SKILLS
 	HUDType = DATA_HUD_MEDICAL_ADVANCED
 
 /obj/item/clothing/glasses/hud/blueshield/attack_self(mob/user)
-	if(!can_use(user))
-		return FALSE
+	change_mode(user)
 
+/obj/item/clothing/glasses/hud/blueshield/proc/change_mode(mob/user)
 	if(HUDType)
 		var/datum/atom_hud/H = GLOB.huds[HUDType]
 		H.remove_hud_from(user)
-
-	if(HUDType == DATA_HUD_MEDICAL_ADVANCED)
-		HUDType = null
-		examine_extensions = null
-		icon_state = "sun"
-		update_equipped_item(update_speedmods = FALSE)
-	else if(HUDType == DATA_HUD_SECURITY_ADVANCED)
-		HUDType = DATA_HUD_MEDICAL_ADVANCED
-		examine_extensions = EXAMINE_HUD_MEDICAL
-		icon_state = "sunhudmed"
-		update_equipped_item(update_speedmods = FALSE)
-	else
-		HUDType = DATA_HUD_SECURITY_ADVANCED
-		examine_extensions = EXAMINE_HUD_SECURITY_READ | EXAMINE_HUD_SECURITY_WRITE
-		icon_state = "sunhud"
-		update_equipped_item(update_speedmods = FALSE)
+	switch(HUDType)
+		if(DATA_HUD_MEDICAL_ADVANCED)
+			HUDType = DATA_HUD_SECURITY_BASIC
+			examine_extensions = EXAMINE_HUD_SKILLS
+		if(DATA_HUD_SECURITY_ADVANCED)
+			HUDType = DATA_HUD_MEDICAL_ADVANCED
+			examine_extensions = EXAMINE_HUD_MEDICAL
+		else
+			HUDType = DATA_HUD_SECURITY_ADVANCED
+			examine_extensions = EXAMINE_HUD_SECURITY_READ | EXAMINE_HUD_SECURITY_WRITE
 
 	if(HUDType)
 		var/datum/atom_hud/H = GLOB.huds[HUDType]
 		H.add_hud_to(user)
+	return
