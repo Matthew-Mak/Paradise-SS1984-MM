@@ -724,15 +724,19 @@
 	sleep(50 SECONDS)
 	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайщее время.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(30 SECONDS)
+
 	var/obj/singularity/narsie/N = locate(/obj/singularity/narsie) in GLOB.poi_list
 	var/obj/singularity/ratvar/R = locate(/obj/singularity/ratvar) in GLOB.poi_list
+
 	if(!N && !R)
 		GLOB.priority_announcement.Announce("Угроза пропала с наших сенсоров. Санкционирована экстренная эвакуация.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 		SSshuttle.emergency.request(null, 0.3)
 		SSshuttle.emergency.canRecall = FALSE
 		return
+	
+	var/datum/cinematic/cinema
+
 	if(N)
-		var/datum/cinematic/cinema
 		switch(SSticker.cultdat.name)
 			if("Cult of Nar'Sie")
 				cinema = /datum/cinematic/cult_arm
@@ -740,15 +744,15 @@
 				cinema = /datum/cinematic/cult_arm_kharin
 			if("Cult of Mortality")
 				cinema = /datum/cinematic/cult_arm_reaper
+	if(R)
+		cinema = /datum/cinematic/cult_arm_ratvar
+
+	if(cinema)
 		play_cinematic(cinema, world)
 		sleep(15 SECONDS)
 		SSticker.force_ending = TRUE
-		return
-	if(R)
-		play_cinematic(/datum/cinematic/cult_arm_ratvar, world)
-		sleep(15 SECONDS)
-		SSticker.force_ending = TRUE
-		return
+
+	return
 
 #undef NUKE_INTACT
 #undef NUKE_CORE_MISSING
