@@ -134,7 +134,7 @@
 		return
 
 	if(!(upgrade.type in upgrade_with))
-		user.balloon_alert(user, "учучшение не подходит!")
+		user.balloon_alert(user, "улучшение не подходит!")
 		return
 
 	user.balloon_alert(user, "модуль расширения установлен!")
