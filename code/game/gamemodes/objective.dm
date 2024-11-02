@@ -1870,10 +1870,10 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 			return TRUE
 
 	for(var/obj/spacepod/pod in range(3, T))
-		if(pod.pilot == owner.current)
+		if(!pod.pilot)
 			return TRUE
 
-		if(!pod.pilot)
+		if(pod.pilot == owner.current)
 			return TRUE
 
 	return FALSE
