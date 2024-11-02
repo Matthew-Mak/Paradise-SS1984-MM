@@ -4,8 +4,7 @@
 /datum/component/spy_bug/Initialize(...)
 	. = ..()
 	var/atom/par = parent
-	for(var/obj/item/spy_bug/spy_bug in par.contents)
-		bug = spy_bug
+	bug = locate() in par.contents
 
 /datum/component/spy_bug/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))

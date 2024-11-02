@@ -59,6 +59,12 @@
 	if(!istype(I))
 		return
 
+	if(I.GetComponent(/datum/component/spy_bug))
+		if(user)
+			user.balloon_alert(user, "уже есть")
+
+		return
+
 	if(!user.drop_transfer_item_to_loc(src, I))
 		return
 
