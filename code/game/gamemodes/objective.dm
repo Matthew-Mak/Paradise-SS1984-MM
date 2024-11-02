@@ -871,8 +871,6 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 	martyr_compatible = FALSE
 	var/type_theft_flag = THEFT_FLAG_HIGHRISK
 
-/datum/objective/steal/New(text, datum/team/team_to_join)
-	. = ..()
 
 /datum/objective/steal/proc/get_theft_list_objectives(type_theft_flag)
 	switch(type_theft_flag)
