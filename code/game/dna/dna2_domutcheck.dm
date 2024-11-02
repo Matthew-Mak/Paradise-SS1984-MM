@@ -45,12 +45,12 @@
 	// If human mob has no DNA its better runtime to tell us,
 	// since its involves some hacky code elsewhere
 	if(!dna)
-		CRASH("Mob [real_name] has no DNA assigned.")
+		CRASH("Мобу [real_name] не присвоена ДНК.")
 
 	var/datum/species/our_species = dna.species
 	// Another stuff that should never happen
 	if(!our_species)
-		CRASH("Mob [real_name] somehow has a DNA, but no species assigned.")
+		CRASH("У моба [real_name] каким-то образом есть ДНК, но не указан вид.")
 
 	if(HAS_TRAIT(src, TRAIT_NO_DNA))
 		return FALSE
