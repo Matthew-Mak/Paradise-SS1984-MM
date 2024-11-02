@@ -2,10 +2,10 @@
 //sets you on fire, does burn damage, explodes into flame when burnt, weak to water
 /datum/blobstrain/reagent/blazing_oil
 	name = "Пылающее масло"
-	description = "наносит средне-высокий урон от ожогов и подожигает цели."
-	effectdesc = "при горении также выпускает вспышки пламени, но получает урон от воды."
-	analyzerdescdamage = "Наносит средне-высокий урон от ожогов и поджигает цели."
-	analyzerdesceffect = "При горении выделяет огонь, но получает урон от воды и других огнетушащих жидкостей."
+	description = "наносит высокий урон от ожогов и подожигает цели."
+	effectdesc = "при горении также выпускает вспышки пламени, игнорирует урон от горения, но получает урон от воды."
+	analyzerdescdamage = "Наносит высокий урон от ожогов и поджигает цели."
+	analyzerdesceffect = "При попадании выпускает вспышки пламени, игнорирует урон от горения, но получает урон от воды и других огнетушащих жидкостей."
 	color = "#B68D00"
 	complementary_color = "#BE5532"
 	blobbernaut_message = "splashes"
