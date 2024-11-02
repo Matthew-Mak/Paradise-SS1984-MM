@@ -4,12 +4,12 @@
 	description = "наносит большое количество урона травмами и ожогами и генерирует ресурсы быстрее, но может расширяться только с помощью перемещения ядра или узлов."
 	shortdesc = "наносит сочетание урона травмами и ожогами."
 	effectdesc = "перемещает ваше ядро ​​или узел при ручном расширении рядом с ним."
-	analyzerdescdamage = "наносит большое количество урона травмами и ожогами."
+	analyzerdescdamage = "Наносит большое количество урона травмами и ожогами."
 	analyzerdesceffect = "Мобильный и быстро генерирует ресурсы."
 	color = "#4F4441"
 	complementary_color = "#414C4F"
 	reagent = /datum/reagent/blob/networked_fibers
-	core_regen_bonus = 4
+	core_regen_bonus = 5
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/spawning_blob, obj/structure/blob/new_blob, turf/chosen_turf, mob/camera/blob/overmind, offstation)
 	if(!overmind && new_blob.overmind || offstation)
@@ -18,7 +18,7 @@
 			to_chat(usr, span_warning("Двигать ядро или узел за пределы станции нельзя."))
 		qdel(new_blob)
 		return FALSE
-	
+
 	var/list/range_contents = (is_there_multiz())? urange_multiz(1, new_blob) : range(1, new_blob)
 
 	for(var/obj/structure/blob/possible_expander in range_contents)
@@ -27,7 +27,7 @@
 			possible_expander.forceMove(chosen_turf)
 			possible_expander.setDir(get_dir(new_blob, possible_expander))
 			return TRUE
-	overmind.add_points(4)
+	overmind.add_points(BLOB_EXPAND_COST)
 	qdel(new_blob)
 	return FALSE
 

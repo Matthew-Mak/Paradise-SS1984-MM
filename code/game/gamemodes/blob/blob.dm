@@ -213,7 +213,7 @@
 		if(!off_auto_gamma)
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/set_security_level, SEC_LEVEL_GAMMA), TIME_TO_SWITCH_CODE)
 
-	if(blob_stage == BLOB_STAGE_SECOND && legit_blobs.len >= THIRD_STAGE_COEF * blob_win_count)
+	if(blob_stage == BLOB_STAGE_SECOND && legit_blobs.len >= THIRD_STAGE_COEF * blob_win_count && (blob_win_count - legit_blobs.len) <= THIRD_STAGE_DELTA_THRESHOLD)
 		blob_stage = BLOB_STAGE_THIRD
 		send_intercept(BLOB_SECOND_REPORT)
 

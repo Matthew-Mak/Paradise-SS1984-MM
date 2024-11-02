@@ -26,6 +26,20 @@
 
 
 /datum/weather/blob_storm/telegraph()
+	var/list/blobs = SSticker?.mode?.blobs["infected"] + SSticker?.mode?.blobs["offsprings"]
+	var/color
+	var/mass = 0
+	for(var/datum/mind/blob in blobs)
+		var/mob/camera/blob/overmind = blob.current
+		if(QDELETED(overmind) || !istype(overmind) || overmind.stat == DEAD)
+			continue
+		if(overmind.blobs_legit.len > mass)
+			mass = overmind.blobs_legit.len
+			color = overmind.blobstrain.color
+
+	if(color)
+		weather_color = color
+
 	..()
 	status_alarm(TRUE)
 	GLOB.event_announcement.Announce("Биологической угроза пятого уровня достигла критической массы на борту [station_name()]. Выброс спор и массовое заражение неизбежно.",

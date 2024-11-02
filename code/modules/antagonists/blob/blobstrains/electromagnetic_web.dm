@@ -3,10 +3,10 @@
 	name = "Электромагнитная паутина"
 	color = "#83ECEC"
 	complementary_color = "#EC8383"
-	description = "наносит большой урон от ожогов и цели с ЭМИ."
+	description = "наносит большой урон от ожогов и излучает ЭМИ."
 	effectdesc = "также получает значительно увеличенный урон и выпускает ЭМИ после разрушения."
-	analyzerdescdamage = "Наносит небольшой урон от ожогов и излучает ЭМИ."
-	analyzerdesceffect = "Хрупок ко всем типам урона, но получает огромный урон от травм. Кроме того, при разрушении выпускает небольшой ЭМИ."
+	analyzerdescdamage = "Наносит большой урон от ожогов и излучает ЭМИ."
+	analyzerdesceffect = "Хрупок ко всем типам урона и получает огромный урон от травм. Кроме того, при разрушении выпускает небольшой ЭМИ."
 	reagent = /datum/reagent/blob/electromagnetic_web
 
 /datum/blobstrain/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)

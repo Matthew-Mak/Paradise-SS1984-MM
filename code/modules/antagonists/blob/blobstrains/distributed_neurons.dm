@@ -2,17 +2,17 @@
 /datum/blobstrain/reagent/distributed_neurons
 	name = "Распределенные нейроны"
 	description = "наносит средне-низкий урон токсинами и превращает бессознательные цели в зомби блоба."
-	effectdesc = "при убийстве также производит хрупкие споры.  Споры, производимые фабриками, разумны."
+	effectdesc = "при разрушении также производит хрупкие споры.  Споры, производимые фабриками, разумны."
 	shortdesc = "наносит средне-низкий урон токсинами и убьет все цели, находящиеся без сознания, при атаке. Споры, производимые фабриками, разумны."
-	analyzerdescdamage = "Наносит средне-низкий урон токсинами и убивает людей, находящихся без сознания."
-	analyzerdesceffect = "При разрушении производит споры.  Споры, производимые фабриками, разумны."
+	analyzerdescdamage = "Наносит средне-низкий урон токсинами и зомбирует людей, находящихся без сознания."
+	analyzerdesceffect = "При разрушении производит хрупкие споры. Споры, производимые фабриками, разумны."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
 	message_living = "и ты чувствуешь усталость"
 	reagent = /datum/reagent/blob/distributed_neurons
 
 /datum/blobstrain/reagent/distributed_neurons/damage_reaction(obj/structure/blob/blob_tile, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && blob_tile.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && blob_tile.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
 		blob_tile.visible_message(span_boldwarning("Спора вылетает из блоба!"))
 		blob_tile.overmind.create_spore(blob_tile.loc, /mob/living/simple_animal/hostile/blob_minion/spore/minion/weak)
 	return ..()

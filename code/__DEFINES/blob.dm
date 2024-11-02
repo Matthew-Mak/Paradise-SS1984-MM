@@ -13,6 +13,7 @@
 #define THIRD_STAGE_COEF 0.75
 #define FIRST_STAGE_THRESHOLD 300
 #define SECOND_STAGE_THRESHOLD 400
+#define THIRD_STAGE_DELTA_THRESHOLD 250
 #define BLOB_STAGE_NONE -1
 #define BLOB_STAGE_ZERO 0
 #define BLOB_STAGE_FIRST 1
@@ -70,7 +71,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 #define BLOB_BASE_POINT_RATE 2 // Base amount of points per process()
 #define BLOB_EXPAND_COST 4 // Price to expand onto a new tile
-#define BLOB_ZOMBIFICATION_COST 5 
+#define BLOB_ZOMBIFICATION_COST 5
 #define BLOB_ATTACK_REFUND 2 // Points 'refunded' when the expand attempt actually attacks something instead
 #define BLOB_BRUTE_RESIST 0.5 // Brute damage taken gets multiplied by this value
 #define BLOB_FIRE_RESIST 1 // Burn damage taken gets multiplied by this value

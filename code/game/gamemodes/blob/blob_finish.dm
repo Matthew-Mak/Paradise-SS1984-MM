@@ -8,7 +8,7 @@
 		return
 	update_blob_objective()
 	GLOB.event_announcement.Announce("Объект потерян. Причина: распостранение 5-ой биоугрозы. Взведение устройства самоуничтожения персоналом или внешними силами  в данный момент не представляется возможным из-за высокого уровня заражения. Решение: оставить станцию в изоляции до принятия окончательных мер противодействия.",
-										 "Отчет об объекте [station_name()]")
+										"Отчет об объекте [station_name()]")
 	blob_stage = (delay_blob_end)? BLOB_STAGE_POST_END : BLOB_STAGE_END
 	if(blob_stage == BLOB_STAGE_END)
 		end_game()

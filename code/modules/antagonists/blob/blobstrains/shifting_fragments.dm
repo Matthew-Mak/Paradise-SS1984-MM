@@ -1,10 +1,10 @@
 //does brute damage, shifts away when damaged
 /datum/blobstrain/reagent/shifting_fragments
 	name = "Смещающиеся фрагменты"
-	description = "нанесит средний урон травмами."
-	effectdesc = "также приведет к смещению плиток при атаке."
+	description = "наносит средний урон травмами."
+	effectdesc = "также смещает плитки при атаке, повреждении и расширении."
 	analyzerdescdamage = "Наносит средний урон травмами."
-	analyzerdesceffect = "При нападении может поменять местами плитки."
+	analyzerdesceffect = "Смещает плитки при атаке, повреждении и расширении."
 	color = "#C8963C"
 	complementary_color = "#3C6EC8"
 	reagent = /datum/reagent/blob/shifting_fragments
