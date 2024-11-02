@@ -70,7 +70,7 @@
 					stamina_damage += PULL_STAMINADAM_RUN
 
 				if(staminaloss > 69)
-					balloon_alert(usr, "слишком тяжело тащить!")
+					balloon_alert(src, "слишком тяжело тащить!")
 					stop_pulling()
 
 			// Handle pushing, NOT swapping sides with mobs in help intent
