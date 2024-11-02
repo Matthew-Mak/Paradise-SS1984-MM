@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(admin_objective_list)
 
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in SSticker.minds)
-		if(is_invalid_target(possible_target) || (possible_target in target_blacklist) || !(possible_target?.assigned_role in list("Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Captain")))
+		if(is_invalid_target(possible_target) || LAZYIN(target_blacklist, possible_target) || !LAZYIN(GLOB.command_positions, possible_target?.assigned_role))
 			continue
 
 		possible_targets |= possible_target

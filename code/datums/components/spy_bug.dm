@@ -1,11 +1,13 @@
 /datum/component/spy_bug
 	var/obj/item/spy_bug/bug
 
-/datum/component/spy_bug/RegisterWithParent()
+/datum/component/spy_bug/Initialize(...)
+	. = ..()
 	var/atom/par = parent
 	for(var/obj/item/spy_bug/spy_bug in par.contents)
 		bug = spy_bug
 
+/datum/component/spy_bug/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
 	RegisterSignal(parent, COMSIG_PREQDELETED, PROC_REF(deleted_handler))
