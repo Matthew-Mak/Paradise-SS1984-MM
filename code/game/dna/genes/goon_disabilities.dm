@@ -9,9 +9,9 @@
 // WAS: /datum/bioEffect/mute
 /datum/dna/gene/disability/mute
 	name = "Mute"
-	desc = "Completely shuts down the speech center of the subject's brain."
-	activation_message   = "You feel unable to express yourself at all."
-	deactivation_message = "You feel able to speak freely again."
+	desc = "Полностью отключает речевой центр мозга субъекта."
+	activation_message   = "Вы чувствуете, что не можете выразить себя."
+	deactivation_message = "Вы чувствуете, что снова можете говорить свободно."
 	instability = -GENE_INSTABILITY_MODERATE
 	traits_to_add = list(TRAIT_MUTE)
 
@@ -30,9 +30,9 @@
 
 /datum/dna/gene/disability/radioactive
 	name = "Radioactive"
-	desc = "The subject suffers from constant radiation sickness and causes the same on nearby organics."
-	activation_message = "You feel a strange sickness permeate your whole body."
-	deactivation_message = "You no longer feel awful and sick all over."
+	desc = "Объект страдает от постоянной лучевой болезни и вызывает такую же у близлежащей органики."
+	activation_message = "Вы чувствуете, как странное недомогание пронизывает все ваше тело."
+	deactivation_message = "Вы больше не чувствуете себя ужасно больным."
 	instability = -GENE_INSTABILITY_MAJOR
 
 
@@ -51,7 +51,7 @@
 	var/radiation_amount = abs(min(mutant.radiation - 20, 0))
 	mutant.apply_effect(radiation_amount, IRRADIATE)
 	for(var/mob/living/victim in (view(1, get_turf(src)) - src))
-		to_chat(victim, span_danger("You are enveloped by a soft green glow emanating from [mutant]."))
+		to_chat(victim, span_danger("Вас окутывает мягкое зеленое свечение, исходящее от [mutant]."))
 		victim.apply_effect(5, IRRADIATE)
 
 
@@ -66,9 +66,9 @@
 // WAS: /datum/bioEffect/fat
 /datum/dna/gene/disability/obesity
 	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	activation_message = "You feel blubbery and lethargic!"
-	deactivation_message = "You feel fit!"
+	desc = "Сильно замедляет метаболизм, способствуя большему накоплению жировой ткани."
+	activation_message = "Вы чувствуете себя толстым и ленивым!"
+	deactivation_message = "Вы чувствуете себя в хорошей форме!"
 	instability = -GENE_INSTABILITY_MINOR
 	traits_to_add = list(TRAIT_OBESITY)
 
@@ -81,7 +81,7 @@
 // WAS: /datum/bioEffect/chav
 // WAS: /datum/dna/gene/disability/speech/chav
 /datum/dna/gene/disability/speech/auld_imperial
-	name = "Староимпѣрская рѣчь"
+	name = "Old Imperial speech"
 	desc = "Заставляет языковой центра мозга субъекта произносить слова на староимперский манер."
 	activation_message = "Охъ, где бы отвѣдать мягкихъ ѳранцузскихъ булокъ, да выпить ароматнаго чаю глоточекъ?"
 	deactivation_message = "Изысканность вашей речи улетучивается, как запах дорогих духов… Блядь."
@@ -190,7 +190,7 @@
 
 // WAS: /datum/bioEffect/swedish
 /datum/dna/gene/disability/speech/swedish
-	name = "Шведский акцент"
+	name = "Swedish"
 	desc = "Заставляет языковой центра мозга субъекта произносить слова на скандинавский манер."
 	activation_message = "Вы ощущаете внутреннюю шведскость. Кажется, сработало."
 	deactivation_message = "Внутреннее ощущение шведскости проходит."
@@ -244,9 +244,9 @@
 // WAS: /datum/bioEffect/unintelligable
 /datum/dna/gene/disability/unintelligable
 	name = "Unintelligable"
-	desc = "Heavily corrupts the part of the brain responsible for forming spoken sentences."
-	activation_message = "You can't seem to form any coherent thoughts!"
-	deactivation_message = "Your mind feels more clear."
+	desc = "Сильно повреждает часть мозга, отвечающую за формирование разговорных предложений."
+	activation_message = "Вы не можете сформировать ни одной связной мысли!"
+	deactivation_message = "Ваши мысли становятся более ясными."
 	instability = -GENE_INSTABILITY_MINOR
 
 
@@ -286,9 +286,9 @@
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
 	name = "Horns"
-	desc = "Enables the growth of a compacted keratin formation on the subject's head."
-	activation_message = "A pair of horns erupt from your head."
-	deactivation_message = "Your horns crumble away into nothing."
+	desc = "Обеспечивает рост уплотненного кератинового образования на голове субъекта."
+	activation_message = "Из вашей головы вырываются рога."
+	deactivation_message = "Ваши рога рассыпаются в прах."
 
 
 /datum/dna/gene/disability/horns/New()
@@ -304,9 +304,9 @@
 // WAS: /datum/bioEffect/immolate
 /datum/dna/gene/basic/grant_spell/immolate
 	name = "Incendiary Mitochondria"
-	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
-	activation_messages = list("You suddenly feel rather hot.")
-	deactivation_messages = list("You no longer feel uncomfortably hot.")
+	desc = "Субъект приобретает способность преобразовывать избыточную клеточную энергию в тепловую."
+	activation_messages = list("Вам вдруг становится очень жарко.")
+	deactivation_messages = list("Вы больше не чувствуете дискомфортного жара.")
 	spelltype = /obj/effect/proc_holder/spell/immolate
 
 
@@ -317,7 +317,7 @@
 
 /obj/effect/proc_holder/spell/immolate
 	name = "Incendiary Mitochondria"
-	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
+	desc = "Субъект приобретает способность преобразовывать избыточную клеточную энергию в тепловую."
 	base_cooldown = 60 SECONDS
 	clothes_req = FALSE
 	stat_allowed = CONSCIOUS
@@ -332,7 +332,7 @@
 /obj/effect/proc_holder/spell/immolate/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/L = user
 	L.adjust_fire_stacks(0.5)
-	L.visible_message("<span class='danger'>[L.name]</b> suddenly bursts into flames!</span>")
+	L.visible_message("<span class='danger'>[L.name]</b> внезапно вспыхивает!</span>")
 	L.IgniteMob()
 	playsound(L.loc, 'sound/effects/bamf.ogg', 50, 0)
 
