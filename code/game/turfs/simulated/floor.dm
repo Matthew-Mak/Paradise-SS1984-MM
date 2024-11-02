@@ -106,8 +106,9 @@ GLOBAL_LIST_INIT(icons_to_ignore_at_floor_init, list("damaged1","damaged2","dama
 	var/datum/gas_mixture/Z = air
 	var/pressure = Z.return_pressure()
 	// Can most things breathe and tolerate the temperature and pressure?
-	if(Z.oxygen < 16 || Z.toxins >= 0.05 || Z.carbon_dioxide >= 10 || Z.sleeping_agent >= 1 || (Z.temperature <= 270) || (Z.temperature >= 360) || (pressure <= 20) || (pressure >= 550))
+	if(Z.gases.get(GAS_OXYGEN) < 16 || Z.gases.get(GAS_PLASMA) >= 0.05 || Z.gases.get(GAS_CDO) >= 10 || Z.gases.get(GAS_N2O) >= 1 || (Z.temperature <= 270) || (Z.temperature >= 360) || (pressure <= 20) || (pressure >= 550))
 		return FALSE
+
 	return TRUE
 
 
@@ -127,6 +128,7 @@ GLOBAL_LIST_INIT(icons_to_ignore_at_floor_init, list("damaged1","damaged2","dama
 /turf/simulated/floor/break_tile()
 	if(broken)
 		return
+
 	current_overlay = pick(broken_states())
 	broken = TRUE
 	update_icon()
@@ -134,6 +136,7 @@ GLOBAL_LIST_INIT(icons_to_ignore_at_floor_init, list("damaged1","damaged2","dama
 /turf/simulated/floor/burn_tile()
 	if(burnt)
 		return
+
 	current_overlay = pick(burnt_states())
 	burnt = TRUE
 	update_icon()

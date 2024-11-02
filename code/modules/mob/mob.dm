@@ -96,14 +96,10 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t+= "<span class='warning'>Temperature: [environment.temperature] \n</span>"
-	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
-	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
-	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
-	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
-	t+= "<span class='notice'>N2O: [environment.sleeping_agent] \n</span>"
-	t+= "<span class='notice'>Agent B: [environment.agent_b] \n</span>"
+	var/t = span_notice("Coordinates: [x],[y] \n")
+	t += span_warning("Temperature: [environment.temperature] \n")
+	for(var/id in environment.gases.gases)
+		t += span_notice(gas_name_by_id(id) + ": [environment.gases.get(id)] \n")
 
 	usr.show_message(t, 1)
 
@@ -638,7 +634,7 @@
 	return FALSE
 
 /mob/proc/can_use_machinery(obj/machinery/mach)
-	return IsAdvancedToolUser() 
+	return IsAdvancedToolUser()
 
 /mob/proc/swap_hand()
 	return
@@ -673,7 +669,7 @@
 	var/mob/living/picked = tgui_input_list(usr, "Please select an NPC to respawn as", "Respawn as NPC", allowed_creatures)
 	if(!picked)
 		return
-		
+
 	if(picked == "Mouse")
 		become_mouse()
 		return
@@ -684,7 +680,7 @@
 	if(QDELETED(picked_mob) || picked_mob.key || picked_mob.stat == DEAD)
 		to_chat(usr, span_warning("[capitalize(picked_mob)] is no longer available to respawn!"))
 		return
-	
+
 	if(istype(picked_mob, /mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/borer = picked_mob
 		borer.transfer_personality(usr.client)
@@ -693,7 +689,7 @@
 	to_chat(usr, span_notify(message))
 	GLOB.respawnable_list -= usr
 	picked_mob.key = key
-		
+
 
 /mob/proc/become_mouse()
 	var/timedifference = world.time - client.time_joined_as_mouse

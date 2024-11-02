@@ -100,10 +100,10 @@
 		var/total_moles = environment.total_moles()
 
 		if(total_moles)
-			var/o2_level = environment.oxygen/total_moles
-			var/n2_level = environment.nitrogen/total_moles
-			var/co2_level = environment.carbon_dioxide/total_moles
-			var/plasma_level = environment.toxins/total_moles
+			var/o2_level = environment.gases.get(GAS_OXYGEN)/total_moles
+			var/n2_level = environment.gases.get(GAS_NITROGEN)/total_moles
+			var/co2_level = environment.gases.get(GAS_CDO)/total_moles
+			var/plasma_level = environment.gases.get(GAS_PLASMA)/total_moles
 			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 			results = list(
 				list("entry" = "Pressure", "units" = "kPa", "val" = "[round(pressure,0.1)]", "bad_high" = 120, "poor_high" = 110, "poor_low" = 95, "bad_low" = 80),

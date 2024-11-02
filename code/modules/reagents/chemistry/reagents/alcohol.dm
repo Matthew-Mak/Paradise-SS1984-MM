@@ -13,6 +13,7 @@
 	var/dizzy_adj = 6 SECONDS
 	var/alcohol_perc = 1 //percentage of ethanol in a beverage 0.0 - 1.0
 	taste_description = "liquid fire"
+	has_touch_effect = TRUE
 
 /datum/reagent/consumable/ethanol/New()
 	addict_supertype = /datum/reagent/consumable/ethanol
@@ -1161,6 +1162,7 @@
 	alcohol_perc = 1
 	can_synth = FALSE
 	taste_description = "<span class='userdanger'>LIQUID FUCKING DEATH OH GOD WHAT THE FUCK</span>"
+	has_touch_effect = FALSE
 
 /datum/reagent/consumable/ethanol/dragons_breath/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(method == REAGENT_INGEST && prob(20))
@@ -1210,6 +1212,7 @@
 	drink_name = "Glass of Synthanol"
 	drink_desc = "The equivalent of alcohol for synthetic crewmembers. They'd find it awful if they had tastebuds too."
 	taste_description = "motor oil"
+	has_touch_effect = FALSE
 
 /datum/reagent/consumable/ethanol/synthanol/on_mob_life(mob/living/M)
 	metabolization_rate = REAGENTS_METABOLISM
@@ -1223,6 +1226,7 @@
 /datum/reagent/consumable/ethanol/synthanol/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(M.dna.species.reagent_tag & PROCESS_SYN)
 		return
+
 	if(method == REAGENT_INGEST)
 		to_chat(M, pick("<span class = 'danger'>That was awful!</span>", "<span class = 'danger'>Yuck!</span>"))
 
@@ -1708,6 +1712,7 @@
 	drink_name = "Alcomender"
 	drink_desc = "A glass in the form of a mender, a favorite among doctors."
 	taste_description = "funny medicine"
+	has_touch_effect = TRUE
 
 /datum/reagent/consumable/ethanol/alcomender/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1719,6 +1724,7 @@
 		if(method == REAGENT_TOUCH)
 			M.adjustFireLoss(-volume * 0.7, affect_robotic = FALSE)
 			to_chat(M, "<span class='notice'>The diluted silver sulfadiazine soothes your burns.</span>")
+
 	return STATUS_UPDATE_NONE
 
 /datum/reagent/consumable/ethanol/amnesia

@@ -63,8 +63,10 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/simulated/floor/indestructible/necropolis
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_LAVA
@@ -78,8 +80,10 @@
 		icon_state = "necro[rand(2,3)]"
 
 /turf/simulated/floor/indestructible/necropolis/air
-	oxygen = MOLES_O2STANDARD
-	nitrogen = MOLES_N2STANDARD
+	preloaded_gases = list(
+		GAS_OXYGEN = MOLES_O2STANDARD,
+		GAS_NITROGEN = MOLES_N2STANDARD,
+	)
 	temperature = T20C
 
 /turf/simulated/floor/indestructible/boss //you put stone tiles on this and use it as a base
@@ -88,19 +92,22 @@
 	icon_state = "boss"
 	smooth = SMOOTH_FALSE
 	baseturf = /turf/simulated/floor/indestructible/boss
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 
 /turf/simulated/floor/indestructible/boss/indoors //used for ashwalkers village
-	oxygen = /turf/simulated/floor/lava::oxygen //lava near tendril
-	nitrogen = /turf/simulated/floor/lava::nitrogen
+	preloaded_gases = /turf/simulated/floor/lava::preloaded_gases
 	temperature = /turf/simulated/floor/lava::temperature
 
 /turf/simulated/floor/indestructible/boss/air
-	oxygen = MOLES_O2STANDARD
-	nitrogen = MOLES_N2STANDARD
+	preloaded_gases = list(
+		GAS_OXYGEN = MOLES_O2STANDARD,
+		GAS_NITROGEN = MOLES_N2STANDARD,
+	)
 	temperature = T20C
 
 /turf/simulated/floor/indestructible/hierophant
@@ -108,8 +115,10 @@
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	icon_state = "floor"
 	base_icon_state = "hierophant_floor"
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 	smooth = SMOOTH_BITMASK
@@ -122,8 +131,10 @@
 /turf/simulated/floor/indestructible/hierophant/two
 
 /turf/simulated/floor/indestructible/vox
-	oxygen = 0 // I hate this
-	nitrogen = 100
+	preloaded_gases = list( // BeepBeepBoop hate this
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 100,
+	)
 
 /turf/simulated/floor/indestructible/carpet
 	name = "Carpet"

@@ -34,6 +34,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_description = "antiseptic"
+	has_touch_effect = TRUE
 
 	//makes you squeaky clean
 /datum/reagent/medicine/sterilizine/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
@@ -125,6 +126,7 @@
 	color = "#0000C8" // rgb: 200, 165, 220
 	heart_rate_decrease = 1
 	taste_description = "a safe refuge"
+	has_touch_effect = TRUE
 
 /datum/reagent/medicine/cryoxadone/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(data && data["diseases"])
@@ -235,6 +237,7 @@
 	metabolization_rate = 7.5 * REAGENTS_METABOLISM
 	harmless = FALSE	//toxic if ingested, and I am NOT going to account for the difference
 	taste_description = "burn cream"
+	has_touch_effect = TRUE
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -285,6 +288,7 @@
 	penetrates_skin = TRUE
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	taste_description = "salt"
+	has_touch_effect = TRUE
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE

@@ -143,27 +143,32 @@
 
 		switch(filter_type)
 			if(FILTER_TOXINS)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
+				filtered_out.gases._set(GAS_AGENT_B, removed.gases.get(GAS_AGENT_B))
+				removed.gases._set(GAS_AGENT_B, 0)
 
-				filtered_out.agent_b = removed.agent_b
-				removed.agent_b = 0
+				for(var/id in removed.gases.gases)
+					if(id == GAS_OXYGEN || id == GAS_NITROGEN)
+						continue
+
+					if(id in GLOB.chemical_reagents_list)
+						filtered_out.gases._set(id, removed.gases.get(id))
+						removed.gases._set(id, 0)
 
 			if(FILTER_OXYGEN)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
+				filtered_out.gases._set(GAS_OXYGEN, removed.gases.get(GAS_OXYGEN))
+				removed.gases._set(GAS_OXYGEN, 0)
 
 			if(FILTER_NITROGEN)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
+				filtered_out.gases._set(GAS_NITROGEN, removed.gases.get(GAS_NITROGEN))
+				removed.gases._set(GAS_NITROGEN, 0)
 
 			if(FILTER_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
+				filtered_out.gases._set(GAS_CDO, removed.gases.get(GAS_CDO))
+				removed.gases._set(GAS_CDO, 0)
 
 			if(FILTER_N2O)
-				filtered_out.sleeping_agent = removed.sleeping_agent
-				removed.sleeping_agent = 0
+				filtered_out.gases._set(GAS_N2O, removed.gases.get(GAS_N2O))
+				removed.gases._set(GAS_N2O, 0)
 			else
 				filtered_out = null
 

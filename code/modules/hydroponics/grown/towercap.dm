@@ -253,7 +253,7 @@
 
 /obj/structure/bonfire/proc/CheckOxygen()
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen > 13)
+	if(G.gases.get(GAS_OXYGEN) > 13)
 		return 1
 	return 0
 

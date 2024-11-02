@@ -6,6 +6,7 @@
 	var/message = "Блоб наносит вам удар" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 	can_synth = FALSE
+	has_touch_effect = TRUE
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume, show_message, touch_protection)
 	return round(volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.

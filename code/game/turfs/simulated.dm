@@ -5,10 +5,16 @@
 	var/mutable_appearance/melting_olay
 
 	var/thermite = 0
-	oxygen = MOLES_O2STANDARD
-	nitrogen = MOLES_N2STANDARD
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	var/list/preloaded_gases = list(
+		GAS_OXYGEN = MOLES_O2STANDARD,
+		GAS_NITROGEN = MOLES_N2STANDARD,
+	)
+
+	var/oxygen
+	var/nitrogen
+	var/toxins
 
 /turf/simulated/proc/break_tile()
 	return
@@ -71,12 +77,8 @@
 /turf/simulated/proc/assimilate_air()
 	if(blocks_air || !air) // Fuck off
 		return
-	var/aoxy = 0
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/asleep = 0
-	var/ab = 0
+
+	var/datum/gaslist/agases = new
 	var/atemp = TCMB
 
 	var/turf_count = 0
@@ -87,25 +89,17 @@
 			continue
 		else if(isfloorturf(T))
 			var/datum/gas_mixture/turf_air = T.return_air()
-			aoxy += turf_air.oxygen
-			anitro += turf_air.nitrogen
-			aco += turf_air.carbon_dioxide
-			atox += turf_air.toxins
-			asleep += turf_air.sleeping_agent
-			ab += turf_air.agent_b
+			for(var/id in turf_air.gases.gases)
+				agases.add(id, turf_air.gases.get(id))
+
 			atemp += turf_air.temperature
 			turf_count++
 
 	var/datum/gas_mixture/new_air = new
+	for(var/id in agases.gases)
+		new_air.gases._set(id, agases.get(id) / max(turf_count, 1))
 
-	new_air.oxygen = (aoxy / max(turf_count, 1)) //Averages contents of the turfs, ignoring walls and the like
-	new_air.nitrogen = (anitro / max(turf_count, 1))
-	new_air.carbon_dioxide = (aco / max(turf_count, 1))
-	new_air.toxins = (atox / max(turf_count, 1))
-	new_air.sleeping_agent = (asleep / max(turf_count, 1))
-	new_air.agent_b = (ab / max(turf_count, 1))
 	new_air.temperature = (atemp / max(turf_count, 1))
-
 	air = new_air
 
 	if(SSair)

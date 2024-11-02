@@ -21,12 +21,6 @@
 //TODO: Port gas_mixture_parser from TG
 /proc/gas_mixture_parser(datum/gas_mixture/gasmix, name)
 	. = list(
-		"oxygen" = null,
-		"carbon_dioxide" = null,
-		"nitrogen" = null,
-		"toxins" = null,
-		"sleeping_agent" = null,
-		"agent_b" = null,
 		"name" = format_text(name),
 		"total_moles" = null,
 		"temperature" = null,
@@ -37,12 +31,10 @@
 	)
 	if(!gasmix)
 		return
-	.["oxygen"] = gasmix.oxygen
-	.["carbon_dioxide"] = gasmix.carbon_dioxide
-	.["nitrogen"] = gasmix.nitrogen
-	.["toxins"] = gasmix.toxins
-	.["sleeping_agent"] = gasmix.sleeping_agent
-	.["agent_b"] = gasmix.agent_b
+
+	for(var/id in gasmix.gases.gases)
+		.[id] = gasmix.gases.get(id)
+
 	.["total_moles"] = gasmix.total_moles()
 	.["temperature"] = gasmix.temperature
 	.["volume"] = gasmix.volume

@@ -3,8 +3,7 @@
 	desc = "Sturdy exterior hull plating that separates you from the uncaring vacuum of space."
 	explosion_vertical_block = 2
 	icon_state = "regular_hull"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/engine/hull/rcd_deconstruct_act(mob/user, obj/item/rcd/our_rcd)

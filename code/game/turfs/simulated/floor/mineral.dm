@@ -102,24 +102,21 @@
 	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 
 /turf/simulated/floor/mineral/titanium/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/mineral/titanium/blue
 	icon_state = "titanium_blue"
 
 /turf/simulated/floor/mineral/titanium/blue/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/mineral/titanium/yellow
 	icon_state = "titanium_yellow"
 
 /turf/simulated/floor/mineral/titanium/yellow/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/mineral/titanium/purple
@@ -127,8 +124,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/titanium/purple
 
 /turf/simulated/floor/mineral/titanium/purple/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 //PLASTITANIUM (syndieshuttle)
@@ -144,8 +140,7 @@
 	icon_state = "plastitanium_red"
 
 /turf/simulated/floor/mineral/plastitanium/red/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/mineral/plastitanium/red/brig
@@ -186,8 +181,7 @@
 		spam_flag = world.time + 10
 
 /turf/simulated/floor/mineral/bananium/airless
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 

@@ -245,8 +245,8 @@
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.oxygen = MOLES_O2STANDARD
-	GM.nitrogen = MOLES_N2STANDARD
+	GM.gases._set(GAS_OXYGEN, MOLES_O2STANDARD)
+	GM.gases._set(GAS_NITROGEN, MOLES_N2STANDARD)
 	GM.temperature = T20C
 	return GM
 

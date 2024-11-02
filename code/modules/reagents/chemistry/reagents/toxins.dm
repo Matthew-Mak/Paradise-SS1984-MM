@@ -102,6 +102,7 @@
 	color = "#0b8f70" // rgb: 11, 143, 112
 	taste_description = "slimes"
 	taste_mult = 1.3
+	has_touch_effect = TRUE
 
 /datum/reagent/slimejelly/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -186,6 +187,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	penetrates_skin = TRUE
 	taste_mult = 0 // elemental mercury is tasteless
+	has_touch_effect = TRUE
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -202,6 +204,7 @@
 	penetrates_skin = TRUE
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "fire"
+	has_touch_effect = TRUE
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -217,6 +220,7 @@
 	penetrates_skin = TRUE
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "acid"
+	has_touch_effect = TRUE
 
 /datum/reagent/fluorine/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -232,6 +236,7 @@
 	color = "#C7C7C7" // rgb: 199,199,199
 	penetrates_skin = TRUE
 	taste_description = "the colour blue and regret"
+	has_touch_effect = TRUE
 
 /datum/reagent/radium/on_mob_life(mob/living/M)
 	if(M.radiation < 80)
@@ -251,12 +256,15 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	taste_mult = 0.9
 	taste_description = "slime"
+	has_touch_effect = TRUE
 
 /datum/reagent/mutagen/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 	if(!..())
 		return
+
 	if(!M.dna)
 		return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+
 	if((method==REAGENT_TOUCH && prob(33)) || method==REAGENT_INGEST)
 		randmutb(M)
 		M.check_genes()
@@ -354,6 +362,7 @@
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "<span class='userdanger'>ACID</span>"
 	var/acidpwr = 10 //the amount of protection removed from the armour
+	has_touch_effect = TRUE
 
 /datum/reagent/acid/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -451,6 +460,7 @@
 	color = "#0080ff"
 	reagent_state = LIQUID
 	taste_description = "vinegar"
+	has_touch_effect = TRUE
 
 /datum/reagent/acetic_acid/reaction_mob(mob/M, method = REAGENT_TOUCH, volume)
 	if(ishuman(M))
@@ -548,6 +558,7 @@
 	penetrates_skin = TRUE
 	can_synth = FALSE
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/polonium/on_mob_life(mob/living/M)
 	M.apply_effect(8, IRRADIATE, negate_armor = 1)
@@ -562,6 +573,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 40
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/histamine/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume) //dumping histamine on someone is VERY mean.
 	if(iscarbon(M))
@@ -639,6 +651,7 @@
 	color = "#B44B00"
 	penetrates_skin = TRUE
 	taste_description = "bitterness"
+	has_touch_effect = TRUE
 
 /datum/reagent/formaldehyde/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -655,6 +668,7 @@
 	color = "#B44B00"
 	penetrates_skin = TRUE
 	taste_description = "apples"
+	has_touch_effect = TRUE
 
 /datum/reagent/acetaldehyde/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -737,6 +751,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	penetrates_skin = TRUE
 	taste_description = "almonds"
+	has_touch_effect = TRUE
 
 /datum/reagent/cyanide/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -762,6 +777,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	penetrates_skin = TRUE
 	taste_description = "prickliness"
+	has_touch_effect = TRUE
 
 /datum/reagent/itching_powder/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_STAT
@@ -892,6 +908,7 @@
 	penetrates_skin = TRUE
 	can_synth = FALSE
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/ketamine/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1003,6 +1020,7 @@
 	can_synth = FALSE
 	penetrates_skin = TRUE
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/curare/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1039,6 +1057,7 @@
 	penetrates_skin = TRUE
 	overdose_threshold = 25
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/sarin/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1095,6 +1114,7 @@
 	color = "#d3cf50"
 	var/lethality = 0 //Glyphosate is non-toxic to people
 	taste_description = "bitterness"
+	has_touch_effect = TRUE
 
 /datum/reagent/glyphosate/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1124,6 +1144,7 @@
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
 			C.adjustToxLoss(lethality)
+
 		if(HAS_TRAIT(C, TRAIT_PLANT_ORIGIN))	//plantmen take extra damage
 			C.adjustToxLoss(3)
 			..()
@@ -1147,6 +1168,7 @@
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	taste_description = "bitterness"
+	has_touch_effect = TRUE
 
 /datum/reagent/pestkiller/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1163,6 +1185,7 @@
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
 			C.adjustToxLoss(2)
+
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(iskidan(H)) //RIP
@@ -1244,12 +1267,15 @@
 	reagent_state = LIQUID
 	color = "#00FD00"
 	taste_description = "slime"
+	has_touch_effect = TRUE
 
 /datum/reagent/glowing_slurry/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume) //same as mutagen
 	if(!..())
 		return
+
 	if(!M.dna)
 		return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+
 	if((method==REAGENT_TOUCH && prob(50)) || method==REAGENT_INGEST)
 		randmutb(M)
 		M.check_genes()
@@ -1277,6 +1303,7 @@
 	color = "#993333"
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "<span class='warning'>ANTS OH GOD</span>"
+	has_touch_effect = TRUE
 
 /datum/reagent/ants/on_mob_life(mob/living/M)
 	var/update_flags = STATUS_UPDATE_NONE
@@ -1333,6 +1360,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	can_synth = FALSE
 	taste_description = "decay"
+	has_touch_effect = TRUE
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/living/L, method=REAGENT_TOUCH, reac_volume)
 	var/datum/disease/virus/transformation/morph/D = new

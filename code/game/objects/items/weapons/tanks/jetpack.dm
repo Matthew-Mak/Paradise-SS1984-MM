@@ -53,9 +53,10 @@
 		return
 	switch(gas_type)
 		if("oxygen")
-			air_contents.oxygen = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+			air_contents.gases._set(GAS_OXYGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
 		if("carbon dioxide")
-			air_contents.carbon_dioxide = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+			air_contents.gases._set(GAS_CDO, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 
 /obj/item/tank/jetpack/item_action_slot_check(slot, mob/user, datum/action/action)

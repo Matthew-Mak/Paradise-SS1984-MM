@@ -12,9 +12,9 @@
 /obj/structure/closet/critter/proc/updateEnv()
 	if(!env)
 		env = new/datum/gas_mixture()
-	env.oxygen = MOLES_O2STANDARD
-	env.nitrogen = MOLES_N2STANDARD
-	env.carbon_dioxide = 0
+	env.gases._set(GAS_OXYGEN, MOLES_O2STANDARD)
+	env.gases._set(GAS_NITROGEN, MOLES_N2STANDARD)
+	env.gases._set(GAS_CDO, 0)
 	env.temperature = T20C
 
 /obj/structure/closet/critter/Initialize(mapload)

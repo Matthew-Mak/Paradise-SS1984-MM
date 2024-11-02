@@ -16,15 +16,6 @@
 	var/real_layer = TURF_LAYER
 	layer = MAP_EDITOR_TURF_LAYER
 
-	///Properties for open tiles (/floor)
-	/// All the gas vars, on the turf, are meant to be utilized for initializing a gas datum and setting its first gas values; the turf vars are never further modified at runtime; it is never directly used for calculations by the atmospherics system.
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-	var/sleeping_agent = 0
-	var/agent_b = 0
-
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
@@ -75,6 +66,7 @@
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	var/datum/gas_mixture/air = new
 
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)

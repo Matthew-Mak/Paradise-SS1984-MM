@@ -71,18 +71,11 @@
 
 		filtered_out.temperature = removed.temperature
 
-
-		filtered_out.toxins = removed.toxins
-		removed.toxins = 0
-
-		filtered_out.carbon_dioxide = removed.carbon_dioxide
-		removed.carbon_dioxide = 0
-
-		filtered_out.sleeping_agent = removed.sleeping_agent
-		removed.sleeping_agent = 0
-
-		filtered_out.agent_b = removed.agent_b
-		removed.agent_b = 0
+		var/list/normal_gases = list(GAS_OXYGEN, GAS_NITROGEN)
+		for(var/id in removed.gases.gases)
+			if(!(id in normal_gases))
+				filtered_out.gases._set(id, removed.gases.get(id))
+				removed.gases._set(id, 0)
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)

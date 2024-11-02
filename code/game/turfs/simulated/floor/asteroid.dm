@@ -151,8 +151,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/simulated/floor/plating/asteroid/basalt/airless
 	temperature = TCMB
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 
 /turf/simulated/floor/plating/asteroid/ancient
 	digResult = /obj/item/stack/ore/glass/basalt/ancient
@@ -160,8 +159,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/simulated/floor/plating/asteroid/ancient/airless
 	temperature = TCMB
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 
 /turf/simulated/floor/plating/asteroid/basalt/Initialize(mapload)
 	. = ..()
@@ -182,16 +180,17 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
 /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 	baseturf = /turf/simulated/floor/lava/mapping_lava
 
 /turf/simulated/floor/plating/asteroid/airless
 	temperature = TCMB
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	turf_type = /turf/simulated/floor/plating/asteroid/airless
 
 /turf/simulated/floor/plating/asteroid/snow
@@ -222,14 +221,15 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/simulated/floor/plating/asteroid/snow/airless
 	temperature = TCMB
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 
 /turf/simulated/floor/plating/asteroid/snow/temperature
 	temperature = 255.37
 
 /turf/simulated/floor/plating/asteroid/snow/atmosphere
-	oxygen = 22
-	nitrogen = 82
+	preloaded_gases = list(
+		GAS_OXYGEN = 22,
+		GAS_NITROGEN = 82,
+	)
 	temperature = 180
 	planetary_atmos = FALSE

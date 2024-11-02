@@ -10,6 +10,7 @@
 	var/temp_deviance = 1000
 	var/size_divisor = 40
 	var/mob_burning =  6.6 // 33
+	has_touch_effect = TRUE
 
 /datum/reagent/phlogiston/reaction_turf(turf/T, volume)
 	if(holder.chem_temp <= T0C - 50)
@@ -21,6 +22,7 @@
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method = REAGENT_TOUCH, volume)
 	if(holder.chem_temp <= T0C - 50)
 		return
+
 	M.adjust_fire_stacks(mob_burning)
 	M.IgniteMob()
 	if(method == REAGENT_INGEST)
@@ -52,6 +54,7 @@
 	process_flags = ORGANIC | SYNTHETIC
 	color = "#C86432"
 	taste_description = "burning"
+	has_touch_effect = TRUE
 
 /datum/reagent/napalm/reaction_temperature(exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 100)
@@ -101,6 +104,7 @@
 	var/volume_explosion_radius_multiplier = 0.005
 	var/volume_explosion_radius_modifier = 0
 	var/combustion_temp = T0C + 200
+	has_touch_effect = TRUE
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
 	if(M.on_fire)
@@ -152,6 +156,7 @@
 	color = "#7A2B94"
 	taste_description = "corporate assets going to waste"
 	taste_mult = 1.5
+	has_touch_effect = TRUE
 
 /datum/reagent/plasma/reaction_temperature(exposed_temperature, exposed_volume)
 	if(exposed_temperature >= T0C + 100)
@@ -185,6 +190,7 @@
 	color = "#673910" // rgb: 103, 57, 16
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "rust"
+	has_touch_effect = TRUE
 
 /datum/reagent/thermite/reaction_mob(mob/living/M, method= REAGENT_TOUCH, volume)
 	if(method == REAGENT_TOUCH)
@@ -239,10 +245,12 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	process_flags = ORGANIC | SYNTHETIC
 	taste_mult = 0
+	has_touch_effect = TRUE
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	if(M.on_fire)
 		M.adjust_fire_stacks(1)
+
 	return ..()
 
 /datum/reagent/clf3/reaction_turf(turf/T, volume)
@@ -304,6 +312,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	penetrates_skin = TRUE
 	taste_description = "explosions"
+	has_touch_effect = TRUE
 
 /datum/reagent/blackpowder/reaction_turf(turf/T, volume) //oh shit
 	if(volume >= 5 && !isspaceturf(T))
@@ -318,6 +327,7 @@
 	color = "#FFFF00"
 	penetrates_skin = TRUE
 	taste_description = "salt"
+	has_touch_effect = TRUE
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
@@ -335,6 +345,7 @@
 	color = "#0000FF"
 	penetrates_skin = TRUE
 	taste_description = "loud noises"
+	has_touch_effect = TRUE
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"
@@ -343,6 +354,7 @@
 	color = "#B2B2FF" // rgb: 139, 166, 233
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "bitterness"
+	has_touch_effect = TRUE
 
 /datum/reagent/cryostylane/on_new(data)
 	..()
@@ -415,6 +427,7 @@
 	color = "#A0A090"
 	var/cooling_temperature = 3 // more effective than water
 	taste_description = "the inside of a fire extinguisher"
+	has_touch_effect = TRUE
 
 /datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume)
 // Put out fire
@@ -444,6 +457,7 @@
 	color = "#500064" // rgb: 80, 0, 100
 	taste_description = "corporate assets going to waste"
 	taste_mult = 1.5
+	has_touch_effect = TRUE
 
 /datum/reagent/plasma_dust/reaction_temperature(exposed_temperature, exposed_volume)
 	if(exposed_temperature >= T0C + 100)
@@ -465,4 +479,5 @@
 	if(method == REAGENT_TOUCH)
 		M.adjust_fire_stacks(volume / 5)
 		return
+
 	..()

@@ -5,8 +5,7 @@
 
 /turf/simulated/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /obj/machinery/mech_bay_recharge_port

@@ -404,7 +404,7 @@
 			var/stun_time = (max(5 / efficiency, (1 / occupant.bodytemperature) * 2000/efficiency)) STATUS_EFFECT_CONSTANT
 			occupant.Sleeping(stun_time)
 			occupant.Paralyse(stun_time)
-			if(air_contents.oxygen > 2)
+			if(air_contents.gases.get(GAS_OXYGEN) > 2)
 				if(occupant.getOxyLoss())
 					occupant.adjustOxyLoss(-6)
 			else

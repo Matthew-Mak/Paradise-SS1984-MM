@@ -1,10 +1,3 @@
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
-#define GAS_A_B	(1 << 5)
-
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -28,8 +21,10 @@
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 #define CELL_VOLUME				2500	//liters in a cell
 //liters in a normal breath
-#define BREATH_VOLUME			1
+#define BREATH_VOLUME						10
+#define BREATH_NON_REAGENT_USE				0.1
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
+#define GASES_TOUCH_PERCENTAGE	0.05
 
 //EXCITED GROUPS
 #define EXCITED_GROUP_BREAKDOWN_CYCLES				10		//number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)

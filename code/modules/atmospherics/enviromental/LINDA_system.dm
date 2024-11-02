@@ -1,13 +1,16 @@
 /turf/proc/CanAtmosPass(turf/T, vertical = FALSE)
 	if(!istype(T))
 		return FALSE
+
 	var/direction = vertical ? get_dir_multiz(src, T) : get_dir(src, T)//if not UP and DOWN, get_dir_multiz returns get_dir
 	var/reverse_direction = REVERSE_DIR(direction)
 	var/can_pass = TRUE
 	if(vertical && !(zAirOut(direction, T) && T.zAirIn(direction, src)))
 		can_pass = FALSE
+
 	if(blocks_air || T.blocks_air)
 		can_pass = FALSE
+
 	//If we're just checking with ourselves no sense asking objects on the turf
 	if(T == src)
 		return can_pass
@@ -16,6 +19,7 @@
 	for(var/obj/O in contents) //from our turf to T
 		if(O.CanAtmosPass(T, vertical))
 			continue
+
 		can_pass = FALSE
 		if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 			atmos_supeconductivity |= direction
@@ -25,6 +29,7 @@
 	for(var/obj/O in T.contents) //from T turf to ours
 		if(O.CanAtmosPass(src, vertical))
 			continue
+
 		can_pass = FALSE
 		if(O.BlockSuperconductivity())
 			atmos_supeconductivity |= direction
@@ -87,8 +92,10 @@
 			turf_target = (direction & UP) ? GET_TURF_ABOVE(src) : GET_TURF_BELOW(src)
 		else
 			turf_target = get_step(src, direction)
+
 		if(!istype(turf_target))
 			continue
+
 		var/vertical = (direction & (UP | DOWN))
 		if(CanAtmosPass(turf_target, vertical))
 			atmos_adjacent_turfs |= turf_target
@@ -132,18 +139,21 @@
 /atom/movable/proc/air_update_turf(command = FALSE)
 	if(!istype(loc,/turf) && command)
 		return
+
 	for(var/turf/T in locs) // used by double wide doors and other nonexistant multitile structures
 		T.air_update_turf(command)
 
 /turf/proc/air_update_turf(command = FALSE)
 	if(command)
 		CalculateAdjacentTurfs()
+
 	if(SSair)
 		SSair.add_to_active(src, command)
 
 /atom/movable/proc/move_update_air(var/turf/T)
     if(istype(T,/turf))
         T.air_update_turf(1)
+
     air_update_turf(1)
 
 
@@ -167,26 +177,26 @@
 		G.temperature += 1000
 
 	if(flag & LINDA_SPAWN_TOXINS)
-		G.toxins += amount
+		G.gases.add(GAS_PLASMA, amount)
 
 	if(flag & LINDA_SPAWN_OXYGEN)
-		G.oxygen += amount
+		G.gases.add(GAS_OXYGEN, amount)
 
 	if(flag & LINDA_SPAWN_CO2)
-		G.carbon_dioxide += amount
+		G.gases.add(GAS_CDO, amount)
 
 	if(flag & LINDA_SPAWN_NITROGEN)
-		G.nitrogen += amount
+		G.gases.add(GAS_NITROGEN, amount)
 
 	if(flag & LINDA_SPAWN_N2O)
-		G.sleeping_agent += amount
+		G.gases.add(GAS_N2O, amount)
 
 	if(flag & LINDA_SPAWN_AGENT_B)
-		G.agent_b += amount
+		G.gases.add(GAS_AGENT_B, amount)
 
 	if(flag & LINDA_SPAWN_AIR)
-		G.oxygen += MOLES_O2STANDARD * amount
-		G.nitrogen += MOLES_N2STANDARD * amount
+		G.gases.add(GAS_OXYGEN, MOLES_O2STANDARD * amount)
+		G.gases.add(GAS_NITROGEN, MOLES_N2STANDARD * amount)
 
 	air.merge(G)
 	SSair.add_to_active(src, FALSE)

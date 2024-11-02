@@ -14,12 +14,9 @@
 		SSair.remove_from_active(T)
 	for(var/turf/simulated/T in map)
 		if(T.air)
-			T.air.oxygen = T.oxygen
-			T.air.nitrogen = T.nitrogen
-			T.air.carbon_dioxide = T.carbon_dioxide
-			T.air.toxins = T.toxins
-			T.air.sleeping_agent = T.sleeping_agent
-			T.air.agent_b = T.agent_b
+			for(var/id in T.air.gases.gases)
+				T.air.gases._set(id, T.air.gases.get(id))
+
 			T.air.temperature = T.temperature
 		SSair.add_to_active(T)
 

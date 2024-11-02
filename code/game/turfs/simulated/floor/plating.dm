@@ -156,8 +156,7 @@
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
 	name = "airless plating"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/plating/airless/Initialize(mapload)
@@ -279,51 +278,65 @@
 
 /turf/simulated/floor/engine/n20
 	name = "\improper N2O floor"
-	sleeping_agent = 6000
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list(
+		GAS_N2O = 6000,
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 0,
+	)
+	preloaded_gases = list()
 
 /turf/simulated/floor/engine/co2
 	name = "\improper CO2 floor"
-	carbon_dioxide = 50000
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list(
+		GAS_CDO = 50000,
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 0,
+	)
+	preloaded_gases = list()
 
 /turf/simulated/floor/engine/plasma
 	name = "plasma floor"
-	toxins = 70000
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list(
+		GAS_PLASMA = 70000,
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 0,
+	)
+	preloaded_gases = list()
 
 /turf/simulated/floor/engine/o2
 	name = "\improper O2 floor"
-	oxygen = 100000
-	nitrogen = 0
+	preloaded_gases = list(
+		GAS_OXYGEN = 100000,
+		GAS_NITROGEN = 0,
+	)
 
 /turf/simulated/floor/engine/n2
 	name = "\improper N2 floor"
-	nitrogen = 100000
-	oxygen = 0
+	preloaded_gases = list(
+		GAS_OXYGEN = 0,
+		GAS_NITROGEN = 100000,
+	)
 
 /turf/simulated/floor/engine/air
 	name = "air floor"
-	oxygen = 2644
-	nitrogen = 10580
-
+	preloaded_gases = list(
+		GAS_OXYGEN = 2644,
+		GAS_NITROGEN = 10580,
+	)
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
 				make_plating(make_floor_tile = TRUE, force = TRUE)
+
 		else if(prob(30))
 			ReplaceWithLattice()
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 	temperature = TCMB
 
 /turf/simulated/floor/engine/insulated
@@ -336,8 +349,7 @@
 /turf/simulated/floor/engine/insulated/vacuum
 	name = "insulated vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0
+	preloaded_gases = list()
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
@@ -466,8 +478,10 @@
 	icon = 'icons/turf/floors/ice_turfs.dmi'
 	base_icon_state = "ice_turfs"
 	icon_state = "unsmooth"
-	oxygen = 22
-	nitrogen = 82
+	preloaded_gases = list(
+		GAS_OXYGEN = 22,
+		GAS_NITROGEN = 82,
+	)
 	temperature = 180
 	baseturf = /turf/simulated/floor/plating/ice
 	slowdown = 1

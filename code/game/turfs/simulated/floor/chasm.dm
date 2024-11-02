@@ -183,8 +183,10 @@
 
 
 /turf/simulated/floor/chasm/straight_down/lava_land_surface
-	oxygen = 14
-	nitrogen = 23
+	preloaded_gases = list(
+		GAS_OXYGEN = 14,
+		GAS_NITROGEN = 23,
+	)
 	temperature = 300
 	planetary_atmos = TRUE
 	baseturf = /turf/simulated/floor/chasm/straight_down/lava_land_surface //Chasms should not turn into lava
@@ -194,7 +196,9 @@
 
 
 /turf/simulated/floor/chasm/straight_down/lava_land_surface/normal_air
-	oxygen = MOLES_O2STANDARD
-	nitrogen = MOLES_N2STANDARD
+	preloaded_gases = list(
+		GAS_OXYGEN = MOLES_O2STANDARD,
+		GAS_NITROGEN = MOLES_N2STANDARD,
+	)
 	temperature = T20C
 
