@@ -95,7 +95,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/ui_theme = "Nanotrasen" //Тема интерфейса
 
-	var/locked = TRUE
+	var/locked = FALSE
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	for(var/T in subtypesof(/datum/tech))
@@ -485,8 +485,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(machine)
 		if(enough_materials && being_built)
 			investigate_log("[key_name_log(user)] built [amount] of [being_built.build_path] via [machine].", INVESTIGATE_RESEARCH)
-			if(is_taipan(z) || !being_built.locked)
-				locked = FALSE
+			if(being_built.locked && !is_taipan(z))
+				locked = TRUE
 			for(var/i in 1 to amount)
 				var/obj/new_item = new being_built.build_path(src)
 				if(istype(new_item, /obj/item/storage/backpack/holding))
