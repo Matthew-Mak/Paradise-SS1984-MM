@@ -317,10 +317,7 @@
 			announced = 10
 		announced = max(0, announced-1)
 
-/obj/machinery/doomsday_device/proc/detonate(z_level = 1)
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
-
+/obj/machinery/doomsday_device/proc/update_traitors_objectives()
 	for(var/datum/mind/M in SSticker.minds)
 		var/datum/antagonist/traitor/T = M.has_antag_datum(/datum/antagonist/traitor)
 		if(!T)
@@ -328,6 +325,12 @@
 
 		for(var/datum/objective/make_ai_malf/objective in T.objectives)
 			objective.made = TRUE
+
+/obj/machinery/doomsday_device/proc/detonate(z_level = 1)
+	for(var/mob/M in GLOB.player_list)
+		M << 'sound/machines/alarm.ogg'
+
+	update_traitors_objectives()
 
 	sleep(100)
 	SSticker.station_explosion_cinematic(null, "AI malfunction")

@@ -22,7 +22,7 @@
 	sync()
 	RegisterSignal(user, COMSIG_BORER_ENTERED_HOST, PROC_REF(entered_host))
 	RegisterSignal(user, COMSIG_BORER_LEFT_HOST, PROC_REF(left_host))
-	RegisterSignal(user, COMSIG_MOB_DEATH, PROC_REF(on_mob_death)) 
+	RegisterSignal(user, COMSIG_MOB_DEATH, PROC_REF(on_mob_death))
 	RegisterSignal(user, COMSIG_LIVING_REVIVE, PROC_REF(on_mob_revive))
 
 	if(tick_interval != -1)
@@ -70,7 +70,7 @@
 
 	if(!borer_rank?.required_reproductions)
 		return
-		
+
 	if(reproductions < borer_rank.required_reproductions)
 		return
 
@@ -90,13 +90,13 @@
 	if(evo_points >= focus.cost)
 		evo_points -= focus.cost
 		learned_focuses += new focus(user)
-		
+
 		pre_grant_movable_effect()
 		to_chat(user, span_notice("Вы успешно приобрели [focus.bodypartname]"))
 		return
 
 	to_chat(user, span_notice("Вам требуется еще [focus.cost - evo_points] очков эволюции для получения [focus.bodypartname]."))
-	return 
+	return
 
 /datum/antagonist/borer/proc/entered_host()
 	SIGNAL_HANDLER
@@ -117,7 +117,7 @@
 /datum/antagonist/borer/proc/pre_grant_movable_effect()
 	if(QDELETED(user) || QDELETED(host))
 		return
-		
+
 	for(var/datum/borer_focus/focus as anything in learned_focuses)
 		if(focus.movable_granted)
 			continue
@@ -129,7 +129,7 @@
 		focus.grant_movable_effect()
 
 	scaling?.grant_movable_effect()
-	
+
 	return
 
 /datum/antagonist/borer/proc/pre_remove_movable_effect()
@@ -168,7 +168,7 @@
 
 /datum/antagonist/borer/proc/on_mob_death()
 	SIGNAL_HANDLER
-	
+
 	STOP_PROCESSING(SSprocessing, src)
 
 /datum/antagonist/borer/proc/on_mob_revive()

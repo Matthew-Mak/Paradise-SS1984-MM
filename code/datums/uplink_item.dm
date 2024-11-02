@@ -87,15 +87,14 @@
 	/// Associative list UID - refund cost
 	var/static/list/item_to_refund_cost
 	/// Affiliate that made it
-	var/made_by = ""
+	var/made_by
 
 /datum/uplink_item/New()
 	. = ..()
 	desc += " Предоставлено "
-	if(made_by == "")
-		desc += pick(AFFIL_CYBERSUN, AFFIL_GORLEX, AFFIL_HEMATOGENIC, AFFIL_MI13, AFFIL_SELF, AFFIL_TIGER, AFFIL_WAFFLE, AFFIL_DONK, AFFIL_WAFFLE, AFFIL_BIOTECH, AFFIL_MIME, AFFIL_CLOWN, AFFIL_SOL)
-	desc += made_by + "."
-
+	if(!made_by)
+		desc += (!made_by) ? pick(AFFIL_CYBERSUN, AFFIL_GORLEX, AFFIL_HEMATOGENIC, AFFIL_MI13, AFFIL_SELF, AFFIL_TIGER, \
+		AFFIL_WAFFLE, AFFIL_DONK, AFFIL_WAFFLE, AFFIL_BIOTECH, AFFIL_MIME, AFFIL_CLOWN, AFFIL_SOL) : (made_by + ".")
 
 /datum/uplink_item/Destroy(force)
 	if(force)

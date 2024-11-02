@@ -3,7 +3,7 @@
 
 /datum/component/spy_bug/RegisterWithParent()
 	var/atom/par = parent
-	for (var/obj/item/spy_bug/spy_bug in par.contents)
+	for(var/obj/item/spy_bug/spy_bug in par.contents)
 		bug = spy_bug
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
