@@ -2,6 +2,7 @@
 	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	glide_size = DEFAULT_GLIDE_SIZE // Default, adjusted when mobs move based on their movement delays
+	//Hey, another test entry!
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
