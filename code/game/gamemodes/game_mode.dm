@@ -718,9 +718,9 @@
 	antaghud.leave_hud(mob_mind.current)
 	set_antag_hud(mob_mind.current, null)
 
-/datum/game_mode/proc/apocalypse_cinema(obj/singularity/god/god)
-	if(god.soul_devoured <= 17)
-		return /datum/cinematic/nuke/self_destruct
+/datum/game_mode/proc/apocalypse_cinema(obj/singularity/god/god, inevitable = FALSE)
+	if(god.soul_devoured <= 17 && !inevitable)
+		return FALSE
 
 	if(istype(god, /obj/singularity/god/narsie))
 		return SSticker.cultdat.apocalypse_cinema
@@ -728,13 +728,13 @@
 	if(istype(god, /obj/singularity/god/ratvar))
 		return /datum/cinematic/cult_arm_ratvar
 
-	return /datum/cinematic/nuke/self_destruct
+	return FALSE
 
 /datum/game_mode/proc/apocalypse()
 	set_security_level(SEC_LEVEL_DELTA)
 	GLOB.priority_announcement.Announce("Обнаружена угроза класса 'Разрушитель миров'. Моделирование пути противостояния угрозе начато, ожидайте.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(50 SECONDS)
-	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайщее время.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
+	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайшее время.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(30 SECONDS)
 
 	var/obj/singularity/god/god = locate(/obj/singularity/god) in GLOB.poi_list
@@ -745,14 +745,26 @@
 		SSshuttle.emergency.canRecall = FALSE
 		return
 
-	var/datum/cinematic/cinema = apocalypse_cinema(god)
+	var/datum/cinematic/cinema = apocalypse_cinema(god, FALSE)
+
+	if(!cinema)
+		var/obj/machinery/nuclearbomb/bomb
+		for(var/obj/machinery/nuclearbomb/bomb_to_find in GLOB.poi_list)
+			if(is_station_level(bomb_to_find.z))
+				bomb = bomb_to_find
+				break
+
+		if(bomb)
+			bomb.safety = FALSE
+			bomb.explode()
+			qdel(god)
+			return
+		else
+			cinema = apocalypse_cinema(god, TRUE)
 
 	play_cinematic(cinema, world)
 	sleep(15 SECONDS)
 	SSticker.force_ending = TRUE
-	if(cinema == /datum/cinematic/nuke/self_destruct)
-		qdel(god)
-
 	return
 
 #undef NUKE_INTACT
