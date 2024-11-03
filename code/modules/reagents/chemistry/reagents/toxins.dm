@@ -257,7 +257,7 @@
 		return
 	if(!M.dna)
 		return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==REAGENT_TOUCH && prob(33)) || method==REAGENT_INGEST)
+	if(volume > 1 && ((method == REAGENT_TOUCH && prob(33)) || method == REAGENT_INGEST))
 		randmutb(M)
 		M.check_genes()
 
@@ -1285,7 +1285,7 @@
 
 /datum/reagent/ants/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume) //NOT THE ANTS
 	if(iscarbon(M))
-		if(method == REAGENT_TOUCH || method==REAGENT_INGEST)
+		if(volume > 1 && (method == REAGENT_TOUCH || method == REAGENT_INGEST))
 			to_chat(M, "<span class='warning'>OH SHIT ANTS!!!!</span>")
 			M.emote("scream")
 			M.adjustBruteLoss(4)
