@@ -750,7 +750,7 @@
 	if(!cinema)
 		var/obj/machinery/nuclearbomb/bomb
 		for(var/obj/machinery/nuclearbomb/bomb_to_find in GLOB.poi_list)
-			if(is_station_level(bomb_to_find.z))
+			if(is_station_level(bomb_to_find.z) && bomb_to_find.core)
 				bomb = bomb_to_find
 				break
 
