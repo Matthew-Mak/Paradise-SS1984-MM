@@ -542,8 +542,7 @@ Class Procs:
 			if(0 to 25)
 				. +=  span_warning("It's falling apart!")
 
-	var/obj/item/organ/internal/brain/mobs_brain = user.get_organ_slot(INTERNAL_ORGAN_BRAIN)
-	if((user.research_scanner || mobs_brain?.smart_mind) && component_parts)
+	if((user.research_scanner || user.check_smart_brain()) && component_parts)
 		. += display_parts(user)
 
 /obj/machinery/proc/on_assess_perp(mob/living/carbon/human/perp)

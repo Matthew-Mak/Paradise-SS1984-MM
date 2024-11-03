@@ -456,11 +456,13 @@
 	if(method == REAGENT_TOUCH)
 		if(volume >= 5 && !damage_ignored) // Prevent damage to mob, but not to clothes
 			var/damage_coef = 0
+			var/should_scream = TRUE
 
 			for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
 				damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
-				if(damage_coef && H.has_pain())
+				if(damage_coef && should_scream && H.has_pain()) // prevent emote spam
 					H.emote("scream")
+					should_scream = FALSE
 
 				H.apply_damage(clamp((volume - 5) * 3, 8, 75) * damage_coef / length(H.bodyparts), BURN, def_zone = bodypart)
 
