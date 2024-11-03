@@ -756,7 +756,8 @@
 	play_cinematic(cinema, world)
 	sleep(15 SECONDS)
 	SSticker.force_ending = TRUE
-	qdel(god)
+	if(cinema == /datum/cinematic/nuke/self_destruct)
+		qdel(god)
 
 	return
 
