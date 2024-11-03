@@ -38,7 +38,7 @@
 	color = COLOR_WHITE
 	taste_description = "Это баг"
 	penetrates_skin = TRUE
-	ignore_clothes = TRUE
+	clothing_penetration = 1
 	metabolization_rate = BLOB_REAGENTS_METABOLISM
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.

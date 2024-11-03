@@ -605,7 +605,7 @@
 
 				var/mob/living/L = A
 				var/protection = 0
-				if(method == REAGENT_TOUCH && !ignore_protection && !R.ignore_clothes)
+				if(method == REAGENT_TOUCH && !ignore_protection)
 					if(def_zone)
 						var/mob/living/carbon/human/H = L
 						if(istype(H))
