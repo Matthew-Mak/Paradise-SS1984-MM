@@ -289,6 +289,7 @@
 	smoke.set_up(1,0, where, 0)
 	smoke.start()
 
+//Codechange2
 /obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
 	var/result = FALSE
 	var/counter = 1
