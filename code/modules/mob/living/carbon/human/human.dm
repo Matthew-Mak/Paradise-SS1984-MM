@@ -1454,11 +1454,17 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
 	apply_effect(current_size * 3, IRRADIATE)
 
-/mob/living/carbon/human/narsie_act(obj/singularity/narsie/narsie)
+/mob/living/carbon/human/narsie_act(obj/singularity/god/narsie/narsie)
 	if(iswizard(src) && iscultist(src)) //Wizard cultists are immune to narsie because it would prematurely end the wiz round that's about to end by the automated shuttle call anyway
 		return
-	narsie.soul_devoured += 1
+	if(narsie)
+		narsie.soul_devoured++
 	..()
+
+/mob/living/carbon/human/ratvar_act(weak, obj/singularity/god/ratvar/ratvar)
+	if(ratvar)
+		ratvar.soul_devoured++
+	. = ..()
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/human/H)
 	if(H == src)
