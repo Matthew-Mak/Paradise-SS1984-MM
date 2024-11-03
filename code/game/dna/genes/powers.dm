@@ -5,7 +5,7 @@
 /datum/dna/gene/basic/nobreath
 	name = "No Breathing"
 	activation_messages = list("Вы не чувствуете необходимости дышать.")
-	deactivation_messages = list("Вы снова чувствуете необходимость дышать.")
+	deactivation_messages = list("Вы чувствуете необходимость дышать, снова.")
 	instability = GENE_INSTABILITY_MODERATE
 	activation_prob = 25
 	traits_to_add = list(TRAIT_NO_BREATH)
@@ -62,8 +62,8 @@
 
 /datum/dna/gene/basic/heat_resist
 	name = "Heat Resistance"
-	activation_messages = list("Ваша кожа ледяная на ощупь.")
-	deactivation_messages = list("Ваша кожа перестала быть ледяной на ощупь.")
+	activation_messages = list("От вашей кожи веет холодом.")
+	deactivation_messages = list("Ваша кожа возвращается к привычной температуре.")
 	instability = GENE_INSTABILITY_MODERATE
 	traits_to_add = list(TRAIT_RESIST_HEAT)
 
@@ -79,8 +79,8 @@
 
 /datum/dna/gene/basic/cold_resist
 	name = "Cold Resistance"
-	activation_messages = list("Ваше тело наполняется теплом.")
-	deactivation_messages = list("Ваше тело больше не наполнено теплом.")
+	activation_messages = list("От вашей кожи веет жаром.")
+	deactivation_messages = list("Ваша кожа возвращается к привычной температуре.")
 	instability = GENE_INSTABILITY_MODERATE
 	traits_to_add = list(TRAIT_RESIST_COLD)
 

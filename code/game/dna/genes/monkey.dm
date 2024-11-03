@@ -38,7 +38,8 @@
 		mutant.gib()
 		return
 
-	mutant.balloon_alert(mutant, "теперь вы [mutant.dna.species.name].")
+	mutant.balloon_alert(mutant, "вы трансформировались!")
+	to_chat(mutant, span_big("Вы трансформировались в [mutant.dna.species.name]."))
 
 
 /datum/dna/gene/monkey/deactivate(mob/living/carbon/human/mutant, flags)
@@ -70,5 +71,6 @@
 	mutant.real_name = mutant.dna.real_name
 	mutant.name = mutant.real_name
 
-	mutant.balloon_alert(mutant, "теперь вы [mutant.dna.species.name].")
+	mutant.balloon_alert(mutant, "вы трансформировались!")
+	to_chat(mutant, span_big("Вы трансформировались в [mutant.dna.species.name]."))
 

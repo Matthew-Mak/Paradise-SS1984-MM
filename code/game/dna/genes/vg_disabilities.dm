@@ -2,8 +2,8 @@
 /datum/dna/gene/disability/speech/loud
 	name = "Loud"
 	desc = "Заставляет речевой центр мозга субъекта выкрикивать каждое предложение."
-	activation_message = "ВАМ ХОЧЕТСЯ КРИЧАТЬ!"
-	deactivation_message = "Вам хочется побыть в тишине..."
+	activation_message = list("ВАМ ХОЧЕТСЯ КРИЧАТЬ!")
+	deactivation_message = list("Вам хочется побыть в тишине...")
 
 
 /datum/dna/gene/disability/speech/loud/New()
@@ -20,9 +20,9 @@
 
 /datum/dna/gene/disability/dizzy
 	name = "Dizzy"
-	desc = "Вызывает отключение мозжечка в некоторых местах."
-	activation_message = "У вас очень сильно кружится голова..."
-	deactivation_message = "Вы вновь обретаете равновесие."
+	desc = "Вызывает отключение мозжечка время от времени."
+	activation_message = list("У вас очень сильно кружится голова...")
+	deactivation_message = list("Вы вновь обретаете равновесие.")
 	instability = -GENE_INSTABILITY_MINOR
 
 
