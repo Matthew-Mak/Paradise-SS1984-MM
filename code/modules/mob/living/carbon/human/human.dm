@@ -1457,12 +1457,12 @@ Eyes need to have significantly high darksight to shine unless the mob has the X
 /mob/living/carbon/human/narsie_act(obj/singularity/god/narsie/narsie)
 	if(iswizard(src) && iscultist(src)) //Wizard cultists are immune to narsie because it would prematurely end the wiz round that's about to end by the automated shuttle call anyway
 		return
-	if(narsie && client)
+	if(narsie)
 		narsie.soul_devoured++
 	..()
 
 /mob/living/carbon/human/ratvar_act(weak, obj/singularity/god/ratvar/ratvar)
-	if(ratvar && client)
+	if(ratvar)
 		ratvar.soul_devoured++
 	. = ..()
 
