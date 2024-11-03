@@ -718,6 +718,24 @@
 	antaghud.leave_hud(mob_mind.current)
 	set_antag_hud(mob_mind.current, null)
 
+/datum/game_mode/proc/apocalypse_cinema(obj/singularity/god/god)
+	var/cinema
+	if(god.soul_devoured <= 17)
+		return /datum/cinematic/nuke/self_destruct
+
+	switch(SSticker.cultdat.name)
+		if("Cult of Nar'Sie")
+			cinema = /datum/cinematic/cult_arm
+		if("Cult of Kha'Rin")
+			cinema = /datum/cinematic/cult_arm_kharin
+		if("Cult of Mortality")
+			cinema = /datum/cinematic/cult_arm_reaper
+
+	if(istype(god, /obj/singularity/god/ratvar))
+		cinema = /datum/cinematic/cult_arm_ratvar
+
+	return cinema
+
 /datum/game_mode/proc/apocalypse()
 	set_security_level(SEC_LEVEL_DELTA)
 	GLOB.priority_announcement.Announce("Обнаружена угроза класса 'Разрушитель миров'. Моделирование пути противостояния угрозе начато, ожидайте.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
@@ -725,40 +743,20 @@
 	GLOB.priority_announcement.Announce("Моделирование завершено. Всему живому персоналу: не допустите усиления угрозы любой ценой. Меры будут приняты в ближайщее время.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 	sleep(30 SECONDS)
 
-	var/obj/singularity/god/narsie/N = locate(/obj/singularity/god/narsie) in GLOB.poi_list
-	var/obj/singularity/god/ratvar/R = locate(/obj/singularity/god/ratvar) in GLOB.poi_list
+	var/obj/singularity/god/god = locate(/obj/singularity/god) in GLOB.poi_list
 
-	if(!N && !R)
+	if(!god)
 		GLOB.priority_announcement.Announce("Угроза пропала с наших сенсоров. Санкционирована экстренная эвакуация.", "Отдел Центрального Командования по делам высших измерений", 'sound/AI/commandreport.ogg')
 		SSshuttle.emergency.request(null, 0.3)
 		SSshuttle.emergency.canRecall = FALSE
 		return
 
-	var/datum/cinematic/cinema
+	var/datum/cinematic/cinema = apocalypse_cinema(god)
 
-	if(N && N.soul_devoured > 17)
-		switch(SSticker.cultdat.name)
-			if("Cult of Nar'Sie")
-				cinema = /datum/cinematic/cult_arm
-			if("Cult of Kha'Rin")
-				cinema = /datum/cinematic/cult_arm_kharin
-			if("Cult of Mortality")
-				cinema = /datum/cinematic/cult_arm_reaper
-
-	if(R && R.soul_devoured > 17)
-		cinema = /datum/cinematic/cult_arm_ratvar
-
-	if(cinema)
-		play_cinematic(cinema, world)
-		sleep(15 SECONDS)
-		SSticker.force_ending = TRUE
-		return
-
-	play_cinematic(/datum/cinematic/nuke/self_destruct, world)
-	sleep(8 SECONDS)
+	play_cinematic(cinema, world)
+	sleep(15 SECONDS)
 	SSticker.force_ending = TRUE
-	qdel(R)
-	qdel(N)
+	qdel(god)
 
 	return
 
