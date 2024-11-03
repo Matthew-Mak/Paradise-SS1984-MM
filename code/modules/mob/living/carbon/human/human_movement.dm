@@ -51,19 +51,19 @@
 
 		// If we sooo weak to pull or push something, except items or tiny mobs, get stamina damage
 		var/weak_mob = FALSE
-		if((pulling || now_pushing) && (TRAIT_WEAK_PULLING in dna?.species.inherent_traits))
+		if((pulling || now_pushing) && (HAS_TRAIT(src, TRAIT_WEAK_PULLING)))
 			weak_mob = TRUE
 
 		if(weak_mob)
 			var/stamina_damage = 0
-			var/small_pushed = TRUE
+			var/small_pulled = FALSE
 			// Handle pulling all non /obj/item stuff or tiny mobs
 			if(pulling && isliving(pulling))
 				var/mob/living/pulled_mob = pulling
-				if(pulled_mob.mob_size) // small or bigger mobs
-					small_pushed = FALSE
+				if(!pulled_mob.mob_size) // small or bigger mobs
+					small_pulled = TRUE
 
-			if(pulling && !(small_pushed || isitem(pulling)))
+			if(pulling && !(small_pulled || isitem(pulling)))
 				if(m_intent == MOVE_INTENT_WALK)
 					stamina_damage += PULL_STAMINADAM_WALK
 				else
