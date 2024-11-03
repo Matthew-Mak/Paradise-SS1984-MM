@@ -281,9 +281,6 @@
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
-/atom/proc/view_act(mob/user)
-	return
-
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
 		if(istype(A, /datum/reagent))

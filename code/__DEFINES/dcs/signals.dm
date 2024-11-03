@@ -1199,3 +1199,4 @@
 #define	COMSIG_BORER_ENTERED_HOST "borer_on_enter" // when borer entered host
 #define COMSIG_BORER_LEFT_HOST "borer_on_leave" // when borer left host
 
+#define COMSIG_MOB_ATTACK_VIEW "atom_ranged"
