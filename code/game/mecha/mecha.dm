@@ -1745,4 +1745,20 @@
 	icon_state = occupant ? init_icon_state : "[init_icon_state]-open"
 
 
+/obj/mecha/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+
+	if(!phasing || is_teleport_allowed(new_turf.z))
+		return
+
+	phasing = FALSE
+	occupant_message("<font color='#f00'>Phasing is malfunctioning.</font>")
+
+	if(!phasing_action.owner)
+		return
+
+	phasing_action.button_icon_state = "mech_phasing_off"
+	phasing_action.UpdateButtonIcon()
+
+
 #undef OCCUPANT_LOGGING
