@@ -901,7 +901,7 @@
 	COOLDOWN_DECLARE(cooldown)
 
 /obj/item/toy/plushie/gsbplushie/proc/interaction()
-	if(. || !COOLDOWN_FINISHED(src, cooldown))
+	if(!COOLDOWN_FINISHED(src, cooldown))
 		return .
 
 	var/message = pick("Я просто стояла рядом с автолатом и Уника исчезла...", ".ы ПОО-МММ-ОО-Г-Г-ГИТ-Е-Е-ее-Ее А-а-А-Р-р-Ан-Н-Еу-С-С!",
@@ -917,12 +917,13 @@
 	. = ..()
 	interaction()
 
-
 /obj/item/toy/plushie/gsbplushie/attack(mob/living/target, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
 	. = ..()
-	if(ATTACK_CHAIN_SUCCESS_CHECK(.))
-		interaction()
 
+/obj/item/toy/plushie/gsbplushie/afterattack(atom/target, mob/user, proximity, flag, params)
+	if(!proximity || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return
+	interaction()
 
 /obj/item/toy/plushie/greyplushie
 	name = "Плюшевый грей"
