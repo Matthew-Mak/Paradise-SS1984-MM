@@ -72,6 +72,14 @@
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
+	ru_names = list{
+		NOMINATIVE = "ДНК-модификатор" //Именительный (есть): кто, что? [declent_ru(NOMINATIVE)]
+		GENITIVE = "ДНК-модификатора" //Родительный (нет): кого, чего? [declent_ru(GENITIVE)]
+		DATIVE = "ДНК-модификатору" //Дательный(дать): кому, чему? [declent_ru(DATIVE)]
+		ACCUSATIVE = "ДНК-модификатор" //Винительный (вижу): кого, что? [declent_ru(ACCUSATIVE)]
+		INSTRUMENTAL = "ДНК-модификатором" //Творительный (доволен): кем, чем? [declent_ru(INSTRUMENTAL)]
+		PREPOSITIONAL = "ДНК-модификаторе" //Предложный (думать): о ком, о чем? [declent_ru(PREPOSITIONAL)]
+	}
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -143,16 +151,16 @@
 	if(usr.incapacitated() || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || usr.buckled) //are you cuffed, dying, lying, stunned or other
 		return
 	if(!ishuman(usr)) //Make sure they're a mob that has dna
-		to_chat(usr, "<span class='notice'>Как ни старайся, ты не сможешь забраться в [src].</span>")
+		to_chat(usr, span_notice("Как бы вы не старались, у вас не получится забраться в [declent_ru(ACCUSATIVE)]."))
 		return
 	if(occupant)
-		to_chat(usr, "<span class='boldnotice'>[src] уже занят!</span>")
+		to_chat(usr, span_boldnotice("[declent_ru(NOMINATIVE)] уже занят!"))
 		return
 	if(usr.abiotic())
-		to_chat(usr, "<span class='boldnotice'>На субъекте не может быть абиотических предметов.</span>")
+		to_chat(usr, span_boldnotice("Субъект не должен ничего держать в руках."))
 		return
 	if(usr.has_buckled_mobs()) //mob attached to us
-		to_chat(usr, "<span class='warning'>[usr] не поместится в [src], потому что [usr.p_they()] [usr.p_have()] слизь прилипла к голове [usr.p_their()].</span>")
+		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
 		return
 	usr.forceMove(src)
 	occupant = usr
@@ -180,21 +188,21 @@
 	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
-		to_chat(user, "<span class='boldnotice'>[src] уже занят!</span>")
+		to_chat(user, span_boldnotice("В [declent_ru(PREPOSITIONAL)] уже кто-то находится!"))
 		return TRUE
 	var/mob/living/L = O
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		to_chat(user, "<span class='danger'>На субъекте не может быть абиотических предметов.</span>")
+		to_chat(user, span_boldnotice("Субъект не должен ничего держать в руках."))
 		return TRUE
 	if(L.has_buckled_mobs()) //mob attached to us
-		to_chat(user, "<span class='warning'>[L] не поместится в [src], потому что [L.p_they()] [L.p_have()] слизь прилипла к голове [L.p_their()].</span>")
+		to_chat(user, span_warning("[L] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
 		return TRUE
 	if(L == user)
-		visible_message("[user] забирается в [src].")
+		visible_message("[user] забирается в [declent_ru(ACCUSATIVE)].")
 	else
-		visible_message("[user] помещает [L.name] в [src].")
+		visible_message("[user] помещает [L.name] в [declent_ru(ACCUSATIVE)].")
 	put_in(L)
 	return TRUE
 
@@ -209,15 +217,16 @@
 	if(istype(I, /obj/item/reagent_containers/glass))
 		add_fingerprint(user)
 		if(beaker)
-			balloon_alert(user, "в машину уже загружена ёмкость.")
+			balloon_alert(user, "внутри уже установлена ёмкость")
+			to_chat(user, span_warning("Внутри уже установлена ёмкость."))
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
 		beaker = I
 		SStgui.update_uis(src)
 		user.visible_message(
-			span_notice("[user] вставляет [I] в [src]!"),
-			span_notice("Вы вставляете [I] в [src]!"),
+			span_notice("[user] помещает [I] в [declent_ru(ACCUSATIVE)]."),
+			span_notice("Вы помещаете [I] в [declent_ru(ACCUSATIVE)]."),
 		)
 		return ATTACK_CHAIN_BLOCKED_ALL
 
@@ -233,13 +242,13 @@
 		return .
 	var/mob/target = grabbed_thing
 	if(occupant)
-		to_chat(grabber, span_warning("[src] уже занят!"))
+		to_chat(grabber, span_warning("[declent_ru(NOMINATIVE)] уже занят!"))
 		return .
 	if(target.abiotic())
-		to_chat(grabber, span_warning("На субъекте не может быть абиотических предметов."))
+		to_chat(grabber, span_warning("Субъект не должен ничего держать в руках."))
 		return .
 	if(target.has_buckled_mobs()) //mob attached to us
-		to_chat(grabber, span_warning("[target] не поместится в [src], потому что [target.p_they()] [target.p_have()] слизь прилипла к голове [target.p_their()]."))
+		to_chat(grabber, span_warning("[target] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
 		return .
 	put_in(target)
 	add_fingerprint(grabber)
@@ -253,7 +262,8 @@
 
 /obj/machinery/dna_scannernew/screwdriver_act(mob/user, obj/item/I)
 	if(occupant)
-		balloon_alert(user, "панель техобслуживания заблокирована.")
+		balloon_alert(user, "панель техобслуживания заблокирована")
+		to_chat(user, span_notice("Панель техобслуживания заблокирована."))
 		return TRUE
 	if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]", I))
 		return TRUE
@@ -280,11 +290,11 @@
 /obj/machinery/dna_scannernew/proc/go_out(mob/user, force)
 	if(!occupant)
 		if(user)
-			balloon_alert(user, "сканер пуст!")
+			to_chat(user, span_warning("Cканер пуст!"))
 		return
 	if(locked && !force)
 		if(user)
-			balloon_alert(user, "сканер заблокирован!")
+			to_chat(user, span_warning("Cканер заблокирован!"))
 		return
 	occupant.forceMove(loc)
 	occupant = null
@@ -346,20 +356,29 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
+	ru_names = list{
+		NOMINATIVE = "Консоль доступа ДНК-модификатора"
+		GENITIVE = "Консоли доступа ДНК-модификатора"
+		DATIVE = "Консоли доступа ДНК-модификатора"
+		ACCUSATIVE = "Консоль доступа ДНК-модификатора"
+		INSTRUMENTAL = "Консолью доступа ДНК-модификатора"
+		PREPOSITIONAL = "Консоли доступа ДНК-модификатора"
+	}
 
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/disk/data)) //INSERT SOME diskS
 		add_fingerprint(user)
 		if(disk)
-			balloon_alert(user, "диск уже вставлен.")
+			balloon_alert(user, "диск уже вставлен")
+			to_chat(user, span_notice("Диск уже вставлен."))
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
 		disk = I
 		user.visible_message(
-			span_notice("[user] вставляет [I.name] в [src]."),
-			span_notice("Вы вставляете [I.name] в [src]."),
+			span_notice("[user] вставляет [I.name] в [declent_ru(ACCUSATIVE)]."),
+			span_notice("Вы вставляете [I.name] в [declent_ru(ACCUSATIVE)]."),
 		)
 		SStgui.update_uis(src)
 		return ATTACK_CHAIN_BLOCKED_ALL

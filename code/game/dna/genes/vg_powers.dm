@@ -4,8 +4,8 @@
 	name = "Morphism"
 	desc = "Позволяет субъекту изменить свою внешность на внешность любого человека."
 	spelltype = /obj/effect/proc_holder/spell/morph
-	activation_messages = list("Ваше тело чувствует, что может изменить свой внешний вид.")
-	deactivation_messages = list("Ваше тело больше не способно изменить свой внешний вид.")
+	activation_messages = list("Вы чувствуете, что может изменить свой внешний вид.")
+	deactivation_messages = list("Вы больше не способны менять свой внешний вид.")
 	instability = GENE_INSTABILITY_MINOR
 
 
@@ -15,7 +15,7 @@
 
 /obj/effect/proc_holder/spell/morph
 	name = "Morph"
-	desc = "Имитируйте внешний вид по своему усмотрению!"
+	desc = "Играйтесь со своей внешностью как душе угодно!"
 	base_cooldown = 3 MINUTES
 
 	clothes_req = FALSE
@@ -33,7 +33,7 @@
 		return
 
 	if(ismob(user.loc))
-		balloon_alert(user, "Сейчас нельзя изменить свою внешность!")
+		balloon_alert(user, "невозможно в данный момент")
 		return
 	var/mob/living/carbon/human/M = user
 	var/obj/item/organ/external/head/head_organ = M.get_organ(BODY_ZONE_HEAD)
@@ -55,7 +55,7 @@
 		//Alt heads.
 		if(head_organ.dna.species.bodyflags & HAS_ALT_HEADS)
 			var/list/valid_alt_heads = M.generate_valid_alt_heads()
-			var/new_alt_head = input("Пожалуйста, выберите другую голову.", "Создание персонажа", head_organ.alt_head) as null|anything in valid_alt_heads
+			var/new_alt_head = input("Пожалуйста, выберите другую форму головы.", "Создание персонажа", head_organ.alt_head) as null|anything in valid_alt_heads
 			if(new_alt_head)
 				M.change_alt_head(new_alt_head)
 
@@ -73,7 +73,7 @@
 
 		var/datum/sprite_accessory/hair_style = GLOB.hair_styles_public_list[head_organ.h_style]
 		if(hair_style.secondary_theme && !hair_style.no_sec_colour)
-			new_hair = input("Пожалуйста, выберите второй цвет волос.", "Создание персонажа", head_organ.sec_hair_colour) as null|color
+			new_hair = input("Пожалуйста, выберите дополнительный цвет волос.", "Создание персонажа", head_organ.sec_hair_colour) as null|color
 			if(new_hair)
 				M.change_hair_color(new_hair, TRUE)
 
@@ -84,13 +84,13 @@
 		if(new_style)
 			M.change_facial_hair(new_style)
 
-		var/new_facial = input("Пожалуйста, выберите цвет волос на лице.", "Создание персонажа", head_organ.facial_colour) as null|color
+		var/new_facial = input("Пожалуйста, выберите цвет лицевой растительности.", "Создание персонажа", head_organ.facial_colour) as null|color
 		if(new_facial)
 			M.change_facial_hair_color(new_facial)
 
 		var/datum/sprite_accessory/facial_hair_style = GLOB.facial_hair_styles_list[head_organ.f_style]
 		if(facial_hair_style.secondary_theme && !facial_hair_style.no_sec_colour)
-			new_facial = input("Пожалуйста, выберите второй цвет волос на лице.", "Создание персонажа", head_organ.sec_facial_colour) as null|color
+			new_facial = input("Пожалуйста, выберите дополнительный цвет лицевой растительности.", "Создание персонажа", head_organ.sec_facial_colour) as null|color
 			if(new_facial)
 				M.change_facial_hair_color(new_facial, TRUE)
 
@@ -148,7 +148,7 @@
 
 	//Skin tone.
 	if(M.dna.species.bodyflags & HAS_SKIN_TONE)
-		var/new_tone = input("Пожалуйста, выберите уровень тона кожи: 1-220 (1=альбинос, 35=кавказец, 150=черный, 220='очень' черный)", "Создание персонажа", M.s_tone) as null|text
+		var/new_tone = input("Пожалуйста, выберите уровень тона кожи: 1-220 (1=альбинос, 35=белый, 150=тёмный, 220=чёрный)", "Создание персонажа", M.s_tone) as null|text
 		if(!new_tone)
 			new_tone = 35
 		else
@@ -178,7 +178,9 @@
 
 	M.update_dna()
 
-	M.visible_message("<span class='notice'>[M] трансформирует и изменяет [M.p_their()] внешность!</span>", "<span class='notice'>Вы меняете свою внешность!</span>", "<span class='warning'>О боже!  Что это, черт возьми, было?  Звук был такой, будто плоть сплющивают, а кости перетирают, придавая им другую форму!</span>")
+	M.visible_message(span_notice("[M] трансформиру[pluralize_ru(M.gender, "ет", "ют")]ся, изменяя свой внешний вид!"),
+					span_notice("Вы меняете свою внешность!"),
+					span_warning("О боже!  Что это, черт возьми, было?  Звук был такой, будто плоть сплющивают, а кости перетирают, придавая им другую форму!"))
 
 
 /datum/dna/gene/basic/grant_spell/remotetalk
@@ -211,7 +213,7 @@
 
 /obj/effect/proc_holder/spell/remotetalk
 	name = "Project Mind"
-	desc = "Заставьте людей понять ваши мысли!"
+	desc = "Позвольте другим ощущать ваши мысли."
 	base_cooldown = 0
 
 	clothes_req = FALSE
@@ -264,7 +266,7 @@
 
 /obj/effect/proc_holder/spell/mindscan
 	name = "Scan Mind"
-	desc = "Дайте людям возможность поделиться своими мыслями!"
+	desc = "Дайте людям возможность поделиться их мыслями!"
 	base_cooldown = 45 SECONDS
 	clothes_req = FALSE
 	stat_allowed = CONSCIOUS
@@ -283,9 +285,9 @@
 		var/datum/atom_hud/thoughts/hud = GLOB.huds[THOUGHTS_HUD]
 		var/message = "Вы чувствуете, что ваш разум ненадолго расширяется... (Нажмите, чтобы отправить сообщение.)"
 		if(target.dna?.GetSEState(GLOB.remotetalkblock))
-			message = "Вы чувствуете, что [user.real_name] запрашивает у вас ответ... (Нажмите здесь, чтобы спроецировать мысли.)"
-		user.show_message("<span class='abductor'>Вы предлагаете доступ в свой разум [(target in user.get_visible_mobs()) ? target.name : "неизвестной сущности"].</span>")
-		target.show_message("<span class='abductor'><a href='byond://?src=[UID()];target=[target.UID()];user=[user.UID()]'>[message]</a></span>")
+			message = "Вы чувствуете, что [user.real_name] хочет что-то от вас услышать... (Нажмите здесь, чтобы спроецировать мысли.)"
+		user.show_message(span_abductor("Вы предлагаете доступ в свой разум [(target in user.get_visible_mobs()) ? target.name : "неизвестной сущности"]."))
+		target.show_message(span_abductor("<a href='byond://?src=[UID()];target=[target.UID()];user=[user.UID()]'>[message]</a>"))
 		available_targets += target
 		hud.manage_hud(target, THOUGHTS_HUD_PRECISE)
 		addtimer(CALLBACK(src, PROC_REF(removeAvailability), target), 45 SECONDS)
@@ -296,7 +298,7 @@
 		var/datum/atom_hud/thoughts/hud = GLOB.huds[THOUGHTS_HUD]
 		available_targets -= target
 		hud.manage_hud(target, THOUGHTS_HUD_DISPERSE)
-		target.show_message("<span class='abductor'>Вы чувствуете, как это ощущение исчезает...</span>")
+		target.show_message(span_abductor("Вы чувствуете, как это ощущение исчезает..."))
 
 
 /obj/effect/proc_holder/spell/mindscan/Topic(href, href_list)
@@ -383,7 +385,7 @@
 	var/mob/target
 
 	if(istype(H.l_hand, /obj/item/tk_grab) || istype(H.r_hand, /obj/item/tk_grab))
-		balloon_alert(H, "ваш разум слишком занят.")
+		balloon_alert(H, "разум занят")
 		H.remoteview_target = null
 		H.reset_perspective()
 		return
