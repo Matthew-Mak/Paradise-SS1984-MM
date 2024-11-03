@@ -257,7 +257,7 @@
 		return
 	if(!M.dna)
 		return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==REAGENT_TOUCH && prob(33)) || method==REAGENT_INGEST)
+	if(volume > 1 && ((method == REAGENT_TOUCH && prob(33)) || method == REAGENT_INGEST))
 		randmutb(M)
 		M.check_genes()
 
@@ -353,6 +353,8 @@
 	color = "#00FF32"
 	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "<span class='userdanger'>ACID</span>"
+	//acid is not using permeability_coefficient to calculate protection, but armour["acid"]
+	clothing_penetration = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
 
@@ -375,33 +377,38 @@
 		return
 
 	if(method == REAGENT_TOUCH)
-		if(volume > 25)
-			if(H.wear_mask)
-				to_chat(H, span_danger("Your [H.wear_mask] protects you from the acid!"))
-				return
+		to_chat(H, span_warning("The greenish acidic substance stings[volume < 1 ? " you, but isn't concentrated enough to harm you" : null]!"))
+		if(volume < 1)
+			return
 
-			if(H.head)
-				to_chat(H, span_danger("Your [H.head] protects you from the acid!"))
-				return
+		var/damage_coef = 0
+		var/should_scream = TRUE
 
-			if(prob(75))
-				H.take_organ_damage(5, 10)
+		for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
+			if(istype(bodypart, /obj/item/organ/external/head) && !H.wear_mask && !H.head && volume > 25)
+				bodypart.disfigure()
+				if(H.has_pain() && should_scream)
+					H.emote("scream")
+					should_scream = FALSE
+
+			damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
+
+			if(damage_coef > 0 && should_scream)
+				should_scream = FALSE
+				if(H.has_pain())
+					H.emote("scream")
+
+			H.apply_damage(clamp(volume - 1, 2, 20) * damage_coef / length(H.bodyparts), BURN, def_zone = bodypart)
+			H.apply_damage(clamp((volume - 1)/2, 1, 10) * damage_coef / length(H.bodyparts), BRUTE, def_zone = bodypart)
+
+		return
+
+	if(method == REAGENT_INGEST)
+		to_chat(H, span_warning("The greenish acidic substance stings[volume < 1 ? " you, but isn't concentrated enough to harm you" : null]!"))
+		if(volume >= 1)
+			H.adjustFireLoss(clamp((volume - 1) * 2, 0, 30))
+			if(H.has_pain())
 				H.emote("scream")
-				var/obj/item/organ/external/affecting = H.get_organ(BODY_ZONE_HEAD)
-				if(affecting)
-					affecting.disfigure()
-
-			else
-				H.take_organ_damage(5, 10)
-
-		else
-			H.take_organ_damage(5, 10)
-
-	else
-		to_chat(H, span_danger("The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!"))
-		if(volume >= 10)
-			H.adjustFireLoss(min(max(4, (volume - 10) * 2), 20))
-			H.emote("scream")
 
 
 /datum/reagent/acid/reaction_obj(obj/O, volume)
@@ -426,6 +433,8 @@
 	description = "Fluorosulfuric acid is a an extremely corrosive super-acid."
 	color = "#5050FF"
 	acidpwr = 42
+	//acid is not using permeability_coefficient to calculate protection, but armour["acid"]
+	clothing_penetration = 1
 
 
 /datum/reagent/acid/facid/on_mob_life(mob/living/M)
@@ -447,19 +456,15 @@
 	if(method == REAGENT_TOUCH)
 		if(volume >= 5 && !damage_ignored) // Prevent damage to mob, but not to clothes
 			var/damage_coef = 0
-			var/isDamaged = FALSE
 
 			for(var/obj/item/organ/external/bodypart as anything in H.bodyparts)
 				damage_coef = (100 - clamp(H.getarmor_organ(bodypart, "acid"), 0, 100))/100
-				if(damage_coef > 0 && !isDamaged)
-					isDamaged = TRUE
-
-					if(H.has_pain())
-						H.emote("scream")
+				if(damage_coef && H.has_pain())
+					H.emote("scream")
 
 				H.apply_damage(clamp((volume - 5) * 3, 8, 75) * damage_coef / length(H.bodyparts), BURN, def_zone = bodypart)
 
-		if(volume > 9)
+		if(volume > 9 && (H.wear_mask || H.head))
 			if(H.wear_mask && !(H.wear_mask.resistance_flags & ACID_PROOF))
 				to_chat(H, span_danger("Your [H.wear_mask.name] melts away!"))
 				qdel(H.wear_mask)
@@ -1344,7 +1349,7 @@
 
 /datum/reagent/ants/reaction_mob(mob/living/M, method=REAGENT_TOUCH, volume) //NOT THE ANTS
 	if(iscarbon(M))
-		if(method == REAGENT_TOUCH || method==REAGENT_INGEST)
+		if(volume > 1 && (method == REAGENT_TOUCH || method == REAGENT_INGEST))
 			to_chat(M, "<span class='warning'>OH SHIT ANTS!!!!</span>")
 			M.emote("scream")
 			M.adjustBruteLoss(4)
