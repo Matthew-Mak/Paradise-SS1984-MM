@@ -6723,6 +6723,10 @@
 	tag = "icon-shower (EAST)"
 	},
 /obj/effect/landmark/start/captain,
+/obj/item/radio/intercom{
+	dir = 1;
+	pixel_y = 25
+	},
 /turf/simulated/floor/plasteel/freezer,
 /area/crew_quarters/captain/bedroom)
 "aYf" = (
@@ -11816,9 +11820,8 @@
 "bIi" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/simulated/floor/plasteel{
 	dir = 1
@@ -13189,12 +13192,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/secpost)
 "bRX" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/multiz,
-/obj/item/kitchen/knife/combat/survival,
-/obj/item/kitchen/knife/combat/survival{
-	pixel_x = 6
-	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "brown"
@@ -20101,9 +20101,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -21827,6 +21824,8 @@
 	pixel_x = -22
 	},
 /obj/item/reagent_containers/hypospray/safety,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "whiteblue";
@@ -49476,7 +49475,7 @@
 /obj/effect/decal/warning_stripes/southwest,
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = -28
+	pixel_x = -26
 	},
 /turf/simulated/floor/plasteel{
 	dir = 10;
@@ -52489,7 +52488,7 @@
 /area/crew_quarters/captain/bedroom)
 "hHY" = (
 /obj/machinery/door/airlock/mining{
-	name = "Mining Dock";
+	name = "Mining Storage";
 	req_access = list(31)
 	},
 /obj/structure/cable{
@@ -63624,6 +63623,8 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/regular,
 /obj/item/reagent_containers/hypospray/safety,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor/plasteel{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -64320,6 +64321,9 @@
 	layer = 5;
 	pixel_y = -5
 	},
+/obj/item/radio/intercom{
+	pixel_x = -28
+	},
 /turf/simulated/floor/plasteel/freezer,
 /area/ntrep)
 "jvL" = (
@@ -64654,6 +64658,8 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/regular,
 /obj/item/reagent_containers/hypospray/safety,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "whiteblue";
@@ -65625,6 +65631,16 @@
 /area/medical/cmo)
 "jFR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/ore_box,
+/obj/effect/turf_decal/bot,
+/obj/item/radio/intercom{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 4
+	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
 	icon_state = "brown"
@@ -71564,10 +71580,6 @@
 /turf/simulated/floor/plasteel,
 /area/engineering/gravitygenerator)
 "kBz" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/item/flag/sec,
 /turf/simulated/floor/plasteel{
 	dir = 1
@@ -71822,14 +71834,20 @@
 	},
 /area/hallway/primary/fore)
 "kDD" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Mining Deep Storage";
+	req_access = list(31)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "open";
+	id_tag = "Brig_lockdown";
+	name = "Cargo Lockdown";
+	opacity = 0
 	},
 /turf/simulated/floor/plasteel{
-	dir = 1;
-	icon_state = "brown"
+	icon_state = "brownfull"
 	},
 /area/quartermaster/miningstorage)
 "kDG" = (
@@ -72025,8 +72043,11 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/table,
+/obj/item/kitchen/knife/combat/survival{
+	pixel_x = 6
+	},
+/obj/item/kitchen/knife/combat/survival,
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	icon_state = "brown"
@@ -86409,6 +86430,8 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/regular,
 /obj/item/reagent_containers/hypospray/safety,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "whiteblue";
@@ -88645,7 +88668,8 @@
 /obj/item/clothing/glasses/welding/superior,
 /obj/item/radio/intercom{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 34;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/purple,
 /area/toxins/rdoffice)
@@ -102055,6 +102079,7 @@
 /obj/item/reagent_containers/hypospray/safety,
 /obj/item/reagent_containers/hypospray/safety,
 /obj/item/clothing/glasses/sunglasses/blindfold/black,
+/obj/item/storage/belt/medical/surgery/loaded,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "dark"
@@ -111775,6 +111800,9 @@
 	on = 1
 	},
 /obj/structure/curtain/open/shower/security,
+/obj/item/radio/intercom{
+	pixel_x = 30
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -115129,6 +115157,10 @@
 "qYH" = (
 /obj/structure/chair{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -128458,6 +128490,11 @@
 /obj/machinery/shower{
 	dir = 8;
 	tag = "icon-shower (WEST)"
+	},
+/obj/item/radio/intercom{
+	dir = 1;
+	pixel_x = -30;
+	pixel_y = -8
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
@@ -147405,6 +147442,8 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/regular,
 /obj/item/reagent_containers/hypospray/safety,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor/plasteel{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -158384,7 +158423,9 @@
 	dir = 4;
 	network = list("SS13","Security")
 	},
-/obj/item/clothing/suit/armor/hos/alt,
+/obj/item/clothing/suit/armor/hos/alt{
+	name = "Warden's armored trenchoat"
+	},
 /turf/simulated/floor/carpet/red,
 /area/security/warden)
 "xoL" = (
@@ -162646,6 +162687,10 @@
 	c_tag = "Brig Staff Room";
 	network = list("SS13","Security");
 	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 25
 	},
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -269917,8 +269962,8 @@ ebq
 itY
 gND
 gmY
-aTC
 kDD
+ewV
 kMo
 duz
 kMo
@@ -270174,7 +270219,7 @@ rCn
 xfV
 xfV
 cwu
-jFL
+aTC
 rSc
 jFR
 hzd
