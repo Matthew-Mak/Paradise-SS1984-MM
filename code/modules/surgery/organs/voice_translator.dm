@@ -107,7 +107,7 @@
 /obj/item/organ/internal/cyberimp/mouth/translator/insert(mob/living/carbon/target, special)
 	. = ..()
 
-	RegisterSignal(target, COMSIG_CHECK_LANG_IN_TRANSLATOR, PROC_REF(check_language))
+	RegisterSignal(target, COMSIG_LANG_PRE_ACT, PROC_REF(check_language))
 
 	for(var/datum/language/lang as anything in given_languages)
 		target.add_language(lang.name)
@@ -117,7 +117,7 @@
 	if(!istype(target))
 		return
 
-	UnregisterSignal(target, COMSIG_CHECK_LANG_IN_TRANSLATOR)
+	UnregisterSignal(target, COMSIG_LANG_PRE_ACT)
 
 	for(var/datum/language/lang as anything in given_languages)
 		target.remove_language(lang.name)
@@ -130,7 +130,7 @@
 
 	for(var/datum/language/lang as anything in given_languages)
 		if(language_name == lang.name)
-			return COMSIG_LANG_STORED
+			return COMSIG_LANG_SECURED
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/update_desc(updates)

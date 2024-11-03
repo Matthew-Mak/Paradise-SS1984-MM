@@ -90,22 +90,22 @@
 		affected_mob.remove_language(lan.name)
 
 
-/datum/disease/virus/babylonian_fever/proc/store_language(datum/signal_source, language_name)
+/datum/disease/virus/babylonian_fever/proc/store_language(datum/signal_source, language_name, lang_flags)
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(signal_source, COMSIG_CHECK_LANG_IN_TRANSLATOR, language_name) & COMSIG_LANG_STORED)
-		return DISEASE_MOB_LANGUAGE_PROCESSED
+	if(lang_flags & COMSIG_LANG_SECURED)
+		return
 
 	var/datum/language/new_language = GLOB.all_languages[language_name]
 	LAZYOR(stored_languages, new_language)
 	return DISEASE_MOB_LANGUAGE_PROCESSED
 
 
-/datum/disease/virus/babylonian_fever/proc/remove_language(datum/signal_source, language_name)
+/datum/disease/virus/babylonian_fever/proc/remove_language(datum/signal_source, language_name, lang_flags)
 	SIGNAL_HANDLER
 
-	if(SEND_SIGNAL(signal_source, COMSIG_CHECK_LANG_IN_TRANSLATOR, language_name) & COMSIG_LANG_STORED)
-		return DISEASE_MOB_LANGUAGE_PROCESSED
+	if(lang_flags & COMSIG_LANG_SECURED)
+		return
 
 	var/datum/language/rem_language = GLOB.all_languages[language_name]
 	LAZYREMOVE(stored_languages, rem_language)
