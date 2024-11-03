@@ -854,10 +854,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 0
-	},
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
@@ -4343,9 +4339,6 @@
 /area/lavaland/surface/outdoors/necropolis)
 "Cn" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/effect/decal/warning_stripes/yellow,
 /turf/simulated/floor/plasteel{
 	dir = 1;
@@ -6295,6 +6288,15 @@
 	},
 /turf/simulated/floor/plasteel,
 /area/mine/living_quarters)
+"Pt" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/simulated/floor/plasteel{
+	icon_state = "brown"
+	},
+/area/mine/living_quarters)
 "Pu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -6587,14 +6589,15 @@
 /turf/simulated/floor/indestructible/boss,
 /area/mine/necropolis)
 "Rc" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 2
 	},
 /obj/structure/sign/poster/random{
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1;
+	on = 1
 	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
@@ -18763,8 +18766,8 @@ DH
 DH
 Ne
 Ne
-Ne
-Ne
+bB
+tG
 Ne
 Ne
 Ne
@@ -19021,8 +19024,8 @@ DH
 Ne
 bB
 bB
-Ne
-Ne
+tG
+tG
 Ne
 Ne
 Ne
@@ -19279,8 +19282,8 @@ Ne
 bB
 bB
 bB
-Ne
-Ne
+tG
+tG
 Ne
 Ne
 Ne
@@ -19537,8 +19540,8 @@ bB
 bB
 bB
 bB
-Ne
-Ne
+tG
+bB
 Ne
 Ne
 "}
@@ -19795,7 +19798,7 @@ bB
 bB
 bB
 bB
-Ne
+bB
 Ne
 Ne
 "}
@@ -20052,8 +20055,8 @@ Ne
 bB
 bB
 bB
-Ne
-Ne
+bB
+bB
 Ne
 "}
 (48,1,1) = {"
@@ -22610,7 +22613,7 @@ CO
 CO
 TA
 ZC
-VC
+Pt
 Ul
 nz
 Bz

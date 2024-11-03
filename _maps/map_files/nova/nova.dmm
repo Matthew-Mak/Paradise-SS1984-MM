@@ -13193,8 +13193,9 @@
 /area/maintenance/secpost)
 "bRX" = (
 /obj/machinery/atmospherics/pipe/multiz,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "brown"
@@ -46638,10 +46639,11 @@
 /turf/simulated/floor/plasteel,
 /area/hallway/secondary/entry/commercial)
 "gMD" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
+	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
 	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
@@ -51477,7 +51479,6 @@
 /area/hallway/spacebridge/comcar)
 "hxM" = (
 /obj/structure/closet,
-/obj/item/suppressor,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating/airless,
 /area/toxins/test_area)
@@ -62365,7 +62366,6 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/ammo_box/shotgun/laserslug,
 /obj/item/storage/belt/bandolier,
 /obj/item/storage/belt/bandolier,
 /turf/simulated/floor/plasteel{
@@ -63751,8 +63751,9 @@
 	},
 /area/security/permahallway)
 "jqW" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "brown"
@@ -66537,6 +66538,8 @@
 	},
 /obj/item/clothing/accessory/holster,
 /obj/item/gun/projectile/revolver/mateba,
+/obj/item/ammo_box/tox46x30mm,
+/obj/item/ammo_box/inc46x30mm,
 /turf/simulated/floor/carpet/red,
 /area/security/hos)
 "jLH" = (
@@ -125685,7 +125688,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/suppressor,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/security/permahallway)
