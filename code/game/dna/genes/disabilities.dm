@@ -22,8 +22,8 @@
 
 /datum/dna/gene/disability/activate(mob/living/mutant, flags)
 	. = ..()
-	if(length(activation_messages))
-		var/msg = pick(activation_messages)
+	if(length(activation_message))
+		var/msg = pick(activation_message)
 		to_chat(mutant, span_warning("[activation_message]"))
 	else
 		testing("[name] has no activation message.")
@@ -31,8 +31,8 @@
 
 /datum/dna/gene/disability/deactivate(mob/living/mutant, flags)
 	. = ..()
-	if(length(deactivation_messages))
-		var/msg = pick(deactivation_messages)
+	if(length(deactivation_message))
+		var/msg = pick(deactivation_message)
 		to_chat(mutant, span_warning("[deactivation_message]"))
 	else
 		testing("[name] has no deactivation message.")
