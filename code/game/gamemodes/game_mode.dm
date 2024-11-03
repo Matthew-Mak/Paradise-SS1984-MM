@@ -759,8 +759,8 @@
 			bomb.explode()
 			qdel(god)
 			return
-		else
-			cinema = apocalypse_cinema(god, TRUE)
+
+		cinema = apocalypse_cinema(god, TRUE)
 
 	play_cinematic(cinema, world)
 	sleep(15 SECONDS)
