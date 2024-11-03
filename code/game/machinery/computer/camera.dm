@@ -268,9 +268,11 @@
 			return GLOB.always_state
 
 	else if(ishuman(user))
-		for(var/obj/machinery/computer/security/telescreen/entertainment/TV in range(6, user))
-			if(!TV.stat)
-				return GLOB.range_state
+		if(get_dist(src, user) > 6)
+			return GLOB.default_state
+
+		if(!stat)
+			return GLOB.range_state
 
 	return GLOB.default_state
 
