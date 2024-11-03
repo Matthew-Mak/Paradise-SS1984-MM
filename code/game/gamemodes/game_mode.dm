@@ -723,13 +723,8 @@
 	if(god.soul_devoured <= 17)
 		return /datum/cinematic/nuke/self_destruct
 
-	switch(SSticker.cultdat.name)
-		if("Cult of Nar'Sie")
-			cinema = /datum/cinematic/cult_arm
-		if("Cult of Kha'Rin")
-			cinema = /datum/cinematic/cult_arm_kharin
-		if("Cult of Mortality")
-			cinema = /datum/cinematic/cult_arm_reaper
+	if(istype(god, /obj/singularity/god/narsie))
+		return SSticker.cultdat.apocalypse_cinema
 
 	if(istype(god, /obj/singularity/god/ratvar))
 		cinema = /datum/cinematic/cult_arm_ratvar
