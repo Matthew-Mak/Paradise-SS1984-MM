@@ -3,17 +3,17 @@
 //Internal
 /obj/item/storage/backpack/shared
 	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
+	desc = "Каким-то образом находится в двух местах одновременно."
 	max_combined_w_class = 60
 	max_w_class = WEIGHT_CLASS_NORMAL
 	cant_hold = list(/obj/item/storage/backpack/shared)
 
 
 /obj/item/storage/backpack/shared/can_be_inserted(obj/item/shared_storage/I, stop_messages = FALSE)
-	// basically we cannot put one bag in the storage if another one is already there
+	// basically we cannot put one bag in the storage if another one is already there - Мы не можем сунуть два рюкзака в себя же.
 	if(istype(I) && I.bag && I.bag == src && I.twin_storage && I.twin_storage.loc == src)
 		if(!stop_messages)
-			to_chat(usr, span_warning("Yo dawg, and how are you going to do it?"))
+			balloon_alert(usr, span_warning("Нельзя в себя же"))
 		return FALSE
 	return ..()
 
@@ -21,7 +21,7 @@
 //External
 /obj/item/shared_storage
 	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
+	desc = "Каким-то образом находится в двух местах одновременно."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
 	slot_flags = ITEM_SLOT_BACK
@@ -111,7 +111,7 @@
 
 /obj/item/book_of_babel
 	name = "Book of Babel"
-	desc = "An ancient tome written in countless tongues."
+	desc = "Древний фолиант, написанный в бесчисленном количестве языков."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
 	w_class = 2
@@ -120,10 +120,10 @@
 /obj/item/book_of_babel/attack_self(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_NO_BABEL))
 		user.visible_message(span_notice("[user] suddenly stops, releasing [src]."))
-		to_chat(user, span_warning("You don't know what a book is or what to do with it."))
+		to_chat(user, span_warning("Вы не знаете ни что такое книга, ни что с ней делать."))
 		return
 
-	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
+	to_chat(user, "Вы пролистываете через страницы книги, быстро и удобно изучая каждый язык во вселенной. Уже не столь удобно, древняя книга рассыпается в прах после прочтения. Упс.")
 	user.grant_all_babel_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	user.temporarily_remove_item_from_inventory(src)
@@ -138,7 +138,7 @@
 
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+	desc = "Флакон с почти святой аурой исходящей от него. Надпись на нет гласит: 'эуфц'хъъ тъи'рв лвх йв'атв'."
 	list_reagents = list("flightpotion" = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
@@ -150,7 +150,7 @@
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	id = "flightpotion"
-	description = "Strange mutagenic compound of unknown origins."
+	description = "Странный мутаген с неизвестным происхождением."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
@@ -163,7 +163,7 @@
 				to_chat(H, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 
-		to_chat(H, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		to_chat(H, "<span class='userdanger'>Невыносимая боль проходит через вашу спину, как вдруг оттуда вырываются крылья!</span>")
 		H.set_species(/datum/species/angel)
 		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
 		H.adjustBruteLoss(20)
@@ -172,7 +172,7 @@
 
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
-	desc = "A celestial ladder that violates the laws of physics."
+	desc = "Небесная лестница, нарушающая законы физики."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder"
 
@@ -180,7 +180,7 @@
 	var/turf/T = get_turf(src)
 	var/ladder_x = T.x
 	var/ladder_y = T.y
-	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
+	to_chat(user, "<span class='notice'>Вы разворачиваете лестницу. Она уходит значительно дальше, чем вы ожидали.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
 		if(is_admin_level(i) || is_away_level(i) || is_taipan(i))
@@ -195,12 +195,12 @@
 // Inherit from unbreakable but don't set ID, to suppress the default Z linkage
 /obj/structure/ladder/unbreakable/jacob
 	name = "jacob's ladder"
-	desc = "An indestructible celestial ladder that violates the laws of physics."
+	desc = "Нерушимая небесная лестница, нарушающая законы физики."
 
 //Wisp Lantern
 /obj/item/wisp_lantern
 	name = "spooky lantern"
-	desc = "This lantern gives off no light, but is home to a friendly wisp."
+	desc = "Эта лампа не источает света, но является убежищем для дружелюбного духа."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue"
 	item_state = "lantern"
@@ -222,33 +222,33 @@
 
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		to_chat(user, "<span class='warning'>The wisp has gone missing!</span>")
+		balloon_alert(user, "<span class='warning'>Дух исчез!</span>")
 		update_icon(UPDATE_ICON_STATE)
 		return
 
 	if(wisp.loc == src)
 		RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 
-		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
+		to_chat(user, "<span class='notice'>Выпущенный дух крутится вокруг вашей головы.</span>")
 		wisp.forceMove(user)
 		update_icon(UPDATE_ICON_STATE)
 		INVOKE_ASYNC(wisp, TYPE_PROC_REF(/atom/movable, orbit), user, 20)
 		set_light_on(FALSE)
 
 		user.update_sight()
-		to_chat(user, "<span class='notice'>The wisp enhances your vision.</span>")
+		balloon_alert(user, "<span class='notice'>Дух улучшает ваше зрение.</span>")
 
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed") // freed
 	else
 		UnregisterSignal(user, COMSIG_MOB_UPDATE_SIGHT)
 
-		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
+		to_chat(user, "<span class='notice'>Вы помещаете духа обратно в лампу.</span>")
 		wisp.stop_orbit()
 		wisp.forceMove(src)
 		set_light_on(TRUE)
 
 		user.update_sight()
-		to_chat(user, "<span class='notice'>Your vision returns to normal.</span>")
+		balloon_alert(user, "<span class='notice'>Ваше зрение вернулось в норму.</span>")
 
 		update_icon(UPDATE_ICON_STATE)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned") // returned
@@ -273,7 +273,7 @@
 
 /obj/effect/wisp
 	name = "friendly wisp"
-	desc = "Happy to light your way."
+	desc = "Счастливо освещает ваш путь."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
 	light_range = 7
@@ -282,7 +282,7 @@
 //Red/Blue Cubes
 /obj/item/warp_cube
 	name = "blue cube"
-	desc = "A mysterious blue cube."
+	desc = "Мистический синий куб."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
 	var/obj/item/warp_cube/linked
@@ -295,7 +295,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
-		to_chat(user, "[src] fizzles uselessly.")
+		to_chat(user, "[src] бесполезно шипит.")
 		return
 
 	if(is_in_teleport_proof_area(user) || is_in_teleport_proof_area(linked))
@@ -318,7 +318,7 @@
 
 /obj/item/warp_cube/red
 	name = "red cube"
-	desc = "A mysterious red cube."
+	desc = "Мистический красный куб."
 	icon_state = "red_cube"
 
 /obj/item/warp_cube/red/New()
