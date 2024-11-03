@@ -4,6 +4,7 @@
 	icon_state = "headphones0"
 	item_state = "headphones0"
 	slot_flags = ITEM_SLOT_EARS
+	slot_flags_2 = ITEM_FLAG_TWOEARS
 	actions_types = list(/datum/action/item_action/change_headphones_song)
 	var/datum/song/headphones/song
 	var/on = FALSE
