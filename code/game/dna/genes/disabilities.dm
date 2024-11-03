@@ -24,7 +24,7 @@
 	. = ..()
 	if(length(activation_message))
 		var/msg = pick(activation_message)
-		to_chat(mutant, span_warning("[activation_message]"))
+		to_chat(mutant, span_warning("[msg]"))
 	else
 		testing("[name] has no activation message.")
 
@@ -33,7 +33,7 @@
 	. = ..()
 	if(length(deactivation_message))
 		var/msg = pick(deactivation_message)
-		to_chat(mutant, span_warning("[deactivation_message]"))
+		to_chat(mutant, span_warning("[msg]"))
 	else
 		testing("[name] has no deactivation message.")
 
