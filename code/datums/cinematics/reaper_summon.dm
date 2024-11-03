@@ -1,4 +1,3 @@
-/datum/cinematic/cult_arm_reaper
 /datum/cinematic/cult_arm_reaper/play_cinematic()
 	screen.icon_state = null
 	flick("intro_cult", screen)
@@ -13,7 +12,6 @@
 	special_callback?.Invoke()
 
 
-/datum/cinematic/cult_fail_reaper
 /datum/cinematic/cult_fail_reaper/play_cinematic()
 	screen.icon_state = "station_intact"
 	stoplag(2 SECONDS)
