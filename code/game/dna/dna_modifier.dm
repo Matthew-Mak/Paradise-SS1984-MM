@@ -356,14 +356,14 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
-	ru_names = list{
-		NOMINATIVE = "Консоль доступа ДНК-модификатора"
-		GENITIVE = "Консоли доступа ДНК-модификатора"
-		DATIVE = "Консоли доступа ДНК-модификатора"
-		ACCUSATIVE = "Консоль доступа ДНК-модификатора"
-		INSTRUMENTAL = "Консолью доступа ДНК-модификатора"
+	ru_names = list(
+		NOMINATIVE = "Консоль доступа ДНК-модификатора",
+		GENITIVE = "Консоли доступа ДНК-модификатора",
+		DATIVE = "Консоли доступа ДНК-модификатора",
+		ACCUSATIVE = "Консоль доступа ДНК-модификатора",
+		INSTRUMENTAL = "Консолью доступа ДНК-модификатора",
 		PREPOSITIONAL = "Консоли доступа ДНК-модификатора"
-	}
+	)
 
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
