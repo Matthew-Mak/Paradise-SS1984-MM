@@ -241,11 +241,11 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOB_ATTACK_VIEW, PROC_REF(on_ranged_attack))
+	RegisterSignal(src, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
 /obj/machinery/computer/security/telescreen/entertainment/Destroy()
 	. = ..()
-	UnregisterSignal(src, COMSIG_MOB_ATTACK_VIEW)
+	UnregisterSignal(src, COMSIG_MOB_ATTACK_RANGED)
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/on_ranged_attack(datum/source, mob/user, params)
 	SIGNAL_HANDLER
