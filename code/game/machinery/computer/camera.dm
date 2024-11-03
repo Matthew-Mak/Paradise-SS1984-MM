@@ -249,9 +249,11 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/on_ranged_attack(datum/source, mob/user, params)
 	SIGNAL_HANDLER
+	
 	if(stat)
 		user.unset_machine()
 		return
+		
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/machinery/computer/security/telescreen/entertainment/update_overlays()
