@@ -2,6 +2,7 @@
 #define BASE_SHEET_MULT 0.5
 #define POINT_MULT_ADD_PER_RATING 0.35
 #define SHEET_MULT_ADD_PER_RATING 0.2
+#define MESSAGES_WAIT_TIME 1 MINUTES
 
 /**
   * # Ore Redemption Machine
@@ -56,6 +57,7 @@
 	var/datum/research/files
 	/// The currently inserted design disk.
 	var/obj/item/disk/design_disk/inserted_disk
+	COOLDOWN_DECLARE(messages_cooldown)
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()
@@ -187,8 +189,11 @@
 	// Process it
 	if(length(ore_buffer))
 		message_sent = FALSE
+		if(!COOLDOWN_STARTED(src, messages_cooldown))
+			COOLDOWN_START(src, messages_cooldown, MESSAGES_WAIT_TIME)
 		process_ores(ore_buffer)
-	else if(!message_sent)
+
+	if(COOLDOWN_FINISHED(src, messages_cooldown) && !message_sent)
 		SStgui.update_uis(src)
 		send_console_message()
 		message_sent = TRUE
@@ -485,7 +490,7 @@
 		if(!(C.department in supply_consoles))
 			continue
 		if(!supply_consoles[C.department] || length(supply_consoles[C.department] - mats_in_stock))
-			C.createMessage("Плавильная печь", "Новые ресурсы доступны!", msg, 1) // RQ_NORMALPRIORITY
+			C.createMessage(ORE_REDEMPTION, "Новые ресурсы доступны!", msg, 1) // RQ_NORMALPRIORITY
 
 /**
   * Tries to insert the ID card held by the given user into the machine.

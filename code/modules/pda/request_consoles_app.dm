@@ -7,6 +7,7 @@
 	update = PDA_APP_UPDATE
 	var/list/department_list
 	var/list/possible_consoles = list()
+	var/ore_message_reciver_dep
 	var/obj/machinery/requests_console/selected_console
 
 /datum/data/pda/app/request_console/New()
@@ -30,8 +31,10 @@
 	possible_consoles -= source
 	SStgui.update_uis(pda)
 
-/datum/data/pda/app/request_console/proc/on_rc_message_recieved(atom/source, message)
+/datum/data/pda/app/request_console/proc/on_rc_message_recieved(obj/machinery/requests_console/source, message, isoremessage)
 	SIGNAL_HANDLER
+	if(isoremessage && source.department != ore_message_reciver_dep)
+		return
 	var/rendered_message = "Recieved on [source.name] : [message]"
 	notify(rendered_message)
 
@@ -109,7 +112,7 @@
 
 /datum/data/pda/app/request_console/clown_security
 	department_list = list(RC_SECURITY)
-	
+
 /datum/data/pda/app/request_console/lawyer
 	department_list = list(RC_INTERNAL_AFFAIRS_OFFICE)
 
@@ -133,6 +136,7 @@
 							RC_ATMOSPHERICS,
 							RC_MECHANIC
 						)
+	ore_message_reciver_dep = RC_MECHANIC
 
 
 /datum/data/pda/app/request_console/detective
@@ -155,6 +159,7 @@
 							RC_RESEARCH,
 							RC_XENOBIOLOGY
 						)
+	ore_message_reciver_dep = RC_RESEARCH
 
 /datum/data/pda/app/request_console/hop
 	department_list = list(
@@ -185,6 +190,7 @@
 							RC_AI,
 							RC_CHIEF_ENGINEER_DESK
 						)
+	ore_message_reciver_dep = RC_MECHANIC
 
 /datum/data/pda/app/request_console/cmo
 	department_list = list(
@@ -208,6 +214,7 @@
 							RC_AI,
 							RC_RESEARCH_DIRECTOR_DESK
 						)
+	ore_message_reciver_dep = RC_RESEARCH
 
 /datum/data/pda/app/request_console/captain
 	department_list = list(
@@ -221,6 +228,7 @@
 							RC_CAPTAIN_DESK,
 							RC_RESEARCH_DIRECTOR_DESK
 						)
+	ore_message_reciver_dep = RC_RESEARCH_DIRECTOR_DESK
 
 /datum/data/pda/app/request_console/ntrep
 	department_list = list(
@@ -249,20 +257,13 @@
 							RC_BRIDGE
 						)
 
-
 /datum/data/pda/app/request_console/roboticist
 	department_list = list(
 							RC_RESEARCH,
 							RC_SCIENCE,
 							RC_ROBOTICS
 						)
-
-/datum/data/pda/app/request_console/roboticist
-	department_list = list(
-							RC_RESEARCH,
-							RC_SCIENCE,
-							RC_ROBOTICS
-						)
+	ore_message_reciver_dep = RC_ROBOTICS
 
 /datum/data/pda/app/request_console/atmos
 	department_list = list(
@@ -270,13 +271,7 @@
 							RC_ATMOSPHERICS,
 							RC_ENGINEERING
 						)
-
-/datum/data/pda/app/request_console/atmos
-	department_list = list(
-							RC_TECH_STORAGE,
-							RC_ATMOSPHERICS,
-							RC_ENGINEERING
-						)
+	ore_message_reciver_dep = RC_ATMOSPHERICS
 
 /datum/data/pda/app/request_console/chemist
 	department_list = list(

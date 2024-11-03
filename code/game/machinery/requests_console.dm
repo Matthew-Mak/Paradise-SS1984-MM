@@ -345,13 +345,13 @@ GLOBAL_LIST_EMPTY(allRequestConsoles)
 			rendered_message = "От: [linkedSender] - [message]"
 
 	if(!isnull(rendered_message))
-		write_to_message_log(rendered_message)
+		write_to_message_log(rendered_message, source == ORE_REDEMPTION)
 
 
-/obj/machinery/requests_console/proc/write_to_message_log(message)
+/obj/machinery/requests_console/proc/write_to_message_log(message, ore_message = FALSE)
 	for(var/datum/data/pda/app/request_console/app as anything in connected_apps)
 		if(istype(app))
-			app.on_rc_message_recieved(src, message)
+			app.on_rc_message_recieved(src, message, ore_message)
 	message_log = list(message) + message_log
 
 /obj/machinery/requests_console/proc/print_label(tag_name, tag_index)
