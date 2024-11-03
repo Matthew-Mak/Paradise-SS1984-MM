@@ -719,7 +719,6 @@
 	set_antag_hud(mob_mind.current, null)
 
 /datum/game_mode/proc/apocalypse_cinema(obj/singularity/god/god)
-	var/cinema
 	if(god.soul_devoured <= 17)
 		return /datum/cinematic/nuke/self_destruct
 
@@ -727,9 +726,9 @@
 		return SSticker.cultdat.apocalypse_cinema
 
 	if(istype(god, /obj/singularity/god/ratvar))
-		cinema = /datum/cinematic/cult_arm_ratvar
+		return /datum/cinematic/cult_arm_ratvar
 
-	return cinema
+	return /datum/cinematic/nuke/self_destruct
 
 /datum/game_mode/proc/apocalypse()
 	set_security_level(SEC_LEVEL_DELTA)
