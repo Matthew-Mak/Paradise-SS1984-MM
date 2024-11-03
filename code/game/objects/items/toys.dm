@@ -919,7 +919,7 @@
 	interaction()
 
 /obj/item/toy/plushie/gsbplushie/afterattack(atom/target, mob/user, proximity, flag, params)
- . = ..()
+	. = ..()
 
 	if(!proximity || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
