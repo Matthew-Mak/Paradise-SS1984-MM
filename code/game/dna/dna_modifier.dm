@@ -73,12 +73,12 @@
 	var/scan_level
 	var/precision_coeff
 	ru_names = list(
-		NOMINATIVE = "ДНК-модификатор", //Именительный (есть): кто, что? [declent_ru(NOMINATIVE)]
-		GENITIVE = "ДНК-модификатора", //Родительный (нет): кого, чего? [declent_ru(GENITIVE)]
-		DATIVE = "ДНК-модификатору", //Дательный(дать): кому, чему? [declent_ru(DATIVE)]
-		ACCUSATIVE = "ДНК-модификатор", //Винительный (вижу): кого, что? [declent_ru(ACCUSATIVE)]
-		INSTRUMENTAL = "ДНК-модификатором", //Творительный (доволен): кем, чем? [declent_ru(INSTRUMENTAL)]
-		PREPOSITIONAL = "ДНК-модификаторе" //Предложный (думать): о ком, о чем? [declent_ru(PREPOSITIONAL)]
+		NOMINATIVE = "ДНК-модификатор",
+		GENITIVE = "ДНК-модификатора",
+		DATIVE = "ДНК-модификатору",
+		ACCUSATIVE = "ДНК-модификатор",
+		INSTRUMENTAL = "ДНК-модификатором",
+		PREPOSITIONAL = "ДНК-модификаторе"
 	)
 
 /obj/machinery/dna_scannernew/New()
