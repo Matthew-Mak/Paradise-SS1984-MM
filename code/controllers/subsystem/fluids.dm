@@ -60,16 +60,16 @@ SUBSYSTEM_DEF(fluids)
  * Ensures that the subsystem's fire wait evenly splits the spread and effect waits.
  */
 /datum/controller/subsystem/fluids/proc/initialize_waits()
-	if (spread_wait <= 0)
+	if(spread_wait <= 0)
 		WARNING("[src] has the invalid spread wait [spread_wait].")
 		spread_wait = 1 SECONDS
-	if (effect_wait <= 0)
+	if(effect_wait <= 0)
 		WARNING("[src] has the invalid effect wait [effect_wait].")
 		spread_wait = 1 SECONDS
 
 	// Sets the overall wait of the subsystem to evenly divide both the effect and spread waits.
 	var/max_wait = Gcd(spread_wait, effect_wait)
-	if (max_wait < wait || wait <= 0)
+	if(max_wait < wait || wait <= 0)
 		wait = max_wait
 	else
 		// If the wait of the subsystem overall is set to a valid value make the actual wait of the subsystem evenly divide that as well.
@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(fluids)
 			to_spread.spread(seconds_per_tick)
 			to_spread.spread_bucket = null
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			break
 
 	MC_SPLIT_TICK // Start processing fluid effects:
@@ -154,12 +154,12 @@ SUBSYSTEM_DEF(fluids)
 		var/obj/effect/particle_effect/fluid/to_process = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (QDELETED(to_process) || to_process.process(seconds_per_tick) == PROCESS_KILL)
+		if(QDELETED(to_process) || to_process.process(seconds_per_tick) == PROCESS_KILL)
 			effect_carousel[cached_bucket_index] -= to_process
 			to_process.effect_bucket = null
 			to_process.datum_flags &= ~DF_ISPROCESSING
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			break
 
 /**
@@ -169,7 +169,7 @@ SUBSYSTEM_DEF(fluids)
  * - [node][/obj/effect/particle_effect/fluid]: The node to queue to spread.
  */
 /datum/controller/subsystem/fluids/proc/queue_spread(obj/effect/particle_effect/fluid/node)
-	if (node.spread_bucket)
+	if(node.spread_bucket)
 		return
 
 	spread_carousel[spread_bucket_index] += node
@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(fluids)
 
 	var/bucket_index = node.spread_bucket
 	spread_carousel[bucket_index] -= node
-	if (bucket_index == spread_bucket_index)
+	if(bucket_index == spread_bucket_index)
 		currently_spreading -= node
 
 	node.spread_bucket = null
@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(fluids)
  * - [node][/obj/effect/particle_effect/fluid]: The node to start processing.
  */
 /datum/controller/subsystem/fluids/proc/start_processing(obj/effect/particle_effect/fluid/node)
-	if (node.datum_flags & DF_ISPROCESSING || node.effect_bucket)
+	if(node.datum_flags & DF_ISPROCESSING || node.effect_bucket)
 		return
 
 	// Edit this value to make all fluids process effects (at the same time|offset by when they started processing| -> offset by a random amount <- )
@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(fluids)
 		return
 
 	effect_carousel[bucket_index] -= node
-	if (bucket_index == effect_bucket_index)
+	if(bucket_index == effect_bucket_index)
 		currently_processing -= node
 
 	node.effect_bucket = null

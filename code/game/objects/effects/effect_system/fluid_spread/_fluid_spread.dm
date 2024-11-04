@@ -125,7 +125,7 @@
 /datum/effect_system/fluid_spread/start(log = FALSE)
 	var/location = src.location || get_turf(holder)
 	var/obj/effect/particle_effect/fluid/flood = new effect_type(location, new /datum/fluid_group(amount))
-	if (log) // Smoke is used as an aesthetic effect in a tonne of places and we don't want, say, a broken secway spamming admin chat.
+	if(log) // Smoke is used as an aesthetic effect in a tonne of places and we don't want, say, a broken secway spamming admin chat.
 		help_out_the_admins(flood, holder, location)
 	flood.spread()
 
@@ -140,12 +140,12 @@
 /datum/effect_system/fluid_spread/proc/help_out_the_admins(obj/effect/particle_effect/fluid/flood, atom/holder, atom/location)
 	var/source_msg
 	var/blame_msg
-	if (holder)
+	if(holder)
 		holder.transfer_fingerprints_to(flood) // This is important. If this doesn't exist thermobarics are annoying to adjudicate.
 
 		source_msg = "from inside of [ismob(holder) ? ADMIN_LOOKUPFLW(holder) : ADMIN_VERBOSEJMP(holder)]"
 		var/lastkey = holder.fingerprintslast
-		if (lastkey)
+		if(lastkey)
 			var/mob/scapegoat = get_mob_by_key(lastkey)
 			blame_msg = " last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
 		else

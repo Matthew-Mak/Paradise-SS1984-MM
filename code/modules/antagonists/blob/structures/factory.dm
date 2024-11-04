@@ -81,7 +81,7 @@
 /// Produce a blobbernaut
 /obj/structure/blob/special/factory/proc/assign_blobbernaut(mob/living/new_naut)
 	is_creating_blobbernaut = FALSE
-	if (isnull(new_naut))
+	if(isnull(new_naut))
 		return
 
 	modify_max_integrity(initial(max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
@@ -96,7 +96,7 @@
 /// When our brave soldier dies, reset our max integrity
 /obj/structure/blob/special/factory/proc/on_blobbernaut_death(mob/living/death_naut)
 	SIGNAL_HANDLER
-	if (isnull(blobbernaut) || blobbernaut != death_naut)
+	if(isnull(blobbernaut) || blobbernaut != death_naut)
 		return
 	blobbernaut = null
 	max_integrity = initial(max_integrity)

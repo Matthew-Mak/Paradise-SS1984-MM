@@ -51,33 +51,33 @@
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/Initialize(mapload)
 	bruteloss = maxHealth / 2 // Start out injured to encourage not beelining away from the blob
 	. = ..()
-		
+
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
 	. = ..()
-	if (!.)
+	if(!.)
 		return FALSE
 	var/damage_sources = 0
 	var/list/blobs_in_area = (is_there_multiz())? urange_multiz(2, src) : range(2, src)
 
-	if (!(locate(/obj/structure/blob) in blobs_in_area))
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damage_sources++
 
-	if (orphaned)
+	if(orphaned)
 		damage_sources++
 	else
 		var/particle_colour = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_BLACK
 
-		if (locate(/obj/structure/blob/special/core) in blobs_in_area)
+		if(locate(/obj/structure/blob/special/core) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_CORE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			heal_effect.color = particle_colour
 
-		if (locate(/obj/structure/blob/special/node) in blobs_in_area)
+		if(locate(/obj/structure/blob/special/node) in blobs_in_area)
 			heal_overall_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALING_NODE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			heal_effect.color = particle_colour
 
-	if (damage_sources == 0)
+	if(damage_sources == 0)
 		return FALSE
 
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
@@ -99,7 +99,7 @@
 
 /// Set our attack damage based on blob's properties
 /mob/living/simple_animal/hostile/blob_minion/blobbernaut/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
-	if (isnull(overmind))
+	if(isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		attacktext = initial(attacktext)

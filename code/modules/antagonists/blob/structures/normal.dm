@@ -43,7 +43,7 @@
 
 	if(compromised_integrity)
 		brute_resist = BLOB_BRUTE_RESIST
-	else if (overmind)
+	else if(overmind)
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
 		brute_resist = BLOB_BRUTE_RESIST * 0.5

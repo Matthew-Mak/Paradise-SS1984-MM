@@ -5,9 +5,9 @@
 /datum/blobstrain/multiplex/New(mob/camera/blob/new_overmind, list/blobstrains)
 	. = ..()
 	for (var/bt in blobstrains)
-		if (ispath(bt, /datum/blobstrain))
+		if(ispath(bt, /datum/blobstrain))
 			src.blobstrains += new bt(overmind)
-		else if (istype(bt, /datum/blobstrain))
+		else if(istype(bt, /datum/blobstrain))
 			var/datum/blobstrain/bts = bt
 			bts.overmind = overmind
 			src.blobstrains += bt
@@ -28,7 +28,7 @@
 /datum/blobstrain/multiplex/tesla_reaction(obj/structure/blob/B, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
 	for (var/datum/blobstrain/bt in blobstrains)
 		. += bt.tesla_reaction(B, power, coefficient*typeshare)
-	if (prob(. / length(blobstrains) * 100))
+	if(prob(. / length(blobstrains) * 100))
 		return 1
 
 /datum/blobstrain/multiplex/extinguish_reaction(obj/structure/blob/B, coefficient = 1) //when the blob is hit with water, do this

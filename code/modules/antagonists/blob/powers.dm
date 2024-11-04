@@ -180,7 +180,7 @@
 /// When one of our boys attacked something, we sometimes want to perform extra effects
 /mob/camera/blob/proc/on_blobbernaut_attacked(mob/living/simple_animal/hostile/blobbynaut, atom/target, success)
 	SIGNAL_HANDLER
-	if (!success)
+	if(!success)
 		return
 	if(!QDELETED(src))
 		blobstrain.blobbernaut_attack(target, blobbynaut)
@@ -365,7 +365,7 @@
 
 /** Opens the reroll menu to change strains */
 /mob/camera/blob/proc/strain_reroll()
-	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
+	if(!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
 		to_chat(src, span_warning("Вам нужно как минимум [BLOB_POWER_REROLL_COST], чтобы снова изменить свой штамм!"))
 		return FALSE
 
@@ -373,7 +373,7 @@
 
 /** Controls changing strains */
 /mob/camera/blob/proc/open_reroll_menu()
-	if (!strain_choices)
+	if(!strain_choices)
 		strain_choices = list()
 
 		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
@@ -385,24 +385,24 @@
 
 			//var/info_text = span_boldnotice("[initial(strain.name)]")
 			//info_text += "<br>[span_notice("[initial(strain.analyzerdescdamage)]")]"
-			//if (!isnull(initial(strain.analyzerdesceffect)))
+			//if(!isnull(initial(strain.analyzerdesceffect)))
 				//info_text += "<br>[span_notice("[initial(strain.analyzerdesceffect)]")]"
 
 			strain_choices[initial(strain.name)] = strain_icon
 
 	var/strain_result = show_radial_menu(src, src, strain_choices, radius = BLOB_REROLL_RADIUS)
-	if (isnull(strain_result))
+	if(isnull(strain_result))
 		return
 
-	if (!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
+	if(!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
 		return
 
 	for (var/_other_strain in GLOB.valid_blobstrains)
 		var/datum/blobstrain/other_strain = _other_strain
-		if (initial(other_strain.name) == strain_result)
+		if(initial(other_strain.name) == strain_result)
 			set_strain(other_strain)
 
-			if (free_strain_rerolls)
+			if(free_strain_rerolls)
 				free_strain_rerolls -= 1
 
 			last_reroll_time = world.time

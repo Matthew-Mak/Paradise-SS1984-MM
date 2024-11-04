@@ -59,12 +59,12 @@
 		stat_attack = DEAD
 	. = ..()
 	stat_attack = initial(stat_attack)
-	
+
 
 /mob/living/simple_animal/hostile/blob_minion/spore/AttackingTarget()
 	. = ..()
 	var/mob/living/carbon/human/human_target = target
-	if (!istype(human_target) || human_target.stat != DEAD)
+	if(!istype(human_target) || human_target.stat != DEAD)
 		return
 	zombify(human_target)
 
@@ -76,7 +76,7 @@
 	visible_message(span_warning("Тело [target.name] внезапно поднимается!"))
 	var/mob/living/simple_animal/hostile/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
 	blombie.set_name()
-	if (istype(blombie)) // In case of badmin
+	if(istype(blombie)) // In case of badmin
 		blombie.consume_corpse(target)
 	SEND_SIGNAL(src, COMSIG_BLOB_ZOMBIFIED, blombie)
 	qdel(src)
@@ -95,9 +95,9 @@
 /// When we z-move check that we're on the same z level as our factory was
 /mob/living/simple_animal/hostile/blob_minion/spore/minion/proc/on_z_changed()
 	SIGNAL_HANDLER
-	if (isnull(z_turf))
+	if(isnull(z_turf))
 		return
-	if (!is_valid_z_level(get_turf(src), z_turf))
+	if(!is_valid_z_level(get_turf(src), z_turf))
 		death()
 
 /// Mark the turf we need to track from our factory
@@ -107,7 +107,7 @@
 
 /// If the blob changes to distributed neurons then you can control the spores
 /mob/living/simple_animal/hostile/blob_minion/spore/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
-	if (istype(new_strain, /datum/blobstrain/reagent/distributed_neurons))
+	if(istype(new_strain, /datum/blobstrain/reagent/distributed_neurons))
 		AddComponent(\
 			/datum/component/ghost_direct_control,\
 			ban_type = ROLE_BLOB,\

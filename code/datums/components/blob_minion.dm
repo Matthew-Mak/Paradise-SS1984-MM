@@ -10,18 +10,18 @@
 
 /datum/component/blob_minion/Initialize(mob/camera/blob/overmind, datum/callback/on_strain_changed)
 	. = ..()
-	if (!isminion(parent))
+	if(!isminion(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
 
 /datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/camera/blob/overmind, datum/callback/on_strain_changed)
-	if (!isnull(on_strain_changed))
+	if(!isnull(on_strain_changed))
 		src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
 
 /datum/component/blob_minion/proc/register_overlord(mob/camera/blob/overmind)
-	if (isnull(overmind))
+	if(isnull(overmind))
 		return
 	src.overmind = overmind
 	overmind.register_new_minion(parent)
@@ -61,7 +61,7 @@
 	GLOB.blob_telepathy_mobs |= parent
 
 /datum/component/blob_minion/UnregisterFromParent()
-	if (!isnull(overmind))
+	if(!isnull(overmind))
 		overmind.blob_mobs -= parent
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags &= ~PASSBLOB
@@ -83,7 +83,7 @@
 /// Become blobpilled when we gain a mind
 /datum/component/blob_minion/proc/on_mind_init(mob/living/minion, datum/mind/new_mind)
 	SIGNAL_HANDLER
-	if (isnull(overmind) || new_mind.has_antag_datum(/datum/antagonist/blob_minion))
+	if(isnull(overmind) || new_mind.has_antag_datum(/datum/antagonist/blob_minion))
 		return
 
 	var/datum_type = (isblobbernaut(minion))? /datum/antagonist/blob_minion/blobernaut : /datum/antagonist/blob_minion
@@ -101,7 +101,7 @@
 /// When our icon is updated, update our colour too
 /datum/component/blob_minion/proc/on_update_status_tab(mob/living/minion, list/status_items)
 	SIGNAL_HANDLER
-	if (isnull(overmind))
+	if(isnull(overmind))
 		return
 	status_items += list(list("Критическая Масса:", "[TOTAL_BLOB_MASS]/[NEEDED_BLOB_MASS]"))
 
@@ -136,7 +136,7 @@
 /datum/component/blob_minion/proc/on_space_move(mob/living/minion)
 	SIGNAL_HANDLER
 	var/obj/structure/blob/blob_handhold = locate() in range(1, parent)
-	if (!isnull(blob_handhold))
+	if(!isnull(blob_handhold))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /// We only speak telepathically to blobs

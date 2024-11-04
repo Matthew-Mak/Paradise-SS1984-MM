@@ -245,7 +245,7 @@
 	blob_client = GLOB.directory[ckey(owner.key)]
 	location = get_turf(C)
 	var/datum/game_mode/mode= SSticker.mode
-	if (ismob(C.loc))
+	if(ismob(C.loc))
 		var/mob/M = C.loc
 		M.gib()
 	if(!is_station_level(location.z) || isspaceturf(location))

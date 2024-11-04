@@ -402,7 +402,7 @@ GLOBAL_PROTECT(log_end)
 		return "(INVALID LOCATION)"
 
 	var/turf/T = A
-	if (!istype(T))
+	if(!istype(T))
 		T = get_turf(A)
 
 	if(istype(T))

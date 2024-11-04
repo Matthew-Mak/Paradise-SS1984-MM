@@ -639,7 +639,7 @@
  */
 /atom/proc/blob_act(obj/structure/blob/attacking_blob)
 	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, attacking_blob)
-	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
+	if(blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
 		return FALSE
 	return TRUE
 

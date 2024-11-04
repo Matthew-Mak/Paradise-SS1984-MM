@@ -51,7 +51,7 @@
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
 	for(var/atom/movable/atom as anything in contents)
-		if (atom && !QDELETED(atom) && istype(atom))
+		if(atom && !QDELETED(atom) && istype(atom))
 			atom.forceMove(get_turf(src))
 			atom.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 6, 5, src, TRUE, FALSE, null, 3)
 	return ..()

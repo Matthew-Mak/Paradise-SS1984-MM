@@ -110,7 +110,7 @@
 
 
 /obj/blob_act(obj/structure/blob/B)
-	if (!..() || (obj_flags & IGNORE_BLOB_ACT))
+	if(!..() || (obj_flags & IGNORE_BLOB_ACT))
 		return
 	if(isturf(loc))
 		var/turf/T = loc

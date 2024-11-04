@@ -2,7 +2,7 @@
 /proc/send_to_observers(message, source)
 	var/list/all_observers = GLOB.dead_player_list + GLOB.current_observers_list
 	for(var/mob/observer as anything in all_observers)
-		if (isnull(source))
+		if(isnull(source))
 			to_chat(observer, "[message]")
 			continue
 		var/link = FOLLOW_LINK(observer, source)

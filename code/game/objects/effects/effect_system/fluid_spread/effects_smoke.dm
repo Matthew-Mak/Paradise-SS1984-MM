@@ -29,7 +29,7 @@
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
 	SSsmoke.stop_processing(src)
-	if (spread_bucket)
+	if(spread_bucket)
 		SSsmoke.cancel_spread(src)
 	return ..()
 
@@ -39,7 +39,7 @@
  */
 /obj/effect/particle_effect/fluid/smoke/proc/kill_smoke()
 	SSsmoke.stop_processing(src)
-	if (spread_bucket)
+	if(spread_bucket)
 		SSsmoke.cancel_spread(src)
 	INVOKE_ASYNC(src, PROC_REF(fade_out))
 	QDEL_IN(src, 1 SECONDS)
@@ -136,7 +136,7 @@
 	SIGNAL_HANDLER
 	if(!group)
 		return NONE
-	if (spread_bucket)
+	if(spread_bucket)
 		return NONE
 	SSsmoke.queue_spread(src)
 
@@ -446,7 +446,7 @@
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
-	if (log)
+	if(log)
 		help_out_the_admins(smoke, holder, location)
 	smoke.spread() // Making the smoke spread immediately.
 

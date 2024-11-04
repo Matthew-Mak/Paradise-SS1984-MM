@@ -41,8 +41,8 @@
 	qdel(GetComponent(/datum/component/connect_containers))
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
-	if (original)
-		if (newc)
+	if(original)
+		if(newc)
 			inform_admins = newc.inform_admins
 			allow_death = newc.allow_item_destruction
 		else
@@ -133,20 +133,20 @@
 	))
 
 	// Our loc is a secluded location = not in bounds
-	if (atom_to_check.loc && HAS_TRAIT(atom_to_check.loc, TRAIT_SECLUDED_LOCATION))
+	if(atom_to_check.loc && HAS_TRAIT(atom_to_check.loc, TRAIT_SECLUDED_LOCATION))
 		return FALSE
 	// No turf below us = nullspace = not in bounds
 	var/turf/destination_turf = get_turf(atom_to_check)
-	if (!destination_turf)
+	if(!destination_turf)
 		return FALSE
-	if (is_station_level(destination_turf.z))
+	if(is_station_level(destination_turf.z))
 		return TRUE
 	if(atom_to_check.onSyndieBase())
 		return TRUE
 
 	var/area/destination_area = destination_turf.loc
-	if (is_admin_level(destination_turf.z))
-		if (is_type_in_typecache(destination_area, disallowed_centcom_areas))
+	if(is_admin_level(destination_turf.z))
+		if(is_type_in_typecache(destination_area, disallowed_centcom_areas))
 			return FALSE
 		return TRUE
 	return FALSE

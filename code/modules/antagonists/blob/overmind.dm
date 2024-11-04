@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(overminds)
 	if(isturf(T))
 		update_z(T.z)
 
-	
+
 /mob/camera/blob/Logout()
 	update_z(null)
 	. = ..()
@@ -176,17 +176,17 @@ GLOBAL_LIST_EMPTY(overminds)
 	bubble_type,
 	sanitize = TRUE,
 )
-	if (!message)
+	if(!message)
 		return
 
-	if (client)
+	if(client)
 		if(GLOB.admin_mutes_assoc[ckey] & MUTE_IC)
 			to_chat(src, span_boldwarning("Вы не можете писать IC сообщения (мут)."))
 			return
-		if (client.handle_spam_prevention(message, MUTE_IC))
+		if(client.handle_spam_prevention(message, MUTE_IC))
 			return
 
-	if (stat)
+	if(stat)
 		return
 
 	blob_talk(message)
@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(overminds)
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (!message)
+	if(!message)
 		return
 
 	add_say_logs(src, message, language = "BLOB")
@@ -216,11 +216,11 @@ GLOBAL_LIST_EMPTY(overminds)
 
 
 /mob/camera/blob/proc/set_strain(datum/blobstrain/new_strain, first_select = FALSE)
-	if (!ispath(new_strain))
+	if(!ispath(new_strain))
 		return FALSE
 
 	var/had_strain = FALSE
-	if (istype(blobstrain))
+	if(istype(blobstrain))
 		blobstrain.on_lose()
 		qdel(blobstrain)
 		had_strain = TRUE
@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(overminds)
 		overmind_datum.strain = blobstrain
 	blobstrain.on_gain()
 
-	if (had_strain && !first_select)
+	if(had_strain && !first_select)
 		var/list/messages = get_strain_info()
 		to_chat(src, chat_box_red(messages.Join("<br>")))
 	SEND_SIGNAL(src, COMSIG_BLOB_SELECTED_STRAIN, blobstrain)
@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(overminds)
 /// Add something to our list of mobs and wait for it to die
 /mob/camera/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
-	if (!istype(minion, /mob/living/simple_animal/hostile/blob_minion/blobbernaut))
+	if(!istype(minion, /mob/living/simple_animal/hostile/blob_minion/blobbernaut))
 		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
 
 /// When a spore (or zombie) dies then we do this
