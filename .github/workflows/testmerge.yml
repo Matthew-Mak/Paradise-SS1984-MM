@@ -152,13 +152,6 @@ jobs:
             git commit -m "Automatic changelog generation"
           fi
           
-          git push -f origin ${{ env.TESTMERGE_BRANCH }}
-
-          # Output the list of merged PRs
-          echo "${MERGED_PRS[@]}"
-          echo "merged_prs=${MERGED_PRS[@]}" >> $GITHUB_OUTPUT
-          echo "END"
-          
           # Generate TGUI bundle
           ./tgui/bin/tgui
           CHANGES=$(git diff --name-only --cached | wc -l)
@@ -168,6 +161,13 @@ jobs:
             git commit -m "Testmerge TGUI bundle build generation"
           fi
           
+          git push -f origin ${{ env.TESTMERGE_BRANCH }}
+
+          # Output the list of merged PRs
+          echo "${MERGED_PRS[@]}"
+          echo "merged_prs=${MERGED_PRS[@]}" >> $GITHUB_OUTPUT
+          echo "END"
+                    
       - name: Comment on merged PRs
         uses: actions/github-script@v7
         with:
