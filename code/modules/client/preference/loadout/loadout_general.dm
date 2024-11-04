@@ -38,8 +38,8 @@
 /datum/gear/earrings/New()
 	..()
 	var/list/earrings = list("silver" = /obj/item/clothing/ears/earrings/silver,
-									"gold" = /obj/item/clothing/ears/earrings
-									)
+								 "gold" = /obj/item/clothing/ears/earrings
+								 )
 	gear_tweaks += new /datum/gear_tweak/path(earrings, src)
 
 /datum/gear/matches
