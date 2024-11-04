@@ -154,10 +154,10 @@
 		to_chat(usr, span_notice("Как бы вы не старались, у вас не получится забраться в [declent_ru(ACCUSATIVE)]."))
 		return
 	if(occupant)
-		to_chat(usr, span_boldnotice("[declent_ru(NOMINATIVE)] уже занят!"))
+		balloon_alert(usr, "занято!")
 		return
 	if(usr.abiotic())
-		to_chat(usr, span_boldnotice("Субъект не должен ничего держать в руках."))
+		balloon_alert(usr, "руки заняты")
 		return
 	if(usr.has_buckled_mobs()) //mob attached to us
 		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
@@ -188,7 +188,7 @@
 	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
-		to_chat(user, span_boldnotice("В [declent_ru(PREPOSITIONAL)] уже кто-то находится!"))
+		balloon_alert(user, "занято")
 		return TRUE
 	var/mob/living/L = O
 	if(!istype(L) || L.buckled)
@@ -238,11 +238,11 @@
 	if(grabber.grab_state < GRAB_AGGRESSIVE || !ismob(grabbed_thing))
 		return .
 	if(panel_open)
-		to_chat(grabber, span_warning("Cначала закройте панель техобслуживания."))
+		balloon_alert(grabber, "закройте панель")
 		return .
 	var/mob/target = grabbed_thing
 	if(occupant)
-		to_chat(grabber, span_warning("[declent_ru(NOMINATIVE)] уже занят!"))
+		balloon_alert(grabber, "занято!")
 		return .
 	if(target.abiotic())
 		to_chat(grabber, span_warning("Субъект не должен ничего держать в руках."))
@@ -289,11 +289,11 @@
 /obj/machinery/dna_scannernew/proc/go_out(mob/user, force)
 	if(!occupant)
 		if(user)
-			to_chat(user, span_warning("Cканер пуст!"))
+			balloon_alert(user, "сканер пуст!")
 		return
 	if(locked && !force)
 		if(user)
-			to_chat(user, span_warning("Cканер заблокирован!"))
+			balloon_alert(user, "сканер заблокирован!")
 		return
 	occupant.forceMove(loc)
 	occupant = null
