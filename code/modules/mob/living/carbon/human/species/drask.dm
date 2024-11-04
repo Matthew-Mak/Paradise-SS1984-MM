@@ -1,3 +1,5 @@
+#define DRASK_PITCH_SHIFT -0.1 // a bit lower emotes
+
 /datum/species/drask
 	name = SPECIES_DRASK
 	name_plural = "Drask"
@@ -79,6 +81,13 @@
 	disliked_food = SUGAR | GROSS
 	liked_food = DAIRY
 	special_diet = MATERIAL_CLASS_SOAP
+
+	age_sheet = list(
+		SPECIES_AGE_MIN = 30,
+		SPECIES_AGE_MAX = 999,
+		JOB_MIN_AGE_HIGH_ED = 50,
+		JOB_MIN_AGE_COMMAND = 50,
+	)
 
 /datum/species/drask/get_species_runechat_color(mob/living/carbon/human/H)
 	var/obj/item/organ/internal/eyes/E = H.get_int_organ(/obj/item/organ/internal/eyes)
@@ -175,3 +184,11 @@
 		return
 
 	living.remove_status_effect(STATUS_EFFECT_DRASK_COMA)
+
+/datum/species/drask/get_emote_pitch(mob/living/carbon/human/H, tolerance)
+	. = ..()
+	. += DRASK_PITCH_SHIFT
+
+#undef DRASK_COOLINGSTARTTEMP
+#undef ENVIRONMENT_COOLINGSTOPTEMP
+#undef DRASK_PITCH_SHIFT
