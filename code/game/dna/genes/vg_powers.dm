@@ -229,7 +229,7 @@
 	if(!ishuman(user))
 		return
 	if(user.mind?.miming) // Dont let mimes telepathically talk
-	to_chat(user, span_warning("Вы не можете общаться, не нарушив свой обет молчания."))
+		to_chat(user, span_warning("Вы не можете общаться, не нарушив свой обет молчания."))
 		return
 	for(var/mob/living/target in targets)
 		var/datum/atom_hud/thoughts/hud = GLOB.huds[THOUGHTS_HUD]
