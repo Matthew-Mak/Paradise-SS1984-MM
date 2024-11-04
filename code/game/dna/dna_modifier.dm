@@ -262,8 +262,7 @@
 
 /obj/machinery/dna_scannernew/screwdriver_act(mob/user, obj/item/I)
 	if(occupant)
-		balloon_alert(user, "панель техобслуживания заблокирована")
-		to_chat(user, span_notice("Панель техобслуживания заблокирована."))
+		balloon_alert(user, "панель заблокирована")
 		return TRUE
 	if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]", I))
 		return TRUE
@@ -371,7 +370,6 @@
 		add_fingerprint(user)
 		if(disk)
 			balloon_alert(user, "диск уже вставлен")
-			to_chat(user, span_notice("Диск уже вставлен."))
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
