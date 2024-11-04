@@ -160,7 +160,7 @@
 		balloon_alert(usr, "руки заняты")
 		return
 	if(usr.has_buckled_mobs()) //mob attached to us
-		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
+		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на [genderize_decode(usr, "%(нём,ней,нём,них)%")]  сидит слайм."))
 		return
 	usr.forceMove(src)
 	occupant = usr
