@@ -158,7 +158,7 @@ jobs:
           if [ "$CHANGES" -gt 0 ] ; then
             git config --local user.email "action@github.com"
             git config --local user.name "TGUI bundle Generation"
-            git commit -m "Testmerge TGUI bundle build generation"
+            git commit -am "Testmerge TGUI bundle build generation"
           fi
           
           git push -f origin ${{ env.TESTMERGE_BRANCH }}
