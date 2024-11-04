@@ -228,24 +228,14 @@
 /obj/effect/proc_holder/spell/remotetalk/cast(list/targets, mob/living/carbon/human/user = usr)
 	if(!ishuman(user))
 		return
-
 	if(user.mind?.miming) // Dont let mimes telepathically talk
-<<<<<<< HEAD
 	to_chat(user, span_warning("Вы не можете общаться, не нарушив свой обет молчания."))
-=======
-		to_chat(user, span_warning("Вы не можете общаться, не нарушив свой обет молчания."))
->>>>>>> 6fcac596aef96ca918a2a6c5d59f26ef99413163
 		return
-
 	for(var/mob/living/target in targets)
 		var/datum/atom_hud/thoughts/hud = GLOB.huds[THOUGHTS_HUD]
 		hud.manage_hud(target, THOUGHTS_HUD_PRECISE)
 		user.thoughts_hud_set(TRUE)
 		var/say = tgui_input_text(user, "Что вы хотите сказать?", "Project Mind")
-<<<<<<< HEAD
-=======
-		// user.hud_typing = FALSE
->>>>>>> 6fcac596aef96ca918a2a6c5d59f26ef99413163
 		user.typing = FALSE
 
 		if(!say || user.stat)
@@ -262,7 +252,6 @@
 
 		if(target.dna?.GetSEState(GLOB.remotetalkblock))
 			target.show_message(span_abductor("Вы слышите голос [user.real_name]: [say]"))
-<<<<<<< HEAD
 
 		else
 			target.show_message(span_abductor("Вы слышите голос, который, кажется, эхом разносится по комнате: [say]"))
@@ -271,13 +260,6 @@
 
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			G.show_message(span_italics("Телепатическое сообщение от <b>[user]</b> ([ghost_follow_link(user, ghost=G)]) для <b>[target]</b> ([ghost_follow_link(target, ghost=G)]): [say]"))
-=======
-		else
-			target.show_message(span_abductor("Вы слышите голос, который, кажется, эхом разносится по комнате: [say]"))
-		user.show_message(span_abductor("Вы проецируете свой разум на [(target in user.get_visible_mobs()) ? target.name : "неизвестную сущность"]: [say]"))
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			G.show_message("<i>Телепатическое сообщение от <b>[user]</b> ([ghost_follow_link(user, ghost=G)]) для <b>[target]</b> ([ghost_follow_link(target, ghost=G)]): [say]</i>")
->>>>>>> 6fcac596aef96ca918a2a6c5d59f26ef99413163
 
 
 /obj/effect/proc_holder/spell/mindscan
@@ -331,12 +313,7 @@
 			return
 
 		target.thoughts_hud_set(TRUE)
-<<<<<<< HEAD
 		var/say = tgui_input_text(target, "Что вы хотите сказать?", "Scan Mind")
-=======
-		var/say = tgui_input_text(user, "Что вы хотите сказать?", "Scan Mind")
-		// target.hud_typing = FALSE
->>>>>>> 6fcac596aef96ca918a2a6c5d59f26ef99413163
 		target.typing = FALSE
 
 		if(!say || target.stat)
@@ -351,7 +328,6 @@
 
 		if(target.dna?.GetSEState(GLOB.remotetalkblock))
 			target.show_message(span_abductor("Вы проецируете свой разум на [user.name]: [say]"))
-<<<<<<< HEAD
 
 		else
 			target.show_message(span_abductor("Вы заполняете пространство в своих мыслях: [say]"))
@@ -360,13 +336,6 @@
 
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			G.show_message(span_italics("Телепатический ответ от <b>[target]</b> ([ghost_follow_link(target, ghost=G)]) для <b>[user]</b> ([ghost_follow_link(user, ghost=G)]): [say]"))
-=======
-		else
-			target.show_message(span_abductor("Вы заполняете пространство в своих мыслях: [say]"))
-		user.show_message(span_abductor("Вы слышите голос [target.name]: [say]"))
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			G.show_message("<i>Телепатический ответ от <b>[target]</b> ([ghost_follow_link(target, ghost=G)]) для <b>[user]</b> ([ghost_follow_link(user, ghost=G)]): [say]</i>")
->>>>>>> 6fcac596aef96ca918a2a6c5d59f26ef99413163
 
 
 /obj/effect/proc_holder/spell/mindscan/Destroy()
