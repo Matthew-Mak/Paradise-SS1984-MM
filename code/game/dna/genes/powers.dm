@@ -223,7 +223,7 @@
 /datum/dna/gene/basic/farvision
 	name = "Far vision"
 	activation_messages = list("Теперь вы можете видеть дальше, чем раньше.")
-	deactivation_messages = list("Дальность вашего взора вернулась к нормальному состоянию")
+	deactivation_messages = list("Дальность вашего взора вернулась к нормальному состоянию.")
 	instability = GENE_INSTABILITY_MODERATE
 
 
