@@ -416,3 +416,10 @@
 	display_name = "RD doll"
 	path = /obj/item/toy/plushie/rdplushie
 
+/datum/gear/donor/gsbplushie
+	donator_tier = 3
+	cost = 1
+	display_name = "GSBussy doll"
+	path = /obj/item/toy/plushie/gsbplushie
+
+
