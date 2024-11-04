@@ -159,20 +159,20 @@ jobs:
           echo "merged_prs=${MERGED_PRS[@]}" >> $GITHUB_OUTPUT
           echo "END"
 
-      - name: Comment on merged PRs
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            console.log('${{ steps.prepare_testmerge_branch.outputs.merged_prs }}')
-            const mergedPRs = '${{ steps.prepare_testmerge_branch.outputs.merged_prs }}'.split(' ');
-            console.log(mergedPRs);
-            for (const prNumber of mergedPRs) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: parseInt(prNumber),
-                body: 'Данный PR был добавлен в ветку "${{ env.TESTMERGE_BRANCH }}" для тестов. Он попадёт на сервер после деплоя.'
-              });
-              console.log(`Commented on PR #${prNumber}`);
-            }
+      #- name: Comment on merged PRs
+      #  uses: actions/github-script@v7
+      #  with:
+      #    github-token: ${{secrets.GITHUB_TOKEN}}
+      #    script: |
+      #      console.log('${{ steps.prepare_testmerge_branch.outputs.merged_prs }}')
+      #      const mergedPRs = '${{ steps.prepare_testmerge_branch.outputs.merged_prs }}'.split(' ');
+      #      console.log(mergedPRs);
+      #      for (const prNumber of mergedPRs) {
+      #        await github.rest.issues.createComment({
+      #          owner: context.repo.owner,
+      #          repo: context.repo.repo,
+      #          issue_number: parseInt(prNumber),
+      #          body: 'Данный PR был добавлен в ветку "${{ env.TESTMERGE_BRANCH }}" для тестов. Он попадёт на сервер после деплоя.'
+      #        });
+      #        console.log(`Commented on PR #${prNumber}`);
+      #      }
