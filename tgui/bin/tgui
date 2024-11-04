@@ -135,8 +135,8 @@ task-merge-bundle() {
   local file_current="${2}"
   echo "----------------------"
   echo "tgui: prepping to replace a conflicted bundle"
+  cat $file_path > $file_current
   task-rebuild-conflicted-bundle
-  cat $file_current > $file_path
   exit 0
 }
 
