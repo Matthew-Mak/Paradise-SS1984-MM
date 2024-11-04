@@ -297,6 +297,8 @@
 #define isdemon(A) 			(istype((A), /mob/living/simple_animal/demon))
 #define ismorph(A)		(istype((A), /mob/living/simple_animal/hostile/morph))
 #define isborer(A)		(istype((A), /mob/living/simple_animal/borer))
+#define isrevenant(A)		(istype((A), /mob/living/simple_animal/revenant))
+#define isshadowdemon(A)		(istype((A), /mob/living/simple_animal/demon/shadow))
 
 #define issilicon(A)	(istype((A), /mob/living/silicon))
 #define isAI(A)			(istype((A), /mob/living/silicon/ai))

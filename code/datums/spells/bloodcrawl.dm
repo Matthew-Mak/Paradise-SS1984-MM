@@ -295,7 +295,7 @@
 
 /obj/effect/proc_holder/spell/bloodcrawl/shadow_crawl/post_phase_in(mob/living/user, obj/effect/dummy/slaughter/holder)
 	..()
-	if(!istype(user, /mob/living/simple_animal/demon/shadow))
+	if(!isshadowdemon(user))
 		return
 	var/mob/living/simple_animal/demon/shadow/demon = user
 	demon.RegisterSignal(holder, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/living/simple_animal/demon/shadow, check_darkness))
