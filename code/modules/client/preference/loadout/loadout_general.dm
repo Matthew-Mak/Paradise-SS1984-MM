@@ -32,6 +32,16 @@
 	display_name = "a cheap lighter"
 	path = /obj/item/lighter
 
+/datum/gear/earrings_gold
+	display_name = "gold earrings"
+	path = /obj/item/clothing/ears/earrings
+	cost = 1
+
+/datum/gear/earrings_silver
+	display_name = "silver earrings"
+	path = /obj/item/clothing/ears/earrings/silver
+	cost = 1
+
 /datum/gear/matches
 	display_name = "a box of matches"
 	path = /obj/item/storage/box/matches
