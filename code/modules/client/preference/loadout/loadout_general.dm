@@ -32,15 +32,14 @@
 	display_name = "a cheap lighter"
 	path = /obj/item/lighter
 
-/datum/gear/earrings_gold
-	display_name = "gold earrings"
+/datum/gear/earrings
+	display_name = "earrings, select"
 	path = /obj/item/clothing/ears/earrings
-	cost = 1
 
-/datum/gear/earrings_silver
-	display_name = "silver earrings"
-	path = /obj/item/clothing/ears/earrings/silver
-	cost = 1
+/datum/gear/earrings/New()
+	..()
+	var/list/earrings = list("silver" = /obj/item/clothing/ears/earrings/silver)
+	gear_tweaks += new /datum/gear_tweak/path(earrings, src)
 
 /datum/gear/matches
 	display_name = "a box of matches"
