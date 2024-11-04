@@ -70,7 +70,7 @@
 
 /datum/dna/gene/disability/epilepsy/OnMobLife(mob/living/carbon/human/H)
 	if((prob(1) && H.AmountParalyzed() < 2 SECONDS))
-		H.visible_message(span_danger("[H] начинает биться в припадке!"),span_alert("У вас припадок!"))
+		H.visible_message(span_danger("[H] начинает биться в припадке!"), span_alert("У вас припадок!"))
 		H.Paralyse(20 SECONDS)
 		H.Jitter(2000 SECONDS)
 

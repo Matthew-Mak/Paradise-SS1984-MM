@@ -217,8 +217,7 @@
 	if(istype(I, /obj/item/reagent_containers/glass))
 		add_fingerprint(user)
 		if(beaker)
-			balloon_alert(user, "внутри уже установлена ёмкость")
-			to_chat(user, span_warning("Внутри уже установлена ёмкость."))
+			balloon_alert(user, "внутри есть ёмкость")
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
