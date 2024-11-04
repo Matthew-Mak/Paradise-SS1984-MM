@@ -34,6 +34,7 @@
 
 /datum/gear/earrings
 	display_name = "earrings, select"
+	path = /obj/item/clothing/ears/earrings
 
 /datum/gear/earrings/New()
 	..()
