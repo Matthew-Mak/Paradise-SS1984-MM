@@ -194,15 +194,15 @@
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		to_chat(user, span_boldnotice("Субъект не должен ничего держать в руках."))
+		balloon_alert(user, "руки заняты")
 		return TRUE
 	if(L.has_buckled_mobs()) //mob attached to us
-		to_chat(user, span_warning("[L] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
+		to_chat(user, span_warning("[L] не помест[pluralize_ru(user, "ит", "ят")]ся в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(user, "нём", "ней", "нём", "них")] сидит слайм."))
 		return TRUE
 	if(L == user)
-		visible_message("[user] забирается в [declent_ru(ACCUSATIVE)].")
+		visible_message("[user] забира[pluralize_ru(user, "ет", "ют")]ся в [declent_ru(ACCUSATIVE)].")
 	else
-		visible_message("[user] помещает [L.name] в [declent_ru(ACCUSATIVE)].")
+		visible_message("[user] помеща[pluralize_ru(user, "ет", "ют")] [L.name] в [declent_ru(ACCUSATIVE)].")
 	put_in(L)
 	return TRUE
 
@@ -224,7 +224,7 @@
 		beaker = I
 		SStgui.update_uis(src)
 		user.visible_message(
-			span_notice("[user] помещает [I] в [declent_ru(ACCUSATIVE)]."),
+			span_notice("[user] помеща[pluralize_ru(user, "ет", "ют")] [I] в [declent_ru(ACCUSATIVE)]."),
 			span_notice("Вы помещаете [I] в [declent_ru(ACCUSATIVE)]."),
 		)
 		return ATTACK_CHAIN_BLOCKED_ALL
@@ -247,7 +247,7 @@
 		to_chat(grabber, span_warning("Субъект не должен ничего держать в руках."))
 		return .
 	if(target.has_buckled_mobs()) //mob attached to us
-		to_chat(grabber, span_warning("[target] не поместится в [declent_ru(ACCUSATIVE)], пока на нем сидит слайм."))
+		to_chat(grabber, span_warning("[target] не поместится в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(target, "нём", "ней", "нём", "них")]  сидит слайм."))
 		return .
 	put_in(target)
 	add_fingerprint(grabber)
@@ -330,7 +330,7 @@
 
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA Modifier access console"
-	desc = "Позволяет сканировать и изменять ДНК."
+	desc = "Устройство позволяет сканировать и изменять ДНК."
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
