@@ -123,7 +123,7 @@
 		to_chat(user, span_warning("Вы не знаете ни что такое книга, ни что с ней делать."))
 		return
 
-	to_chat(user, "Вы залпом пролистываете через страницы книги, быстро и удобно изучая каждый язык во вселенной. Уже не столь удобно, древняя книга рассыпается в прах после прочтения. Упс.")
+	to_chat(user, "Вы залпом пролистываете через страницы книги, необъяснимо быстро изучая каждый язык во вселенной. К сожалению, в процессе древняя книга рассыпается в прах. Упс.")
 	user.grant_all_babel_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	user.temporarily_remove_item_from_inventory(src)
@@ -313,7 +313,7 @@
 		smoke2.set_up(1, 0, user.loc)
 		smoke2.start()
 	else
-		balloon_alert(user, "<span class='notice'>Стойте на месте!</span>")
+		balloon_alert(user, "<span class='notice'>перестаньте двигатся</span>")
 
 
 /obj/item/warp_cube/red
