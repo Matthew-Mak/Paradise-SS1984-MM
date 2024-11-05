@@ -48,7 +48,7 @@
 	update_hud()
 
 /datum/antagonist/devil/proc/try_update_rank()
-	if(!rank.required_souls || LAZYLEN(soulsOwned) < required_souls)
+	if(!rank.required_souls || LAZYLEN(soulsOwned) < rank.required_souls)
 		return FALSE
 
 	var/devil_rank = rank?.next_rank_type
