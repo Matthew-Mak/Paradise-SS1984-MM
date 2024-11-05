@@ -30,7 +30,7 @@
 
 /datum/dna/gene/disability/radioactive
 	name = "Radioactive"
-	desc = "Объект страдает от постоянной лучевой болезни и вызывает такую же у близлежащей органики."
+	desc = "Субъект страдает от постоянной лучевой болезни и вызывает такую же у близлежащей органики."
 	activation_message = list("Вы чувствуете, как странное недомогание пронизывает всё ваше тело.")
 	deactivation_message = list("Вы больше не чувствуете себя ужасно больным.")
 	instability = -GENE_INSTABILITY_MAJOR

@@ -43,7 +43,7 @@
 // WAS: /datum/bioEffect/darkcloak
 /datum/dna/gene/basic/stealth/darkcloak
 	name = "Cloak of Darkness"
-	desc = "Позволяет объекту излучать вокруг себя слабое свечение, создавая эффект маскировки."
+	desc = "Позволяет субъекту излучать вокруг себя слабое свечение, создавая эффект маскировки."
 	activation_messages = list("Вы начинаете исчезать в тени.")
 	deactivation_messages = list("Вы становитесь полностью видимым.")
 	activation_prob = 25
@@ -173,7 +173,7 @@
 			if(istype(H.wear_suit, /obj/item/clothing/suit/space))
 				handle_suit = TRUE
 				if(H.internal)
-					H.visible_message(span_warning("[user] распыля[pluralize_ru(user, "ет", "ют")] облако мелких ледяных кристаллов, поглощая [H]!"),
+					H.visible_message(span_warning("[user] распыля[pluralize_ru(user, "ет", "ют")] облако мелких ледяных кристаллов, сковывая [H]!"),
 									span_notice("[user] распыля[pluralize_ru(user, "ет", "ют")] облако мелких кристалликов льда на визор вашего [H.head]."))
 				else
 					H.visible_message(span_warning("[user] распыля[pluralize_ru(user, "ет", "ют")] облако мелких кристаллов льда, поглощая [H]!"),
@@ -311,12 +311,12 @@
 			if(H.loc != oldloc)
 				to_chat(user, span_danger("Вы упустили [limb]!"))
 				return
-			visible_message(span_danger("[user] [pick("отрыва[pluralize_ru(user, "ет", "ют")]","откусыва[pluralize_ru(user, "ет", "ют")]")] [limb] от [the_item]!"))
+			user.visible_message(span_danger("[user] [pick("отрыва[pluralize_ru(user, "ет", "ют")]","откусыва[pluralize_ru(user, "ет", "ют")]")] [limb] от [the_item]!"))
 			playsound(user.loc, 'sound/items/eatfood.ogg', 50, 0)
 			limb.droplimb(0, DROPLIMB_SHARP)
 			doHeal(user)
 	else
-		visible_message(span_danger("[user] [pick("съеда[pluralize_ru(user, "ет", "ют")]","поглоща[pluralize_ru(user, "ет", "ют")]")] [the_item]."))
+		user.visible_message(span_danger("[user] [pick("съеда[pluralize_ru(user, "ет", "ют")]","поглоща[pluralize_ru(user, "ет", "ют")]")] [the_item]."))
 		playsound(user.loc, 'sound/items/eatfood.ogg', 50, 0)
 		qdel(the_item)
 		doHeal(user)
@@ -374,11 +374,11 @@
 			else if(puller)
 				puller.stop_pulling()
 
-		visible_message(span_danger("[user.name] дела[pluralize_ru(user.name, "ет", "ют")] огромный скачок!"))
+		user.visible_message(span_danger("[user.name] дела[pluralize_ru(user, "ет", "ют")] огромный скачок!"))
 		playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
 		if(failure)
 			user.Weaken(10 SECONDS)
-			visible_message(span_warning("[user] пыта[pluralize_ru(user, "ет", "ют")]ся отпрыгнуть, но снова оказыва[pluralize_ru(user, "ет", "ют")]ся прижатым[pluralize_ru(user, "", "и")] к земле!"),
+			user.visible_message(span_warning("[user] пыта[pluralize_ru(user, "ет", "ют")]ся отпрыгнуть, но снова оказыва[pluralize_ru(user, "ет", "ют")]ся прижатым[pluralize_ru(user, "", "и")] к земле!"),
 							span_warning("Вы пытаетесь отпрыгнуть в сторону, но внезапно оказываетесь прижаты к земле!"),
 							span_notice("Вы слышите, как напрягаются мощные мышцы, и внезапно раздается грохот, когда тело падает на пол."))
 			return FALSE
@@ -399,7 +399,7 @@
 			pitfall?.zFall(user)
 
 		else if(HAS_TRAIT(user, TRAIT_FAT) && prob(66))
-			visible_message(span_danger("[user.name] пада[pluralize_ru(user.name, "ет", "ют")] на землю под весом своего тела!"))
+			user.visible_message(span_danger("[user.name] пада[pluralize_ru(user, "ет", "ют")] на землю под весом своего тела!"))
 			//playsound(user.loc, 'zhit.wav', 50, 1)
 			user.AdjustWeakened(20 SECONDS)
 
@@ -410,7 +410,7 @@
 		to_chat(user, span_warning("Вы прыгаете и ударяетесь головой о внутреннюю часть [container]! АЙ!"))
 		user.AdjustParalysis(6 SECONDS)
 		user.AdjustWeakened(10 SECONDS)
-		container.visible_message(span_danger("[user.loc] изда[pluralize_ru(user.name, "ет", "ют")] громкий стук и немного дребезжит."))
+		container.visible_message(span_danger("[user.loc] изда[pluralize_ru(user, "ет", "ют")] громкий стук и немного дребезжит."))
 		playsound(user.loc, 'sound/effects/bang.ogg', 50, 1)
 		var/wiggle = 6
 		while(wiggle > 0)

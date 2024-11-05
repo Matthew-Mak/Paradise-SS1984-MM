@@ -79,7 +79,7 @@
 
 		// facial hair
 		var/list/valid_facial_hairstyles = M.generate_valid_facial_hairstyles()
-		new_style = input("Пожалуйста, выберите тип лица.", "Создание персонажа", head_organ.f_style) as null|anything in valid_facial_hairstyles
+		new_style = input("Пожалуйста, выберите тип лицевой растительности.", "Создание персонажа", head_organ.f_style) as null|anything in valid_facial_hairstyles
 
 		if(new_style)
 			M.change_facial_hair(new_style)
