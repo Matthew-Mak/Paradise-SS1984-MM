@@ -446,6 +446,8 @@
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, params)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///from base of mob/RangedAttack(): (atom/A, params) after being range attacked
+#define COMSIG_MOB_ATTACKED_RANGED "mob_attack_ranged"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///called when a user is getting new weapon and we want to remove previous weapon to clear hands
