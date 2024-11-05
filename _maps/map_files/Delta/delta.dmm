@@ -1330,7 +1330,6 @@
 /area/medical/research/nhallway)
 "anM" = (
 /obj/structure/bookcase/random,
-/obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/civilian/vacantoffice)
 "anN" = (
@@ -1936,16 +1935,6 @@
 /obj/effect/decal/warning_stripes/southwest,
 /turf/simulated/floor/plasteel,
 /area/hallway/secondary/entry/westarrival)
-"asa" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/structure/closet/cardboard,
-/turf/simulated/floor/plasteel{
-	dir = 8;
-	icon_state = "neutral"
-	},
-/area/maintenance/trading)
 "asb" = (
 /obj/machinery/door_control{
 	id = "hangar";
@@ -43782,6 +43771,7 @@
 	dir = 10;
 	initialize_directions = 10
 	},
+/obj/structure/closet/cardboard,
 /turf/simulated/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -62496,15 +62486,6 @@
 	icon_state = "grimy"
 	},
 /area/maintenance/library)
-"jto" = (
-/mob/living/simple_animal/moth,
-/obj/effect/decal/cleanable/dirt,
-/obj/random/tool,
-/turf/simulated/floor/plasteel{
-	dir = 8;
-	icon_state = "neutral"
-	},
-/area/maintenance/trading)
 "jtr" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -64094,7 +64075,8 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/plasteel{
-	icon_state = "hydrofloor"
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/maintenance/trading)
 "jLc" = (
@@ -66389,8 +66371,7 @@
 	},
 /area/security/checkpoint/south)
 "kqw" = (
-/obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/maintenance/trading)
 "kqJ" = (
@@ -69636,10 +69617,6 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/trading)
-"lkp" = (
-/obj/structure/bookcase/random,
-/turf/simulated/wall,
-/area/civilian/vacantoffice)
 "lkA" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -75978,6 +75955,8 @@
 /obj/item/trash/cheesie{
 	pixel_x = 8
 	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/table/wood,
 /turf/simulated/floor/plasteel{
 	icon_state = "neutral";
 	dir = 6
@@ -99071,8 +99050,10 @@
 	pixel_y = -6;
 	pixel_x = 6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plasteel{
-	icon_state = "hydrofloor"
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/maintenance/trading)
 "rOQ" = (
@@ -116259,6 +116240,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/random/tool,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "neutral"
@@ -121531,6 +121513,7 @@
 	pixel_x = 6
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/mob/living/simple_animal/moth,
 /turf/simulated/floor/plating,
 /area/maintenance/trading)
 "wZo" = (
@@ -160256,8 +160239,8 @@ aRQ
 cAz
 ren
 gBy
-jto
-asa
+cAz
+cAz
 kqw
 cAz
 ven
@@ -160514,7 +160497,7 @@ aoo
 aoo
 aoo
 aoo
-lkp
+anM
 anM
 aoo
 brS
