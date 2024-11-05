@@ -4,7 +4,7 @@
 	name = "Morphism"
 	desc = "Позволяет субъекту изменить свою внешность на внешность любого человека."
 	spelltype = /obj/effect/proc_holder/spell/morph
-	activation_messages = list("Вы чувствуете, что может изменить свой внешний вид.")
+	activation_messages = list("Вы чувствуете, что можете изменить свой внешний вид.")
 	deactivation_messages = list("Вы больше не способны менять свой внешний вид.")
 	instability = GENE_INSTABILITY_MINOR
 
