@@ -113,7 +113,7 @@
 	category = list("Mining")
 
 /datum/design/fishingrod
-	name = "Ol' reliable"
+	name = "Fishing Rod"
 	desc = "Hey! I caught a miner!"
 	id = "fishingrod"
 	req_tech = list("materials" = 5, "engineering" = 4, "plasmatech" = 6, "biotech" = 6)
