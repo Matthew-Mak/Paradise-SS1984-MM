@@ -46,7 +46,7 @@
 	next_rank_type = ENRAGED_DEVIL_RANK
 	required_souls = ENRAGED_THRESHOLD
 
-	rank_spells = list() // TODO: new single spell which allows you to do rituals
+	rank_spells = list(/obj/effect/proc_holder/spell/sacrifice_circle)
 
 /datum/devil_rank/enraged_devil
 	regen_threshold = ENRAGED_DEVIL_REGEN_THRESHOLD
@@ -56,6 +56,7 @@
 	required_souls = BLOOD_THRESHOLD
 
 	rank_spells = list(
+		/obj/effect/proc_holder/spell/sacrifice_circle,
 		/obj/effect/proc_holder/spell/conjure_item/pitchfork,
 		/obj/effect/proc_holder/spell/aoe/devil_fire,
 		/obj/effect/proc_holder/spell/dark_conversion
@@ -69,6 +70,7 @@
 	required_souls = TRUE_THRESHOLD
 
 	rank_spells = list(
+		/obj/effect/proc_holder/spell/sacrifice_circle,
 		/obj/effect/proc_holder/spell/conjure_item/pitchfork,
 		/obj/effect/proc_holder/spell/fireball/hellish,
 		/obj/effect/proc_holder/spell/aoe/devil_fire,
@@ -102,6 +104,7 @@
 	regen_amount = TRUE_DEVIL_REGEN_AMOUNT
 
 	rank_spells = list(
+		/obj/effect/proc_holder/spell/sacrifice_circle,
 		/obj/effect/proc_holder/spell/conjure_item/pitchfork/greater,
 		/obj/effect/proc_holder/spell/fireball/hellish,
 		/obj/effect/proc_holder/spell/aoe/devil_fire,
