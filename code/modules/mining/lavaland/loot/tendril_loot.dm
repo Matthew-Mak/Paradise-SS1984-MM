@@ -10,7 +10,7 @@
 
 
 /obj/item/storage/backpack/shared/can_be_inserted(obj/item/shared_storage/I, stop_messages = FALSE)
-	// По сути, не можем сунуть два рюкзака в себя же.
+	// basically we cannot put one bag in the storage if another one is already there
 	if(istype(I) && I.bag && I.bag == src && I.twin_storage && I.twin_storage.loc == src)
 		if(!stop_messages)
 			balloon_alert(usr, span_warning("Нельзя в себя же!"))
@@ -295,7 +295,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
-		to_chat(user, "[src] бесполезно шипит.")
+		balloon_alert(user, "[src] искрится и шипит.")
 		return
 
 	if(is_in_teleport_proof_area(user) || is_in_teleport_proof_area(linked))
@@ -406,7 +406,7 @@
 
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, last_used_immortality_talisman))
-		balloon_alert(user, span_warning("[src] на перезарядке."))
+		balloon_alert(user, span_warning("Перезарядка!"))
 		return
 
 	var/turf/source_turf = get_turf(src)
