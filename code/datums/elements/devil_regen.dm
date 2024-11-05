@@ -9,7 +9,7 @@
     . = ..()
     var/mob/living/carbon/human = target
 
-    if(!istype(human) && !human.mind?.has_antag_datum(/datum/antagonist/devil))
+    if(!istype(human) || !human.mind?.has_antag_datum(/datum/antagonist/devil))
         return ELEMENT_INCOMPATIBLE
 
     RegisterSignal(human, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(start_regen_bodypart))

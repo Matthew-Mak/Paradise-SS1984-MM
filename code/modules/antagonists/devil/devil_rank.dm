@@ -8,6 +8,10 @@
 	/// Regeneration things for devil. Used in devil elements
 	var/regen_threshold
 	var/regen_amount
+	/// just OOP thing. Ranks without this designated as last rank.
+	var/next_rank_type
+	/// How many souls we need to ascend to next rank.
+	var/required_souls
 
 /datum/devil_rank/Destroy(force)
 	remove_spells()
@@ -39,11 +43,17 @@
 	regen_threshold = BASIC_DEVIL_REGEN_THRESHOLD
 	regen_amount = BASIC_DEVIL_REGEN_AMOUNT
 
+	next_rank_type = ENRAGED_DEVIL_RANK
+	required_souls = ENRAGED_THRESHOLD
+
 	rank_spells = list() // TODO: new single spell which allows you to do rituals
 
 /datum/devil_rank/enraged_devil
 	regen_threshold = ENRAGED_DEVIL_REGEN_THRESHOLD
 	regen_amount = ENRAGED_DEVIL_REGEN_AMOUNT
+
+	next_rank_type = BLOOD_LIZARD_RANK
+	required_souls = BLOOD_THRESHOLD
 
 	rank_spells = list(
 		/obj/effect/proc_holder/spell/conjure_item/pitchfork,
@@ -54,6 +64,9 @@
 /datum/devil_rank/blood_lizard
 	regen_threshold = BLOOD_LIZARD_REGEN_THRESHOLD
 	regen_amount = BLOOD_LIZARD_REGEN_AMOUNT
+
+	next_rank_type = TRUE_DEVIL_RANK
+	required_souls = TRUE_THRESHOLD
 
 	rank_spells = list(
 		/obj/effect/proc_holder/spell/conjure_item/pitchfork,

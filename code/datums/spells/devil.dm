@@ -308,7 +308,7 @@
 
 /obj/effect/proc_holder/spell/aoe/devil_fire
 	name = "Devil fire"
-	desc = "Causes hotspots on random locations and slows every living creature in spell radius."
+	desc = "Призывает огненные волны в радиусе заклинания."
 	action_icon_state = "explosion_old"
 
 	base_cooldown = 60 SECONDS
@@ -344,7 +344,7 @@
 
 /obj/effect/proc_holder/spell/dark_conversion
 	name = "Dark conversion"
-	desc = "Transforms any humanoid into shadowpeople."
+	desc = "Превращает гуманоида в тенечеловека и искажает его восприятие реальности."
 
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "horror"
@@ -363,19 +363,12 @@
 
 	return targeting
 
+/obj/effect/proc_holder/spell/dark_conversion/create_new_handler()
+	var/datum/spell_handler/devil/devil = new
+	return devil
+
 /obj/effect/proc_holder/spell/dark_conversion/valid_target(mob/living/carbon/human/target, mob/user)
 	return target.mind && !isshadowperson(target)
-
-/obj/effect/proc_holder/spell/dark_conversion/can_cast(mob/user, charge_check, show_message)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	if(!iscarbon(user))
-		return FALSE
-
-	if(!user.mind?.has_antag_datum(/datum/antagonist/devil))	
-		return FALSE
 
 /obj/effect/proc_holder/spell/dark_conversion/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/human/human = targets[1]
@@ -388,8 +381,11 @@
 		revert_cast(user)
 		return
 
+	make_shadow(human)
+
+/obj/effect/proc_holder/spell/dark_conversion/proc/make_shadow(mob/living/carbon/human/human)
 	human.set_species(/datum/species/shadow)
-	human.store_memory("Вы - создание тьмы. Старайтесь сохранить свою истинную форму и выполнить свои задания.")
+	human.store_memory("Вы - создание тьмы. Старайтесь сохранить свою истинную форму и выполнить свои задания.", TRUE)
 
 	var/datum/objective/assassinate/kill = new
 	kill.owner = human.mind
@@ -399,3 +395,43 @@
 	LAZYADD(human.faction, "hell")
 
 	human.mind.prepare_announce_objectives()
+
+/obj/effect/proc_holder/spell/sacrifice_circle
+	name = "Create sacrifice circle"
+	desc = "Создает руну для жертвоприношений."
+
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "sintouch"
+
+	base_cooldown = 900 SECONDS
+	var/cast_time = 5 SECONDS
+
+	clothes_req = FALSE
+	human_req = FALSE
+
+/obj/effect/proc_holder/spell/sacrifice_circle/create_new_targeting()
+	return new /datum/spell_targeting/self
+
+/obj/effect/proc_holder/spell/sacrifice_circle/create_new_handler()
+	var/datum/spell_handler/devil/devil = new
+	return devil
+
+/obj/effect/proc_holder/spell/sacrifice_circle/cast(list/targets, mob/user = usr)
+	if(!do_after(user, cast_time, user, NONE))
+		revert_cast(user)
+		return
+
+	var/mob/living/carbon/carbon = user
+	var/datum/antagonist/devil/devil = carbon.mind?.has_antag_datum(/datum/antagonist/devil)
+
+	var/obj/effect/decal/cleanable/devil/devil_rune = new devil_rune(get_turf(carbon))
+	playsound(carbon.loc, 'sound/magic/invoke_general.ogg', 50, TRUE)
+
+	devil_rune.AddComponent( \
+		devil.ritual_component, \
+		/datum/ritual/devil, \
+		allowed_special_role = list(ROLE_DEVIL), \
+	)
+
+	devil_rune.devil = devil
+	devil_rune.update_appearance(UPDATE_DESC)

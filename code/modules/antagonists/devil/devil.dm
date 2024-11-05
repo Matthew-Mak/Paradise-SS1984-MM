@@ -9,6 +9,8 @@
 	var/list/datum/mind/soulsOwned = new
 	var/datum/devil_rank/rank
 
+	var/datum/component/ritual_object/ritual_component = new
+
 /datum/antagonist/devil/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(!.)
@@ -28,12 +30,14 @@
 	return ..()
 
 /datum/antagonist/devil/proc/add_soul(datum/mind/soul)
-	if(locate(soul) in soulsOwned)
+	if(!istype(soul) || locate(soul) in soulsOwned)
 		return
 
 	LAZYADD(soulsOwned, soul)
-	owner.current.set_nutrition(NUTRITION_LEVEL_FULL)
 	to_chat(owner.current, span_warning("You feel satiated as you received a new soul."))
+
+	owner.current.set_nutrition(NUTRITION_LEVEL_FULL)
+	soul.hasSoul = FALSE
 
 	try_update_rank()
 	update_hud()
@@ -44,29 +48,18 @@
 	update_hud()
 
 /datum/antagonist/devil/proc/try_update_rank()
-	var/devil_rank = update_rank()
+	if(!required_souls || LAZYLEN(soulsOwned) < required_souls)
+		return FALSE
+
+	var/devil_rank = rank?.next_rank_type
 	
-	if(!devil_rank)
+	if(!devil_rank || istype(devil_rank, rank))
 		return FALSE
 
 	if(!init_new_rank(devil_rank))
 		return FALSE
 
 	return TRUE // rank updated.
-
-/datum/antagonist/devil/proc/update_rank()
-	switch(SOULVALUE)
-		if(ENRAGED_THRESHOLD)
-			. = ENRAGED_DEVIL_RANK
-		if(BLOOD_THRESHOLD)
-			. = BLOOD_LIZARD_RANK
-		if(TRUE_THRESHOLD)
-			. = TRUE_DEVIL_RANK
-
-	if(istype(., rank))
-		. = FALSE
-
-	return .
 
 /datum/antagonist/devil/proc/init_new_rank(typepath)
 	if(rank)
@@ -157,7 +150,17 @@
 /datum/antagonist/devil/give_objectives()
 	add_objective(/datum/objective/devil/ascend)
 	add_objective(/datum/objective/devil/sintouch)
-	add_objective(/datum/objective/devil/sacrifice)
+	forge_sacrifice_objective()
+
+/datum/antagonist/devil/proc/forge_sacrifice_objective()
+	var/datum/objective/devil/sacrifice/sacrifice = new
+
+	if(!sacrifice.forge())
+		addTimer(CALLBACK(src, PROC_REF(forge_sacrifice_objective)), 1 MINUTE)
+		qdel(sacrifice)
+		return
+	
+	add_objective(sacrifice)
 
 /datum/antagonist/devil/add_owner_to_gamemode()
 	LAZYADD(SSticker.mode.devils, owner)
@@ -218,34 +221,3 @@
 	LAZYADD(parts, printdevilinfo())
 	LAZYADD(parts, printobjectives(objectives))
 	return parts.Join("<br>")
-
-/datum/outfit/devil_lawyer
-	name = "Devil Lawyer"
-	uniform = /obj/item/clothing/under/lawyer/black
-	shoes = /obj/item/clothing/shoes/laceup
-	back = /obj/item/storage/backpack
-	l_hand = /obj/item/storage/briefcase
-	l_pocket = /obj/item/pen
-	l_ear = /obj/item/radio/headset
-	id = /obj/item/card/id
-
-/datum/outfit/devil_lawyer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/obj/item/card/id/W = H.wear_id
-	if(!istype(W) || W.assignment) // either doesn't have a card, or the card is already written to
-		return
-
-	var/name_to_use = H.real_name
-	var/datum/antagonist/devil/devilinfo = H.mind?.has_antag_datum(/datum/antagonist/devil)
-
-	if(devilinfo)
-		// Having hell create an ID for you causes its risks
-		name_to_use = devilinfo.info.truename
-
-	W.name = "[name_to_use]'s ID Card (Lawyer)"
-	W.registered_name = name_to_use
-	W.assignment = "Lawyer"
-	W.rank = W.assignment
-	W.age = H.age
-	W.sex = capitalize(H.gender)
-	W.access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_EXTERNAL_AIRLOCKS)
-	W.photo = get_id_photo(H)

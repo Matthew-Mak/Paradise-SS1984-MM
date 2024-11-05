@@ -1906,15 +1906,16 @@
 
 				remove_devil_role()
 			if("devil")
-				var/datum/antagonist/devil/devil = has_antag_datum(/datum/antagonist/devil)
-				if(!iscarbon(current) || devil)
+				if(has_antag_datum(/datum/antagonist/devil))
 					return
 
 				add_antag_datum(/datum/antagonist/devil)
 				message_admins("[key_name_admin(usr)] has devil'ed [current].")
 				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("sintouched")
-				
+				if(has_antag_datum(/datum/antagonist/sintouched))
+					return
+
 				add_antag_datum(/datum/antagonist/sintouched)
 				message_admins("[key_name_admin(usr)] has sintouch'ed [current].")
 				log_admin("[key_name(usr)] has sintouch'ed [current].")

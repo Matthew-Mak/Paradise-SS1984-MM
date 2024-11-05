@@ -17,6 +17,9 @@
 	var/list/sins = list()
 
 	for(var/datum/objective/sintouched/sin as anything in subtypesof(/datum/objective/sintouched))
+		if(!sin.explanation_text)
+			continue
+			
 		LAZYADD(sins, sin)
 
 	add_objective(pick(sins))

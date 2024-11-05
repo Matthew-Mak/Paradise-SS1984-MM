@@ -851,10 +851,9 @@
 	. = ..()
 	if(isliving(user))
 		var/mob/living/U = user
-		var/datum/antagonist/devil/devilinfo = U.mind?.has_antag_datum(/datum/antagonist/devil)
-		if(devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
-			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
-				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
+		if(!U.mind?.has_antag_datum(/datum/antagonist/devil) && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
+			U.visible_message(span_warning("As [U] picks [src] up, [U]'s arms briefly catch fire."), \
+				span_warning("\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\""))
 			if(ishuman(U))
 				var/mob/living/carbon/human/H = U
 				H.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))

@@ -8,7 +8,7 @@
     . = ..()
     var/mob/living/carbon/human = target
 
-    if(!istype(human) && !human.mind?.has_antag_datum(/datum/antagonist/devil))
+    if(!istype(human) || !human.mind?.has_antag_datum(/datum/antagonist/devil))
         return ELEMENT_INCOMPATIBLE
 
     RegisterSignal(human, COMSIG_LIVING_EARLY_DEATH, PROC_REF(pre_death))

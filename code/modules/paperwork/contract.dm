@@ -38,31 +38,6 @@
 	<BR>Кроме того, Раб соглашается передать право на владение своей душой отделу лояльности Вездесущего и полезного наблюдателя за человечеством.\
 	<BR>В случае, если передача души Раба невозможна, Раб вносит вместо неё залог.<BR>Подписано,<BR><i>[target]</i>"
 
-
-/obj/item/paper/contract/employment/attack(mob/living/victim, mob/living/user, params, def_zone, skip_attack_anim = FALSE)
-	. = ..()
-	if(!ATTACK_CHAIN_SUCCESS_CHECK(.))
-		return .
-
-	var/deconvert = 0
-	if(victim.mind == target && target.soulOwner != target)
-		if(user.mind && (user.mind.assigned_role == JOB_TITLE_LAWYER))
-			deconvert = 60
-		else if (user.mind && (user.mind.assigned_role == JOB_TITLE_HOP) || (user.mind.assigned_role == "Centcom Commander") || (user.mind.assigned_role == JOB_TITLE_JUDGE))
-			deconvert = 40
-		else if(user.mind && (user.mind.assigned_role == JOB_TITLE_CAPTAIN))
-			deconvert = 25
-		else
-			deconvert = 0.0001
-
-	if(prob(deconvert))
-		victim.visible_message(
-			span_notice("Благодаря [user] [victim] вспоминает, что душа [victim] уже приобретена НаноТрейзен!"),
-			span_boldnotice("Вы чувствуете, как Ваша душа возвращается к её правомочному владельцу — НаноТрейзен."),
-		)
-		victim.return_soul()
-
-
 /obj/item/paper/contract/infernal
 	var/contractType = 0
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF

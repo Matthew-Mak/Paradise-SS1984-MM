@@ -5,13 +5,16 @@
 	needs_target = FALSE
 	check_cryo = FALSE
 	target_amount = 12
-	explanation_text = ""
+	explanation_text = null
 
-/datum/objective/devil/sacrifice/New()
-	get_targets()
+/datum/objective/devil/sacrifice/proc/forge()
+	if(!get_targets())
+		return FALSE
 
 	for(var/datum/mind/mind in target_minds)
 		LAZYADD(explanation_text, "Принесите в жертву [mind.name], [mind.assigned_role]")
+
+	return TRUE
 
 /datum/objective/devil/sacrifice/proc/get_targets()
 	var/list/command_minds = list()
@@ -39,8 +42,7 @@
 	var/other_target_count = target_amount - command_target_count - security_target_count
 
 	if(LAZYLEN(command_minds) < command_target_count || LAZYLEN(security_minds) < security_target_count || LAZYLEN(other_minds) < other_target_count)
-		addtimer(CALLBACK(src, PROC_REF(get_targets)), 60 SECONDS)
-		return
+		return FALSE
 
 	for(var/i in 1 to command_target_count)
 		LAZYADD(target_minds, pick(command_minds))
@@ -50,6 +52,8 @@
 
 	for(var/i in 1 to other_target_count)
 		LAZYADD(target_minds, pick(other_minds))
+
+	return TRUE
 
 /datum/objective/devil/sacrifice/check_completion()
 	var/list/collected_minds = list()
