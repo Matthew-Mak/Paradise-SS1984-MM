@@ -85,7 +85,7 @@
 	if(!living.hud_used?.devilsouldisplay)
 		living.hud_used.devilsouldisplay = new /atom/movable/screen/devil/soul_counter(null, living.hud_used)
 
-	living.hud_used?.devilsouldisplay.update_counter(SOULVALUE)
+	living.hud_used?.devilsouldisplay.update_counter(LAZYLEN(soulsOwned))
 
 /datum/antagonist/devil/proc/remove_hud()
 	var/mob/living/living = owner.current
