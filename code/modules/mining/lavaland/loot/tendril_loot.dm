@@ -3,7 +3,7 @@
 //Internal
 /obj/item/storage/backpack/shared
 	name = "paradox bag"
-	desc = "Каким-то образом есть сразу в двух местах одновременно."
+	desc = "Каким-то образом существует сразу в двух местах одновременно."
 	max_combined_w_class = 60
 	max_w_class = WEIGHT_CLASS_NORMAL
 	cant_hold = list(/obj/item/storage/backpack/shared)
@@ -21,7 +21,7 @@
 //External
 /obj/item/shared_storage
 	name = "paradox bag"
-	desc = "Каким-то образом есть сразу в двух местах одновременно."
+	desc = "Каким-то образом существует сразу в двух местах одновременно."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
 	slot_flags = ITEM_SLOT_BACK
