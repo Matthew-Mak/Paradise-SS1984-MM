@@ -424,7 +424,7 @@
 	var/mob/living/carbon/carbon = user
 	var/datum/antagonist/devil/devil = carbon.mind?.has_antag_datum(/datum/antagonist/devil)
 
-	var/obj/effect/decal/cleanable/devil/devil_rune = new devil_rune(get_turf(carbon))
+	var/obj/effect/decal/cleanable/devil/devil_rune = new(get_turf(carbon))
 	playsound(carbon.loc, 'sound/magic/invoke_general.ogg', 50, TRUE)
 
 	devil_rune.AddComponent( \
