@@ -20029,9 +20029,6 @@
 /area/quartermaster/office)
 "bll" = (
 /obj/effect/landmark/event/blobstart,
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
 /turf/simulated/floor/plasteel{
 	icon_state = "cult"
 	},
@@ -49954,7 +49951,6 @@
 	},
 /obj/item/stack/tape_roll,
 /obj/item/pen/multi,
-/obj/item/toy/figure/librarian,
 /turf/simulated/floor/plasteel{
 	icon_state = "cult"
 	},
@@ -51213,6 +51209,10 @@
 /area/atmos)
 "dbK" = (
 /obj/machinery/light/small,
+/obj/structure/closet/librarian,
+/obj/item/book/codex_gigas,
+/obj/item/taperecorder,
+/obj/item/toy/figure/librarian,
 /turf/simulated/floor/plasteel{
 	icon_state = "cult"
 	},
@@ -54253,6 +54253,11 @@
 /area/library)
 "dlG" = (
 /obj/structure/table/wood,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "Camera";
+	pictures_left = 30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "dlH" = (
@@ -71064,14 +71069,9 @@
 /turf/simulated/floor/plasteel,
 /area/hallway/primary/central/west)
 "ntA" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "Camera";
-	pictures_left = 30
+/obj/structure/chair/comfy/brown{
+	dir = 4
 	},
-/obj/item/book/codex_gigas,
 /turf/simulated/floor/plasteel{
 	icon_state = "cult"
 	},
