@@ -433,7 +433,7 @@
 
 	var/turf/effect_turf = get_turf(effect)
 	if(!effect_turf)
-		stack_trace("[effect] вне содержаний")
+		stack_trace("[effect] вне содержаний этой земли.")
 		return
 
 	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), UNIQUE_TRAIT_SOURCE(src))
