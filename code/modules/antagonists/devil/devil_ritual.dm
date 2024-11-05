@@ -21,14 +21,13 @@
 
 /datum/ritual/devil/imp/do_ritual(mob/living/carbon/human/invoker)
 	var/datum/antagonist/devil/devil = invoker.mind?.has_antag_datum(/datum/antagonist/devil)
-
-    var/list/candidates = SSghost_spawns.poll_candidates("Вы хотите сыграть за беса?", ROLE_DEMON, TRUE)
+	var/list/candidates = SSghost_spawns.poll_candidates("Вы хотите сыграть за беса?", ROLE_DEMON, TRUE)
 
 	if(!LAZYLEN(candidates))
 		return RITUAL_FAILED_ON_PROCEED 
 
 	var/mob/mob = pick(candidates)
-    var/mob/living/simple_animal/imp/imp = new(get_turf(ritual_object))
+	var/mob/living/simple_animal/imp/imp = new(get_turf(ritual_object))
 
 	imp.key = mob.key
 	imp.universal_speak = TRUE
