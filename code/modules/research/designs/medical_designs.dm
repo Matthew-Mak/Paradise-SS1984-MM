@@ -267,7 +267,7 @@
 
 /datum/design/item/laserfullkit
 	name = "Advanced Surgery Kit"
-	desc = "A complete set of advanced surgical tools."
+	desc = "Полный набор современных хирургических инструментов."
 	id = "laser_fullsurgerykit"
 	req_tech = list("biotech" = 4, "materials" = 6, "magnets" = 5)
 	build_path = /obj/item/storage/toolbox/surgery/advanced
@@ -368,7 +368,7 @@
 
 /datum/design/alienfullkit
 	name = "Alien Surgery Kit"
-	desc = "A complete set of alien surgical tools."
+	desc = "Полный набор инопланетных хирургических инструментов."
 	id = "alien_fullsurgerykit"
 	req_tech = list("biotech" = 4, "materials" = 4, "abductor" = 3)
 	build_path = /obj/item/storage/toolbox/surgery/alien

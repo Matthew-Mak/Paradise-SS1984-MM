@@ -221,8 +221,8 @@
 	return
 
 /obj/item/storage/toolbox/surgery/advanced
-	name = "advanced laser surgery kit"
-	desc = "Contains tools for surgery. Has green neon overlays."
+	name = "Advanced Laser Surgery Kit"
+	desc = "Содержит в себе хирургические инструменты. Имеет зелёные неоновые накладки."
 	icon_state = "surgerykit_advanced"
 	item_state = "surgerykit_advanced"
 
@@ -241,8 +241,8 @@
 	return
 
 /obj/item/storage/toolbox/surgery/alien
-	name = "alien surgery kit"
-	desc = "Contains tools for surgery. It looks incredibly advanced."
+	name = "Alien Surgery Kit"
+	desc = "Содержит в себе хирургические инструменты. Выглядит очень футуристично."
 	icon_state = "surgerykit_alien"
 	item_state = "surgerykit_alien"
 
