@@ -530,7 +530,7 @@
 			to_chat(user, span_warning("Вы не можете прочитать мысли мёртвого существа."))
 			return
 		if(M.health < 0)
-			to_chat(user, span_warning("[M.name] в предсмертном состоянии, а [genderize_ru(M.gender, "его", "её", "этого", "их")] мысли слишком спутаны, чтобы их прочитать."))
+			to_chat(user, span_warning("[M.name] в предсмертном состоянии, а [genderize_ru(M.gender, "его", "её", "его", "их")] мысли слишком спутаны, чтобы их прочитать."))
 			return
 
 		to_chat(user, span_notice("Чтение мыслей <b>[M.name]:</b>"))
