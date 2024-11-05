@@ -225,7 +225,7 @@
 
 /obj/effect/proc_holder/spell/eat
 	name = "Eat"
-	desc = "Ешьте все подряд!"
+	desc = "Ешьте всё подряд!"
 
 	base_cooldown = 30 SECONDS
 
