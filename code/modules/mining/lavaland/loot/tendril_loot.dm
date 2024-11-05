@@ -13,7 +13,7 @@
 	// basically we cannot put one bag in the storage if another one is already there
 	if(istype(I) && I.bag && I.bag == src && I.twin_storage && I.twin_storage.loc == src)
 		if(!stop_messages)
-			balloon_alert(usr, span_warning("Нельзя в себя же!"))
+			balloon_alert(usr, span_warning("нельзя в себя же!"))
 		return FALSE
 	return ..()
 
@@ -236,7 +236,7 @@
 		set_light_on(FALSE)
 
 		user.update_sight()
-		balloon_alert(user, "<span class='notice'>Дух улучшает ваше зрение.</span>")
+		balloon_alert(user, "<span class='notice'>дух улучшает ваше зрение.</span>")
 
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed") // freed
 	else
@@ -248,7 +248,7 @@
 		set_light_on(TRUE)
 
 		user.update_sight()
-		balloon_alert(user, "<span class='notice'>Ваше зрение вернулось в норму.</span>")
+		balloon_alert(user, "<span class='notice'>ваше зрение вернулось в норму.</span>")
 
 		update_icon(UPDATE_ICON_STATE)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned") // returned
@@ -406,7 +406,7 @@
 
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, last_used_immortality_talisman))
-		balloon_alert(user, span_warning("Перезарядка!"))
+		balloon_alert(user, span_warning("перезарядка!"))
 		return
 
 	var/turf/source_turf = get_turf(src)
