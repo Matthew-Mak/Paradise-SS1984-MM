@@ -484,7 +484,7 @@
 // WAS: /datum/bioEffect/empath
 /datum/dna/gene/basic/grant_spell/empath
 	name = "Empathic Thought"
-	desc = "Субъект получает возможность читать мысли других людей, чтобы получить определенную информацию."
+	desc = "Субъект получает возможность читать мысли других людей, чтобы получить определённую информацию."
 
 	spelltype = /obj/effect/proc_holder/spell/empath
 	activation_messages = list("Вы вдруг стали замечать в окружающих больше, чем раньше.")
