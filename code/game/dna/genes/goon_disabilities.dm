@@ -9,7 +9,7 @@
 // WAS: /datum/bioEffect/mute
 /datum/dna/gene/disability/mute
 	name = "Mute"
-	desc = "Полностью отключает речевой центр мозга субъекта."
+	desc = "Полностью отключает речевой центр у мозга субъекта."
 	activation_message = list("Вы чувствуете, что потеряли способность к самовыражению.")
 	deactivation_message = list("Вы чувствуете, что вновь можете говорить свободно.")
 	instability = -GENE_INSTABILITY_MODERATE
@@ -31,7 +31,7 @@
 /datum/dna/gene/disability/radioactive
 	name = "Radioactive"
 	desc = "Объект страдает от постоянной лучевой болезни и вызывает такую же у близлежащей органики."
-	activation_message = list("Вы чувствуете, как странное недомогание пронизывает все ваше тело.")
+	activation_message = list("Вы чувствуете, как странное недомогание пронизывает всё ваше тело.")
 	deactivation_message = list("Вы больше не чувствуете себя ужасно больным.")
 	instability = -GENE_INSTABILITY_MAJOR
 
@@ -51,7 +51,7 @@
 	var/radiation_amount = abs(min(mutant.radiation - 20, 0))
 	mutant.apply_effect(radiation_amount, IRRADIATE)
 	for(var/mob/living/victim in (view(1, get_turf(src)) - src))
-		to_chat(victim, span_danger("Вас окутывает мягкое зеленое свечение, исходящее от [mutant]."))
+		to_chat(victim, span_danger("Вас окутывает мягкое зелёное свечение, исходящее от [mutant]."))
 		victim.apply_effect(5, IRRADIATE)
 
 
@@ -66,7 +66,7 @@
 // WAS: /datum/bioEffect/fat
 /datum/dna/gene/disability/obesity
 	name = "Obesity"
-	desc = "Сильно замедляет метаболизм, способствуя большему накоплению жировой ткани."
+	desc = "Сильно замедляет метаболизм, способствуя ожирению."
 	activation_message = list("Вы чувствуете себя толстым и ленивым!")
 	deactivation_message = list("Вы чувствуете себя в хорошей форме!")
 	instability = -GENE_INSTABILITY_MINOR
@@ -190,7 +190,7 @@
 
 // WAS: /datum/bioEffect/swedish
 /datum/dna/gene/disability/speech/swedish
-	name = "Swedish"
+	name = "Swedish accent"
 	desc = "Заставляет языковой центра мозга субъекта произносить слова на скандинавский манер."
 	activation_message = list("Вы ощущаете внутреннюю шведскость. Кажется, сработало.")
 	deactivation_message = list("Внутреннее ощущение шведскости проходит.")
@@ -286,7 +286,7 @@
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
 	name = "Horns"
-	desc = "Обеспечивает рост уплотненного кератинового образования на голове субъекта."
+	desc = "Обеспечивает рост уплотнённого кератинового образования на голове субъекта."
 	activation_message = list("Из вашей головы вырываются рога.")
 	deactivation_message = list("Ваши рога рассыпаются в прах.")
 
@@ -332,7 +332,7 @@
 /obj/effect/proc_holder/spell/immolate/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/L = user
 	L.adjust_fire_stacks(0.5)
-	L.visible_message(span_danger("[L.name] внезапно вспыхива[pluralize_ru(L.gender, "ет", "ют")]!"))
+	L.visible_message(span_danger("[L.name] внезапно вспыхива[pluralize_ru(L.gender, "ет", "ют")] пламенем!"))
 	L.IgniteMob()
 	playsound(L.loc, 'sound/effects/bamf.ogg', 50, 0)
 

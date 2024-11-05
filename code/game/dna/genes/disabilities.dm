@@ -95,7 +95,7 @@
 
 /datum/dna/gene/disability/clumsy
 	name = "Clumsiness"
-	activation_message = list("Вы чувствуете легкое головокружение.")
+	activation_message = list("Вы чувствуете лёгкое головокружение.")
 	deactivation_message = list("Вы вновь обретаете контроль над своими движениями.")
 	instability = -GENE_INSTABILITY_MINOR
 	traits_to_add = list(TRAIT_CLUMSY)
@@ -175,7 +175,7 @@
 
 /datum/dna/gene/disability/colourblindness
 	name = "Colourblindness"
-	activation_message = list("Вы чувствуете странное покалывание в глазах, а ваше восприятие цвета меняется.")
+	activation_message = list("Вы чувствуете странное покалывание в глазах. Ваше восприятие цвета меняется.")
 	deactivation_message = list("Вы чувствуете неприятное покалывание в глазах, но все вокруг вновь обрело краски.")
 	instability = -GENE_INSTABILITY_MODERATE
 	traits_to_add = list(TRAIT_COLORBLIND)
@@ -236,7 +236,7 @@
 
 /datum/dna/gene/disability/lisp
 	name = "Lisp"
-	desc = "Интерефно, фто это деает."
+	desc = "Интерефно, фто это делает."
 	activation_message = list("Фто-то тошно не тах.")
 	deactivation_message = list("Теперь вы можете произносить согласные.")
 
@@ -254,7 +254,7 @@
 	name = "Comic"
 	desc = "Это принесет только смерть и разрушение."
 	activation_message = list(span_sans("Ой-йо!"))
-	deactivation_message = list("Слава Хонко-маме, с этим покончено.")
+	deactivation_message = list("Слава Святой Хонкоматери, с этим покончено.")
 	traits_to_add = list(TRAIT_COMIC)
 
 

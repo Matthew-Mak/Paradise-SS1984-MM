@@ -160,7 +160,7 @@
 		balloon_alert(usr, "руки заняты")
 		return
 	if(usr.has_buckled_mobs()) //mob attached to us
-		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на [genderize_decode(usr, "%(нём,ней,нём,них)%")]  сидит слайм."))
+		to_chat(usr, span_warning("[usr] не поместится в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(usr, "нём", "ней", "нём", "них")]  сидит слайм."))
 		return
 	usr.forceMove(src)
 	occupant = usr
@@ -197,7 +197,7 @@
 		balloon_alert(user, "руки заняты")
 		return TRUE
 	if(L.has_buckled_mobs()) //mob attached to us
-		to_chat(user, span_warning("[L] не помест[pluralize_ru(user, "ит", "ят")]ся в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(user, "нём", "ней", "нём", "них")] сидит слайм."))
+		to_chat(user, span_warning("[L] не помест[pluralize_ru(L, "ит", "ят")]ся в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(L, "нём", "ней", "нём", "них")] сидит слайм."))
 		return TRUE
 	if(L == user)
 		visible_message("[user] забира[pluralize_ru(user, "ет", "ют")]ся в [declent_ru(ACCUSATIVE)].")
@@ -247,7 +247,7 @@
 		to_chat(grabber, span_warning("Субъект не должен ничего держать в руках."))
 		return .
 	if(target.has_buckled_mobs()) //mob attached to us
-		to_chat(grabber, span_warning("[target] не поместится в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(target, "нём", "ней", "нём", "них")]  сидит слайм."))
+		to_chat(grabber, span_warning("[target] не помест[pluralize_ru(target, "ит", "ят")]ся в [declent_ru(ACCUSATIVE)], пока на [genderize_ru(target, "нём", "ней", "нём", "них")]  сидит слайм."))
 		return .
 	put_in(target)
 	add_fingerprint(grabber)
@@ -374,7 +374,7 @@
 			return ..()
 		disk = I
 		user.visible_message(
-			span_notice("[user] вставляет [I.name] в [declent_ru(ACCUSATIVE)]."),
+			span_notice("[user] вставля[pluralize_ru(user, "ет", "ют")] [I.name] в [declent_ru(ACCUSATIVE)]."),
 			span_notice("Вы вставляете [I.name] в [declent_ru(ACCUSATIVE)]."),
 		)
 		SStgui.update_uis(src)
