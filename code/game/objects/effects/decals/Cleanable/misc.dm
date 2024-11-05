@@ -281,7 +281,7 @@
 	desc = "Безобразно выглядящая руна, писанная кровью."
 
 	icon = 'icons/effects/crayondecal.dmi'
-	icon_state = 'rune6s'
+	icon_state = 'rune6'
 	color = "#661b1b"
 
 	anchored = TRUE

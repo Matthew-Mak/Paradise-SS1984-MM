@@ -20,16 +20,28 @@
     return
 
 /datum/ritual/devil/imp/do_ritual(mob/living/carbon/human/invoker)
-	var/mob/living/simple_animal/imp/imp = new imp(get_turf(ritual_object))
-
 	var/datum/antagonist/devil/devil = invoker.mind?.has_antag_datum(/datum/antagonist/devil)
-	imp.store_memory("Мой призыватель - [devil.info.truename]. Я обязан вечной службой моему призывателю.", TRUE)
+
+    var/list/candidates = SSghost_spawns.poll_candidates("Вы хотите сыграть за беса?", ROLE_DEMON, TRUE)
+
+	if(!LAZYLEN(candidates))
+		return RITUAL_FAILED_ON_PROCEED 
+
+	var/mob/mob = pick(candidates)
+    var/mob/living/simple_animal/imp/imp = new(get_turf(ritual_object))
+
+	imp.key = mob.key
+	imp.universal_speak = TRUE
+	imp.sentience_act()
+	imp.master_commander = invoker
+
+	imp.mind.store_memory("Я подчиняюсь призывателю [imp.master_commander.name], также известному как [devil.info.truename].")
 
 	return RITUAL_SUCCESSFUL
 
 /datum/ritual/devil/sacrifice
 	name = "Sacrifice ritual"
-	del_things = FALSE
+	ritual_should_del_things = FALSE
 	required_things = list(
 		/mob/living/carbon/human = 1
 	)
