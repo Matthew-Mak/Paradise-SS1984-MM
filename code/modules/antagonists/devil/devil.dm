@@ -156,7 +156,7 @@
 	var/datum/objective/devil/sacrifice/sacrifice = new
 
 	if(!sacrifice.forge())
-		addTimer(CALLBACK(src, PROC_REF(forge_sacrifice_objective)), 1 MINUTE)
+		addTimer(CALLBACK(src, PROC_REF(forge_sacrifice_objective)), 1 MINUTES)
 		qdel(sacrifice)
 		return
 	
