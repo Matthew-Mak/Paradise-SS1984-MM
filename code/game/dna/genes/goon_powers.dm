@@ -211,7 +211,7 @@
 // WAS: /datum/bioEffect/mattereater
 /datum/dna/gene/basic/grant_spell/mattereater
 	name = "Matter Eater"
-	desc = "Позволяет без вреда для здоровья есть практически все."
+	desc = "Позволяет без вреда для здоровья есть практически что-угодно."
 	activation_messages = list("Вы чувствуете голод.")
 	deactivation_messages = list("Вы больше не чувствуете себя таким голодным.")
 	instability = GENE_INSTABILITY_MINOR
