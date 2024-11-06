@@ -307,9 +307,9 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, span_danger("Вы замыкаете микросхемы идентификации целей [declent_ru(GENITIVE)]."))
+			to_chat(user, span_danger("Вы замыкаете микросхемы системы целеуказания [declent_ru(GENITIVE)]."))
 			oldtarget_name = user.name
-		audible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] странно жужит!"))
+		audible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] странно жужжит!"))
 		declare_arrests = FALSE
 		icon_state = "[base_icon][on]"
 
