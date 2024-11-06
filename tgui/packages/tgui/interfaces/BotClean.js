@@ -20,8 +20,8 @@ export const BotClean = (props, context) => {
     <Window width={500} height={500}>
       <Window.Content scrollable>
         <NoticeBox>
-        Проведите своей ID-картой, чтобы{' '}
-        {locked ? 'разблокировать' : 'заблокировать'} этот интерфейс.
+          Проведите своей ID-картой, чтобы{' '}
+          {locked ? 'разблокировать' : 'заблокировать'} этот интерфейс.
         </NoticeBox>
         <Section title="Основные настройки">
           <LabeledList>
