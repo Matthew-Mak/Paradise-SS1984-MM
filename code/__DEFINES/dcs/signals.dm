@@ -642,7 +642,6 @@
 
 /// Source: /mob/living/UnarmedAttack(atom/atom, proximity_flag)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
-	#define COMPONENT_CANCEL_UNARMED_ATTACK (1<<0)
 
 // /mob/living/carbon signals
 

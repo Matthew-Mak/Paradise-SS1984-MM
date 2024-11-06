@@ -102,8 +102,6 @@
 		return
 
 	var/signal = SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, atom, proximity_flag)
-	if(signal & COMPONENT_CANCEL_UNARMED_ATTACK)
-		return
 
 	if(signal & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
