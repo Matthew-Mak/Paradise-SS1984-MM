@@ -248,8 +248,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
 		SStgui.update_uis(src)
 	id = null
-	cartridge.on_id_updated()
-	request_cartridge.on_id_updated()
+	cartridge?.on_id_updated()
+	request_cartridge?.on_id_updated()
 	update_icon(UPDATE_OVERLAYS)
 
 
@@ -304,8 +304,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/I = user.get_active_hand()
 		if(istype(I, /obj/item/card/id) && user.drop_transfer_item_to_loc(I, src))
 			id = I
-			cartridge.on_id_updated()
-			request_cartridge.on_id_updated()
+			cartridge?.on_id_updated()
+			request_cartridge?.on_id_updated()
 			update_icon(UPDATE_OVERLAYS)
 			return TRUE
 		return FALSE
@@ -315,8 +315,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			id.forceMove_turf()
 			user.put_in_hands(id)
 		id = I
-		cartridge.on_id_updated()
-		request_cartridge.on_id_updated()
+		cartridge?.on_id_updated()
+		request_cartridge?.on_id_updated()
 		update_icon(UPDATE_OVERLAYS)
 		return TRUE
 	return FALSE

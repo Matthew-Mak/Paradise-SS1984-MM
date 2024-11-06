@@ -36,7 +36,8 @@
 	if(isoremessage && source.department != ore_message_reciver_dep)
 		return
 	var/rendered_message = "Recieved on [source.name] : [message]"
-	notify(rendered_message)
+	if(!QDELETED(pda)
+		notify(rendered_message)
 
 
 /datum/data/pda/app/request_console/update_ui(mob/user, list/data)
