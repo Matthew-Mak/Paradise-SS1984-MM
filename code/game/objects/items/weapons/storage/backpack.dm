@@ -266,7 +266,7 @@
 
 /obj/item/storage/backpack/justice
 	name = "backpack of justice"
-	desc = "Крепкий рюкзак выданный специально для самых крепких офицеров."
+	desc = "A robust backpack issued to Nanotrasen's security."
 	icon_state = "backpack_justice0"
 	item_state = "backpack_justice0"
 	actions_types = list(/datum/action/item_action/toggle_backpack_light)
