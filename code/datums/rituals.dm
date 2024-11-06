@@ -129,7 +129,7 @@
 	if(charges == 0)
 		return NONE
 
-	if(allowed_special_role && !is_type_in_list(invoker.mind?.special_role, allowed_special_role))
+	if(allowed_special_role && !LAZYIN(allowed_special_role, invoker.mind?.special_role))
 		return RITUAL_FAILED_INVALID_SPECIAL_ROLE
 
 	if(allowed_species && !is_type_in_list(invoker.dna.species, allowed_species)) // double check to avoid funny situations
@@ -151,13 +151,13 @@
 
 /datum/ritual/proc/cast(mob/living/carbon/human/invoker)
 	. = TRUE
-	LAZYADD(invokers, invoker)
 
-	for(var/mob/living/carbon/human/human as anything in invokers)
+	var/list/invokers_list = invokers.Copy() // create temp list to avoid funny situations
+	LAZYADD(invokers_list, invoker)
+
+	for(var/mob/living/carbon/human/human as anything in invokers_list)
 		if(!do_after(human, cast_time, ritual_object, extra_checks = CALLBACK(src, PROC_REF(action_check_contents))))
 			. = FALSE
-
-	LAZYREMOVE(invokers, invoker)
 
 	return .
 
@@ -172,7 +172,7 @@
 		if(require_allowed_species && !is_type_in_list(human.dna.species, allowed_species))
 			continue
 
-		if(require_allowed_special_role && !is_type_in_list(human.mind?.special_role, allowed_special_role))
+		if(require_allowed_special_role && !LAZYIN(allowed_special_role, human.mind?.special_role))
 			continue
 
 		LAZYADD(invokers, human)
@@ -204,7 +204,7 @@
 		if(obj == ritual_object)
 			continue
 
-		if(locate(obj) in invokers)
+		if(LAZYIN(invokers, obj))
 			continue
 
 		LAZYADD(atoms, obj)
@@ -222,7 +222,7 @@
 
 			if(isstack(atom))
 				var/obj/item/stack/picked_stack = atom
-				LAZYREMOVE(requirements[req_type], picked_stack.amount)
+				requirements[req_type] -= picked_stack.amount
 			else
 				requirements[req_type]--
 
