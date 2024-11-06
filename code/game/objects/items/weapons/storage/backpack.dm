@@ -264,6 +264,41 @@
 	icon_state = "blueshieldpack"
 	item_state = "blueshieldpack"
 
+/obj/item/storage/backpack/justice
+	name = "backpack of justice"
+	desc = "A robust backpack issued to Nanotrasen's security."
+	icon_state = "backpack_justice0"
+	item_state = "backpack_justice0"
+	actions_types = list(/datum/action/item_action/toggle_backpack_light)
+	var/on = FALSE
+
+/obj/item/storage/backpack/justice/attack_self()
+	toggle_backpack_light()
+
+
+/obj/item/storage/backpack/justice/proc/toggle_backpack_light()
+	on = !on
+	if(on)
+		turn_on()
+	else
+		turn_off()
+	update_icon(UPDATE_ICON_STATE)
+	while(on)
+		playsound(loc, 'sound/items/weeoo1.ogg', 100, FALSE, 4)
+		sleep(1.5 SECONDS)
+
+/obj/item/storage/backpack/justice/update_icon_state()
+	icon_state = "backpack_justice[on]"
+	item_state = "backpack_justice[on]"
+	update_equipped_item(update_speedmods = FALSE)
+
+
+/obj/item/storage/backpack/justice/proc/turn_on()
+	set_light_on(TRUE)
+
+/obj/item/storage/backpack/justice/proc/turn_off()
+	set_light_on(FALSE)
+
 /*
 *	Syndicate backpacks. Sprites by ElGood
 */
