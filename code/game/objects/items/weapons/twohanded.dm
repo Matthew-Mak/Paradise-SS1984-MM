@@ -668,6 +668,8 @@
 	for(var/atom/movable/X in orange(5, pull))
 		if(X == wielder)
 			continue
+		if(isobserver(X))
+			return
 		if((X) && (!X.anchored) && (!ishuman(X)))
 			step_towards(X, pull)
 			step_towards(X, pull)
