@@ -2,8 +2,16 @@
 
 //Cleanbot assembly
 /obj/item/bucket_sensor
-	desc = "It's a bucket. With a sensor attached."
-	name = "proxy bucket"
+	name = "Proxy bucket"
+	desc = "Это ведро, к которому прикреплён сенсор."
+	ru_names = list(
+		NOMINATIVE = "ведро с сенсором",
+		GENITIVE = "ведра с сенсором",
+		DATIVE = "ведру с сенсором",
+		ACCUSATIVE = "ведро с сенсором",
+		INSTRUMENTAL = "ведром с сенсором",
+		PREPOSITIONAL = "ведре с сенсором",
+	)
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3
@@ -20,7 +28,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
@@ -28,17 +36,17 @@
 
 	add_fingerprint(user)
 	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
-		to_chat(user, span_warning("You need a cyborg arm to finish the construction."))
+		balloon_alert(user, "для завершения сборки нужна робо-рука")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!isturf(loc))
-		to_chat(user, span_warning("You cannot finish the construction [ismob(loc) ? "in inventory" : "in [loc]"]."))
+		balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!user.drop_transfer_item_to_loc(I, src))
 		return ..()
 
-	to_chat(user, span_notice("You have added the robot arm to the bucket and sensor assembly. Beep boop!"))
+	balloon_alert(user, "вы прикрепили робо-руку к заготовке")
 	var/mob/living/simple_animal/bot/cleanbot/new_bot = new(loc)
 	transfer_fingerprints_to(new_bot)
 	I.transfer_fingerprints_to(new_bot)
@@ -55,7 +63,15 @@
 
 /obj/item/ed209_assembly
 	name = "\improper ED-209 assembly"
-	desc = "Some sort of bizarre assembly."
+	desc = "Заготовка для чего-то серьёзного."
+	ru_names = list(
+		NOMINATIVE = "заготовка для ED-209",
+		GENITIVE = "заготовки для ED-209",
+		DATIVE = "заготовке для ED-209",
+		ACCUSATIVE = "заготовку для ED-209",
+		INSTRUMENTAL = "заготовкой для ED-209",
+		PREPOSITIONAL = "заготовке для ED-209",
+	)
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed209_frame"
 	item_state = "ed209_frame"
@@ -114,7 +130,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
@@ -124,13 +140,13 @@
 		if(0, 1)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/robot_parts/l_leg) && !istype(I, /obj/item/robot_parts/r_leg))
-				to_chat(user, span_warning("You need a cyborg leg to continue the construction."))
+				balloon_alert(user, "вам нужна робо-нога для продолжения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			qdel(I)
 			build_step++
-			to_chat(user, span_notice("You have added the the robot leg to the ED-209 assembly."))
+			balloon_alert(user, "вы прикрепили робо-ногу к заготовке")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			return ATTACK_CHAIN_PROCEED_SUCCESS
 
@@ -142,13 +158,13 @@
 			else if(istype(I, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
 			if(!newcolor && !istype(I, /obj/item/clothing/suit/armor/vest))
-				to_chat(user, span_warning("You need a helmet to continue the construction."))
+				balloon_alert(user, "вам нужен защитный жилет для продолжения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			lasercolor = newcolor
 			build_step++
-			to_chat(user, span_notice("You have added [I] to the ED-209 assembly."))
+			balloon_alert(user, "вы прикрепили жилет к заготовке")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			qdel(I)
 			return ATTACK_CHAIN_PROCEED_SUCCESS
@@ -158,20 +174,20 @@
 			switch(lasercolor)
 				if("b")
 					if(!istype(I, /obj/item/clothing/head/helmet/bluetaghelm))
-						to_chat(user, span_warning("You need a blue laser tag helmet to continue the construction."))
+						balloon_alert(user, "вам нужен синий шлем для лазертага для продолжения сборки")
 						return ATTACK_CHAIN_PROCEED
 				if("r")
 					if(!istype(I, /obj/item/clothing/head/helmet/redtaghelm))
-						to_chat(user, span_warning("You need a red laser tag helmet to continue the construction."))
+						balloon_alert(user, "вам нужен красный шлем для лазертага для продолжения сборки")
 						return ATTACK_CHAIN_PROCEED
 				if("")
 					if(!istype(I, /obj/item/clothing/head/helmet))
-						to_chat(user, span_warning("You need a standard helmet to continue the construction."))
+						balloon_alert(user, "вам нужен стандартный шлем СБ для продолжения сборки")
 						return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			build_step++
-			to_chat(user, span_notice("You have added [I] to the ED-209 assembly."))
+			balloon_alert(user, "вы прикрепили шлем к заготовке")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			qdel(I)
 			return ATTACK_CHAIN_BLOCKED_ALL
@@ -179,13 +195,13 @@
 		if(5)
 			add_fingerprint(user)
 			if(!isprox(I))
-				to_chat(user, span_warning("You need a proximity sensor to continue the construction."))
+				balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			qdel(I)
 			build_step++
-			to_chat(user, span_notice("You have added the proximity sensor to the ED-209 assembly."))
+			balloon_alert(user, "вы прикрепили датчик движения к заготовке")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			return ATTACK_CHAIN_BLOCKED_ALL
 
@@ -193,6 +209,7 @@
 			add_fingerprint(user)
 			var/obj/item/stack/cable_coil/coil = I
 			if(!iscoil(I) || coil.get_amount() < 1)
+				balloon_alert(user, "вы прикрепили датчик движения к заготовке")
 				to_chat(user, span_warning("You need at least one length of cable to continue the construction."))
 				return ATTACK_CHAIN_PROCEED
 			coil.play_tool_sound(src)
@@ -359,7 +376,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
@@ -398,7 +415,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
@@ -508,7 +525,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
@@ -626,7 +643,7 @@
 		return ..()
 
 	if(is_pen(I))
-		var/new_name = rename_interactive(user, I, prompt = "Enter new robot name")
+		var/new_name = rename_interactive(user, I, prompt = "Введите новое имя для робота")
 		if(!isnull(new_name))
 			created_name = new_name
 			add_game_logs("[key_name(user)] has renamed a robot to [new_name]", user)
