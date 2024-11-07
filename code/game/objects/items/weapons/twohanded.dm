@@ -669,13 +669,13 @@
 		return
 
 	charged = 0
-	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
+	var/turf/target = get_turf(A)
+	playsound(target, 'sound/weapons/marauder.ogg', 50, TRUE)
 
 	if(isliving(A))
 		var/mob/living/victim = A
 		victim.take_organ_damage(20)
 
-	var/turf/target = get_turf(A)
 	for(var/atom/pulled_thing as anything in (orange(5, target) - user))
 		pulled_thing.singularity_hammer_act(target)
 
