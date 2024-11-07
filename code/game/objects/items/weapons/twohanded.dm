@@ -664,9 +664,20 @@
 	icon_state = "mjollnir[HAS_TRAIT(src, TRAIT_WIELDED)]"
 
 
-/obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
-	for(var/atom/X as anything in (orange(5, pull) - wielder))
-		X.singularity_hammer_act(pull)
+/obj/item/twohanded/singularityhammer/afterattack(atom/A, mob/user, proximity, params)
+	if(!proximity || charged < 5 || !HAS_TRAIT(src, TRAIT_WIELDED))
+		return
+
+	charged = 0
+	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
+
+	if(isliving(A))
+		var/mob/living/victim = A
+		victim.take_organ_damage(20)
+
+	var/turf/target = get_turf(A)
+	for(var/atom/pulled_thing as anything in (orange(5, target) - user))
+		pulled_thing.singularity_hammer_act(target)
 
 
 /atom/proc/singularity_hammer_act(turf/pull)
@@ -696,19 +707,6 @@
 	Weaken(2 SECONDS)
 	..()
 
-
-/obj/item/twohanded/singularityhammer/afterattack(atom/A, mob/user, proximity, params)
-	if(!proximity)
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		if(charged == 5)
-			charged = 0
-			if(isliving(A))
-				var/mob/living/Z = A
-				Z.take_organ_damage(20, 0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
-			var/turf/target = get_turf(A)
-			vortex(target, user)
 
 /obj/item/twohanded/mjollnir
 	name = "Mjolnir"
