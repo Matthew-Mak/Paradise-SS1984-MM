@@ -269,7 +269,7 @@
 	if (..())
 		return
 	if(topic_denied(usr))
-		to_chat(span_userdanger("Интерфейс [declent_ru(GENITIVE)] не отвечает!"))
+		to_chat(user, span_danger("Интерфейс [declent_ru(GENITIVE)] не отвечает!"))
 		return
 	add_fingerprint(usr)
 	. = TRUE
