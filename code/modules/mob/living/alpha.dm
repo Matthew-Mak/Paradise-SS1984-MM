@@ -14,7 +14,7 @@
 	if(alphas[source] == 1 && source != ALPHA_SOURCE_DEFAULT)
 		alphas.Remove(source)
 
-    alpha_update()
+	alpha_update()
 
 /mob/living/proc/alpha_add(val, source = ALPHA_SOURCE_DEFAULT)
 	alpha_prepare(source)
