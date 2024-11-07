@@ -665,25 +665,37 @@
 
 
 /obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
-	for(var/atom/movable/X in orange(5, pull))
-		if(X == wielder)
-			continue
-		if(isobserver(X))
+	for(var/atom/X as anything in (orange(5, pull) - wielder))
+		X.singularity_hammer_act(pull)
+
+
+/atom/proc/singularity_hammer_act(turf/pull)
+	return
+
+
+/atom/movable/singularity_hammer_act(turf/pull)
+	if(anchored)
+		return
+
+	unbuckle_all_mobs()
+
+	for(var/a in 1 to 3)
+		if(!step_towards(src, pull))
 			return
-		if((X) && (!X.anchored) && (!ishuman(X)))
-			step_towards(X, pull)
-			step_towards(X, pull)
-			step_towards(X, pull)
-		else if(ishuman(X))
-			var/mob/living/carbon/human/H = X
-			if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
-				var/obj/item/clothing/shoes/magboots/M = H.shoes
-				if(M.magpulse)
-					continue
-			H.Weaken(2 SECONDS)
-			step_towards(H, pull)
-			step_towards(H, pull)
-			step_towards(H, pull)
+
+
+/mob/dead/observer/singularity_hammer_act(turf/pull)
+	return
+
+
+/mob/living/singularity_hammer_act(turf/pull)
+	if(HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
+		return
+
+	buckled?.unbuckle_mob(src)
+	Weaken(2 SECONDS)
+	..()
+
 
 /obj/item/twohanded/singularityhammer/afterattack(atom/A, mob/user, proximity, params)
 	if(!proximity)
