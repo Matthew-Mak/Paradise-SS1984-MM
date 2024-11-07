@@ -171,7 +171,7 @@
 	else if(!on)
 		return span_bad("Отключён")
 	else if(hijacked)
-		return "<span class='bad'>ОШИБКА</span>"
+		return span_bad("ОШИБКА")
 	else if(!mode)
 		return span_good("Бездействие")
 	else
@@ -720,14 +720,14 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/success = bot_move(ai_waypoint, 3)
 	if(!success)
 		if(calling_ai)
-			to_chat(calling_ai, "[bicon(src)] [get_turf(src) == ai_waypoint ? "<span class='notice'>[capitalize(declent_ru(NOMINATIVE))] прибыл в точку назначения.</span>" : "<span class='danger'>[capitalize(declent_ru(NOMINATIVE))] не смог добраться до точки назначения.</span>"]")
+			to_chat(calling_ai, "[bicon(src)] [get_turf(src) == ai_waypoint ? span_notice("[capitalize(declent_ru(NOMINATIVE))] прибыл в точку назначения.") : span_danger("[capitalize(declent_ru(NOMINATIVE))] не смог добраться до точки назначения.")]")
 			calling_ai = null
 		bot_reset()
 
 
 /mob/living/simple_animal/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
-		to_chat(calling_ai, "<span class='danger'>Команда вызова бота была отменена.</span>")
+		to_chat(calling_ai, span_danger("Команда вызова бота была отменена."))
 		calling_ai = null
 	if(reset_access_timer_id)
 		deltimer(reset_access_timer_id)
@@ -1164,7 +1164,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/hack
 	if(issilicon(user) || user.can_admin_interact()) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Программное обеспечение взломано! Устройство может вести себя опасно или нестабильно." : "Устройство работает в нормальном режиме. Отключить протоколы безопасности?"]<BR>"
-		hack += "Протоколы безопасности: <a href='byond://?src=[UID()];operation=hack'>[emagged ? "<span class='bad'>Отключены</span>" : "Включены"]</A><BR>"
+		hack += "Протоколы безопасности: <a href='byond://?src=[UID()];operation=hack'>[emagged ? span_bad("Отключены") : "Включены"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
 		hack += "Удалённое радиоуправление: <a href='byond://?src=[UID()];operation=remote'>[remote_disabled ? "Отключено" : "Включено"]</A><BR>"
 	return hack
@@ -1258,10 +1258,10 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 
 	to_chat(src, "<b>Набор законов:</b>")
 	if(paicard && paicard.pai && paicard.pai.master && paicard.pai.pai_law0)
-		to_chat(src, "<span class='warning'>Приказы вашего мастера, [paicard.pai.master], стоят выше любых других законов. Следование этим приказам - ваша первоочередная задача.</span>")
+		to_chat(src, span_warning("Приказы вашего мастера, [paicard.pai.master], стоят выше любых других законов. Следование этим приказам - ваша первоочередная задача."))
 		to_chat(src, "0. [paicard.pai.pai_law0]")
 	if(emagged >= 2)
-		to_chat(src, "<span class='danger'>1. #$!@#$32K#$</span>")
+		to_chat(src, span_danger("1. #$!@#$32K#$"))
 	else
 		to_chat(src, "1. Вы - машина, созданная для служения экипажу станции и ИИ.")
 		to_chat(src, "2. Ваше задача - [bot_purpose].")
