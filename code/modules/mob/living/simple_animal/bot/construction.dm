@@ -857,11 +857,11 @@
 	var/obj/item/sword
 	if(build_step)
 		sword = new /obj/item/melee/energy/sword(drop_location())
-		to_chat(user, span_notice("You have detached the energy sword from the Griefsky assembly."))
+		balloon_alert(user, "вы отсоединили лазерный меч от заготовки")
 		build_step--
 	else if(toy_step)
 		sword = new /obj/item/toy/sword(drop_location())
-		to_chat(user, span_notice("You have detached the toy sword from the Griefsky assembly."))
+		balloon_alert(user, "вы отсоединили игрушечный лазерный меч от заготовки")
 		toy_step--
 	transfer_fingerprints_to(sword)
 	sword.add_fingerprint(user)
@@ -876,7 +876,7 @@
 
 	add_fingerprint(user)
 	if(length(contents))
-		to_chat(user, span_warning("The [name] should be empty to start the honkbot construction."))
+		balloon_alert(user, "нельзя начать сборку, пока в коробке что-то есть")
 		return .
 
 	. |= ATTACK_CHAIN_BLOCKED_ALL
@@ -891,14 +891,14 @@
 	if(loc == user)
 		user.temporarily_remove_item_from_inventory(src, force = TRUE)
 		user.put_in_hands(assembly)
-	to_chat(user, span_notice("You have added the cyborg arm to [src]. Now it is suitable for further honkbot construction."))
+	balloon_alert(user, "вы прикрепили робо-руку к коробке")
 	qdel(I)
 	qdel(src)
 
 
 /obj/item/honkbot_arm_assembly
 	name = "incomplete honkbot assembly"
-	desc = "A clown box with a robot arm permanently grafted to it."
+	desc = "Клоунская коробка с прикрепленной роботизированной рукой."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "honkbot_arm"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -916,11 +916,11 @@
 		if(0)
 			add_fingerprint(user)
 			if(!isprox(I))
-				to_chat(user, span_warning("You need a proximity sensor to continue the construction."))
+				balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			to_chat(user, span_notice("You have added the proximity sensor to the honkbot assembly."))
+			balloon_alert(user, "вы прикрепили датчик движения к заготовке")
 			build_step++
 			update_appearance(UPDATE_ICON_STATE)
 			qdel(I)
@@ -929,11 +929,11 @@
 		if(1)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/bikehorn))
-				to_chat(user, span_warning("You need a bike horn to continue the construction."))
+				balloon_alert(user, "вам нужен велосипедный гудок для продолжения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			to_chat(user, span_notice("You have added the bike horn to the honkbot assembly."))
+			balloon_alert(user, "вы прикрепили велосипедный гудок к заготовке")
 			build_step++
 			update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
 			qdel(I)
@@ -942,14 +942,15 @@
 		if(2)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/instrument/trombone))
-				to_chat(user, span_warning("You need a trombone to complete the assembly."))
+				balloon_alert(user, "вам нужен тромбон для завершения сборки")
 				return ATTACK_CHAIN_PROCEED
 			if(!isturf(loc))
 				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			to_chat(user, span_notice("You have completed the honkbot assembly. HONK!"))
+			balloon_alert(user, "вы завершили сборку")
+			to_chat(user, span_notice("Вы завершили сборку хонкобота."))
 			var/mob/living/simple_animal/bot/honkbot/new_bot = new(loc)
 			new_bot.robot_arm = robot_arm
 			transfer_fingerprints_to(new_bot)
@@ -969,7 +970,7 @@
 /obj/item/honkbot_arm_assembly/update_desc(updates = ALL)
 	. = ..()
 	if(build_step == 2)
-		desc = "A clown box with a robot arm and a bikehorn permanently grafted to it. It needs a trombone to be finished"
+		desc = "Клоунская коробка с прикреплённой роботизированной рукой и велосипедным гудком. Ему не хватает лишь тромбона."
 		return .
 	desc = initial(desc)
 
