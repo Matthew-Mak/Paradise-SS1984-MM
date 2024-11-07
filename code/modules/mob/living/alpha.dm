@@ -14,23 +14,22 @@
 	if(alphas[source] == 1 && source != ALPHA_SOURCE_DEFAULT)
 		alphas.Remove(source)
 
+    alpha_update()
+
 /mob/living/proc/alpha_add(val, source = ALPHA_SOURCE_DEFAULT)
 	alpha_prepare(source)
 	alphas[source] += val
 	alpha_finalise(source)
-	alpha_update()
 
 /mob/living/proc/alpha_multiply(val, source = ALPHA_SOURCE_DEFAULT)
 	alpha_prepare(source)
 	alphas[source] *= val
 	alpha_finalise(source)
-	alpha_update()
 
 /mob/living/proc/alpha_set(val, source = ALPHA_SOURCE_DEFAULT)
 	alpha_prepare(source)
 	alphas[source] = val
 	alpha_finalise(source)
-	alpha_update()
 
 /mob/living/proc/alpha_get(source = ALPHA_SOURCE_DEFAULT)
 	return alphas[source]
