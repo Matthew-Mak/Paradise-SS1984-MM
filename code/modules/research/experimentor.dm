@@ -179,7 +179,9 @@
 				return ATTACK_CHAIN_PROCEED
 
 		investigate_log("Experimentor has made a clone of [I]", INVESTIGATE_EXPERIMENTOR)
-		throwSmoke(get_turf(pick(oview(1,src))))
+		var/atom/smoker = pick(oview(1,src))
+		smoker.do_smoke(1)
+
 		for (var/i = 1; i <= badThingCoeff; i++)
 			visible_message(span_notice("A duplicate [I] pops out!"))
 			var/type_to_make = I.type
@@ -284,11 +286,6 @@
 			qdel(loaded_item)
 		loaded_item = null
 
-/obj/machinery/r_n_d/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(1,0, where, 0)
-	smoke.start()
-
 /obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
 	var/result = FALSE
 	var/counter = 1
@@ -330,7 +327,7 @@
 		visible_message("<span class='warning'>The [exp_on] begins to vibrate!</span>")
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		ejectItem()
-		throwSmoke(get_turf(exp_on))
+		do_smoke(1)
 		var/obj/item/relict_production/strange_teleporter/teleporter = new /obj/item/relict_production/strange_teleporter(get_turf(exp_on))
 		teleporter.icon_state = exp_on.icon_state
 		qdel(exp_on)
@@ -421,7 +418,7 @@
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("[src] malfunctions, spewing harmless gas.>")
-			throwSmoke(src.loc)
+			do_smoke(1)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] melts [exp_on], ionizing the air around it!</span>")
 			empulse(src.loc, 4, 0) //change this to 4,6 once the EXPERI-Mentor is moved.
@@ -431,7 +428,7 @@
 		visible_message("[exp_on] achieves the perfect mix!")
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		ejectItem()
-		throwSmoke(get_turf(exp_on))
+		do_smoke(1)
 		new /obj/item/relict_production/perfect_mix(get_turf(exp_on))
 		qdel(exp_on)
 	else
@@ -485,7 +482,7 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, activating its emergency coolant systems!</span>")
-			throwSmoke(src.loc)
+			do_smoke(1)
 			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(5,BURN,pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN))
 				investigate_log("Experimentor has dealt minor burn damage to [key_name_log(m)]", INVESTIGATE_EXPERIMENTOR)
@@ -494,7 +491,7 @@
 		visible_message("[exp_on] begins to shake, and in the distance the sound of rampaging animals arises!")
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		ejectItem()
-		throwSmoke(get_turf(exp_on))
+		do_smoke(1)
 		var/obj/item/relict_production/pet_spray/R = new /obj/item/relict_production/pet_spray(get_turf(exp_on))
 		R.icon_state = exp_on.icon_state
 		qdel(exp_on)
@@ -543,15 +540,13 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(1,0, src.loc, 0)
-			smoke.start()
+			do_smoke(1)
 			ejectItem()
 	else if(prob(EFFECT_PROB_LOW))
 		visible_message("[exp_on] emits a loud pop!")
 		playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		ejectItem()
-		throwSmoke(get_turf(exp_on))
+		do_smoke(1)
 		var/obj/item/relict_production/R = new /obj/item/relict_production/rapid_dupe(get_turf(exp_on))
 		R.icon_state = exp_on.icon_state
 		qdel(exp_on)
@@ -646,9 +641,9 @@
 			ejectItem()
 		if(globalMalf > 16 && globalMalf < 35)
 			visible_message("<span class='warning'>[src] melts [exp_on], ian-izing the air around it!</span>")
-			throwSmoke(src.loc)
+			do_smoke(1)
 			if(trackedIan)
-				throwSmoke(trackedIan.loc)
+				trackedIan.do_smoke(1)
 				trackedIan.forceMove(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
@@ -657,9 +652,9 @@
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 59)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
-			throwSmoke(src.loc)
+			do_smoke(1)
 			if(trackedRuntime)
-				throwSmoke(trackedRuntime.loc)
+				trackedRuntime.do_smoke(1)
 				trackedRuntime.loc = src.loc
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
@@ -811,13 +806,9 @@
 		var/turf/userturf = get_turf(user)
 		if(src.loc == user && is_teleport_allowed(userturf.z))
 			visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(5, get_turf(user))
-			smoke.start()
+			user.do_smoke(5)
 			do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
-			smoke = new
-			smoke.set_up(5, get_turf(user))
-			smoke.start()
+			user.do_smoke(5)
 
 /obj/item/relict_production/pet_spray
 	name = "pet spray"

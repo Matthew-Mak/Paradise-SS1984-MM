@@ -142,9 +142,7 @@
 		to_chat(user, "<span class='warning'>The spell has no effect on [target].</span>")
 		return
 
-	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(5, FALSE, target)
-	s.start()
+	target.do_smoke(5)
 
 	var/mob/living/carbon/human/H = target
 	if(H.mind)

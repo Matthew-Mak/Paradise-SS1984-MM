@@ -153,11 +153,7 @@
 
 /obj/item/projectile/grenade/improvised/smoke_shot/on_hit(atom/target, blocked, hit_zone)
 	. = ..()
-	var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread/bad()
-	smoke.set_up(18, FALSE, loc)
-	smoke.custom_lifetime = 20
-	smoke.color = "#800080"
-	smoke.start()
+	do_smoke(18, SMOKE_TYPE_BAD, "#800080")
 
 /datum/crafting_recipe/bombarda
 	name = "Bombarda"

@@ -16,12 +16,9 @@
 	result_amount = 2
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	holder.my_atom.visible_message("<span class='warning'>The solution spews out foam!</span>")
-
-	var/datum/effect_system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, 0)
-	s.start()
+	holder.my_atom.visible_message(span_warning("The solution spews out foam!"))
+	var/radius = round(created_volume/5, 1)
+	holder.my_atom.do_foam(2 * radius * (radius - 1) + 1, holder)
 	holder.clear_reagents()
 
 
@@ -30,16 +27,11 @@
 	id = "metalfoam"
 	result = null
 	required_reagents = list("aluminum" = 3, "fluorosurfactant" = 1, "sacid" = 1)
-	result_amount = 5
+	result_amount = 1
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-
-	holder.my_atom.visible_message("<span class='warning'>The solution spews out a metalic foam!</span>")
-
-	var/datum/effect_system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, MFOAM_ALUMINUM)
-	s.start()
+	holder.my_atom.visible_message(span_warning("The solution spews out a metalic foam!"))
+	holder.my_atom.do_foam(2 * created_volume * (created_volume - 1) + 1, holder, MFOAM_ALUMINUM)
 
 
 /datum/chemical_reaction/ironfoam
@@ -47,19 +39,14 @@
 	id = "ironlfoam"
 	result = null
 	required_reagents = list("iron" = 3, "fluorosurfactant" = 1, "sacid" = 1)
-	result_amount = 5
+	result_amount = 0.2
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-
-	holder.my_atom.visible_message("<span class='warning'>The solution spews out a metalic foam!</span>")
-
-	var/datum/effect_system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, MFOAM_IRON)
-	s.start()
+	holder.my_atom.visible_message(span_warning("The solution spews out a metalic foam!"))
+	holder.my_atom.do_foam(2 * created_volume * (created_volume - 1) + 1, holder, MFOAM_IRON)
 
 
-	// Synthesizing these three chemicals is pretty complex in real life, but fuck it, it's just a game!
+// Synthesizing these three chemicals is pretty complex in real life, but fuck it, it's just a game!
 /datum/chemical_reaction/ammonia
 	name = "Ammonia"
 	id = "ammonia"

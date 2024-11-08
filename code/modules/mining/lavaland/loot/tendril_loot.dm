@@ -302,16 +302,10 @@
 		to_chat(user, "<span class='warning'>[src] sparks and fizzles.</span>")
 		return
 	if(do_after(user, 1.5 SECONDS, user))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(1, 0, user.loc)
-		smoke.start()
-
+		user.do_smoke(1)
 		user.forceMove(get_turf(linked))
 		SSblackbox.record_feedback("tally", "warp_cube", 1, type)
-
-		var/datum/effect_system/smoke_spread/smoke2 = new
-		smoke2.set_up(1, 0, user.loc)
-		smoke2.start()
+		user.do_smoke(1)
 	else
 		to_chat(user, "<span class='notice'>You need to hold still to use [src].</span>")
 

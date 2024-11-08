@@ -137,9 +137,7 @@
 	else
 		visible_message("<span class='boldwarning'>[src] erupts into foam!</span>")
 		if(reagents.total_volume)
-			var/datum/effect_system/foam_spread/sodafizz = new
-			sodafizz.set_up(1, get_turf(src), reagents)
-			sodafizz.start()
+			do_foam(1, reagents)
 
 	for(var/mob/living/carbon/C in range(1, get_turf(src)))
 		to_chat(C, "<span class='warning'>You are splattered with [name]!</span>")

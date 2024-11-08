@@ -146,9 +146,7 @@
 	unmutate()
 
 /mob/living/simple_animal/hulk/proc/unmutate()
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(10, 0, src.loc)
-	smoke.start()
+	do_smoke(10)
 	playsound(src, 'sound/effects/bamf.ogg', CHANNEL_BUZZ)
 
 	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)

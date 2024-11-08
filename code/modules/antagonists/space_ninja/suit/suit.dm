@@ -263,6 +263,9 @@
 	/// Флаг дающий защиту от некоторых способностей вампира пока на нас костюм
 	var/vamp_protection_active = FALSE
 
+	/// Colour of generated smoke.
+	var/smoke_colour
+
 /obj/item/clothing/suit/space/space_ninja/examine(mob/ninja)
 	. = ..()
 	if(!s_initialized)
@@ -291,8 +294,6 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	// Smoke Init
-	smoke_system = new
-	smoke_system.attach(src)
 
 	if(!mapload)
 
@@ -319,7 +320,6 @@
 	QDEL_NULL(cell)
 	affecting = null
 	QDEL_NULL(spark_system)
-	QDEL_NULL(smoke_system)
 	energyKatana = null
 	n_hood = null
 	n_scarf = null
@@ -510,11 +510,11 @@
 	//Покраска дыма
 	switch(color_choice)
 		if("red")
-			smoke_system.color = "#af0033"
+			smoke_colour = "#af0033"
 		if("blue")
-			smoke_system.color = "#88aaff"
+			smoke_colour = "#88aaff"
 		if("green")
-			smoke_system.color = "#00ff00"
+			smoke_colour = "#00ff00"
 
 	var/datum/action/item_action/action
 	for(action in ninja.actions)

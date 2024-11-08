@@ -1,3 +1,54 @@
+// Not random smoke
+/atom/proc/do_smoke(amount, smoketype = SMOKE_TYPE_DEFAULT, smoke_colour)
+	var/turf/epicenter = get_turf(src)
+	if(!epicenter)
+		return
+
+	spawn(0)
+		var/created = 0
+		var/list/spawning_now
+		var/list/turf/possible_turfs = list(epicenter)
+
+		while(possible_turfs.len)
+			spawning_now = possible_turfs
+			possible_turfs = list()
+
+			if(possible_turfs.len < amount - created) // If not anough for layer -> do randomly
+				for(var/i = 1; i < spawning_now.len; ++i)
+					spawning_now.Swap(i, rand(1, spawning_now.len))
+
+			for(var/turf/T in spawning_now)
+				var/turf/source = spawning_now[T]
+				var/obj/effect/particle_effect/smoke/smoke
+				if(!source)
+					smoke = new smoketype(T)
+				else
+					smoke = new smoketype(source)
+					step(smoke, get_dir(smoke, T))
+
+				if(smoke_colour)
+					smoke.color = smoke_colour
+
+				for(var/dir in GLOB.cardinal)
+					var/turf/possible = get_step(T, dir)
+					if(!possible)
+						continue
+
+					if(!possible.Enter(smoke))
+						continue
+
+					if(possible in possible_turfs)
+						continue
+
+					possible_turfs[possible] = T
+
+				created++
+				if(created == amount)
+					return
+
+			sleep(1)
+
+
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
 // direct can be optionally added when set_up, to make the smoke always travel in one direction
@@ -97,13 +148,13 @@
 	victim?.smoke_delay = 0
 
 
+// Don't use it. Use do_smoke instead.
 /datum/effect_system/smoke_spread
 	effect_type = /obj/effect/particle_effect/smoke
-	var/direction
 	var/color
 	var/custom_lifetime
 
-/datum/effect_system/smoke_spread/set_up(n = 5, c = 0, loca, direct)
+/datum/effect_system/smoke_spread/set_up(n = 5, c = 0, loca)
 	if(n > 20)
 		n = 20
 	number = n
@@ -112,25 +163,19 @@
 		location = loca
 	else
 		location = get_turf(loca)
-	if(direct)
-		direction = direct
 
 /datum/effect_system/smoke_spread/start()
 	for(var/i=0, i<number, i++)
 		if(holder)
 			location = get_turf(holder)
+
 		var/obj/effect/particle_effect/smoke/S = new effect_type(location)
 		if(custom_lifetime)
 			S.lifetime = rand(custom_lifetime-3, custom_lifetime)
+
 		if(color)
 			S.color = color
-		if(!direction)
-			if(cardinals)
-				S.direction = pick(GLOB.cardinal)
-			else
-				S.direction = pick(GLOB.alldirs)
-		else
-			S.direction = direction
+
 		S.steps = pick(0,1,1,1,2,2,2,3)
 		S.process()
 
@@ -148,6 +193,7 @@
 	. = ..()
 	if(!.)
 		return .
+
 	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "cough")
 
 
@@ -177,16 +223,10 @@
 			var/obj/effect/particle_effect/smoke/S = new effect_type(location)
 			if(custom_lifetime)
 				S.lifetime = rand(custom_lifetime - 3, custom_lifetime)
+
 			if(color)
 				S.color = color
-			if(!direction)
-				if(cardinals)
-					S.direction = pick(GLOB.cardinal)
-				else
-					S.direction = pick(GLOB.alldirs)
-			else
-				S.direction = direction
-			S.steps = pick(0,1,1,1,2,2,2,3)
+
 			S.process()
 
 /////////////////////////////////////////////
@@ -211,10 +251,6 @@
 	victim.drop_from_active_hand()
 	victim.adjustOxyLoss(1)
 	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "cough")
-
-
-/datum/effect_system/smoke_spread/bad
-	effect_type = /obj/effect/particle_effect/smoke/bad
 
 /////////////////////////////////////////////
 // Nanofrost smoke

@@ -27,12 +27,12 @@
 	var/datum/action/item_action/advanced/ninja/ninja_smoke_bomb/ninja_action = locate() in actions
 	if(!ninja_action.IsAvailable(show_message = FALSE))
 		return
+
 	var/cost = lowcost ? 250 : 1000
 	if(!ninjacost(cost))
 		playsound(src.loc, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 		var/smoke_amount = lowcost ? 5 : 20
-		smoke_system.set_up(smoke_amount, 0, src)
-		smoke_system.start()
+		do_smoke(smoke_amount, SMOKE_TYPE_DEFAULT, smoke_colour)
 		ninja_action.use_action()
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_smoke()

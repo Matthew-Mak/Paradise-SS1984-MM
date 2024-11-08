@@ -63,10 +63,7 @@
 		to_chat(user, "<span class='warning'>A mysterious force disrupts your arcane spell matrix, and you remain where you are.</span>")
 		return
 
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(5, 0, user.loc)
-	smoke.attach(user)
-	smoke.start()
+	user.do_smoke(5)
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		if(!T.density)
@@ -102,6 +99,6 @@
 	if(!success)
 		user.forceMove(pick(L))
 
-	smoke.start()
+	user.do_smoke(5)
 	src.uses -= 1
 	user.update_action_buttons_icon()  //Update action buttons as some spells might now be castable

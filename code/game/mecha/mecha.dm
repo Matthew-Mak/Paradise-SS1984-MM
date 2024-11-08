@@ -135,8 +135,6 @@
 	add_airtank()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
-	smoke_system.set_up(3, src)
-	smoke_system.attach(src)
 	add_cell()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -812,7 +810,6 @@
 		qdel(cabin_air)
 	cabin_air = null
 	QDEL_NULL(spark_system)
-	QDEL_NULL(smoke_system)
 	QDEL_LIST(trackers)
 	GLOB.mechas_list -= src //global mech list
 	return ..()

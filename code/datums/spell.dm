@@ -499,17 +499,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell))
 		if(sparks_spread)
 			do_sparks(sparks_amt, 0, location)
 
-		if(smoke_type)
-			var/datum/effect_system/smoke_spread/smoke
-			switch(smoke_type)
-				if(SMOKE_HARMLESS)
-					smoke = new /datum/effect_system/smoke_spread()
-				if(SMOKE_COUGHING)
-					smoke = new /datum/effect_system/smoke_spread/bad()
-				if(SMOKE_SLEEPING)
-					smoke = new /datum/effect_system/smoke_spread/sleeping()
-			smoke.set_up(smoke_amt, FALSE, location)
-			smoke.start()
+		if(!smoke_type)
+			continue
+
+		switch(smoke_type)
+			if(SMOKE_HARMLESS)
+				target.do_smoke(smoke_amt)
+
+			if(SMOKE_COUGHING)
+				target.do_smoke(smoke_amt, SMOKE_TYPE_BAD)
+
+			if(SMOKE_SLEEPING)
+				target.do_smoke(smoke_amt, SMOKE_TYPE_SLEEPING)
 
 	custom_handler?.after_cast(targets, user, src)
 

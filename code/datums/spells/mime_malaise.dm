@@ -26,10 +26,7 @@
 	if(!proximity || target == user || !ishuman(target) || !iscarbon(user) || user.incapacitated() || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
-	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(5, FALSE, target)
-	s.start()
-
+	target.do_smoke(5)
 	var/mob/living/carbon/human/H = target
 	H.mimetouched()
 	..()
