@@ -46,7 +46,7 @@
 						to_chat(user, "<span class='notice'>Вы усилили [aspell.name] до Мгновенного [aspell.name].</span>")
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
-					to_chat(user, "<span class='notice'>Это заклинание не можеть стать ещё сильнее.</span>")
+					to_chat(user, span_notice("Это заклинание не может стать ещё сильнее."))
 				aspell.on_purchase_upgrade()
 				return TRUE
 	//No same spell found - just learn it
