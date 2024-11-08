@@ -176,7 +176,7 @@
 
 /obj/effect/proc_holder/spell/shadowling_guise/cast(list/targets, mob/living/user = usr)
 	user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
-	user.alpha_set(10 / LIGHTING_PLANE_ALPHA_VISIBLE, ALPHA_SOURCE_SHADOW_THRALL)
+	user.alpha_set(standartize_alpha(10), ALPHA_SOURCE_SHADOW_THRALL)
 	addtimer(CALLBACK(src, PROC_REF(reveal), user), conseal_time)
 
 

@@ -716,7 +716,7 @@
 			animate(carbon, alpha = 20, time = 1 SECONDS)
 			ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(INVIS_SPELL))
 			sleep(10)
-			carbon.alpha_set(20 / LIGHTING_PLANE_ALPHA_VISIBLE, ALPHA_SOURCE_CLOCKROBE)
+			carbon.alpha_set(standartize_alpha(20), ALPHA_SOURCE_CLOCKROBE)
 			add_attack_logs(user, user, "cloaked [src]", ATKLOG_ALL)
 			addtimer(CALLBACK(src, PROC_REF(uncloak), carbon), 10 SECONDS)
 		if(enchant_type == SPEED_SPELL)

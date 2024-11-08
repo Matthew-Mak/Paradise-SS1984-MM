@@ -77,7 +77,7 @@
 
 /datum/dna/gene/basic/chameleon/OnMobLife(mob/living/mutant)
 	if((world.time - mutant.last_movement) >= 30 && (mutant.mobility_flags & MOBILITY_MOVE) && !HAS_TRAIT(mutant, TRAIT_RESTRAINED))
-		mutant.alpha_add(-25 / LIGHTING_PLANE_ALPHA_VISIBLE, ALPHA_SOURCE_CHAMELEON)
+		mutant.alpha_add(standartize_alpha(-25), ALPHA_SOURCE_CHAMELEON)
 	else
 		mutant.alpha_set(0.80, ALPHA_SOURCE_CHAMELEON)
 

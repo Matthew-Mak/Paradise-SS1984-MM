@@ -318,9 +318,9 @@
 	if(!user)
 		return FALSE
 
-	if(!skip_trails && user.alpha_get(ALPHA_SOURCE_NINJA) == NINJA_ALPHA_INVISIBILITY / LIGHTING_PLANE_ALPHA_VISIBLE)
+	if(!skip_trails && user.alpha_get(ALPHA_SOURCE_NINJA) == standartize_alpha(NINJA_ALPHA_INVISIBILITY))
 		configure_jetpack(skip_trails = TRUE)
-	else if(skip_trails && user.alpha_get(ALPHA_SOURCE_NINJA) != NINJA_ALPHA_INVISIBILITY / LIGHTING_PLANE_ALPHA_VISIBLE)
+	else if(skip_trails && user.alpha_get(ALPHA_SOURCE_NINJA) != standartize_alpha(NINJA_ALPHA_INVISIBILITY))
 		configure_jetpack(skip_trails = FALSE)
 
 	return ..()

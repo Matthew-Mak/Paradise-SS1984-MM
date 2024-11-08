@@ -593,7 +593,7 @@
 
 	if(light_available <= 2)
 		animate(owner.current, time = 5, alpha = 38)
-		owner.current.alpha_set(38 / LIGHTING_PLANE_ALPHA_VISIBLE, ALPHA_SOURCE_VAMPIRE)
+		owner.current.alpha_set(standartize_alpha(38), ALPHA_SOURCE_VAMPIRE)
 		if(iscloaking)
 			owner.current.add_movespeed_modifier(/datum/movespeed_modifier/vampire_cloak)
 
