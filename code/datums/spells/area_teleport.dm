@@ -32,7 +32,7 @@
 	var/area/thearea = GLOB.teleportlocs[A]
 
 	if(thearea.tele_proof && !istype(thearea, /area/wizard_station))
-		to_chat(user, "Неизвестная сила разрушает вашу магическую матрицу, и вы остаетесь там, где находитесь.")
+		to_chat(user, "Неизвестная сила разрушает вашу магическую матрицу, и вы остаётесь там, где находитесь.")
 		return
 
 	selected_area = thearea
