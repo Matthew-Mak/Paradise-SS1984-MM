@@ -76,9 +76,6 @@ GLOBAL_LIST_INIT(whiteness, list(
 #define BANISH_DESTRUCTION "destruction"
 #define BANISH_FUNERAL_GARB "funeral"
 
-#define LORE 1
-#define LAW 2
-
 #define BANE_TOOLBOX_DAMAGE_MODIFIER 	2.5
 #define BANE_HARVEST_DAMAGE_MULTIPLIER 	2
 

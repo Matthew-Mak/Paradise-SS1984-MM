@@ -24,8 +24,10 @@
 
 /datum/antagonist/devil/Destroy(force)
 	QDEL_NULL(rank)
-	soulsOwned = null
+	QDEL_NULL(ritual_component)
 	QDEL_NULL(info)
+	
+	LAZYNULL(soulsOwned)
 	
 	return ..()
 

@@ -155,22 +155,22 @@
 					continuing = TRUE
 					break
 		if(continuing)
-			to_chat(user,"<span class='warning'>You are now phasing in.</span>")
+			to_chat(user, span_warning("You are now phasing in."))
 			if(do_after(user, 15 SECONDS, user, NONE))
 				user.infernalphasein(src)
 		else
-			to_chat(user,"<span class='warning'>You can only re-appear near a potential signer or on a shuttle.</span>")
+			to_chat(user, span_warning("You can only re-appear near a potential signer or on a shuttle."))
 			revert_cast()
 			return ..()
 
 	else
 		user.fakefire()
-		to_chat(user,"<span class='warning'>You begin to phase back into sinful flames.</span>")
+		to_chat(user, span_warning("You begin to phase back into sinful flames."))
 		if(do_after(user, 15 SECONDS, user, NONE))
 			ADD_TRAIT(user, TRAIT_NO_TRANSFORM, UNIQUE_TRAIT_SOURCE(src))
 			user.infernalphaseout(src)
 		else
-			to_chat(user,"<span class='warning'>You must remain still while exiting.</span>")
+			to_chat(user, span_warning("You must remain still while exiting."))
 			user.ExtinguishMob()
 
 	cooldown_handler.start_recharge()
@@ -179,7 +179,7 @@
 /mob/living/proc/infernalphaseout(obj/effect/proc_holder/spell/infernal_jaunt/spell)
 	dust_animation()
 	
-	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	visible_message(span_warning("[src] disappears in a flashfire!"))
 	playsound(get_turf(src), 'sound/misc/enter_blood.ogg', 100, 1, -1)
 
 	var/obj/effect/dummy/slaughter/s_holder = new(loc)
@@ -290,7 +290,7 @@
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/T in funky_turfs)
 			if(T.density)
-				to_chat(user, "<span class='warning'>You're too close to a wall.</span>")
+				to_chat(user, span_warning("You're too close to a wall."))
 				return
 
 		dancefloor_exists = TRUE
