@@ -404,7 +404,7 @@
 
 /obj/effect/proc_holder/spell/aoe/repulse
 	name = "Repulse"
-	desc = "Это заклинание отбрасывает все, что находится вокруг заклинателя."
+	desc = "Это заклинание отбрасывает всё, что находится вокруг заклинателя."
 	base_cooldown = 40 SECONDS
 	cooldown_min = 15 SECONDS
 	clothes_req = TRUE
