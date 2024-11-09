@@ -300,7 +300,7 @@
 	if(istype(I, /obj/item/reagent_containers/glass))
 		add_fingerprint(user)
 		if(locked)
-			balloon_alert(user, "панель [declent_ru(GENITIVE)] закрыта!")
+			balloon_alert(user, "сначала разблокируйте панель техобслуживания")
 			return ATTACK_CHAIN_PROCEED|ATTACK_CHAIN_NO_AFTERATTACK
 		if(reagent_glass)
 			balloon_alert(user, "внутри уже находится ёмкость!")

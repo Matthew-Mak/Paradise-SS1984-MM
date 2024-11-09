@@ -308,7 +308,7 @@
 		return
 
 	if(user) //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		to_chat(user, span_warning("Сначала откройте панель технического обслуживания!"))
+		balloon_alert(user, "сначала откройте панель техобслуживания")
 
 
 /mob/living/simple_animal/bot/examine(mob/user)
