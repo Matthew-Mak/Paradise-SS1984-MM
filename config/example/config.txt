@@ -473,12 +473,6 @@ PLAYER_REROUTE_CAP 0
 ## Server to reroute to
 #TUTORIAL_SERVER_URL byond://example.org:1111
 
-## Disable the loading of away missions
-#DISABLE_AWAY_MISSIONS
-
-## Disable the loading of space ruins
-#DISABLE_SPACE_RUINS
-
 ## Minimum number of space ruins levels to generate
 EXTRA_SPACE_RUIN_LEVELS_MIN 4
 
@@ -675,12 +669,6 @@ DEFAULT_MAP /datum/map/cyberiad
 ## Enable animations on item pickup and drop down
 # ITEM_ANIMATIONS_ENABLED
 
-## Disable the loading of "Taipan"
-# DISABLE_TAIPAN
-
-## Disable the loading of Lavaland
-# DISABLE_LAVALAND
-
 ## If the number of players is more or same than this, then we apply the highpop jobs config.
 JOBS_HIGH_POP_MODE_AMOUNT 80
 
@@ -734,6 +722,22 @@ CACHE_ASSETS 0
 ## Enable the replay demo recording subsystem
 #DEMOS_ENABLED
 
+### INITIALIZATION SETTINGS ###
+## This section contains settings directly affecting initializing progress. Uncomment these to make your world load faster.
+
 ## Enables loading titlescreen only after master has been loaded. Recommended to be used on local server for faster loading.
 #ENABLE_TITLESCREEN_LATELOAD
  
+## Disable the loading of "Taipan"
+#DISABLE_TAIPAN
+
+## Disable the loading of Lavaland
+#DISABLE_LAVALAND
+
+## Disable the loading of away missions
+#DISABLE_AWAY_MISSIONS
+
+## Disable the loading of space ruins
+#DISABLE_SPACE_RUINS
+
+### INITIALIZATION SETTINGS END ###
