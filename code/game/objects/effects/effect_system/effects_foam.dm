@@ -101,9 +101,9 @@
 		reagents.reaction(arrived, REAGENT_TOUCH, fraction)
 
 /turf/proc/can_spawn_foam()
-	if(!isfloorturf(src))
-		return FALSE
+	return FALSE
 
+/turf/simulated/floor/can_spawn_foam()
 	for(var/obj/effect/particle_effect/foam/foam in src)
 		return FALSE
 
