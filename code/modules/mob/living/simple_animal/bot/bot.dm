@@ -508,7 +508,10 @@
 		return
 	adjustBruteLoss(-10)
 	add_fingerprint(user)
-	user.visible_message("[user] ремонтиру[pluralize_ru(user.gender, "ет", "ют")] [declent_ru(GENITIVE)].", span_notice("Вы ремонтируете [declent_ru(GENITIVE)]."))
+	user.visible_message(
+		span_notice("[user] ремонтиру[pluralize_ru(user.gender, "ет", "ют")] [declent_ru(GENITIVE)]."),
+		span_notice("Вы ремонтируете [declent_ru(GENITIVE)].")
+	)
 
 
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
