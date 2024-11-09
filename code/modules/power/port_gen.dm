@@ -18,7 +18,7 @@
 	var/power_output = 1
 	var/base_icon = "portgen0"
 
-/obj/machinery/power/port_gen/Initialize()
+/obj/machinery/power/port_gen/Initialize(mapload)
 	. = ..()
 	soundloop = new(list(src), active)
 
