@@ -733,3 +733,7 @@ CACHE_ASSETS 0
 
 ## Enable the replay demo recording subsystem
 #DEMOS_ENABLED
+
+## Enables loading titlescreen only after master has been loaded. Recommended to be used on local server for faster loading.
+#ENABLE_TITLESCREEN_LATELOAD
+ 
