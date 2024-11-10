@@ -55,7 +55,7 @@
 		if("girder")
 			desc = "[span_notice("The bolts are <b>lodged</b> in place.")]"
 		if("broken grille")
-			desc = "A flimsy framework of metal rods. [span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")]"
+			desc = "A flimsy framework of metal rods. <BR>[span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")]"
 		else //used in case, where objects "examine" text aren't in their desc var (like in proc/examine()) or if you want do something funny
 			desc = choosable_items[hidden_type]::desc
 
