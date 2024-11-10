@@ -5,7 +5,7 @@
 	needs_target = FALSE
 	check_cryo = FALSE
 	target_amount = 12
-	explanation_text = null
+	explanation_text = list()
 
 /datum/objective/devil/sacrifice/proc/forge()
 	if(!get_targets())
@@ -45,13 +45,13 @@
 		return FALSE
 
 	for(var/i in 1 to command_target_count)
-		LAZYADD(target_minds, pick(command_minds))
+		LAZYADD(target_minds, pick_n_take(command_minds))
 
 	for(var/i in 1 to security_target_count)
-		LAZYADD(target_minds, pick(security_minds))
+		LAZYADD(target_minds, pick_n_take(security_minds))
 
 	for(var/i in 1 to other_target_count)
-		LAZYADD(target_minds, pick(other_minds))
+		LAZYADD(target_minds, pick_n_take(other_minds))
 
 	return TRUE
 
