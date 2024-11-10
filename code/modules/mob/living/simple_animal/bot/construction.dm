@@ -28,17 +28,19 @@
 
 	add_fingerprint(user)
 	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
-		balloon_alert(user, "для завершения сборки нужна робо-рука")
+		to_chat(user, span_notice("Для завершения сборки чистобота нужна робо-рука."))
+		balloon_alert(user, "это сюда не подойдёт")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!isturf(loc))
-		balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+		to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+		balloon_alert(user, "невозможно")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!user.drop_transfer_item_to_loc(I, src))
 		return ..()
 
-	balloon_alert(user, "вы завершили сборку")
+	balloon_alert(user, "сборка завершена")
 	to_chat(user, span_notice("Вы завершили сборку чистобота."))
 	var/mob/living/simple_animal/bot/cleanbot/new_bot = new(loc)
 	transfer_fingerprints_to(new_bot)
@@ -125,13 +127,15 @@
 		if(0, 1)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/robot_parts/l_leg) && !istype(I, /obj/item/robot_parts/r_leg))
-				balloon_alert(user, "вам нужна робо-нога для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки ED-209 нужна робо-нога."))
+				balloon_alert(user, "это сюда не подойдёт")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			qdel(I)
 			build_step++
-			balloon_alert(user, "вы прикрепили робо-ногу к заготовке")
+			to_chat(user, span_notice("Вы прикрепили робо-ногу к заготовке ED-209."))
+			balloon_alert(user, "деталь установлена")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			return ATTACK_CHAIN_PROCEED_SUCCESS
 
@@ -143,13 +147,15 @@
 			else if(istype(I, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
 			if(!newcolor && !istype(I, /obj/item/clothing/suit/armor/vest))
-				balloon_alert(user, "вам нужен защитный жилет для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки ED-209 нужен защитный жилет."))
+				balloon_alert(user, "это сюда не подойдёт")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			lasercolor = newcolor
 			build_step++
-			balloon_alert(user, "вы прикрепили жилет к заготовке")
+			to_chat(user, span_notice("Вы прикрепили защитный жилет к заготовке ED-209."))
+			balloon_alert(user, "деталь установлена")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			qdel(I)
 			return ATTACK_CHAIN_PROCEED_SUCCESS
@@ -159,20 +165,24 @@
 			switch(lasercolor)
 				if("b")
 					if(!istype(I, /obj/item/clothing/head/helmet/bluetaghelm))
-						balloon_alert(user, "вам нужен синий шлем для лазертага для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен синий шлем для лазертага."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 				if("r")
 					if(!istype(I, /obj/item/clothing/head/helmet/redtaghelm))
-						balloon_alert(user, "вам нужен красный шлем для лазертага для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен красный шлем для лазертага."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 				if("")
 					if(!istype(I, /obj/item/clothing/head/helmet))
-						balloon_alert(user, "вам нужен стандартный шлем СБ для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен стандартный шлем СБ."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			build_step++
-			balloon_alert(user, "вы прикрепили шлем к заготовке")
+			to_chat(user, span_notice("Вы прикрепили шлем к заготовке ED-209."))
+			balloon_alert(user, "деталь установлена")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			qdel(I)
 			return ATTACK_CHAIN_BLOCKED_ALL
@@ -180,13 +190,15 @@
 		if(5)
 			add_fingerprint(user)
 			if(!isprox(I))
-				balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки ED-209 нужен датчик движения."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			qdel(I)
 			build_step++
-			balloon_alert(user, "вы прикрепили датчик движения к заготовке")
+			to_chat(user, span_notice("Вы прикрепили датчик движения к заготовке ED-209."))
+			balloon_alert(user, "деталь установлена")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			return ATTACK_CHAIN_BLOCKED_ALL
 
@@ -194,14 +206,14 @@
 			add_fingerprint(user)
 			var/obj/item/stack/cable_coil/coil = I
 			if(!iscoil(I) || coil.get_amount() < 1)
-				balloon_alert(user, "вам нужны провода для продолжения сборки")
+				balloon_alert(user, "здесь нужны провода")
 				return ATTACK_CHAIN_PROCEED
 			coil.play_tool_sound(src)
-			balloon_alert(user, "вы начинаете прокладывать проводку в заготовке")
+			balloon_alert(user, "вы начинаете прокладывать проводку")
 			if(!do_after(user, 4 SECONDS * I.toolspeed, src, category = DA_CAT_TOOL) || build_step != 6 || QDELETED(coil) || !coil.use(1))
 				return ATTACK_CHAIN_PROCEED
 			build_step++
-			balloon_alert(user, "вы проложили проводку в заготовке")
+			balloon_alert(user, "вы проложили проводку")
 			update_appearance(UPDATE_NAME)
 			return ATTACK_CHAIN_PROCEED_SUCCESS
 
@@ -211,23 +223,27 @@
 			switch(lasercolor)
 				if("b")
 					if(!istype(I, /obj/item/gun/energy/laser/tag/blue))
-						balloon_alert(user, "вам нужен синий лазертаг-карабин для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен синий лазертаг-карабин."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 					new_name = "bluetag ED-209 assembly"
 				if("r")
 					if(!istype(I, /obj/item/gun/energy/laser/tag/red))
-						balloon_alert(user, "вам нужен красный лазертаг-карабин для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен красный лазертаг-карабин."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 					new_name = "redtag ED-209 assembly"
 				if("")
 					if(!istype(I, /obj/item/gun/energy/gun/advtaser))
-						balloon_alert(user, "вам нужен гибридный тазер для продолжения сборки")
+						to_chat(user, span_notice("Для продолжения сборки ED-209 нужен гибридный тазер."))
+						balloon_alert(user, "неверная деталь")
 						return ATTACK_CHAIN_PROCEED
 					new_name = "taser ED-209 assembly"
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
 			build_step++
-			balloon_alert(user, "вы установили вооружение в заготовку")
+			to_chat(user, span_notice("Вы установили вооружение в заготовку ED-209."))
+			balloon_alert(user, "деталь установлена")
 			update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 			qdel(I)
 			return ATTACK_CHAIN_BLOCKED_ALL
@@ -235,14 +251,16 @@
 		if(9)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/stock_parts/cell))
-				balloon_alert(user, "вам нужна батарея для завершения сборки")
+				to_chat(user, span_notice("Для завершения сборки ED-209 нужна батарея."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!isturf(loc))
-				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+				to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+				balloon_alert(user, "невозможно")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы завершили сборку")
+			balloon_alert(user, "сборка завершена")
 			to_chat(user, span_notice("Вы завершили сборку ED-209."))
 			var/mob/living/simple_animal/bot/ed209/new_bot = new(loc, created_name, lasercolor)
 			transfer_fingerprints_to(new_bot)
@@ -264,7 +282,8 @@
 	if(!I.use_tool(src, user, volume = I.tool_volume))
 		return .
 	build_step++
-	balloon_alert(user, "вы приварили броню к заготовке")
+	to_chat(user, span_notice("Вы приварили броню к заготовке ED-209."))
+	balloon_alert(user, "деталь установлена")
 	update_appearance(UPDATE_NAME|UPDATE_ICON_STATE)
 
 
@@ -272,12 +291,12 @@
 	if(build_step != 8)
 		return FALSE
 	. = TRUE
-	balloon_alert(user, "вы начинаете устанавливать орудие в заготовку")
+	balloon_alert(user, "вы начинаете устанавливать оружие")
 	if(!I.use_tool(src, user, 4 SECONDS, volume = I.tool_volume) || build_step != 8)
 		return .
 	build_step++
 	update_appearance(UPDATE_NAME)
-	balloon_alert(user, "вы установили орудие в заготовку")
+	balloon_alert(user, "вы установили оружие")
 
 
 //Floorbot assemblies
@@ -310,15 +329,18 @@
 	add_fingerprint(user)
 	var/obj/item/stack/tile/plasteel/plasteel = I
 	if(istype(I, /obj/item/storage/toolbox/green/memetic))
-		balloon_alert(user, "хорошая попытка...")
+		to_chat(user, span_notice("Хорошая попытка..."))
+		balloon_alert(user, "невозможно")
 		return .
 
 	if(length(contents))
-		balloon_alert(user, "нельзя начать сборку, пока в ящике что-то есть")
+		to_chat(user, span_notice("Вы не можете начать сборку, пока в ящике для инструментов что-то лежит."))
+		balloon_alert(user, "невозможно")
 		return .
 
 	if(!plasteel.use(10))
-		balloon_alert(user, "нужно 10 листов пластали, чтобы начать сборку")
+		to_chat(user, span_notice("Для начала сборки ремонтного бота нужно 10 листов пластали."))
+		balloon_alert(user, "недостаточно материалов")
 		return .
 
 	. |= ATTACK_CHAIN_BLOCKED_ALL
@@ -348,7 +370,8 @@
 	if(loc == user)
 		user.temporarily_remove_item_from_inventory(src, force = TRUE)
 		user.put_in_hands(assembly)
-	balloon_alert(user, "вы укрепили ящик листами пластали")
+	to_chat(user, span_notice("Вы укрепили ящик для инструментов листами пластали."))
+	balloon_alert(user, "ящик укреплён")
 	qdel(src)
 
 
@@ -369,7 +392,8 @@
 
 	add_fingerprint(user)
 	if(!isprox(I))
-		balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
+		to_chat(user, span_notice("Для продолжения сборки ремонтного бота нужен датчик движения."))
+		balloon_alert(user, "неверная деталь")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!user.drop_transfer_item_to_loc(I, src))
@@ -384,7 +408,8 @@
 	if(loc == user)
 		user.temporarily_remove_item_from_inventory(src, force = TRUE)
 		user.put_in_hands(assembly)
-	balloon_alert(user, "вы прикрепили датчик движения к заготовке")
+	to_chat(user, span_notice("Вы прикрепили датчик движения к заготовке ремонтного бота."))
+	balloon_alert(user, "деталь установлена")
 	qdel(I)
 	qdel(src)
 	return ATTACK_CHAIN_BLOCKED_ALL
@@ -408,11 +433,13 @@
 
 	add_fingerprint(user)
 	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
-		balloon_alert(user, "для завершения сборки нужна робо-рука")
+		to_chat(user, span_notice("Для завершения сборки ремонтного бота нужна робо-рука."))
+		balloon_alert(user, "неверная деталь")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!isturf(loc))
-		balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+		to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+		balloon_alert(user, "невозможно")
 		return ATTACK_CHAIN_PROCEED
 
 	if(!user.drop_transfer_item_to_loc(I, src))
@@ -424,7 +451,7 @@
 	new_bot.add_fingerprint(user)
 	new_bot.name = created_name
 	new_bot.robot_arm = I.type
-	balloon_alert(user, "вы завершили сборку")
+	balloon_alert(user, "сборка завершена")
 	to_chat(user, span_notice("Вы завершили сборку ремонтного бота."))
 	qdel(I)
 	qdel(src)
@@ -439,7 +466,8 @@
 
 	add_fingerprint(user)
 	if(length(contents))
-		balloon_alert(user, "нельзя начать сборку, пока в аптечке что-то есть")
+		to_chat(user, span_notice("Вы не можете начать сборку, пока в аптечке что-то лежит."))
+		balloon_alert(user, "невозможно")
 		return .
 
 	. |= ATTACK_CHAIN_BLOCKED_ALL
@@ -461,7 +489,8 @@
 	if(loc == user)
 		user.temporarily_remove_item_from_inventory(src, force = TRUE)
 		user.put_in_hands(assembly)
-	balloon_alert(user, "вы прикрепили робо-руку к аптечке")
+	to_chat(user, span_notice("Вы прикрепили робо-руку к аптечке."))
+	balloon_alert(user, "деталь установлена")
 	qdel(I)
 	qdel(src)
 
@@ -521,11 +550,13 @@
 		if(0)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/healthanalyzer))
-				balloon_alert(user, "вам нужен анализатор здоровья для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки медбота нужен анализатор здоровья."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы прикрепили анализатор здоровья к заготовке")
+			to_chat(user, span_notice("Вы прикрепили анализатор здовроья к аптечке."))
+			balloon_alert(user, "деталь установлена")
 			build_step++
 			update_appearance(UPDATE_NAME|UPDATE_OVERLAYS)
 			qdel(I)
@@ -534,14 +565,16 @@
 		if(1)
 			add_fingerprint(user)
 			if(!isprox(I))
-				balloon_alert(user, "вам нужен датчик движения для завершения сборки")
+				to_chat(user, span_notice("Для завершения сборки медбота нужен датчик движения."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!isturf(loc))
-				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+				to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+				balloon_alert(user, "невозможно")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы завершили сборку")
+			balloon_alert(user, "сборка завершена")
 			to_chat(user, span_notice("Вы завершили сборку медбота."))
 			var/mob/living/simple_animal/bot/medbot/new_bot
 			if(syndicate_aligned)
@@ -608,7 +641,8 @@
 	add_fingerprint(user)
 	var/obj/item/assembly/signaler/signaler = I
 	if(signaler.secured)
-		balloon_alert(user, "сигнальное устройство не должно быть закреплено")
+		to_chat(user, span_notice("Сигнальное устройство не должно быть закреплено."))
+		balloon_alert(user, "невозможно")
 		return ATTACK_CHAIN_PROCEED
 
 	. |= ATTACK_CHAIN_BLOCKED_ALL
@@ -640,11 +674,13 @@
 		if(1)
 			add_fingerprint(user)
 			if(!isprox(I))
-				balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки охранного бота нужен датчик движения."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы прикрепили датчик движения к заготовке")
+			to_chat(user, span_notice("Вы прикрепили датчик движения к заготовке охранного бота."))
+			balloon_alert(user, "деталь установлена")
 			build_step++
 			update_appearance(UPDATE_NAME|UPDATE_OVERLAYS)
 			qdel(I)
@@ -653,11 +689,13 @@
 		if(2)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
-				balloon_alert(user, "вам нужна робо-рука для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки охранного бота нужна робо-рука."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы прикрепили робо-руку к заготовке")
+			to_chat(user, span_notice("Вы прикрепили робо-руку к заготовке охранного бота."))
+			balloon_alert(user, "деталь установлена")
 			build_step++
 			robot_arm = I.type
 			update_appearance(UPDATE_NAME|UPDATE_OVERLAYS)
@@ -667,14 +705,16 @@
 		if(3)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/melee/baton/security))
-				balloon_alert(user, "вам нужна оглушающая дубинка для завершения сборки")
+				to_chat(user, span_notice("Для продолжения сборки охранного бота нужна оглушающая дубинка."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!isturf(loc))
-				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+				to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+				balloon_alert(user, "невозможно")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы завершили сборку")
+			balloon_alert(user, "сборка завершена")
 			to_chat(user, span_notice("Вы завершили сборку охранного бота."))
 			var/mob/living/simple_animal/bot/secbot/new_bot = new(loc)
 			new_bot.name = created_name
@@ -704,22 +744,24 @@
 			var/obj/item/clothing/head/helmet/helmet = new(drop_loc)
 			transfer_fingerprints_to(helmet)
 			helmet.add_fingerprint(user)
-			balloon_alert(user, "вы отсоединили сигнальное устройство от шлема")
-			to_chat(user, span_notice("You have disconnected the signaler from the helmet."))
+			to_chat(user, span_notice("Вы отсоединили сигнальное устройство от шлема."))
+			balloon_alert(user, "деталь отсоединена")
 			qdel(src)
 		if(2)
 			var/obj/item/assembly/prox_sensor/sensor = new(drop_loc)
 			transfer_fingerprints_to(sensor)
 			sensor.add_fingerprint(user)
 			build_step--
-			balloon_alert(user, "вы отсоединили датчик движения от заготовки")
+			to_chat(user, span_notice("Вы отсоединили датчик движения от заготовки."))
+			balloon_alert(user, "деталь отсоединена")
 			update_appearance(UPDATE_NAME|UPDATE_OVERLAYS)
 		if(3)
 			var/obj/item/robot_parts/new_arm = new robot_arm(drop_loc)
 			transfer_fingerprints_to(new_arm)
 			new_arm.add_fingerprint(user)
 			build_step--
-			balloon_alert(user, "вы отсоединили робо-руку от заготовки")
+			to_chat(user, span_notice("Вы отсоединили робо-руку от заготовки."))
+			balloon_alert(user, "деталь отсоединена")
 			update_appearance(UPDATE_NAME|UPDATE_OVERLAYS)
 
 
@@ -729,7 +771,8 @@
 	. = TRUE
 	if(!I.use_tool(src, user, volume = I.tool_volume))
 		return .
-	balloon_alert(user, "вы создали дополнительные слоты для вооружения в заготовке")
+	to_chat(user, span_notice("Вы создали дополнительные слоты для вооружения в заготовке охранного бота."))
+	balloon_alert(user, "корпус модифицирован")
 	var/obj/item/griefsky_assembly/destroyer_of_the_worlds = new(drop_location())
 	transfer_fingerprints_to(destroyer_of_the_worlds)
 	destroyer_of_the_worlds.add_fingerprint(user)
@@ -749,10 +792,12 @@
 		return .
 	if(build_step == 1)
 		build_step = 0
-		balloon_alert(user, "вы заварили лишние отверстия в заготовке")
+		to_chat(user, span_notice("Вы заварили лишние отверствия в заготовке охранного бота."))
+		balloon_alert(user, "корпус модифицирован")
 	else
 		build_step = 1
-		balloon_alert(user, "вы вырезали дополнительные отверстия в заготовке")
+		to_chat(user, span_notice("Вы вырезали дополнительные отверствия в заготовке охранного бота."))
+		balloon_alert(user, "корпус модифицирован")
 	update_appearance(UPDATE_OVERLAYS)
 
 
@@ -782,27 +827,32 @@
 	var/toy_sword = istype(I, /obj/item/toy/sword)
 	if(!energy_sword && !toy_sword)
 		if(build_step == 0 && toy_step == 0)
-			balloon_alert(user, "вам нужен лазерный меч для продолжения сборки")
+			to_chat(user, span_notice("Для продолжения сборки нужен лазерный меч."))
+			balloon_alert(user, "неверная деталь")
 			return ATTACK_CHAIN_PROCEED
 		if(build_step > 0)
-			balloon_alert(user, "вам нужен лазерный меч для продолжения сборки")
+			to_chat(user, span_notice("Для продолжения сборки нужен настоящий лазерный меч."))
+			balloon_alert(user, "неверная деталь")
 			return ATTACK_CHAIN_PROCEED
 		if(toy_step > 0)
-			balloon_alert(user, "вам нужен игрушечный лазерный меч для продолжения сборки")
+			to_chat(user, span_notice("Для продолжения сборки нужен игрушечный лазерный меч."))
+			balloon_alert(user, "неверная деталь")
 			return ATTACK_CHAIN_PROCEED
 		return ATTACK_CHAIN_PROCEED
 
 	if(energy_sword)
 		if(toy_step > 0)
-			balloon_alert(user, "этот лазерный меч не подойдёт")
+			to_chat(user, span_notice("Этот лазерный меч не подойдёт."))
+			balloon_alert(user, "неверная деталь")
 			return ATTACK_CHAIN_PROCEED
 		if(build_step == 3)
 			if(!isturf(loc))
-				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+				to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+				balloon_alert(user, "невозможно")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы завершили сборку")
+			balloon_alert(user, "сборка завершена")
 			to_chat(user, span_notice("Вы завершили сборку Генерала Грифски."))
 			var/mob/living/simple_animal/bot/secbot/griefsky/destroyer_of_the_worlds = new(loc)
 			transfer_fingerprints_to(destroyer_of_the_worlds)
@@ -816,20 +866,23 @@
 		build_step++
 		I.transfer_fingerprints_to(src)
 		update_appearance(UPDATE_NAME)
-		balloon_alert(user, "вы прикрепили лазерный меч к заготовке")
+		to_chat(user, span_notice("Вы прикрепили лазерный меч к заготовке."))
+		balloon_alert(user, "деталь установлена")
 		qdel(I)
 		return ATTACK_CHAIN_BLOCKED_ALL
 
 	if(build_step > 0)
-		balloon_alert(user, "здесь нужен настоящий лазерный меч")
+		to_chat(user, span_notice("Этот лазерный меч не подойдёт."))
+		balloon_alert(user, "неверная деталь")
 		return ATTACK_CHAIN_PROCEED
 	if(toy_step == 3)
 		if(!isturf(loc))
-			balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+			to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+			balloon_alert(user, "невозможно")
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
-		balloon_alert(user, "вы завершили сборку")
+		balloon_alert(user, "сборка завершена")
 		to_chat(user, span_notice("Вы завершили сборку Генерала Грифски."))
 		var/mob/living/simple_animal/bot/secbot/griefsky/toy/destroyer_of_the_pinatas = new(loc)
 		transfer_fingerprints_to(destroyer_of_the_pinatas)
@@ -843,7 +896,8 @@
 	toy_step++
 	I.transfer_fingerprints_to(src)
 	update_appearance(UPDATE_NAME)
-	balloon_alert(user, "вы прикрепили игрушечный лазерный меч к заготовке")
+	to_chat(user, span_notice("Вы прикрепили игрушечный лазерный меч к заготовке."))
+	balloon_alert(user, "деталь установлена")
 	qdel(I)
 	return ATTACK_CHAIN_BLOCKED_ALL
 
@@ -857,11 +911,13 @@
 	var/obj/item/sword
 	if(build_step)
 		sword = new /obj/item/melee/energy/sword(drop_location())
-		balloon_alert(user, "вы отсоединили лазерный меч от заготовки")
+		to_chat(user, span_notice("Вы отсоединили лазерный меч от заготовки."))
+		balloon_alert(user, "деталь отсоединена")
 		build_step--
 	else if(toy_step)
 		sword = new /obj/item/toy/sword(drop_location())
-		balloon_alert(user, "вы отсоединили игрушечный лазерный меч от заготовки")
+		to_chat(user, span_notice("Вы отсоединили игрушечный лазерный меч от заготовки."))
+		balloon_alert(user, "деталь отсоединена")
 		toy_step--
 	transfer_fingerprints_to(sword)
 	sword.add_fingerprint(user)
@@ -876,7 +932,8 @@
 
 	add_fingerprint(user)
 	if(length(contents))
-		balloon_alert(user, "нельзя начать сборку, пока в коробке что-то есть")
+		to_chat(user, span_notice("Вы не можете начать сборку, пока в коробке что-то лежит."))
+		balloon_alert(user, "невозможно")
 		return .
 
 	. |= ATTACK_CHAIN_BLOCKED_ALL
@@ -891,7 +948,8 @@
 	if(loc == user)
 		user.temporarily_remove_item_from_inventory(src, force = TRUE)
 		user.put_in_hands(assembly)
-	balloon_alert(user, "вы прикрепили робо-руку к коробке")
+	to_chat(user, span_notice("Вы прикрепили робо-руку к коробке."))
+	balloon_alert(user, "деталь установлена")
 	qdel(I)
 	qdel(src)
 
@@ -916,11 +974,13 @@
 		if(0)
 			add_fingerprint(user)
 			if(!isprox(I))
-				balloon_alert(user, "вам нужен датчик движения для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки хонкбота нужен датчик движения."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы прикрепили датчик движения к заготовке")
+			to_chat(user, span_notice("Вы прикрепили датчик движения к заготовке хонкбота."))
+			balloon_alert(user, "деталь установлена")
 			build_step++
 			update_appearance(UPDATE_ICON_STATE)
 			qdel(I)
@@ -929,11 +989,13 @@
 		if(1)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/bikehorn))
-				balloon_alert(user, "вам нужен велосипедный гудок для продолжения сборки")
+				to_chat(user, span_notice("Для продолжения сборки хонкбота нужен велосипедный гудок."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы прикрепили велосипедный гудок к заготовке")
+			to_chat(user, span_notice("Вы прикрепили велосипедный гудок к заготовке хонкбота."))
+			balloon_alert(user, "деталь установлена")
 			build_step++
 			update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
 			qdel(I)
@@ -942,14 +1004,16 @@
 		if(2)
 			add_fingerprint(user)
 			if(!istype(I, /obj/item/instrument/trombone))
-				balloon_alert(user, "вам нужен тромбон для завершения сборки")
+				to_chat(user, span_notice("Для завершения сборки хонкбота нужен тромбон."))
+				balloon_alert(user, "неверная деталь")
 				return ATTACK_CHAIN_PROCEED
 			if(!isturf(loc))
-				balloon_alert(user, "вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]")
+				to_chat(user, span_notice("Вы не можете завершить сборку [ismob(loc) ? "в инвентаре" : "здесь"]."))
+				balloon_alert(user, "невозможно")
 				return ATTACK_CHAIN_PROCEED
 			if(!user.drop_transfer_item_to_loc(I, src))
 				return ..()
-			balloon_alert(user, "вы завершили сборку")
+			balloon_alert(user, "сборка завершена")
 			to_chat(user, span_notice("Вы завершили сборку хонкобота."))
 			var/mob/living/simple_animal/bot/honkbot/new_bot = new(loc)
 			new_bot.robot_arm = robot_arm
