@@ -271,12 +271,20 @@
 	item_state = "backpack_justice0"
 	actions_types = list(/datum/action/item_action/toggle_backpack_light)
 	var/on = FALSE
+	var/toggle_cooldown = 20
+	var/cooldown = 0
 
 /obj/item/storage/backpack/justice/attack_self()
 	toggle_backpack_light()
 
 
 /obj/item/storage/backpack/justice/proc/toggle_backpack_light()
+	if(world.time < cooldown + toggle_cooldown)
+		return FALSE
+
+	. = TRUE
+
+	cooldown = world.time
 	on = !on
 	if(on)
 		turn_on()
