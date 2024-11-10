@@ -45,7 +45,7 @@
 	if(!hidden)
 		desc = initial(desc)
 		return
-	switch(hidden_type)
+	switch(hidden_type) //used in case, where objects "examine" text aren't in their desc var (like in proc/examine()) or if you want do something funny
 		if("rack")
 			desc = "Different from the Middle Ages version. <BR>[span_notice("It's held together by a couple of <b>bolts</b>.")]"
 		if("table")
@@ -56,7 +56,7 @@
 			desc = "[span_notice("The bolts are <b>lodged</b> in place.")]"
 		if("broken grille")
 			desc = "A flimsy framework of metal rods. <BR>[span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")]"
-		else //used in case, where objects "examine" text aren't in their desc var (like in proc/examine()) or if you want do something funny
+		else
 			desc = choosable_items[hidden_type]::desc
 
 
