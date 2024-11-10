@@ -233,7 +233,7 @@
 	clothes_req = FALSE
 	human_req = FALSE
 	sound = 'sound/creatures/terrorspiders/attack2.ogg'
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = SMOKE_TYPE_DEFAULT
 	smoke_amt = 15
 
 

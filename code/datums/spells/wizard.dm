@@ -130,7 +130,7 @@
 	cooldown_min = 2 SECONDS //25 deciseconds reduction per rank
 	clothes_req = FALSE
 	human_req = FALSE
-	smoke_type = SMOKE_COUGHING
+	smoke_type = SMOKE_TYPE_BAD
 	smoke_amt = 10
 
 	action_icon_state = "smoke"
@@ -164,7 +164,7 @@
 	clothes_req = TRUE
 	cooldown_min = 5 //4 deciseconds reduction per rank
 
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = SMOKE_TYPE_DEFAULT
 	smoke_amt = 1
 
 	inner_tele_radius = 0

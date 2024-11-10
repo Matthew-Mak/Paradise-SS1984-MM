@@ -26,7 +26,7 @@
 		A = pick(GLOB.teleportlocs)
 
 	if(!A)
-		smoke_type = SMOKE_NONE
+		smoke_type = SMOKE_TYPE_DEFAULT
 		return
 
 	var/area/thearea = GLOB.teleportlocs[A]
@@ -44,7 +44,7 @@
 		revert_cast(user)
 		return
 
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = SMOKE_TYPE_DEFAULT
 	playsound(get_turf(user), sound_in, 50, TRUE)
 	for(var/mob/living/target in targets)
 		var/list/area_turfs = list()
