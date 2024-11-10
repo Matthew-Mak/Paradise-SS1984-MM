@@ -18,7 +18,7 @@
 /obj/structure/clockwork/functional
 	max_integrity = 100
 	var/cooldowntime = 0
-	var/death_message = "<span class='danger'>The structure falls apart.</span>"
+	var/death_message = span_danger("The structure falls apart.")
 	var/death_sound = 'sound/effects/forge_destroy.ogg'
 	var/canbehidden = FALSE
 	var/hidden = FALSE
@@ -110,7 +110,7 @@
 /obj/structure/clockwork/functional/examine(mob/user)
 	. = ..()
 	if(hidden && isclocker(user))
-		. += "<span class='notice'>It's a disguised [initial(name)]!</span>"
+		. += span_notice("It's a disguised [initial(name)]!")
 
 // returns TRUE if hidden, if unhidden FALSE
 /obj/structure/clockwork/functional/proc/toggle_hide(chosen_type)
@@ -129,7 +129,7 @@
 	desc = "An imposing spire formed of brass. It somewhat pulsates."
 	icon_state = "beacon"
 	max_integrity = 250 // A very important one
-	death_message = "<span class='danger'>The beacon crumbles and falls in parts to the ground relaesing it's power!</span>"
+	death_message = span_danger("The beacon crumbles and falls in parts to the ground relaesing it's power!")
 	death_sound = 'sound/effects/creepyshriek.ogg'
 	var/heal_delay = 6 SECONDS
 	var/last_heal = 0
@@ -157,7 +157,7 @@
 			if(!isclocker(L))
 				continue
 			if(L.reagents?.has_reagent("holywater"))
-				to_chat(L, "<span class='warning'>You feel a terrible liquid disappearing from your body.</span>")
+				to_chat(L, span_warning("You feel a terrible liquid disappearing from your body."))
 				L.reagents.del_reagent("holywater")
 			if(iscogscarab(L))
 				var/mob/living/silicon/robot/cogscarab/C = L
@@ -184,7 +184,7 @@
 	GLOB.clockwork_beacons -= src
 	STOP_PROCESSING(SSobj, src)
 	for(var/datum/mind/M in SSticker.mode.clockwork_cult)
-		to_chat(M.current, "<span class='danger'>You get the feeling that one of the beacons have been destroyed! The source comes from [areabeacon.name]</span>")
+		to_chat(M.current, span_danger("You get the feeling that one of the beacons have been destroyed! The source comes from [areabeacon.name]"))
 	return ..()
 
 /obj/structure/clockwork/functional/beacon/attackby(obj/item/I, mob/user, params)
@@ -199,7 +199,7 @@
 	desc = "A strange brass platform with spinning cogs inside. It demands something in exchange for goods..."
 	icon_state = "altar"
 	density = FALSE
-	death_message = "<span class='danger'>The credence breaks in pieces as it dusts into nothing!</span>"
+	death_message = span_danger("The credence breaks in pieces as it dusts into nothing!")
 	canbehidden = TRUE
 	choosable_items = list(
 		"potted plant" = /obj/item/twohanded/required/kirbyplants,
@@ -339,7 +339,7 @@
 
 /obj/structure/clockwork/functional/altar/proc/first_stage_check(var/mob/living/carbon/human/target)
 	first_stage = TRUE
-	target.visible_message("<span class='warning'>[src] begins to glow a piercing amber!</span>", "<span class='clock'>You feel something start to invade your mind...</span>")
+	target.visible_message(span_warning("[src] begins to glow a piercing amber!"), span_clock("You feel something start to invade your mind..."))
 	glow = new (get_turf(src))
 	animate(glow, alpha = 255, time = 8 SECONDS)
 	update_icon(UPDATE_ICON_STATE)
@@ -347,11 +347,11 @@
 /obj/structure/clockwork/functional/altar/proc/second_stage_check(var/mob/living/carbon/human/target)
 	second_stage = TRUE
 	if(!is_convertable_to_clocker(target.mind) || target.stat == DEAD) // mindshield or holy or mindless monkey. or dead guy
-		target.visible_message("<span class='warning'>[src] in glowing manner starts corrupting [target]!</span>", \
-		"<span class='danger'>You feel as your body starts to corrupt by [src] underneath!</span>")
+		target.visible_message(span_warning("[src] in glowing manner starts corrupting [target]!"), \
+		span_danger("You feel as your body starts to corrupt by [src] underneath!"))
 		target.Weaken(20 SECONDS)
 	else // just a living non-clocker civil
-		to_chat(target, "<span class='clocklarge'><b>\"You belong to me now.\"</b></span>")
+		to_chat(target, span_clocklarge("<b>\"You belong to me now.\"</b>"))
 		target.heal_overall_damage(50, 50)
 		if(isgolem(target))
 			target.mind.wipe_memory()
@@ -369,7 +369,7 @@
 	converting = null
 	update_icon(UPDATE_ICON_STATE)
 	if(!silent)
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+		visible_message(span_warning("[src] slowly stops glowing!"))
 
 
 /obj/structure/clockwork/functional/altar/attackby(obj/item/I, mob/user, params)
@@ -398,30 +398,30 @@
 	var/datum/game_mode/gamemode = SSticker.mode
 
 	if(GLOB.ark_of_the_clockwork_justiciar)
-		to_chat(user, "<span class='clockitalic'>There is already Gateway somewhere!</span>")
+		to_chat(user, span_clockitalic("There is already Gateway somewhere!"))
 		return FALSE
 
 	if(gamemode.clocker_objs.clock_status < RATVAR_NEEDS_SUMMONING)
-		to_chat(user, "<span class='clockitalic'><b>Ratvar</b> is not ready to be summoned yet!</span>")
+		to_chat(user, span_clockitalic("<b>Ratvar</b> is not ready to be summoned yet!"))
 		return FALSE
 	if(gamemode.clocker_objs.clock_status == RATVAR_HAS_RISEN)
-		to_chat(user, "<span class='clocklarge'>\"My fellow. There is no need for it anymore.\"</span>")
+		to_chat(user, span_clockitalic("\"My fellow. There is no need for it anymore.\""))
 		return FALSE
 
 	var/list/summon_areas = gamemode.clocker_objs.obj_summon.ritual_spots
 	if(!(A in summon_areas))
-		to_chat(user, "<span class='cultlarge'>Ratvar can only be summoned where the veil is weak - in [english_list(summon_areas)]!</span>")
+		to_chat(user, span_cultlarge("Ratvar can only be summoned where the veil is weak - in [english_list(summon_areas)]!"))
 		return FALSE
 	var/confirm_final = tgui_alert(user, "This is the FINAL step to summon, the crew will be alerted to your presence AND your location!",
 	"The power comes...", list("Let Ratvar shine ones more!", "No"))
 	if(user)
 		if(confirm_final != "Let Ratvar shine ones more!")
-			to_chat(user, "<span class='clockitalic'><b>You decide to prepare further before pincing the shard.</b></span>")
+			to_chat(user, span_clockitalic("<b>You decide to prepare further before pincing the shard.</b>"))
 			return FALSE
 		return TRUE
 
 /obj/structure/clockwork/functional/altar/proc/begin_the_ritual()
-	visible_message("<span class='danger'>The [src] expands itself revealing into the great Ark!</span>")
+	visible_message(span_danger("The [src] expands itself revealing into the great Ark!"))
 	new /obj/structure/clockwork/functional/celestial_gateway(get_turf(src))
 	qdel(src)
 	return
@@ -430,7 +430,7 @@
 	name = "cogscarab fabricator"
 	desc = "House for a tons of little cogscarabs, self-producing and maintaining itself."
 	icon_state = "fabricator"
-	death_message = "<span class='danger'>Fabricator crumbles and dusts, leaving nothing behind!</span>"
+	death_message = span_danger("Fabricator crumbles and dusts, leaving nothing behind!")
 	var/list/cogscarab_list = list()
 	canbehidden = TRUE
 	var/cog_slots = 0
@@ -439,9 +439,7 @@
 /obj/structure/clockwork/functional/cogscarab_fabricator/examine(mob/user)
 	. = ..()
 	if(!hidden && (isclocker(user) || isobserver(user)))
-		. += "<span class='notice'>There's [cog_slots - cogscarab_list.len] cogscarab ready. [timer_fabrictor ? "And it's creating another one now" : "It stopped creating."]."
-
-
+		. += span_notice("There's [cog_slots - cogscarab_list.len] cogscarab ready. [timer_fabrictor ? "And it's creating another one now" : "It stopped creating."].")
 
 
 /obj/structure/clockwork/functional/cogscarab_fabricator/Initialize(mapload)
@@ -506,17 +504,17 @@
 
 /obj/structure/clockwork/functional/cogscarab_fabricator/attack_ghost(mob/dead/observer/user)
 	if(hidden)
-		to_chat(user, "<span class='warning'>It's hidden and cannot produce you at this state!</span>")
+		to_chat(user, span_warning("It's hidden and cannot produce you at this state!"))
 		return FALSE
 	if(!anchored)
-		to_chat(user, "<span class='warning'>It seems to be non-functional to produce a new shell!</span>")
+		to_chat(user, span_warning("It seems to be non-functional to produce a new shell!"))
 		return FALSE
 	if(cogscarab_list.len >= cog_slots)
-		to_chat(user, "<span class='notice'>There's no empty shells to take!</span>")
+		to_chat(user, span_notice("There's no empty shells to take!"))
 		return FALSE
 	if(alert(user, "Do you wish to become cogscarab?",,"Yes","No") == "Yes")
 		if(cogscarab_list.len >= cog_slots) //Double check. No duplications
-			to_chat(user, "<span class='notice'>There's no empty shells to take!</span>")
+			to_chat(user, span_notice("There's no empty shells to take!"))
 			return FALSE
 		var/mob/living/silicon/robot/cogscarab/cog = new(loc)
 		cog.key = user.key
