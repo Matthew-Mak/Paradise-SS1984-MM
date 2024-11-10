@@ -266,7 +266,7 @@
 /datum/dna/gene/disability/wingdings
 	name = "Alien Voice"
 	desc = "Искажает голос субъекта, превращая его в непонятную речь."
-	activation_message = list("✡︎□︎◆︎❒︎ ❖︎□︎♍︎♋︎●︎ ♍︎□︎❒︎♎︎⬧︎ ⬧︎♏︎♏︎❍︎ ♋︎●︎♓︎♏︎■︎📬︎")
+	activation_message = list("✡︎□︎◆︎❒︎ ❖︎□︎♍︎♋︎●︎ ♍︎□︎❒︎♎︎⬧︎ ⬧︎♏︎♏︎❍︎ ♋︎●︎♓︎♏︎■︎📬︎") // Your vocal cords seem alien.
 	deactivation_message = list("Ваши голосовые связки больше не кажутся инородными.")
 	instability = -GENE_INSTABILITY_MINOR
 	traits_to_add = list(TRAIT_WINGDINGS)
