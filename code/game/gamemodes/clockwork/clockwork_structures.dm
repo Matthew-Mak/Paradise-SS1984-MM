@@ -23,7 +23,7 @@
 	var/canbehidden = FALSE
 	var/hidden = FALSE
 	var/hidden_type
-	var/list/choosable_items = list(
+	var/list/atom/choosable_items = list(
 		"rack" = /obj/structure/rack,
 		"table" = /obj/structure/table,
 		"wooden table" = /obj/structure/table/wood,
@@ -37,19 +37,7 @@
 	if(!hidden)
 		name = initial(name)
 		return
-	switch(hidden_type)
-		if("rack")
-			name = "rack"
-		if("table")
-			name = "table"
-		if("wooden table")
-			name = "wooden table"
-		if("personal closet")
-			name = "personal closet"
-		if("girder")
-			name = "girder"
-		if("bookcase")
-			name = "bookcase"
+	name = choosable_items[hidden_type]::name
 
 
 /obj/structure/clockwork/functional/update_desc(updates = ALL)
@@ -59,17 +47,17 @@
 		return
 	switch(hidden_type)
 		if("rack")
-			desc = "Different from the Middle Ages version. <BR><span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
+			desc = "Different from the Middle Ages version. <BR>[span_notice("It's held together by a couple of <b>bolts</b>.")]"
 		if("table")
-			desc = "A square piece of metal standing on four metal legs. It can not move. <BR><span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
+			desc = "A square piece of metal standing on four metal legs. It can not move. <BR>[span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")]"
 		if("wooden table")
-			desc = "Do not apply fire to this. Rumour says it burns easily. <BR><span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
-		if("personal closet")
-			desc = "It's a secure locker for personnel. The first card swiped gains control."
+			desc = "Do not apply fire to this. Rumour says it burns easily. <BR>[span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")]"
 		if("girder")
-			desc = "<span class='notice'>The bolts are <b>lodged</b> in place.</span>"
-		if("bookcase")
-			desc = null
+			desc = "[span_notice("The bolts are <b>lodged</b> in place.")]"
+		if("broken grille")
+			desc = "A flimsy framework of metal rods. [span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")]"
+		else //used in case, where objects "examine" text aren't in their desc var (like in proc/examine()) or if you want do something funny
+			desc = choosable_items[hidden_type]::desc
 
 
 /obj/structure/clockwork/functional/update_icon_state()
@@ -77,25 +65,8 @@
 		icon = initial(icon)
 		icon_state = anchored ? "[initial(icon_state)]-off" : initial(icon_state)
 		return
-	switch(hidden_type)
-		if("rack")
-			icon = 'icons/obj/objects.dmi'
-			icon_state = "rack"
-		if("table")
-			icon = 'icons/obj/smooth_structures/table.dmi'
-			icon_state = "table"
-		if("wooden table")
-			icon = 'icons/obj/smooth_structures/wood_table.dmi'
-			icon_state = "wood_table"
-		if("personal closet")
-			icon = 'icons/obj/closet.dmi'
-			icon_state = "secureoff"
-		if("girder")
-			icon = 'icons/obj/structures.dmi'
-			icon_state = "girder"
-		if("bookcase")
-			icon = 'icons/obj/library.dmi'
-			icon_state = "book-0"
+	icon = choosable_items[hidden_type]::icon
+	icon_state = choosable_items[hidden_type]::icon_state
 
 
 /obj/structure/clockwork/functional/attackby(obj/item/I, mob/user, params)
@@ -265,38 +236,6 @@
 	return ..()
 
 
-/obj/structure/clockwork/functional/altar/update_name(updates = ALL)
-	. = ..()
-	if(!hidden)
-		name = initial(name)
-		return
-	switch(hidden_type)
-		if("potted plant")
-			name = "potted plant"
-		if("chair")
-			name = "chair"
-		if("stool")
-			name = "stool"
-		if("broken grille")
-			name = "grille"
-
-
-/obj/structure/clockwork/functional/altar/update_desc(updates = ALL)
-	. = ..()
-	if(!hidden)
-		desc = initial(desc)
-		return
-	switch(hidden_type)
-		if("potted plant")
-			desc = null
-		if("chair")
-			desc = "You sit in this. Either by will or force."
-		if("stool")
-			desc = "Apply butt."
-		if("broken grille")
-			desc = "A flimsy framework of metal rods."
-
-
 /obj/structure/clockwork/functional/altar/update_icon_state()
 	if(!hidden)
 		icon = initial(icon)
@@ -305,19 +244,11 @@
 			return
 		icon_state = first_stage ? "[initial(icon_state)]-fast" : initial(icon_state)
 		return
-	switch(hidden_type)
-		if("potted plant")
-			icon = 'icons/obj/flora/plants.dmi'
-			icon_state = "plant-[rand(1,36)]"
-		if("chair")
-			icon = 'icons/obj/chairs.dmi'
-			icon_state = "chair"
-		if("stool")
-			icon = 'icons/obj/chairs.dmi'
-			icon_state = "stool"
-		if("broken grille")
-			icon = 'icons/obj/structures.dmi'
-			icon_state = "brokengrille"
+	icon = choosable_items[hidden_type]::icon
+	if(hidden_type == "potted plant")
+		icon_state = "plant-[rand(1,36)]"
+	else
+		icon_state = choosable_items[hidden_type]::icon_state
 
 
 /obj/structure/clockwork/functional/altar/attackby(obj/item/I, mob/user, params)
@@ -511,8 +442,6 @@
 		. += "<span class='notice'>There's [cog_slots - cogscarab_list.len] cogscarab ready. [timer_fabrictor ? "And it's creating another one now" : "It stopped creating."]."
 
 
-/obj/structure/clockwork/functional/cogscarab_fabricator/update_icon_state()
-	icon_state = anchored ? "[initial(icon_state)]-off" : initial(icon_state)
 
 
 /obj/structure/clockwork/functional/cogscarab_fabricator/Initialize(mapload)
