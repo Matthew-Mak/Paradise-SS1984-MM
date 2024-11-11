@@ -9,8 +9,8 @@
 	supervisors = "the head of personnel"
 	department_head = list(JOB_TITLE_HOP)
 	selection_color = "#e6e6e6"
-	access = list()			//See /datum/job/assistant/get_access()
-	minimal_access = list()	//See /datum/job/assistant/get_access()
+	access = list(ACCESS_MAINT_TUNNELS)			//See /datum/job/assistant/get_access()
+	minimal_access = list(ACCESS_MAINT_TUNNELS)	//See /datum/job/assistant/get_access()
 	alt_titles = list("Tourist","Businessman","Trader","Assistant")
 	outfit = /datum/outfit/job/assistant
 	insurance_type = INSURANCE_TYPE_BUDGETARY
