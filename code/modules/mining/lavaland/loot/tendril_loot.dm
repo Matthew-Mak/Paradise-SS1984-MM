@@ -485,7 +485,7 @@
 
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, last_used_immortality_talisman))
-		balloon_alert(user, span_warning("перезарядка!"))
+		balloon_alert(user, "перезарядка!")
 		return
 
 	var/turf/source_turf = get_turf(src)
