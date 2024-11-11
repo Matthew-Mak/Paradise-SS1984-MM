@@ -4,6 +4,14 @@
 /obj/item/storage/backpack/shared
 	name = "paradox bag"
 	desc = "Каким-то образом существует сразу в двух местах одновременно."
+	ru_names = list(
+		NOMINATIVE = "парадоксальная сумка",
+		GENITIVE = "парадоксальной сумки",
+		DATIVE = "парадоксальной сумке",
+		ACCUSATIVE = "парадоксальную сумку",
+		INSTRUMENTAL = "парадоксальной сумкой",
+		PREPOSITIONAL = "парадоксальной сумке",
+	)
 	max_combined_w_class = 60
 	max_w_class = WEIGHT_CLASS_NORMAL
 	cant_hold = list(/obj/item/storage/backpack/shared)
@@ -13,7 +21,7 @@
 	// basically we cannot put one bag in the storage if another one is already there
 	if(istype(I) && I.bag && I.bag == src && I.twin_storage && I.twin_storage.loc == src)
 		if(!stop_messages)
-			balloon_alert(usr, span_warning("нельзя в себя же!"))
+			balloon_alert(usr, "нельзя в себя же")
 		return FALSE
 	return ..()
 
@@ -22,6 +30,14 @@
 /obj/item/shared_storage
 	name = "paradox bag"
 	desc = "Каким-то образом существует сразу в двух местах одновременно."
+	ru_names = list(
+		NOMINATIVE = "парадоксальная сумка",
+		GENITIVE = "парадоксальной сумки",
+		DATIVE = "парадоксальной сумке",
+		ACCUSATIVE = "парадоксальную сумку",
+		INSTRUMENTAL = "парадоксальной сумкой",
+		PREPOSITIONAL = "парадоксальной сумке",
+	)
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
 	slot_flags = ITEM_SLOT_BACK
@@ -112,6 +128,14 @@
 /obj/item/book_of_babel
 	name = "Book of Babel"
 	desc = "Древний фолиант, написанный в бесчисленном количестве языков."
+	ru_names = list(
+		NOMINATIVE = "книга вавилона",
+		GENITIVE = "книги вавилона",
+		DATIVE = "книге вавилона",
+		ACCUSATIVE = "книгу вавилона",
+		INSTRUMENTAL = "книгой вавилона",
+		PREPOSITIONAL = "книге вавилона",
+	)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
 	w_class = 2
@@ -123,7 +147,7 @@
 		to_chat(user, span_warning("Вы не знаете ни что такое книга, ни что с ней делать."))
 		return
 
-	to_chat(user, "Вы залпом пролистываете через страницы книги, необъяснимо быстро изучая каждый язык во вселенной. К сожалению, в процессе древняя книга рассыпается в прах. Упс.")
+	to_chat(user, "Вы пролистываете страницы книги, необъяснимо быстро изучая все известные языки вселенной. В процессе, к сожалению, древний фолиант медленно распадается в прах. Упс.")
 	user.grant_all_babel_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	user.temporarily_remove_item_from_inventory(src)
@@ -139,6 +163,14 @@
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
 	desc = "Мистический флакон с полусвятой аурой исходящей от него. Надпись на нем гласит: 'эуфц'хъъ тъи'рв лвх йв'атв'."
+	ru_names = list(
+		NOMINATIVE = "странный эликсир",
+		GENITIVE = "странного эликсира",
+		DATIVE = "странному эликсиру",
+		ACCUSATIVE = "странный эликсир",
+		INSTRUMENTAL = "странным эликсиром",
+		PREPOSITIONAL = "странном эликсире",
+	)
 	list_reagents = list("flightpotion" = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
@@ -155,12 +187,12 @@
 	color = "#FFEBEB"
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method = REAGENT_TOUCH, reac_volume, show_message = 1)
-	to_chat(M, "<span class='warning'>Этот предмет на данный момент не может быть использован.</span>")
+	balloon_alert(user, "нельзя использовать")
 	/*if(ishuman(M) && M.stat != DEAD)
 		var/mob/living/carbon/human/H = M
 		if(!ishumanbasic(H) || reac_volume < 5) // implying xenohumans are holy
 			if(method == INGEST && show_message)
-				to_chat(H, "<span class='notice'><i>Вы не чувствуете ничего, кроме отвратительного послевкусия..</i></span>")
+				to_chat(H, span_notice(span_italics("Вы не чувствуете ничего, кроме отвратительного послевкусия.")))
 			return ..()
 
 		to_chat(H, "<span class='userdanger'>Невыносимая боль проходит через вашу спину, как вдруг оттуда вырываются крылья!</span>")
@@ -173,6 +205,14 @@
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "Небесная лестница, нарушающая законы физики."
+	ru_names = list(
+		NOMINATIVE = "лестница иакова",
+		GENITIVE = "лестницы иакова",
+		DATIVE = "лестнице иакова",
+		ACCUSATIVE = "лестницу иакова",
+		INSTRUMENTAL = "лестницей иакова",
+		PREPOSITIONAL = "лестнице иакова",
+	)
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder"
 
@@ -201,6 +241,14 @@
 /obj/item/wisp_lantern
 	name = "spooky lantern"
 	desc = "Эта лампа не источает света, но является убежищем для дружелюбного духа."
+	ru_names = list(
+		NOMINATIVE = "жуткая лампа",
+		GENITIVE = "жуткой лампы",
+		DATIVE = "жуткой лампе",
+		ACCUSATIVE = "жуткою лампу",
+		INSTRUMENTAL = "жуткой лампой",
+		PREPOSITIONAL = "жуткой лампе",
+	)
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue"
 	item_state = "lantern"
@@ -222,7 +270,7 @@
 
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		balloon_alert(user, "<span class='warning'>Дух исчез!</span>")
+		balloon_alert(user, "Дух исчез!")
 		update_icon(UPDATE_ICON_STATE)
 		return
 
@@ -236,7 +284,7 @@
 		set_light_on(FALSE)
 
 		user.update_sight()
-		balloon_alert(user, "<span class='notice'>дух улучшает ваше зрение.</span>")
+		balloon_alert(user, "дух улучшает ваше зрение")
 
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed") // freed
 	else
@@ -248,7 +296,7 @@
 		set_light_on(TRUE)
 
 		user.update_sight()
-		balloon_alert(user, "<span class='notice'>ваше зрение вернулось в норму.</span>")
+		balloon_alert(user, "ваше зрение вернулось в норму")
 
 		update_icon(UPDATE_ICON_STATE)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned") // returned
@@ -283,6 +331,14 @@
 /obj/item/warp_cube
 	name = "blue cube"
 	desc = "Мистический синий куб."
+	ru_names = list(
+		NOMINATIVE = "синий куб",
+		GENITIVE = "синего куба",
+		DATIVE = "синему кубу",
+		ACCUSATIVE = "синий куб",
+		INSTRUMENTAL = "синим кубом",
+		PREPOSITIONAL = "синем кубе",
+	)
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
 	var/obj/item/warp_cube/linked
@@ -299,7 +355,7 @@
 		return
 
 	if(is_in_teleport_proof_area(user) || is_in_teleport_proof_area(linked))
-		balloon_alert(user, "<span class='warning'>[src] искрится и шипит.</span>")
+		balloon_alert(user, "[src] искрится и шипит.")
 		return
 	if(do_after(user, 1.5 SECONDS, user))
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -313,12 +369,20 @@
 		smoke2.set_up(1, 0, user.loc)
 		smoke2.start()
 	else
-		balloon_alert(user, "<span class='notice'>перестаньте двигатся</span>")
+		balloon_alert(user, "не двигайтесь")
 
 
 /obj/item/warp_cube/red
 	name = "red cube"
 	desc = "Мистический красный куб."
+	ru_names = list(
+		NOMINATIVE = "красный куб",
+		GENITIVE = "красного куба",
+		DATIVE = "красному кубу",
+		ACCUSATIVE = "красный куб",
+		INSTRUMENTAL = "красным кубом",
+		PREPOSITIONAL = "красном кубе",
+	)
 	icon_state = "red_cube"
 
 /obj/item/warp_cube/red/New()
@@ -333,6 +397,13 @@
 /obj/item/gun/magic/hook
 	name = "meat hook"
 	desc = "Ты погляди, свежее мясо!"
+	ru_names = list(
+		NOMINATIVE = "мясной крюк",
+		GENITIVE = "мясного крюка",
+		DATIVE = "мясному крюку",
+		ACCUSATIVE = "мясной крюк",
+		INSTRUMENTAL = "мясным крюком",
+		PREPOSITIONAL = "мясном крюке",
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
@@ -372,7 +443,7 @@
 		var/turf/firer_turf = get_turf(firer)
 		var/mob/living/L = target
 		if(!L.anchored && L.loc)
-			L.visible_message("<span class='danger'>[L] прицеплен за крюк [firer]!</span>")
+			L.visible_message("<span class='danger'>[firer] утаскива[pluralize_ru(user.gender, "ет", "ют")] [L] своим крюком!</span>")
 			ADD_TRAIT(L, TRAIT_UNDENSE, UNIQUE_TRAIT_SOURCE(src)) // Ensures the hook does not hit the target multiple times
 			L.forceMove(firer_turf)
 			REMOVE_TRAIT(L, TRAIT_UNDENSE, UNIQUE_TRAIT_SOURCE(src))
@@ -386,6 +457,14 @@
 /obj/item/immortality_talisman
 	name = "Immortality Talisman"
 	desc = "Зловещий талисман, способный временно сделать вас неуязвимым."
+	ru_names = list(
+		NOMINATIVE = "талисман бессмертия",
+		GENITIVE = "талисмана бессмертия",
+		DATIVE = "талисману бессмертия",
+		ACCUSATIVE = "талисман бессмертия",
+		INSTRUMENTAL = "талисманом бессмертия",
+		PREPOSITIONAL = "талисмане бессмертия",
+	)
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -415,7 +494,7 @@
 
 	COOLDOWN_START(src, last_used_immortality_talisman, 60 SECONDS)
 	SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
-	user.visible_message(span_danger("[user] пропадает из реальности, оставляя пространственную дыру на [user.p_their()] месте!"))
+	user.visible_message(span_danger("[user] выпада[pluralize_ru(user.gender, "ет", "ют")] из реальности, оставляя после себя дыру в пространстве!"))
 
 	var/obj/effect/immortality_talisman/effect = new(source_turf)
 	effect.name = "hole in reality"
@@ -438,7 +517,7 @@
 
 	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), UNIQUE_TRAIT_SOURCE(src))
 	user.forceMove(effect_turf)
-	user.visible_message(span_danger("[user] вновь возникает в реальности!"))
+	user.visible_message(span_danger("[user] возвращается в нашу реальность!"))
 	effect.can_destroy = TRUE
 
 	if(length(effect.contents))
