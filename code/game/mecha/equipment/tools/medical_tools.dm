@@ -674,6 +674,6 @@
     mbeam.LoseTarget()
     return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/beamgun/remove_targeted_action()
+/obj/item/mecha_parts/mecha_equipment/medical/beamgun/handle_occupant_exit()
 	. = ..()
 	mbeam.LoseTarget()
