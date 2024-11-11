@@ -271,18 +271,27 @@
 	item_state = "backpack_justice0"
 	actions_types = list(/datum/action/item_action/toggle_backpack_light)
 	var/on = FALSE
-	var/timer
+	var/datum/looping_sound/justice_backpack_alarm/justice_sound
 
 /obj/item/storage/backpack/justice/attack_self()
 	toggle_backpack_light()
 
+/obj/item/storage/backpack/justice/Initialize(mapload)
+	. = ..()
+	justice_sound = new(list(src))
+
+/obj/item/storage/backpack/justice/Destroy(force)
+	QDEL_NULL(justice_sound)
+	return ..()
 
 /obj/item/storage/backpack/justice/proc/toggle_backpack_light()
 	on = !on
+
 	if(on)
 		turn_on()
 	else
 		turn_off()
+
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/storage/backpack/justice/update_icon_state()
@@ -292,14 +301,11 @@
 
 /obj/item/storage/backpack/justice/proc/turn_on()
 	set_light_on(TRUE)
-	if(!timer)
-		timer = addtimer(CALLBACK(GLOBAL_PROC, /proc/playsound, loc, 'sound/items/weeoo1.ogg', 100, FALSE, 4), 1.5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME | TIMER_LOOP)
+	justice_sound.start()
 
 /obj/item/storage/backpack/justice/proc/turn_off()
 	set_light_on(FALSE)
-	if(timer)
-		deltimer(timer)
-		timer = null
+	justice_sound.stop()
 
 
 /*
