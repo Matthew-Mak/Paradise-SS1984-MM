@@ -26030,6 +26030,13 @@
 /area/security/interrogation)
 "dNe" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/safe/floor,
+/obj/item/reagent_containers/food/condiment/cheesesauce,
+/obj/item/reagent_containers/food/condiment/garlicsauce,
+/obj/item/reagent_containers/food/condiment/diablosauce,
+/obj/item/reagent_containers/food/condiment/mushroomsauce,
+/obj/item/reagent_containers/food/condiment/herbs,
+/obj/item/reagent_containers/food/condiment/soysauce,
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -89870,6 +89877,11 @@
 	icon_state = "whitegreen"
 	},
 /area/medical/virology/lab)
+"nms" = (
+/obj/structure/safe/floor,
+/obj/item/seeds/wheat/meat,
+/turf/simulated/floor/grass,
+/area/maintenance/garden)
 "nmx" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -117959,7 +117971,7 @@
 /obj/effect/decal/cleanable/dust,
 /obj/item/radio/intercom{
 	name = "north station intercom (General)";
-	pixel_y = 28
+	pixel_y = 24
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -131996,6 +132008,11 @@
 	},
 /obj/effect/decal/warning_stripes/yellow/hollow,
 /obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/food/condiment/tomatosauce,
+/obj/item/reagent_containers/food/condiment/herbs,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/reagent_containers/food/snacks/grown/tomato,
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -268102,7 +268119,7 @@ cYx
 hmS
 wsH
 qWo
-qWo
+nms
 qWo
 oDB
 bGG
