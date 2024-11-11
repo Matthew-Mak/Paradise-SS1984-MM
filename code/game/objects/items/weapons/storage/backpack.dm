@@ -300,11 +300,9 @@
 	update_equipped_item(update_speedmods = FALSE)
 
 /obj/item/storage/backpack/justice/proc/turn_on()
-	set_light_on(TRUE)
 	soundloop.start()
 
 /obj/item/storage/backpack/justice/proc/turn_off()
-	set_light_on(FALSE)
 	soundloop.stop()
 
 
