@@ -271,17 +271,17 @@
 	item_state = "backpack_justice0"
 	actions_types = list(/datum/action/item_action/toggle_backpack_light)
 	var/on = FALSE
-	var/datum/looping_sound/justice_backpack_alarm/justice_sound
+	var/datum/looping_sound/ambulance_alarm/justice/soundloop
 
 /obj/item/storage/backpack/justice/attack_self()
 	toggle_backpack_light()
 
 /obj/item/storage/backpack/justice/Initialize(mapload)
 	. = ..()
-	justice_sound = new(list(src))
+	soundloop = new(list(src))
 
 /obj/item/storage/backpack/justice/Destroy(force)
-	QDEL_NULL(justice_sound)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/item/storage/backpack/justice/proc/toggle_backpack_light()
@@ -301,11 +301,11 @@
 
 /obj/item/storage/backpack/justice/proc/turn_on()
 	set_light_on(TRUE)
-	justice_sound.start()
+	soundloop.start()
 
 /obj/item/storage/backpack/justice/proc/turn_off()
 	set_light_on(FALSE)
-	justice_sound.stop()
+	soundloop.stop()
 
 
 /*
