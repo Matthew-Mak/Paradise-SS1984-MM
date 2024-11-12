@@ -337,6 +337,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
 	origin_tech = "combat=7;magnets=6"
+	can_flashlight = FALSE
 
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return

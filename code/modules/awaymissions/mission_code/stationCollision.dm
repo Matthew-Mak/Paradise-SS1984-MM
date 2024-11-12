@@ -89,6 +89,7 @@
 	name = "Old laser"
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
 	clumsy_check = 0
+	can_flashlight = FALSE
 
 /*
  * Safe code hints
