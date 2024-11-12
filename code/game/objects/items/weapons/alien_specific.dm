@@ -40,9 +40,7 @@
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 	reagents.remove_reagent(reagents.get_master_reagent_id(),25)
-	var/datum/effect_system/smoke_spread/bad/smoke = new
-	smoke.set_up(5, 0, user.loc)
-	smoke.start()
+	user.do_smoke(5, SMOKE_TYPE_BAD)
 	playsound(user.loc, 'sound/effects/bamf.ogg', 50, 2)
 
 /obj/item/reagent_containers/spray/alien/acid

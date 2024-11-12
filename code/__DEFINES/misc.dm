@@ -165,8 +165,9 @@
 #define MANIFEST_ERROR_COUNT	2
 #define MANIFEST_ERROR_ITEM		4
 
-// Metal foam states
+// Foam states
 // teehee no one will find these here
+#define NORMAL_FOAM		0
 #define MFOAM_ALUMINUM 	1
 #define MFOAM_IRON 		2
 

@@ -141,14 +141,9 @@
 	damage = 5
 
 
-/obj/item/projectile/terrorspider/widow/smoke/on_hit(var/target)
+/obj/item/projectile/terrorspider/widow/smoke/on_hit(atom/target)
 	. = ..()
-	var/datum/effect_system/smoke_spread/smoke = new
-	var/turf/T = get_turf(target)
-	smoke.set_up(15, 0, T)
-	smoke.start()
-
-	return ..()
+	target.do_smoke(15)
 
 
 //DESTROYER//
@@ -238,7 +233,7 @@
 	clothes_req = FALSE
 	human_req = FALSE
 	sound = 'sound/creatures/terrorspiders/attack2.ogg'
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = SMOKE_TYPE_DEFAULT
 	smoke_amt = 15
 
 

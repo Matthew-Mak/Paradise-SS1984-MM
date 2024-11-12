@@ -25,10 +25,7 @@
 	if(!proximity || target == user || !ishuman(target) || !iscarbon(user) || user.incapacitated() || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(5, FALSE, target)
-	smoke.start()
-
+	target.do_smoke(5)
 	to_chat(user, "<font color='red' size='6'>HONK</font>")
 	var/mob/living/carbon/human/h_target = target
 	h_target.bananatouched()

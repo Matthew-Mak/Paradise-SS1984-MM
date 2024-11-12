@@ -1367,10 +1367,7 @@
 				cell.corrupt()
 				malfhack = TRUE
 				update_icon()
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(3, 0, loc)
-				smoke.attach(src)
-				smoke.start()
+				do_smoke(3)
 				do_sparks(3, 1, src)
 				for(var/mob/M in viewers(src))
 					M.show_message("<span class='danger'>The [name] suddenly lets out a blast of smoke and some sparks!", 3, "<span class='danger'>You hear sizzling electronics.</span>", 2)

@@ -66,32 +66,6 @@
 				reagents.reaction(A, REAGENT_TOUCH, fraction)
 	return ..()
 
-/obj/effect/particle_effect/foam/process()
-	if(--amount < 0)
-		return
-
-	for(var/direction in GLOB.cardinal)
-
-		var/turf/T = get_step(src,direction)
-		if(!T)
-			continue
-
-		if(!T.Enter(src))
-			continue
-
-		var/obj/effect/particle_effect/foam/F = locate() in T
-		if(F)
-			continue
-
-		F = new /obj/effect/particle_effect/foam(T, metal)
-		F.amount = amount
-		if(!metal)
-			F.create_reagents(25)
-			if(reagents)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					F.reagents.add_reagent(R.id, min(R.volume, 5), R.data, reagents.chem_temp)
-				F.color = mix_color_from_reagents(reagents.reagent_list)
-
 // foam disolves when heated
 // except metal foams
 /obj/effect/particle_effect/foam/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, global_overlay = TRUE) //Don't heat the reagents inside
@@ -126,58 +100,66 @@
 		var/fraction = 5 / reagents.total_volume
 		reagents.reaction(arrived, REAGENT_TOUCH, fraction)
 
+/turf/proc/can_spawn_foam()
+	return FALSE
 
-/datum/effect_system/foam_spread
-	effect_type = /obj/effect/particle_effect/foam
-	var/amount = 5				// the size of the foam spread.
-	var/list/carried_reagents	// the IDs of reagents present when the foam was mixed
-	var/metal = 0				// 0=foam, 1=metalfoam, 2=ironfoam
-	var/temperature = T0C
-	var/list/banned_reagents = list("smoke_powder", "fluorosurfactant", "stimulants")
+/turf/simulated/floor/can_spawn_foam()
+	for(var/obj/effect/particle_effect/foam/foam in src)
+		return FALSE
 
-/datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metalfoam = 0)
-	amount = min(round(amt/5, 1), 7)
-	if(isturf(loca))
-		location = loca
-	else
-		location = get_turf(loca)
+	return TRUE
 
-	carried_reagents = list()
-	metal = metalfoam
-	temperature = carry.chem_temp
+// This distribution has too many differences from the usual effect systems.
+/atom/proc/do_foam(amount = 5, datum/reagents/reagents, foamtype = NORMAL_FOAM)
+	amount = clamp(amount, 1, 85) // 85 - The number of tiles with Manhattan distance is no more than 6 (a.k.a. radius 7).
+	var/turf/epicenter = get_turf(src)
+	if(!epicenter)
+		return
 
-	// bit of a hack here. Foam carries along any reagent also present in the glass it is mixed
-	// with (defaults to water if none is present). Rather than actually transfer the reagents,
-	// this makes a list of the reagent ids and spawns 1 unit of that reagent when the foam disolves.
+	reagents.remove_reagent("smoke_powder")
+	reagents.remove_reagent("fluorosurfactant")
+	reagents.remove_reagent("stimulants")
 
-	if(carry && !metal)
-		for(var/datum/reagent/R in carry.reagent_list)
-			carried_reagents[R.id] = R.volume
-
-/datum/effect_system/foam_spread/start()
 	spawn(0)
-		var/obj/effect/particle_effect/foam/F = locate() in location
-		if(F)
-			F.amount += amount
-			F.amount = min(F.amount, 27)
-			return
+		var/created = 0
+		var/list/spawning_now
+		var/list/turf/possible_turfs = list(epicenter)
 
-		F = new /obj/effect/particle_effect/foam(location, metal)
-		F.amount = amount
+		while(amount - created >= possible_turfs.len && possible_turfs.len)
+			created += possible_turfs.len
+			spawning_now = possible_turfs
+			possible_turfs = list()
 
-		if(!metal)			// don't carry other chemicals if a metal foam
-			F.create_reagents(25)
-
-			if(carried_reagents)
-				for(var/id in carried_reagents)
-					if(banned_reagents.Find("[id]"))
+			for(var/turf/T in spawning_now)
+				var/obj/effect/particle_effect/foam/F = new(T, foamtype)
+				for(var/dir in GLOB.cardinal)
+					var/turf/possible = get_step(T, dir)
+					if(!possible)
 						continue
-					var/datum/reagent/reagent_volume = carried_reagents[id]
-					F.reagents.add_reagent(id, min(reagent_volume, 5), null, temperature)
+
+					if(!possible.Enter(F))
+						continue
+
+					if(possible in possible_turfs)
+						continue
+
+					if(possible.can_spawn_foam())
+						possible_turfs.Add(possible)
+
+				if(foamtype != NORMAL_FOAM)
+					continue
+
+				if(!reagents)
+					F.create_reagents(1)
+					F.reagents.add_reagent("cleaner", 1)
+					F.color = mix_color_from_reagents(F.reagents.reagent_list)
+					continue
+
+				F.create_reagents(reagents.total_volume / amount)
+				reagents.trans_to(F, reagents.total_volume / amount)
 				F.color = mix_color_from_reagents(F.reagents.reagent_list)
-			else
-				F.reagents.add_reagent("cleaner", 1)
-				F.color = mix_color_from_reagents(F.reagents.reagent_list)
+
+			sleep(1)
 
 // wall formed by metal foams
 // dense and opaque, but easy to break

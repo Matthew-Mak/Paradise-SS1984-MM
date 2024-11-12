@@ -80,10 +80,9 @@
 	if(hacked) //explosion
 		explode()
 		return
+
 	var/turf/simulated/mineral/location = get_turf(target)
-	var/datum/effect_system/smoke_spread/S = new
-	S.set_up(smoke_amount,0,location,null)
-	S.start()
+	location.do_smoke(smoke_amount)
 	//location.attempt_drill(null,TRUE,3) //orange says it doesnt include the actual middle
 	for(var/turf/simulated/mineral/rock in circlerangeturfs(location, boom_sizes[3]))
 		var/distance = get_dist_euclidean(location, rock)

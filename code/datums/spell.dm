@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell))
 	var/sparks_amt = 0
 
 	///Determines if the spell has smoke, and if so what effect the smoke has. See spell defines.
-	var/smoke_type = SMOKE_NONE
+	var/smoke_type = null
 	var/smoke_amt = 0
 
 	var/critfailchance = 0
@@ -500,16 +500,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell))
 			do_sparks(sparks_amt, 0, location)
 
 		if(smoke_type)
-			var/datum/effect_system/smoke_spread/smoke
-			switch(smoke_type)
-				if(SMOKE_HARMLESS)
-					smoke = new /datum/effect_system/smoke_spread()
-				if(SMOKE_COUGHING)
-					smoke = new /datum/effect_system/smoke_spread/bad()
-				if(SMOKE_SLEEPING)
-					smoke = new /datum/effect_system/smoke_spread/sleeping()
-			smoke.set_up(smoke_amt, FALSE, location)
-			smoke.start()
+			target.do_smoke(smoke_amt, smoke_type)
 
 	custom_handler?.after_cast(targets, user, src)
 

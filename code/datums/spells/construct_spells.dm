@@ -215,7 +215,7 @@
 	human_req = FALSE
 	//holy_area_cancast = FALSE //Stops cult magic from working on holy ground eg: chapel
 	cooldown_min = 2 SECONDS //25 deciseconds reduction per rank
-	smoke_type = SMOKE_SLEEPING
+	smoke_type = SMOKE_TYPE_SLEEPING
 	smoke_amt = 10
 
 
@@ -231,6 +231,6 @@
 	holy_area_cancast = FALSE //Stops cult magic from working on holy ground eg: chapel
 	cooldown_min = 2 SECONDS //25 deciseconds reduction per rank
 
-	smoke_type = SMOKE_SLEEPING
+	smoke_type = SMOKE_TYPE_SLEEPING
 	smoke_amt = 10
 
