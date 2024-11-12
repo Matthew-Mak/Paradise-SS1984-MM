@@ -5,6 +5,7 @@
 	deform = 'icons/mob/human_races/r_wryn.dmi'
 	blacklisted = TRUE
 	tail = "wryntail"
+	eyes = "wryn_eyes_s"
 	punchdamagelow = 0
 	punchdamagehigh = 1
 	speed_mod = 1
@@ -60,7 +61,7 @@
 		TRAIT_NO_SCAN,
 	)
 	clothing_flags = HAS_UNDERWEAR | HAS_UNDERSHIRT | HAS_SOCKS
-	bodyflags = HAS_SKIN_COLOR
+	bodyflags = HAS_SKIN_COLOR | HAS_BODY_ACCESSORY
 
 	dies_at_threshold = TRUE
 
@@ -70,8 +71,10 @@
 	blood_color = "#FFFF99"
 	blood_species = "Wryn"
 	//Default styles for created mobs.
-	default_hair = "Antennae"
-
+	default_hair = "Normal antennae"
+	default_fhair = "Default mane"
+	default_bodyacc = "Bee Tail"
+	default_fhair_colour = "#704300"
 	age_sheet = list(
 		SPECIES_AGE_MIN = 15,
 		SPECIES_AGE_MAX = 55,
@@ -99,8 +102,9 @@
 		qdel(node)
 	else
 		var/obj/item/organ/external/head/head_organ = H.get_organ(BODY_ZONE_HEAD)
-		head_organ.h_style = "Antennae"
-		H.update_hair()
+		if(head_organ.h_style == "Bald")
+			head_organ.h_style = random_hair_style(gender = H.gender, species = H.dna.species.name, H = H) // проверка: лысый - даётся рандомная прическа -
+			H.update_hair()
 
 /* Wryn Sting Action Begin */
 
