@@ -456,3 +456,37 @@ SKILLS
 
 /obj/item/clothing/glasses/hud/skills/tajblind/attack_self(mob/user)
 	toggle_veil(user)
+
+/obj/item/clothing/glasses/hud/blueshield
+	name = "blueshield HUD glasses"
+	desc = "Солнечные очки с многорежимным проекционным дисплеем."
+	actions_types = list(/datum/action/item_action/switch_hud)
+	icon_state = "sunhudmed"
+	origin_tech = "magnets=4;combat=4;engineering=4;biotech=4"
+	see_in_dark = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	HUDType = DATA_HUD_MEDICAL_ADVANCED
+
+/obj/item/clothing/glasses/hud/blueshield/attack_self(mob/user)
+	change_mode(user)
+
+/obj/item/clothing/glasses/hud/blueshield/proc/change_mode(mob/user)
+	if(HUDType)
+		var/datum/atom_hud/H = GLOB.huds[HUDType]
+		H.remove_hud_from(user)
+	switch(HUDType)
+		if(DATA_HUD_MEDICAL_ADVANCED)
+			HUDType = DATA_HUD_SECURITY_BASIC
+			examine_extensions = EXAMINE_HUD_SKILLS
+		if(DATA_HUD_SECURITY_ADVANCED)
+			HUDType = DATA_HUD_MEDICAL_ADVANCED
+			examine_extensions = EXAMINE_HUD_MEDICAL
+		else
+			HUDType = DATA_HUD_SECURITY_ADVANCED
+			examine_extensions = EXAMINE_HUD_SECURITY_READ | EXAMINE_HUD_SECURITY_WRITE
+
+	if(HUDType)
+		var/datum/atom_hud/H = GLOB.huds[HUDType]
+		H.add_hud_to(user)
+	return
