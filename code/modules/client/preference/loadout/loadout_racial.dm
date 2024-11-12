@@ -111,9 +111,6 @@
 
 	var/list/available_chips = list()
 	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
-		if(chip.wingdings_decoder) // you can select it in the prefs, so no need to double
-			continue
-
 		available_chips[chip.stored_language_rus] = chip
 
 	gear_tweaks += new /datum/gear_tweak/path(available_chips, src)

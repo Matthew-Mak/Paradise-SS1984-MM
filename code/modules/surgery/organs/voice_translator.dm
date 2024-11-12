@@ -216,7 +216,7 @@
 		LAZYREMOVE(given_languages, chip.stored_language)
 
 	LAZYREMOVE(given_languages_rus, chip.stored_language_rus)
-	remove_wingdings_chip(chip)
+	chip.on_remove(owner, src)
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/install_chip(mob/living/carbon/human/user, obj/item/translator_chip/chip, silent = TRUE, ignore_lid = FALSE)
@@ -257,42 +257,13 @@
 		LAZYADD(given_languages, chip.stored_language)
 
 	LAZYADD(given_languages_rus, chip.stored_language_rus)
-	handle_wingdings_chip(chip)
 
 	if(owner && chip.stored_language)
 		owner.add_language(chip.stored_language.name)
 
+	chip.on_install(owner, src)
+
 	return TRUE
-
-
-/obj/item/organ/internal/cyberimp/mouth/translator/proc/handle_wingdings_chip(obj/item/translator_chip/chip)
-	if(!(chip.wingdings_decoder))
-		return
-
-	if(!decoder)
-		decoder = new(src)
-
-	if(owner)
-		decoder.Grant(owner)
-
-
-/obj/item/organ/internal/cyberimp/mouth/translator/proc/remove_wingdings_chip(obj/item/translator_chip/chip)
-	if(!(chip.wingdings_decoder))
-		return
-
-	can_wingdings = FALSE
-
-	if(!decoder)
-		return
-
-	if(owner)
-		decoder.Remove(owner)
-
-	var/datum/action/item_action/organ_action/wingdings_decoder/used_decoder = locate() in actions
-	if(used_decoder)
-		used_decoder.Destroy()
-
-	decoder = null
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/screwdriver_act(mob/living/user, obj/item/I)
@@ -474,7 +445,6 @@
 	origin_tech = "materials=1;programming=2"
 	var/datum/language/stored_language
 	var/stored_language_rus
-	var/wingdings_decoder = FALSE
 	ru_names = list(
 		NOMINATIVE = "языковой чип",
 		GENITIVE = "языкового чипа",
@@ -491,28 +461,32 @@
 		stored_language = GLOB.all_languages[stored_language]
 
 
+/obj/item/translator_chip/proc/on_install(mob/living/carbon/human/H, obj/item/organ/internal/cyberimp/mouth/translator/translator)
+	return TRUE
+
+
+/obj/item/translator_chip/proc/on_remove(mob/living/carbon/human/H, obj/item/organ/internal/cyberimp/mouth/translator/translator)
+	return TRUE
+
+
 /obj/item/translator_chip/attack_self(mob/living/user)
 	if(stored_language_rus)
 		return
 
 	var/list/available_languages = list()
-	for(var/obj/item/translator_chip/chip as anything in subtypesof(/obj/item/translator_chip))
+	var/obj/item/translator_chip/chip
+	for(chip as anything in subtypesof(/obj/item/translator_chip))
 		available_languages[chip.stored_language_rus] = chip
 
 	var/answer = tgui_input_list(user, "Выберите язык для загрузки в чип:", "Выбор прошивки", available_languages)
 	if(!answer || stored_language_rus) //double check to prevent multispec
 		return
 
-	update_chip(available_languages[answer])
-
-
-/obj/item/translator_chip/proc/update_chip(obj/item/translator_chip/chip)
-	if(chip.stored_language)
-		stored_language = GLOB.all_languages[chip.stored_language]
-
-	stored_language_rus = chip.stored_language_rus
-	wingdings_decoder = chip.wingdings_decoder
-	update_icon(UPDATE_ICON_STATE)
+	user.drop_item_ground(src, silent = TRUE)
+	chip = available_languages[answer]
+	var/obj/item/translator_chip/new_chip = new chip(null)
+	user.put_in_hands(new_chip, silent = TRUE)
+	qdel(src)
 
 
 /obj/item/translator_chip/examine(mob/user)
@@ -608,11 +582,38 @@
 	stored_language = LANGUAGE_DRASK
 	stored_language_rus = "Орлуум"
 
+
 /obj/item/translator_chip/wingdings
 	icon_state = "chip_wingdings"
 	stored_language = null
 	stored_language_rus = "Вингдингс"
-	wingdings_decoder = TRUE
+
+/obj/item/translator_chip/wingdings/on_install(mob/living/carbon/human/H, obj/item/organ/internal/cyberimp/mouth/translator/translator)
+	if(!translator.decoder)
+		translator.decoder = new(translator)
+
+	if(H)
+		translator.decoder.Grant(H)
+
+	return TRUE
+
+/obj/item/translator_chip/wingdings/on_remove(mob/living/carbon/human/H, obj/item/organ/internal/cyberimp/mouth/translator/translator)
+	translator.can_wingdings = FALSE
+
+	if(!translator.decoder)
+		return
+
+	if(H)
+		translator.decoder.Remove(H)
+
+	var/datum/action/item_action/organ_action/wingdings_decoder/used_decoder = locate() in translator.actions
+	if(used_decoder)
+		used_decoder.Destroy()
+
+	translator.decoder = null
+
+	return TRUE
+
 
 /*	One day it will become a reality
 
