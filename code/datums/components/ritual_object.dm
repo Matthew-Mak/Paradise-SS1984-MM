@@ -62,7 +62,7 @@
 	if(allowed_species && !is_type_in_list(human.dna.species, allowed_species))
 		return
 
-	if(allowed_special_role && !is_type_in_list(human.mind?.special_role, allowed_special_role))
+	if(allowed_special_role && !LAZYIN(allowed_special_role, human.mind?.special_role))
 		return
 
 	active_ui = TRUE
