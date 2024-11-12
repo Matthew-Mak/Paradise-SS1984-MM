@@ -145,7 +145,7 @@
 /obj/item/organ/internal/cyberimp/mouth/translator/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/translator_chip)))
 		var/obj/item/translator_chip/chip = I
-		return check_install_chip(user, chip)
+		return install_chip(user, chip, silent = FALSE)
 
 	else if(istype(I, /obj/item/translator_upgrade))
 		if(stored_upgrade)
@@ -219,31 +219,37 @@
 	remove_wingdings_chip(chip)
 
 
-/obj/item/organ/internal/cyberimp/mouth/translator/proc/check_install_chip(mob/living/carbon/human/user, obj/item/translator_chip/chip)
+/obj/item/organ/internal/cyberimp/mouth/translator/proc/install_chip(mob/living/carbon/human/user, obj/item/translator_chip/chip, silent = TRUE, ignore_lid = FALSE)
 	if(!user || !chip)
-		return
+		return FALSE
 
-	if(!open)
-		user.balloon_alert(user, "крышка закрыта!")
-		return
+	if(!open && !ignore_lid) // Forced installation ignoring the closed lid. Used on after_equip chip installation
+		if(!silent)
+			user.balloon_alert(user, "крышка закрыта!")
+
+		return FALSE
 
 	if(LAZYLEN(stored_chips) >= maximum_slots)
-		user.balloon_alert(user, "нет места под чип!")
-		return
+		if(!silent)
+			user.balloon_alert(user, "нет места под чип!")
+
+		return FALSE
 
 	if(!chip.stored_language_rus)
-		user.balloon_alert(user, "чип пустой!")
-		return
+		if(!silent)
+			user.balloon_alert(user, "чип пустой!")
+
+		return FALSE
 
 	if(chip.stored_language_rus in given_languages_rus)
-		user.balloon_alert(user, "чип уже установлен!")
-		return
+		if(!silent)
+			user.balloon_alert(user, "чип уже установлен!")
 
-	user.balloon_alert(user, "чип установлен")
-	install_chip(user, chip)
+		return FALSE
 
+	if(!silent)
+		user.balloon_alert(user, "чип установлен")
 
-/obj/item/organ/internal/cyberimp/mouth/translator/proc/install_chip(mob/living/user, obj/item/translator_chip/chip)
 	user.drop_transfer_item_to_loc(chip, src)
 	LAZYADD(stored_chips, chip)
 
@@ -255,6 +261,8 @@
 
 	if(owner && chip.stored_language)
 		owner.add_language(chip.stored_language.name)
+
+	return TRUE
 
 
 /obj/item/organ/internal/cyberimp/mouth/translator/proc/handle_wingdings_chip(obj/item/translator_chip/chip)
