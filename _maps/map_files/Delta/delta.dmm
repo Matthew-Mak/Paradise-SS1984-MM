@@ -26066,8 +26066,8 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/radio/intercom{
-	pixel_y = -26;
-	pixel_x = 0
+	pixel_x = 0;
+	pixel_y = -26
 	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
@@ -51230,7 +51230,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "gzB" = (
-/obj/item/twohanded/required/kirbyplants,
 /obj/machinery/camera{
 	c_tag = "Chaplain's Quarters"
 	},
@@ -51243,6 +51242,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/vending/clothing/departament/service/chaplain,
 /turf/simulated/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -57724,6 +57724,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/item/twohanded/required/kirbyplants,
 /turf/simulated/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -71065,10 +71066,8 @@
 	},
 /area/security/detectives_office)
 "lwz" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/item/clothing/glasses/hud/hydroponic,
-/obj/item/clothing/glasses/hud/hydroponic,
 /obj/effect/decal/warning_stripes/yellow/hollow,
+/obj/machinery/vending/clothing/departament/service/botanical,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -110990,6 +110989,15 @@
 	icon_state = "dark"
 	},
 /area/crew_quarters/chief)
+"uJZ" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/item/clothing/glasses/hud/hydroponic,
+/obj/item/clothing/glasses/hud/hydroponic,
+/obj/effect/decal/warning_stripes/yellow/hollow,
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/hydroponics)
 "uKb" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
@@ -156139,7 +156147,7 @@ dKX
 dPc
 bhy
 dVJ
-lwz
+uJZ
 baF
 btD
 njM

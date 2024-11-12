@@ -15,6 +15,6 @@
 	new /obj/item/clothing/gloves/ring/silver(src)
 	new /obj/item/clothing/gloves/ring/gold(src)
 	new /obj/item/clothing/gloves/ring/gold(src)
-	new /obj/item/storage/garmentbag/chaplain(src)
+	new /obj/item/clothing/head/helmet/riot/knight/templar(src)
+	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
 	new /obj/item/shield/riot/templar(src)
-

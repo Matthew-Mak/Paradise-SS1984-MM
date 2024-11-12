@@ -487,8 +487,6 @@
 	new /obj/item/wrench(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/shovel/spade(src)
-	new /obj/item/shovel/spade(src)
 	new /obj/item/storage/box/beakers(src)
 	new /obj/item/storage/box/beakers(src)
 	new /obj/item/hand_labeler(src)

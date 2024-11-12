@@ -67732,6 +67732,12 @@
 /obj/machinery/atmospherics/meter,
 /turf/simulated/floor/plasteel,
 /area/atmos)
+"liS" = (
+/obj/machinery/vending/clothing/departament/service/chaplain,
+/turf/simulated/floor/plasteel{
+	icon_state = "grimy"
+	},
+/area/chapel/office)
 "ljb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -134323,7 +134329,7 @@ baz
 cIq
 bga
 bga
-bga
+liS
 baz
 daj
 bLl

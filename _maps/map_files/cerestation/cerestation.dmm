@@ -7310,6 +7310,7 @@
 "bfO" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/item/clothing/glasses/hud/hydroponic,
+/obj/item/clothing/glasses/hud/hydroponic,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "darkgreenfull"
@@ -13017,8 +13018,7 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/item/clothing/glasses/hud/hydroponic,
+/obj/machinery/vending/clothing/departament/service/botanical,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "darkgreenfull"
@@ -29112,6 +29112,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
+/obj/item/clothing/glasses/hud/hydroponic,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "darkgreenfull"
@@ -44250,12 +44251,10 @@
 	},
 /area/hallway/spacebridge/scidock)
 "iUc" = (
-/obj/item/destTagger,
-/obj/item/stack/packageWrap,
-/obj/structure/table/wood,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/vending/clothing/departament/service/chaplain,
 /turf/simulated/floor/carpet/black,
 /area/chapel/office)
 "iUh" = (
@@ -45992,6 +45991,8 @@
 /obj/item/storage/fancy/candle_box{
 	pixel_x = 1
 	},
+/obj/item/destTagger,
+/obj/item/stack/packageWrap,
 /turf/simulated/floor/carpet/black,
 /area/chapel/office)
 "jtF" = (
