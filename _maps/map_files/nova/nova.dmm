@@ -37207,16 +37207,13 @@
 "fsy" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -26
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -39870,6 +39867,7 @@
 	dir = 4
 	},
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/warning_stripes/blue/hollow,
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -43563,11 +43561,13 @@
 	tag_airpump = "ai_pump";
 	tag_chamber_sensor = "ai_sensor";
 	tag_exterior_door = "ai_outer";
-	tag_interior_door = "ai_inner"
+	tag_interior_door = "ai_inner";
+	pixel_y = -3
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "ai_sensor";
-	pixel_x = -28
+	pixel_x = 28;
+	pixel_y = 4
 	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -44247,7 +44247,7 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "robotics_solar_airlock";
 	layer = 3.3;
-	pixel_y = -25;
+	pixel_y = -30;
 	req_access = list(13);
 	tag_airpump = "robotics_solar_pump";
 	tag_chamber_sensor = "robotics_solar_sensor";
@@ -44261,7 +44261,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "robotics_solar_sensor";
 	layer = 3.3;
-	pixel_y = -34
+	pixel_y = -23
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/portsolar)
@@ -45655,7 +45655,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plasteel{
-	icon_state = "red"
+	dir = 1
 	},
 /area/security/seceqstorage)
 "gFc" = (
@@ -50356,7 +50356,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_west_sensor";
-	pixel_y = 7;
+	pixel_y = 3;
 	pixel_x = 25
 	},
 /turf/simulated/floor/plasteel{
@@ -62012,6 +62012,7 @@
 	dir = 10
 	},
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/warning_stripes/blue/hollow,
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -63217,8 +63218,8 @@
 /area/hallway/primary/central/ne)
 "jmY" = (
 /turf/simulated/floor/plasteel{
-	icon_state = "redfull";
-	tag = "icon-redfull (NORTHWEST)"
+	dir = 8;
+	icon_state = "redcorner"
 	},
 /area/security/seceqstorage)
 "jna" = (
@@ -63723,6 +63724,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "jqP" = (
@@ -80881,6 +80885,7 @@
 /area/maintenance/trading)
 "lYj" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/warning_stripes/blue/hollow,
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -87829,10 +87834,6 @@
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/gloves/combat,
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/gloves/combat,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -89854,8 +89855,8 @@
 	frequency = 1379;
 	master_tag = "ex";
 	name = "interior access button";
-	pixel_x = 21;
-	pixel_y = -21
+	pixel_x = 25;
+	pixel_y = -25
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
@@ -95682,10 +95683,16 @@
 	tag_chamber_sensor = "sw_maint2_sensor";
 	tag_exterior_door = "sw_maint2_outer";
 	tag_interior_door = "sw_maint2_inner";
-	pixel_x = 25
+	pixel_x = 25;
+	pixel_y = -2
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "sw_maint2_sensor";
+	pixel_y = 5;
+	pixel_x = 25
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
@@ -106141,7 +106148,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "station_ai_sensor";
-	pixel_y = -10;
+	pixel_y = 7;
 	pixel_x = 57
 	},
 /turf/simulated/floor/plasteel{
@@ -111636,6 +111643,18 @@
 	slowdown = -0.3
 	},
 /area/hallway/primary/port/south)
+"qwG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 1;
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/disposal)
 "qwI" = (
 /turf/simulated/floor/plasteel{
 	icon_state = "freezerfloor"
@@ -112453,6 +112472,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/warning_stripes/blue/hollow,
 /turf/simulated/floor/plasteel{
 	dir = 1
 	},
@@ -112837,6 +112857,13 @@
 	dir = 1
 	},
 /area/hallway/primary/central/second/east)
+"qFi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/disposal)
 "qFu" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/warning_stripes/yellow,
@@ -114796,6 +114823,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -118030,7 +118062,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "n_tool_sensor";
 	layer = 3.3;
-	pixel_y = 9;
+	pixel_y = 7;
 	pixel_x = -25
 	},
 /obj/machinery/light/small{
@@ -124035,7 +124067,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_xeno_sensor";
 	layer = 3.3;
-	pixel_y = 36
+	pixel_y = 33
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 8;
@@ -125131,7 +125163,7 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "solar_tool_airlock";
 	layer = 3.3;
-	pixel_y = 25;
+	pixel_y = 26;
 	req_access = list(13);
 	tag_airpump = "solar_tool_pump";
 	tag_chamber_sensor = "solar_tool_sensor";
@@ -125141,7 +125173,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_tool_sensor";
 	layer = 3.3;
-	pixel_y = 34
+	pixel_y = 33
 	},
 /obj/effect/decal/warning_stripes/yellow,
 /obj/structure/cable{
@@ -146051,10 +146083,13 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "ex_sensor";
-	pixel_y = -24
+	pixel_y = 35
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
+	},
+/obj/structure/sign/vacuum{
+	pixel_y = -32
 	},
 /turf/simulated/floor/engine/insulated,
 /area/maintenance/apmaint)
@@ -146596,7 +146631,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plasteel{
-	icon_state = "red"
+	icon_state = "redcorner"
 	},
 /area/security/seceqstorage)
 "vzX" = (
@@ -149682,7 +149717,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_east_sensor";
 	pixel_x = -25;
-	pixel_y = 10
+	pixel_y = 7
 	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
@@ -161224,7 +161259,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "arrival_south_sensor";
-	pixel_y = 24
+	pixel_y = 34
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	id_tag = "arrival_south_airlock";
@@ -161232,7 +161267,11 @@
 	tag_chamber_sensor = "arrival_south_sensor";
 	tag_exterior_door = "arrival_south_outer";
 	tag_interior_door = "arrival_south_inner";
-	pixel_y = -25
+	pixel_y = 27
+	},
+/obj/structure/sign/vacuum{
+	icon_state = "space1";
+	pixel_y = -32
 	},
 /turf/simulated/floor/plating,
 /area/hallway/secondary/exit)
@@ -163795,7 +163834,7 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "atmos_tank_sensor";
 	pixel_x = 57;
-	pixel_y = 8
+	pixel_y = 7
 	},
 /turf/simulated/floor/plasteel/dark,
 /area/engineering/controlroom)
@@ -205689,8 +205728,8 @@ mMy
 lON
 dvj
 pWK
-jll
-jll
+qwG
+qFi
 jqO
 jll
 iIW
@@ -246504,7 +246543,7 @@ vbS
 gKt
 xmI
 dWi
-mct
+jmY
 aDA
 xAy
 vmF
@@ -246762,7 +246801,7 @@ cTX
 egQ
 ldl
 gEV
-jmY
+mct
 xbz
 cIK
 jHI
