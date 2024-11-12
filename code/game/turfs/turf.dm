@@ -122,8 +122,13 @@
 
 	if(istype(loc, /area/space))
 		force_no_gravity = TRUE
-
+		
+	ComponentInitialize()
 	return INITIALIZE_HINT_NORMAL
+
+/turf/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/blob_turf_consuming, 0)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -174,6 +179,9 @@
 
 /turf/ex_act(severity)
 	return FALSE
+
+/turf/proc/blob_consume()
+	return
 
 /turf/rpd_act(mob/user, obj/item/rpd/our_rpd) //This is the default turf behaviour for the RPD; override it as required
 	if(our_rpd.mode == RPD_ATMOS_MODE)

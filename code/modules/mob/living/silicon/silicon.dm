@@ -4,6 +4,7 @@
 	bubble_icon = "machine"
 	has_unlimited_silicon_privilege = 1
 	weather_immunities = list(TRAIT_WEATHER_IMMUNE)
+	wet_immunity = TRUE
 	var/syndicate = 0
 	var/obj/item/gps/cyborg/gps
 	var/const/MAIN_CHANNEL = "Main Frequency"

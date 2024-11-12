@@ -9,6 +9,8 @@
 	universal_speak = 0
 	status_flags = CANPUSH
 
+	hud_type = /datum/hud/simple_animal
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_resting = ""
@@ -369,12 +371,9 @@
 
 
 /mob/living/simple_animal/say_quote(message)
-	var/verb = "says"
-
-	if(speak_emote.len)
-		verb = pick(speak_emote)
-
-	return verb
+	if(speak_emote?.len)
+		return get_verb(speak_emote)
+	return ..()
 
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
@@ -690,6 +689,7 @@
 		add_overlay("[collar_type]tag")
 
 	update_fire()
+	update_wet()
 
 	if(blocks_emissive)
 		add_overlay(get_emissive_block())
@@ -697,6 +697,11 @@
 /mob/living/simple_animal/Login()
 	..()
 	SSmove_manager.stop_looping(src) // if mob is moving under ai control, then stop AI movement
+	toggle_ai(AI_OFF)
+
+/mob/living/simple_animal/Logout()
+	. = ..()
+	toggle_ai(AI_ON)
 
 
 /mob/living/simple_animal/say(message, verb = "says", sanitize = TRUE, ignore_speech_problems = FALSE, ignore_atmospherics = FALSE, ignore_languages = FALSE)

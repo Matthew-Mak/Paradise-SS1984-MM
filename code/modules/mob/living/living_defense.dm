@@ -85,6 +85,13 @@
 		)
 	return shock_damage
 
+/mob/living/blob_vore_act(obj/structure/blob/special/core/voring_core)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_BLOB_ZOMBIFIED) || QDELETED(src))
+		return FALSE
+	if(stat == DEAD)
+		forceMove(voring_core)
+
 
 /mob/living/emp_act(severity)
 	..()
@@ -185,8 +192,8 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = TRUE
-		visible_message("<span class='warning'>[src.declent_ru(NOMINATIVE)] загора[pluralize_ru(src.gender,"ется","ются")]!</span>", \
-						"<span class='userdanger'>[pluralize_ru(src.gender,"Ты загораешься","Вы загораетесь")]!</span>")
+		visible_message(span_warning("[src.declent_ru(NOMINATIVE)] загора[pluralize_ru(src.gender,"ется","ются")]!"), \
+						span_userdanger("[pluralize_ru(src.gender,"Ты загораешься","Вы загораетесь")]!"))
 		set_light_range(light_range + 3)
 		set_light_color("#ED9200")
 		throw_alert("fire", /atom/movable/screen/alert/fire)
@@ -212,6 +219,8 @@
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
 	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_FIRE)
 	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
+	if(wet_stacks)
+		combine_wet_and_fire()
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -237,6 +246,65 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 	SEND_SIGNAL(src, COMSIG_LIVING_FIRE_TICK)
+	return TRUE
+
+/mob/living/proc/update_wet()
+	if(is_wet)
+		if(wet_effect)
+			return
+		wet_effect = new(src, /particles/droplets)
+	else
+		qdel(wet_effect)
+		wet_effect = null
+
+
+/mob/living/proc/adjust_wet_stacks(add_wet_stacks) //Adjusting the amount of fire_stacks we have on person
+	if(wet_immunity)
+		return
+	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_WET)
+	wet_stacks = clamp(wet_stacks + add_wet_stacks, -20, 20)
+	if(fire_stacks)
+		combine_wet_and_fire()
+	if(is_wet && wet_stacks <= 0)
+		DryMob()
+
+/mob/living/proc/combine_wet_and_fire()
+	var/buf_stacks = wet_stacks
+	wet_stacks = clamp(buf_stacks - fire_stacks, 0, 20)
+	fire_stacks = clamp(fire_stacks - buf_stacks, 0, 20)
+
+/mob/living/proc/WetMob()
+	if(!wet_immunity && wet_stacks > 0 && !is_wet )
+		is_wet = TRUE
+		visible_message(span_warning("[src.declent_ru(NOMINATIVE)] намока[pluralize_ru(src.gender,"ет","ют")]!"), \
+						span_userdanger("[pluralize_ru(src.gender,"Ты намокаешь","Вы намокаете")]!"))
+		AddComponent(/datum/component/slippery, 5 SECONDS)
+		update_wet()
+		SEND_SIGNAL(src, COMSIG_LIVING_WET)
+		return TRUE
+	return FALSE
+
+/mob/living/proc/DryMob()
+	if(is_wet)
+		qdel(GetComponent(/datum/component/slippery))
+		is_wet = FALSE
+		wet_stacks = 0
+		update_wet()
+
+/**
+ * Burns a mob and slowly puts the fires out. Returns TRUE if the mob is on fire
+ */
+/mob/living/proc/handle_wet()
+	if(wet_stacks < 0) //If we've doused ourselves in water to avoid wet, dry off slowly
+		wet_stacks = min(0, wet_stacks + 1)//So we dry ourselves back to default, nonflammable.
+	if(!is_wet)
+		return FALSE
+	if(wet_stacks > 0)
+		adjust_wet_stacks(-0.1) //the wet is slowly consumed
+	else
+		DryMob()
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_LIVING_WET_TICK)
 	return TRUE
 
 /mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, global_overlay = TRUE)

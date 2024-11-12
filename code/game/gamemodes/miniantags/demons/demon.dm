@@ -31,6 +31,7 @@
 	del_on_death = TRUE
 	dirslash_enabled = TRUE
 	slowed_by_pull_and_push = FALSE
+	wet_immunity = TRUE
 	var/vialspawned = FALSE
 	var/playstyle_string
 	var/datum/action/innate/demon/whisper/whisper_action
