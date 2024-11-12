@@ -247,6 +247,11 @@
 	desc = "A mesmerizing painting of a singularity. It seems to suck you in..."
 	icon_state = "singulo"
 
+/obj/structure/sign/bathhouse
+	name = "\improper bathhouse sign"
+	desc = "Старая разбитая, но рабочая табличка. Щас бы в баньку..."
+	icon_state = "banya"
+
 /obj/structure/sign/barber
 	name = "\improper barber shop sign"
 	desc = "A spinning sign indicating a barbershop is near."
