@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/charge
 	name = "Charge"
-	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
+	desc = "Это заклинание можно использовать для подзарядки различных предметов, находящихся в ваших руках, от магических артефактов до электрических компонентов. Изобретательный волшебник может использовать его даже для обновления перезарядки заклинаний своего товарища по магии."
 	school = "transmutation"
 	base_cooldown = 1 MINUTES
 	clothes_req = FALSE
@@ -19,6 +19,7 @@
 	var/charge_result = NONE
 	var/atom/charge_target_name
 
+
 	var/mob/living/living = targets[1]
 
 	if(living.pulling)
@@ -35,12 +36,13 @@
 			if(charge_result & RECHARGE_SUCCESSFUL)
 				break
 
+
 	if(!(charge_result & RECHARGE_SUCCESSFUL))
-		to_chat(user, span_notice("You feel magical power surging to your hands, but the feeling rapidly fades..."))
+		to_chat(user, span_notice("Вы чувствуете, как к вашим рукам приливает магическая сила, но это ощущение быстро исчезает..."))
 		return
 
 	if(charge_result & RECHARGE_BURNOUT)
-		to_chat(user, span_caution("[charge_target_name] is reacting poorly to the spell!"))
+		to_chat(user, span_caution("[charge_target_name] не реагирует на заклинание..."))
 		return
 
-	to_chat(user, span_notice("[charge_target_name] suddenly feels very warm!"))
+	to_chat(user, span_notice("[charge_target_name] внезапно становится очень тёплым!"))
