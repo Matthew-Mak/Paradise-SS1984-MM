@@ -437,10 +437,10 @@
 			balloon_alert(user, "ПИИ не активен")
 			return ATTACK_CHAIN_PROCEED
 		if(key || (!allow_pai && !card.pai.syndipai))
-			balloon_alert(user, "бот не совместим с ПИИ")
+			balloon_alert(user, "робот не совместим с ПИИ")
 			return ATTACK_CHAIN_PROCEED
 		if(!card.pai.ckey || jobban_isbanned(card.pai, ROLE_SENTIENT))
-			balloon_alert(user, "ПИИ не может подключиться к боту")
+			balloon_alert(user, "ПИИ не может подключиться к роботу")
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(card, src))
 			return ..()
@@ -730,7 +730,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 
 /mob/living/simple_animal/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
-		to_chat(calling_ai, span_danger("Команда вызова бота была отменена."))
+		to_chat(calling_ai, span_danger("Команда вызова робота была отменена."))
 		calling_ai = null
 	if(reset_access_timer_id)
 		deltimer(reset_access_timer_id)
@@ -1376,7 +1376,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 
 /obj/effect/proc_holder/spell/bot_speed
 	name = "Speed Charge"
-	desc = "На некоторое время ускоряет работу внутренних систем бота."
+	desc = "На некоторое время ускоряет работу внутренних систем робота."
 	action_icon_state = "adrenal-bot"
 	base_cooldown = 300 SECONDS
 	clothes_req = FALSE

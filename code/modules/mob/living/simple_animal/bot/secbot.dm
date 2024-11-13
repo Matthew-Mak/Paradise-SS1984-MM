@@ -5,12 +5,12 @@
 	name = "\improper Securitron"
 	desc = "Маленький охранный робот. Он выглядит абсолютно спокойным."
 	ru_names = list(
-		NOMINATIVE = "охранный бот",
-		GENITIVE = "охранного бота",
-		DATIVE = "охранному боту",
-		ACCUSATIVE = "охранного бота",
-		INSTRUMENTAL = "охранным ботом",
-		PREPOSITIONAL = "охранном боте",
+		NOMINATIVE = "охранный робот",
+		GENITIVE = "охранного робота",
+		DATIVE = "охранному роботу",
+		ACCUSATIVE = "охранного робота",
+		INSTRUMENTAL = "охранным роботом",
+		PREPOSITIONAL = "охранном роботе",
 	)
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"

@@ -1,6 +1,6 @@
 /mob/living/simple_animal/bot/secbot/griefsky //This bot is powerful. If you managed to get 4 eswords somehow, you deserve this horror. Emag him for best results.
 	name = "\improper General Griefsky"
-	desc = "Это охранный бот с четырьмя лазерными мечами в руках..?"
+	desc = "Это охранный робот с четырьмя лазерными мечами в руках..?"
 	ru_names = list(
 		NOMINATIVE = "Генерал Грифски",
 		GENITIVE = "Генерала Грифски",
@@ -30,7 +30,7 @@
 
 /mob/living/simple_animal/bot/secbot/griefsky/toy  //A toy version of general griefsky!
 	name = "Genewul Giftskee"
-	desc = "Очаровательный охранный бот с четырьмя игрушечными мечами в руках. Прелесть!"
+	desc = "Очаровательный охранный робот с четырьмя игрушечными мечами в руках. Прелесть!"
 	ru_names = list(
 		NOMINATIVE = "Гиневал Гифтски",
 		GENITIVE = "Гиневала Гифтски",

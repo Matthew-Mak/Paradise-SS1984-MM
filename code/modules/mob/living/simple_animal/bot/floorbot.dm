@@ -3,12 +3,12 @@
 	name = "\improper Floorbot"
 	desc = "Маленький робот для починки полов и обшивки. Он выглядит таким увлечённым!"
 	ru_names = list(
-		NOMINATIVE = "ремонтный бот",
-		GENITIVE = "ремонтного бота",
-		DATIVE = "ремонтному боту",
-		ACCUSATIVE = "ремонтного бота",
-		INSTRUMENTAL = "ремонтным ботом",
-		PREPOSITIONAL = "ремонтном боте",
+		NOMINATIVE = "ремонтный робот",
+		GENITIVE = "ремонтного робота",
+		DATIVE = "ремонтному роботу",
+		ACCUSATIVE = "ремонтного робота",
+		INSTRUMENTAL = "ремонтным роботом",
+		PREPOSITIONAL = "ремонтном роботе",
 	)
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
@@ -84,7 +84,7 @@
 	var/dat
 	dat += hack(user)
 	dat += showpai(user)
-	dat += "<TT><B>Панель управления ремонтным ботом v1.1</B></TT><BR><BR>"
+	dat += "<TT><B>Панель управления ремонтным роботом v1.1</B></TT><BR><BR>"
 	dat += "Состояние: <a href='byond://?src=[UID()];power=1'>[on ? "Включён" : "Выключен"]</A><BR>"
 	dat += "Панель технического обслуживания [open ? "открыта" : "закрыта"]<BR>"
 	dat += "Плиток пола в запасе: [amount]<BR>"

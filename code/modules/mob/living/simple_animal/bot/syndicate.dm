@@ -3,12 +3,12 @@
 	name = "Syndicate Sentry Bot"
 	desc = "Охранный робот Синдиката."
 	ru_names = list(
-		NOMINATIVE = "бот-турель Синдиката",
-		GENITIVE = "бота-турели Синдиката",
-		DATIVE = "боту-турели Синдиката",
-		ACCUSATIVE = "бота-турель Синдиката",
-		INSTRUMENTAL = "ботом-турелью Синдиката",
-		PREPOSITIONAL = "боте-турели Синдиката",
+		NOMINATIVE = "робот-часовой Синдиката",
+		GENITIVE = "робота-часового Синдиката",
+		DATIVE = "роботу-часовому Синдиката",
+		ACCUSATIVE = "робота-часового Синдиката",
+		INSTRUMENTAL = "роботом-часовым Синдиката",
+		PREPOSITIONAL = "роботе-часовом Синдиката",
 	)
 	model = "Guardian"
 	icon = 'icons/obj/mecha/mecha.dmi'
@@ -25,7 +25,7 @@
 	shoot_sound = 'sound/weapons/wave.ogg'
 	anchored = TRUE
 	window_id = "syndiebot"
-	window_name = "Интерфейс Бота Синдиката"
+	window_name = "Интерфейс Часового Робота Синдиката"
 	var/turf/saved_turf
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/area/syndicate_depot/core/depotarea
