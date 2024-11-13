@@ -128,15 +128,15 @@
 		return handle_loadout_chip(H, retranslator)
 
 	var/obj/item/translator_chip/wingdings/chip = new
-	retranslator.install_chip(H, chip, ignore_lid = TRUE)
-	to_chat(H, span_notice("В связи с Ваш[translator_pref ? "им недугом" : "ей ответственной работой"], у Вас уже есть установленный чип Вингдингс."))
+	if(retranslator.install_chip(H, chip, ignore_lid = TRUE))
+		to_chat(H, span_notice("В связи с Ваш[translator_pref ? "им недугом" : "ей ответственной работой"], у Вас уже есть установленный чип Вингдингс."))
+
 	handle_loadout_chip(H, retranslator)
 
 
 /datum/species/grey/proc/handle_loadout_chip(mob/living/carbon/human/H, obj/item/organ/internal/cyberimp/mouth/translator/grey_retraslator/retranslator)
 	var/obj/item/translator_chip/chip = locate() in H.contents // we can take only one chip from loadout
-	if(chip && (LAZYLEN(retranslator.stored_chips) < retranslator.maximum_slots)) // install only if we have slot for chip
-		retranslator.install_chip(H, chip, ignore_lid = TRUE)
+	retranslator.install_chip(H, chip, ignore_lid = TRUE)
 
 
 /datum/species/grey/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)
