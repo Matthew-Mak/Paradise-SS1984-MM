@@ -40,6 +40,10 @@
 
 	//Украшение СМа гирляндой. С новым годом!
 	var/holiday_lights = FALSE
+	//Зацикленные звуки
+	var/datum/looping_sound/supermatter/soundloop
+	///cooldown tracker for accent sounds
+	var/last_accent_sound = 0
 
 	var/gasefficency = 0.125
 
@@ -107,6 +111,8 @@
 	if(GLOB.new_year_celebration && is_station_level(z))
 		holiday_lights()
 
+	soundloop = new(src, TRUE)
+
 /obj/machinery/power/supermatter_shard/examine(mob/user)
 	. = ..()
 	if(holiday_lights)
@@ -165,6 +171,7 @@
 	if(damage > emergency_point)
 		emergency_lighting(0)
 	QDEL_NULL(radio)
+	QDEL_NULL(soundloop)
 	GLOB.poi_list.Remove(src)
 	SSair.atmos_machinery -= src
 	return ..()
@@ -297,6 +304,9 @@
 
 	air_update_turf()
 	transfer_energy()
+
+	//Звуки окружения
+	processing_sound()
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(sqrt(power/6)))))
 		// No more hallucinate for ded pipol.
