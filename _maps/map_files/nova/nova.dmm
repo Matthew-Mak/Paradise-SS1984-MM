@@ -4108,7 +4108,6 @@
 	},
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "east bump";
 	pixel_x = 26
 	},
 /turf/simulated/floor/plasteel{
@@ -12516,7 +12515,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "bNL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -14722,7 +14721,7 @@
 	dir = 4;
 	icon_state = "darkredcorners"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "cdq" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -16295,7 +16294,7 @@
 "cpJ" = (
 /obj/machinery/computer/security,
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "cpN" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare{
@@ -29867,7 +29866,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "eoV" = (
 /obj/machinery/porta_turret{
 	dir = 8
@@ -32747,11 +32746,16 @@
 /turf/simulated/floor/plasteel,
 /area/crew_quarters/toilet)
 "eKM" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_y = 28;
+	pixel_x = 28
+	},
 /turf/simulated/floor/plasteel{
 	dir = 5;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "eLa" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -33318,7 +33322,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "eOZ" = (
 /obj/machinery/power/tesla_coil,
 /obj/effect/decal/warning_stripes/yellow/hollow,
@@ -42529,7 +42533,7 @@
 	dir = 6;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "gfP" = (
 /turf/simulated/openspace,
 /area/quartermaster/delivery)
@@ -43015,7 +43019,7 @@
 	dir = 9;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "gjB" = (
 /obj/structure/table/reinforced,
 /obj/item/taperecorder,
@@ -43267,6 +43271,12 @@
 	},
 /turf/simulated/floor/glass,
 /area/crew_quarters/chief)
+"gkR" = (
+/turf/simulated/floor/plasteel{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/tcommsat/server)
 "gkT" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8;
@@ -51820,6 +51830,9 @@
 	icon_state = "darkblue"
 	},
 /area/chapel/main)
+"hBC" = (
+/turf/simulated/wall/r_wall,
+/area/tcommsat/server)
 "hBG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -53404,7 +53417,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "hQr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -59466,9 +59479,7 @@
 "iJH" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	cell_type = 5000;
-	name = "south bump Important Area";
-	pixel_y = -24
+	pixel_y = -26
 	},
 /turf/simulated/floor/redgrid,
 /area/aisat/aihallway)
@@ -66057,18 +66068,20 @@
 	},
 /area/atmos/control)
 "jIQ" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "jIT" = (
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -68663,7 +68676,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "kdy" = (
 /obj/machinery/computer/secure_data{
 	dir = 8
@@ -71725,6 +71738,12 @@
 /obj/effect/spawner/window/reinforced,
 /turf/simulated/floor/plating,
 /area/security/securehallway)
+"kCy" = (
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "darkredcorners"
+	},
+/area/tcommsat/server)
 "kCC" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 2;
@@ -91001,7 +91020,7 @@
 	dir = 9;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "nvU" = (
 /obj/machinery/vending/wallmed{
 	pixel_x = 26;
@@ -91092,6 +91111,22 @@
 	icon_state = "dark"
 	},
 /area/atmos)
+"nwG" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/maintenance/maintcentral)
 "nwN" = (
 /obj/structure/chair/sofa/corner{
 	dir = 4
@@ -104748,7 +104783,7 @@
 	dir = 10;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "pxI" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -105085,9 +105120,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/apmaint)
 "pzK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/turretid/stun{
 	control_area = "AI Satellite Antechamber";
 	name = "AI Antechamber Turret Control";
@@ -105106,7 +105138,7 @@
 	dir = 10;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "pzY" = (
 /obj/effect/decal/warning_stripes/south,
 /obj/item/radio/intercom{
@@ -110694,7 +110726,7 @@
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "qqq" = (
 /obj/structure/chair/comfy/teal{
 	dir = 8
@@ -112592,7 +112624,7 @@
 /turf/simulated/floor/plasteel{
 	icon_state = "darkredcorners"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "qDk" = (
 /obj/machinery/optable,
 /obj/machinery/shower{
@@ -113834,9 +113866,10 @@
 	},
 /area/quartermaster/miningstorage)
 "qNY" = (
-/obj/structure/girder/reinforced,
-/turf/simulated/floor/plating,
-/area/maintenance/maintcentral)
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/server)
 "qOc" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -114581,7 +114614,7 @@
 	dir = 5;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "qSA" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -122548,7 +122581,7 @@
 	},
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "saQ" = (
 /turf/simulated/floor/plasteel{
 	dir = 4;
@@ -122822,7 +122855,7 @@
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "scp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -129100,7 +129133,7 @@
 	dir = 4;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "sXx" = (
 /obj/structure/rack{
 	dir = 8;
@@ -137609,10 +137642,6 @@
 /turf/simulated/floor/plasteel/dark,
 /area/maintenance/starboardaux)
 "ufB" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_y = -28
-	},
 /obj/structure/showcase{
 	density = 0;
 	dir = 1;
@@ -137621,11 +137650,19 @@
 	name = "Cyborg Statue"
 	},
 /obj/machinery/light,
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	name = "south bump Important Area";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "ufI" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -147476,7 +147513,7 @@
 /turf/simulated/floor/plasteel{
 	icon_state = "darkredfull"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "vHo" = (
 /obj/machinery/power/supermatter_shard{
 	anchored = 1;
@@ -148329,7 +148366,7 @@
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "vNO" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -148671,16 +148708,8 @@
 /area/hallway/primary/command/east)
 "vQd" = (
 /obj/machinery/message_server,
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	name = "south bump Important Area";
-	pixel_y = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "vQh" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -150390,7 +150419,7 @@
 	},
 /obj/machinery/tcomms/core/station,
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "wcH" = (
 /turf/simulated/wall/r_wall,
 /area/medical/research/restroom)
@@ -152827,7 +152856,7 @@
 	network = list("Minisat","SS13")
 	},
 /turf/simulated/floor/redgrid,
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "wtT" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Broom Closet"
@@ -155123,7 +155152,7 @@
 	dir = 8;
 	icon_state = "darkred"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "wNu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -161782,7 +161811,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/tcommsat/chamber)
+/area/tcommsat/server)
 "xMp" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -260866,7 +260895,7 @@ fvL
 fvL
 hKA
 kCp
-jZN
+nwG
 kCp
 uMw
 ppW
@@ -261893,7 +261922,7 @@ kCp
 kGY
 hKA
 nxY
-qNY
+kCp
 hJs
 uMw
 daU
@@ -287950,13 +287979,13 @@ iqK
 iqK
 iqK
 iqK
-hPs
-hPs
-hPs
-hPs
-hPs
-hPs
-hPs
+hBC
+hBC
+hBC
+hBC
+hBC
+hBC
+hBC
 mRg
 mRg
 mRg
@@ -288207,13 +288236,13 @@ nUo
 blK
 wCX
 qBf
-hPs
-hPs
+hBC
+hBC
 kdv
 wMZ
 saL
-hPs
-hPs
+hBC
+hBC
 uht
 uht
 vEb
@@ -288464,13 +288493,13 @@ vOX
 bJz
 lhf
 hNL
-hPs
+hBC
 eoO
 nvR
-dqM
+qNY
 pxG
 vQd
-hPs
+hBC
 lrh
 mfy
 bTQ
@@ -288721,13 +288750,13 @@ jWS
 mKl
 mKl
 rlg
-hPs
+hBC
 gjA
-dbP
+kCy
 bNE
-uYu
+gkR
 pzK
-hPs
+hBC
 lvm
 lvm
 grM
@@ -289235,13 +289264,13 @@ jWS
 mKl
 mKl
 gBH
-hPs
+hBC
 qSz
 cdo
 eOV
 qDg
 ufB
-hPs
+hBC
 uTE
 uTE
 mVF
@@ -289492,13 +289521,13 @@ nrj
 oWE
 rzI
 cxX
-hPs
+hBC
 cpJ
 eKM
-dqM
+qNY
 gfK
 wcF
-hPs
+hBC
 nBI
 vwV
 aPT
@@ -289749,13 +289778,13 @@ cBD
 iJU
 wCX
 gke
-hPs
-hPs
+hBC
+hBC
 hQp
 sXu
 wtP
-hPs
-hPs
+hBC
+hBC
 uht
 uht
 hgi
@@ -290006,13 +290035,13 @@ iqK
 iqK
 iqK
 iqK
-hPs
-hPs
-hPs
-hPs
-hPs
-hPs
-hPs
+hBC
+hBC
+hBC
+hBC
+hBC
+hBC
+hBC
 mRg
 mRg
 mRg
