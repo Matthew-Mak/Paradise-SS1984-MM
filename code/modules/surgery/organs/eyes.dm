@@ -1,4 +1,3 @@
-#define EXAMINE_INSTANT	0 // 0 seconds
 
 /obj/item/organ/internal/eyes
 	name = "eyeballs"

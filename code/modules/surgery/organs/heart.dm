@@ -182,11 +182,13 @@
 
 	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		target.stam_regen_start_modifier *= 0.5
+		ADD_TRAIT(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src))
 
 
 /obj/item/organ/internal/heart/cybernetic/upgraded/remove(mob/living/carbon/human/target, special)
-	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
+	if(HAS_TRAIT_FROM(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src)))
 		target.stam_regen_start_modifier /= 0.5
+		REMOVE_TRAIT(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src))
 
 	. = ..()
 

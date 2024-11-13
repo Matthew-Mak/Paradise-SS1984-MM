@@ -336,12 +336,16 @@
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus/insert(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
 	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
 		hunger_modificator = 0.2
+		ADD_TRAIT(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src))
+
 	. = ..()
 
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus/remove(mob/living/carbon/human/target, special = ORGAN_MANIPULATION_DEFAULT)
-	if(HAS_TRAIT(target, TRAIT_ADVANCED_CYBERIMPLANTS))
+	if(HAS_TRAIT_FROM(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src)))
 		hunger_modificator = initial(hunger_modificator)
+		REMOVE_TRAIT(target, TRAIT_CYBERIMP_IMPROVED, UNIQUE_TRAIT_SOURCE(src))
+
 	. = ..()
 
 
