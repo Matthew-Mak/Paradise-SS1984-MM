@@ -203,6 +203,26 @@
 				seed.product = /obj/item/reagent_containers/food/snacks/grown/random
 				seed.transform_into_random()
 
+/obj/machinery/power/supermatter_shard/proc/processing_sound()
+	if(power)
+		soundloop.volume = clamp((50 + (power / 50)), 50, 100)
+	if(damage >= 300)
+		soundloop.mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
+	else
+		soundloop.mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
+
+	//We play delam/neutral sounds at a rate determined by power and damage
+	if(last_accent_sound >= world.time || !prob(20))
+		return
+	var/aggression = min(((damage / 800) * (power / 2500)), 1.0) * 100
+	if(damage >= 300)
+		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+	else
+		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+	var/next_sound = round((100 - aggression) * 5)
+	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+
+
 #undef DETONATION_MACHINE_BREAKDOWN_CHANCE
 #undef DETONATION_MACHINE_EFFECT_CHANCE
 #undef DETONATION_APC_BREAKDOWN_CHANCE

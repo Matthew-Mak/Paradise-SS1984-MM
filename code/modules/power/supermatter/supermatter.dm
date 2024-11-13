@@ -30,18 +30,24 @@
 #define WARNING_DELAY 20			//seconds between warnings.
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'>You get headaches just from looking at it.</span>"
+	desc = "Странный полупрозрачный и переливающийся кристалл, который выглядит так, будто когда-то был частью более крупной структуры. <span class='danger'>У вас начинает болеть голова, просто глядя на это.</span>"
 	icon = 'icons/obj/engines_and_power/supermatter.dmi'
-	icon_state = "darkmatter_shard"
+	icon_state = "sm_shard"
 	density = TRUE
 	anchored = FALSE
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | NO_MALF_EFFECT
 
+	//Украшение СМа гирляндой. С новым годом!
+	var/holiday_lights = FALSE
+	//Зацикленные звуки
+	var/datum/looping_sound/supermatter/soundloop
+	///cooldown tracker for accent sounds
+	var/last_accent_sound = 0
 
 	var/gasefficency = 0.125
 
-	base_icon_state = "darkmatter_shard"
+	base_icon_state = "sm_shard"
 	var/zap_sound_extrarange = 5
 
 	var/damage = 0
@@ -90,9 +96,9 @@
 
 /obj/machinery/power/supermatter_shard/crystal
 	name = "supermatter crystal"
-	desc = "A strangely translucent and iridescent crystal."
-	base_icon_state = "darkmatter"
-	icon_state = "darkmatter"
+	desc = "Странный полупрозрачный и переливающийся кристалл."
+	base_icon_state = "sm"
+	icon_state = "sm"
 	anchored = TRUE
 	warning_point = 200
 	emergency_point = 2000
@@ -100,6 +106,28 @@
 	gasefficency = 0.25
 	explosion_power = 24
 
+/obj/machinery/power/supermatter_shard/Initialize(mapload)
+	. = ..()
+	if(GLOB.new_year_celebration && is_station_level(z))
+		holiday_lights()
+
+	soundloop = new(src, TRUE)
+
+/obj/machinery/power/supermatter_shard/examine(mob/user)
+	. = ..()
+	if(holiday_lights)
+		. += span_notice("Ослепительные огни, любовно обёрнутые вокруг основания, излучают одновременно праздничное настроение и настоящую радиацию, превращающие кристалл из потенциальной бомбы в новогоднюю ёлочку.")
+
+/obj/machinery/power/supermatter_shard/update_overlays()
+	. = ..()
+	if(holiday_lights)
+		if(istype(src, /obj/machinery/power/supermatter_shard/crystal))
+			. += mutable_appearance(icon, "holiday_lights")
+			. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
+		else
+			. += mutable_appearance(icon, "holiday_lights_shard")
+			. += emissive_appearance(icon, "holiday_lights_shard_e", src, alpha = src.alpha)
+	return .
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
@@ -143,6 +171,7 @@
 	if(damage > emergency_point)
 		emergency_lighting(0)
 	QDEL_NULL(radio)
+	QDEL_NULL(soundloop)
 	GLOB.poi_list.Remove(src)
 	SSair.atmos_machinery -= src
 	return ..()
@@ -241,7 +270,7 @@
 	if(oxygen > 0.8)
 		//If chain reacting at oxygen > 0.8, we want the power at 800 K to stabilize at a power level of 400
 		equilibrium_power = 400
-		icon_state = "[base_icon_state]_glow"
+		icon_state = "[base_icon_state]-glow"
 	else
 		//Otherwise, we want the power at 800 K to stabilize at a power level of 250
 		equilibrium_power = 250
@@ -275,6 +304,9 @@
 
 	air_update_turf()
 	transfer_energy()
+
+	//Звуки окружения
+	processing_sound()
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(sqrt(power/6)))))
 		// No more hallucinate for ded pipol.
@@ -423,6 +455,16 @@
 	)
 	playsound(loc, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.apply_effect(150, IRRADIATE)
+
+	if(istype(I, /obj/item/clothing/head/helmet/space/santahat))
+		QDEL_NULL(I)
+		RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(holiday_hat_examine))
+		if(istype(src, /obj/machinery/power/supermatter_shard/crystal))
+			add_overlay(mutable_appearance(icon, "santa_hat"))
+		else
+			add_overlay(mutable_appearance(icon, "santa_hat_shard"))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return NONE
 
 
 /obj/machinery/power/supermatter_shard/wrench_act(mob/living/user, obj/item/I)
@@ -612,3 +654,13 @@
 		user.revive()
 		nuclear.touched_supermatter = TRUE
 		to_chat(user, span_userdanger("The wave of warm energy is overwhelming you. You feel calm."))
+
+/obj/machinery/power/supermatter_shard/proc/holiday_lights()
+	holiday_lights = TRUE
+	update_appearance()
+
+/// Adds the hat flavor text when examined
+/obj/machinery/power/supermatter_shard/proc/holiday_hat_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_info("На ней находится шапочка деда мороза. Как она попала, не став пылью, остаётся загадкой.")
+

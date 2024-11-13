@@ -152,3 +152,7 @@
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
 
+//Звуки окружения СМа
+#define SFX_SM_CALM "sm_calm"
+#define SFX_SM_DELAM "sm_delam"
+
