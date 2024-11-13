@@ -105,7 +105,7 @@
 /obj/machinery/power/supermatter_shard/Initialize(mapload)
 	. = ..()
 	if(GLOB.new_year_celebration && is_station_level(z))
-		holiday_lights = TRUE
+		holiday_lights()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
 	. = ..()
@@ -115,12 +115,12 @@
 /obj/machinery/power/supermatter_shard/update_overlays()
 	. = ..()
 	if(holiday_lights)
-		if(istype(src, /obj/machinery/power/supermatter_shard))
-			. += mutable_appearance(icon, "holiday_lights_shard")
-			. += emissive_appearance(icon, "holiday_lights_shard_e", src, alpha = src.alpha)
-		else
+		if(istype(src, /obj/machinery/power/supermatter_shard/crystal))
 			. += mutable_appearance(icon, "holiday_lights")
 			. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
+		else
+			. += mutable_appearance(icon, "holiday_lights_shard")
+			. += emissive_appearance(icon, "holiday_lights_shard_e", src, alpha = src.alpha)
 	return .
 
 /obj/machinery/power/supermatter_shard/New()
@@ -446,6 +446,16 @@
 	playsound(loc, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.apply_effect(150, IRRADIATE)
 
+	if(istype(I, /obj/item/clothing/head/helmet/space/santahat))
+		QDEL_NULL(I)
+		RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(holiday_hat_examine))
+		if(istype(src, /obj/machinery/power/supermatter_shard/crystal))
+			add_overlay(mutable_appearance(icon, "santa_hat"))
+		else
+			add_overlay(mutable_appearance(icon, "santa_hat_shard"))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return NONE
+
 
 /obj/machinery/power/supermatter_shard/wrench_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -634,3 +644,13 @@
 		user.revive()
 		nuclear.touched_supermatter = TRUE
 		to_chat(user, span_userdanger("The wave of warm energy is overwhelming you. You feel calm."))
+
+/obj/machinery/power/supermatter_shard/proc/holiday_lights()
+	holiday_lights = TRUE
+	update_appearance()
+
+/// Adds the hat flavor text when examined
+/obj/machinery/power/supermatter_shard/proc/holiday_hat_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_info("На ней находится шапочка деда мороза. Как она попала, не став пылью, остаётся загадкой.")
+
