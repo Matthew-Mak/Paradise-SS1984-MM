@@ -37,6 +37,17 @@
 	qdel(src)
 	return TRUE
 
+/obj/item/seeds/kudzu/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/seeds/kudzu))
+		var/obj/item/seeds/kudzu/AttackerSeed = I
+		src.mutations |= AttackerSeed.mutations
+		src.set_potency(max(src.potency, AttackerSeed.potency))
+		src.set_production(min(src.production, AttackerSeed.production))
+
+		add_fingerprint(user)
+		qdel(I)
+	. = ..()
+
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	if(plant(user))
 		to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")

@@ -3,6 +3,10 @@
 #define	NEGATIVE			2
 #define	MINOR_NEGATIVE		3
 
+/datum/event/spacevine
+	announceWhen = 120
+	var/obj/structure/spacevine_controller/SC
+
 /datum/event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
@@ -17,7 +21,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		var/obj/structure/spacevine_controller/SC = new /obj/structure/spacevine_controller(T, , rand(30,70),rand(5,2)) //spawn a controller at turf
+		SC = new /obj/structure/spacevine_controller(T, , rand(30,70),rand(5,2)) //spawn a controller at turf
 
 		// Make the event start fun - give the vine a random hostile mutation
 		if(SC.vines.len)
@@ -31,6 +35,9 @@
 			mutations.Cut()
 			mutations = null
 
+/datum/event/spacevine/announce(false_alarm)
+	if(GLOB.player_list.len < 20 && SC?.vines.len)
+		GLOB.event_announcement.Announce("Биосканеры фиксируют рост космической лозы в [get_area(SC.loc)]. Избавьтесь от неё, прежде чем она нанесёт ущерб станции.", "ВНИМАНИЕ: БИОЛОГИЧЕСКАЯ УГРОЗА.")
 
 /datum/spacevine_mutation
 	var/name = ""
@@ -366,7 +373,7 @@
 	hue = "#444444"
 	quality = POSITIVE
 	severity = 3
-	var/drop_rate = 20
+	var/drop_rate = 40
 	var/list/mineral_results = list(
 	/obj/item/stack/sheet/metal = 1
 	)
@@ -381,7 +388,7 @@
 /datum/spacevine_mutation/mineral/valuables
 	name = "glimmering"
 	hue = "#888800"
-	drop_rate = 10
+	drop_rate = 20
 	mineral_results = list(
 	/obj/item/stack/sheet/mineral/silver = 4,
 	/obj/item/stack/sheet/mineral/gold = 2,
@@ -584,10 +591,11 @@
 	spawn_spacevine_piece(loc, null, muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
-	if(potency != null && potency > 0)
-		// 1 mutativeness at 10 potency
-		// 4 mutativeness at 100 potency
-		mutativeness = log(10, potency) ** 2
+	// 0 mutativeness at 0 or 1 potency
+	// 1 mutativeness at 10 potency
+	// 4 mutativeness at 100 potency
+	mutativeness = potency ? log(10, potency) ** 2 : 0
+
 	if(production != null)
 		// 1 production is crazy powerful
 		var/spread_value = max(10 - production, 1)
