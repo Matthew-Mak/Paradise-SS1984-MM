@@ -22,7 +22,9 @@
 /datum/map_template/ruin/New()
 	if(!name && id)
 		name = id
-
+	check_specials()
 	mappath = prefix + suffix
 	..(path = mappath)
 
+/datum/map_template/ruin/proc/check_specials()
+	return

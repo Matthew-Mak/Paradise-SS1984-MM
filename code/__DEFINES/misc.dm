@@ -536,3 +536,8 @@
 #define MECH_TYPE_LOCKER		(1<<9)
 #define MECH_TYPE_MARAUDER		(1<<10)
 #define MECH_TYPE_SIDEWINTER	(1<<11)
+
+/// Lavaland types
+#define LAVALAND_TYPE_LAVA		(1<<0)
+#define	LAVALAND_TYPE_PLASMA	(1<<1)
+#define	LAVALAND_TYPE_CHASM		(1<<2)

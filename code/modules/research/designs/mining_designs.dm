@@ -119,5 +119,5 @@
 	req_tech = list("materials" = 5, "engineering" = 4, "plasmatech" = 6, "biotech" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_TITANIUM = 15000, MAT_SILVER = 2500, MAT_DIAMOND = 2500)
-	build_path = /obj/item/twohanded/fishingrod
+	build_path = /obj/item/twohanded/fishing_rod
 	category = list("Mining")

@@ -310,3 +310,16 @@
 	cost = 10
 	allow_duplicates = FALSE
 */
+
+/datum/map_template/ruin/lavaland/lavalake
+	name = "Lavaland Lava Lake"
+	id = "lavalake"
+	description = "Огромное лавовое озеро, которое не подвержено стандартным изменениям лаваленда."
+	suffix = "lavaland_surface_lavalake.dmm"
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/lavalake/check_specials()
+	if(SSmapping.lavaland_theme.lavaland_type != LAVALAND_TYPE_LAVA)
+		always_place = TRUE
+	else
+		always_place = FALSE
