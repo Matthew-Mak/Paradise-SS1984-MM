@@ -41,8 +41,6 @@
 	if(istype(I, /obj/item/seeds/kudzu))
 		var/obj/item/seeds/kudzu/AttackerSeed = I
 		src.mutations |= AttackerSeed.mutations
-		src.set_potency(max(src.potency, AttackerSeed.potency))
-		src.set_production(min(src.production, AttackerSeed.production))
 
 		add_fingerprint(user)
 		qdel(I)
