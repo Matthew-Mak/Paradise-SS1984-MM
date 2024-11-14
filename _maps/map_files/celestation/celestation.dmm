@@ -2930,6 +2930,17 @@
 	icon_state = "darkredaltstrip"
 	},
 /area/security/armory)
+"ayo" = (
+/obj/structure/closet/l3closet/janitor,
+/obj/item/reagent_containers/spray/cleaner/janitor,
+/obj/machinery/requests_console{
+	department = "Janitorial";
+	departmentType = 1;
+	name = "Janitor Requests Console";
+	pixel_x = -30
+	},
+/turf/simulated/floor/plasteel,
+/area/janitor)
 "ayp" = (
 /obj/effect/decal/warning_stripes/yellow/hollow,
 /obj/machinery/portable_atmospherics/canister/sleeping_agent{
@@ -17789,6 +17800,12 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/machinery/requests_console{
+	department = "Security";
+	departmentType = 5;
+	name = "Security Requests Console";
+	pixel_y = -30
+	},
 /turf/simulated/floor/plasteel{
 	dir = 6;
 	icon_state = "red"
@@ -23641,8 +23658,8 @@
 /area/toxins/test_area)
 "dfl" = (
 /obj/machinery/requests_console{
-	department = "Tool Storage";
-	name = "Tool Storage Requests Console";
+	department = "Primary Tool Storage";
+	name = "Primary Tool Storage Requests Console";
 	pixel_y = 30
 	},
 /obj/structure/table,
@@ -44319,6 +44336,12 @@
 	pixel_x = 7;
 	req_access = list(2)
 	},
+/obj/machinery/requests_console{
+	department = "Warden";
+	departmentType = 7;
+	name = "Warden's Requests Console";
+	pixel_y = -30
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "darkred"
 	},
@@ -51895,6 +51918,11 @@
 /turf/simulated/floor/plasteel/dark,
 /area/toxins/server)
 "iAb" = (
+/obj/machinery/requests_console{
+	department = "Locker Room";
+	name = "Locker Room Requests Console";
+	pixel_x = -32
+	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -52293,9 +52321,9 @@
 /area/security/prisonlockers)
 "iEd" = (
 /obj/structure/sign/beautyplaque{
-	pixel_y = 32;
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За выдающиеся успехи в области инженерного менеджмента, а также успешное проектирование Селестии по всем стандартам НаноТрейзен. Благодарим вас за труд, Saad_f603. Слава НаноТрейзен!";
 	name = "Благодарственное Письмо Для Бригадира Команды Архитекторов Селестии";
-	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За выдающиеся успехи в области инженерного менеджмента, а также успешное проектирование Селестии по всем стандартам НаноТрейзен. Благодарим вас за труд, Saad_f603. Слава НаноТрейзен!"
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/black,
 /area/bridge)
@@ -53224,9 +53252,9 @@
 /area/crew_quarters/bar)
 "iNt" = (
 /obj/machinery/requests_console{
-	department = "Science";
+	department = "Research";
 	departmentType = 2;
-	name = "Science Requests Console";
+	name = "Research Requests Console";
 	pixel_x = -30
 	},
 /obj/machinery/photocopier,
@@ -62896,6 +62924,12 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/mint,
+/obj/machinery/requests_console{
+	department = "Kitchen";
+	departmentType = 2;
+	name = "Kitchen Requests Console";
+	pixel_x = -30
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -65529,6 +65563,12 @@
 /obj/effect/decal/warning_stripes/yellow/hollow,
 /obj/machinery/light_switch{
 	pixel_x = 26
+	},
+/obj/machinery/requests_console{
+	department = "Science";
+	departmentType = 2;
+	name = "Science Requests Console";
+	pixel_y = 30
 	},
 /turf/simulated/floor/plasteel,
 /area/toxins/launch)
@@ -69709,7 +69749,7 @@
 /obj/item/reagent_containers/applicator/burn,
 /obj/item/reagent_containers/glass/bottle/charcoal,
 /obj/machinery/requests_console{
-	department = "Medbay";
+	department = "Genetics";
 	departmentType = 1;
 	name = "Genetics Requests Console";
 	pixel_y = 30
@@ -70705,6 +70745,12 @@
 /obj/machinery/atmospherics/pipe/multiz{
 	dir = 4
 	},
+/obj/machinery/requests_console{
+	department = "Chapel";
+	departmentType = 2;
+	name = "Chapel Requests Console";
+	pixel_x = -30
+	},
 /turf/simulated/floor/carpet/black,
 /area/chapel/office)
 "miQ" = (
@@ -71259,6 +71305,12 @@
 "mor" = (
 /obj/structure/cable/orange{
 	icon_state = "1-2"
+	},
+/obj/machinery/requests_console{
+	department = "Engineering";
+	departmentType = 3;
+	name = "Engineering Requests Console";
+	pixel_x = -30
 	},
 /turf/simulated/floor/plasteel{
 	dir = 8;
@@ -82678,6 +82730,12 @@
 /area/space)
 "oDP" = (
 /obj/structure/closet/secure_closet/security,
+/obj/machinery/requests_console{
+	department = "Security";
+	departmentType = 5;
+	name = "Security Requests Console";
+	pixel_y = 30
+	},
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	icon_state = "darkred"
@@ -118780,6 +118838,7 @@
 /area/hallway/primary/fore)
 "vyB" = (
 /obj/machinery/requests_console{
+	department = "Detective";
 	name = "Detective Requests Console";
 	pixel_y = -30
 	},
@@ -129310,6 +129369,12 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/atmospheric,
+/obj/machinery/requests_console{
+	department = "Atmospherics";
+	departmentType = 3;
+	name = "Atmospherics Requests Console";
+	pixel_y = 30
+	},
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	icon_state = "caution"
@@ -275635,7 +275700,7 @@ oqZ
 aeM
 aeM
 wMM
-kLd
+ayo
 tTe
 jHd
 duy
