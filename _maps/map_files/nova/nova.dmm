@@ -5319,6 +5319,18 @@
 	icon_state = "purple"
 	},
 /area/hallway/primary/fore)
+"aNX" = (
+/obj/structure/window/reinforced,
+/obj/item/flag/nt,
+/obj/structure/sign/beautyplaque{
+	pixel_y = 32;
+	name = "Благодарственное Письмо от Главного Инженера станции Нова";
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За помощь Главному Инженеру Новы в поисках и устранении неисправностей на станции НаноТрейзен. С благодарностью, Saad603. Слава НаноТрейзен!"
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/bridge)
 "aOb" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/clothing/under/syndicate/blackops_civ,
@@ -36757,6 +36769,18 @@
 	icon_state = "whitebluefull"
 	},
 /area/medical/surgery/south)
+"fps" = (
+/obj/structure/window/reinforced,
+/obj/item/flag/nt,
+/obj/structure/sign/goldenplaque{
+	pixel_y = 32;
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За помощь Главному Инженеру Новы в поисках и устранении неисправностей на станции НаноТрейзен. С благодарностью, Aeterna0. Слава НаноТрейзен!";
+	name = "Благодарственное Письмо от Главного Инженера станции Нова"
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/bridge)
 "fpt" = (
 /obj/item/radio/intercom{
 	pixel_x = 28
@@ -44972,6 +44996,11 @@
 /obj/structure/window/reinforced,
 /obj/structure/statue/gold/hop{
 	pixel_y = 7
+	},
+/obj/structure/sign/goldenplaque{
+	pixel_y = 32;
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За помощь Главному Инженеру Новы в поисках и устранении неисправностей на станции НаноТрейзен. С благодарностью, Den10g. Слава НаноТрейзен!";
+	name = "Благодарственное Письмо от Главного Инженера станции Нова"
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -71467,10 +71496,10 @@
 /area/maintenance/fsmaint)
 "kAy" = (
 /obj/effect/decal/warning_stripes/east,
-/obj/machinery/flasher/portable,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
+/obj/machinery/flasher/portable,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -81283,6 +81312,9 @@
 /obj/item/radio/intercom{
 	pixel_x = -28
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "mbz" = (
@@ -87768,6 +87800,18 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint2)
+"mXr" = (
+/obj/structure/window/reinforced,
+/obj/item/flag/nt,
+/obj/structure/sign/atmosplaque{
+	pixel_y = 32;
+	desc = "Важное Уточнение! Главный Инженер пожелал оставаться анонимным, поэтому, обойдёмся прозвищем. За выдающиеся успехи в области инженерного менеджмента, а также успешное проектирование станции Нова по всем стандартам НаноТрейзен. Благодарим вас за труд, PiroMage. Слава НаноТрейзен!";
+	name = "Благодарственное Письмо Для Главного Инженера Команды Архитекторов Станции Нова"
+	},
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/bridge)
 "mXt" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -92427,6 +92471,15 @@
 	icon_state = "white"
 	},
 /area/toxins/explab)
+"nFO" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 30
+	},
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/engineering/break_room)
 "nFR" = (
 /obj/structure/chair/sofa/right,
 /obj/machinery/light{
@@ -93359,7 +93412,9 @@
 /area/quartermaster/miningdock)
 "nMX" = (
 /obj/effect/decal/warning_stripes/east,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/item/videocam,
+/obj/item/videocam,
+/obj/structure/closet/crate,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -98799,6 +98854,15 @@
 	icon_state = "neutralfull"
 	},
 /area/hallway/secondary/entry/lounge)
+"oEP" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -30
+	},
+/turf/simulated/floor/wood,
+/area/library)
 "oET" = (
 /obj/effect/decal/warning_stripes/northeast,
 /turf/simulated/floor/plasteel{
@@ -104293,9 +104357,6 @@
 "ptU" = (
 /obj/item/storage/fancy/donut_box,
 /obj/structure/table/wood/fancy/purple,
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /turf/simulated/floor/carpet/purple,
 /area/crew_quarters/captain)
 "ptW" = (
@@ -108191,6 +108252,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/maintenance/brig)
+"pWd" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 30
+	},
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/security/permahallway)
 "pWf" = (
 /turf/simulated/floor/plasteel{
 	dir = 1;
@@ -108673,6 +108743,11 @@
 "pYS" = (
 /obj/structure/window/reinforced,
 /obj/item/flag/nt,
+/obj/structure/sign/goldenplaque{
+	pixel_y = 32;
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. За помощь Главному Инженеру Новы в поисках и устранении неисправностей на станции НаноТрейзен. С благодарностью, Zhojaba. Слава НаноТрейзен!";
+	name = "Благодарственное Письмо от Главного Инженера станции Нова"
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -144035,6 +144110,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/engineering/supermatter)
+"vdg" = (
+/obj/structure/chair/comfy/purp{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/turf/simulated/floor/carpet/purple,
+/area/crew_quarters/captain)
 "vdh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -159680,11 +159764,6 @@
 /area/security/securearmory)
 "xwA" = (
 /obj/effect/decal/warning_stripes/west,
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/flashbangs,
 /obj/item/storage/box/handcuffs{
 	pixel_x = -3;
 	pixel_y = 3
@@ -159694,6 +159773,11 @@
 	name = "Brig storage crate"
 	},
 /obj/machinery/light,
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -160446,6 +160530,11 @@
 /obj/structure/window/reinforced,
 /obj/structure/statue/gold/hos{
 	pixel_y = 7
+	},
+/obj/structure/sign/goldenplaque{
+	pixel_y = 32;
+	desc = "Важное Уточнение! Рабочие пожелали оставаться анонимными, поэтому, обойдёмся их прозвищами. Особая благодарность за помощь Главному Инженеру Новы в поисках и устранении неисправностей на станции НаноТрейзен. С благодарностью, Daeberdir. Слава НаноТрейзен!";
+	name = "Благодарственное Письмо от Главного Инженера станции Нова"
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -182294,7 +182383,7 @@ dFQ
 dFQ
 dFQ
 ocY
-mWj
+pWd
 eCk
 fAb
 wlg
@@ -185653,7 +185742,7 @@ hKl
 jOC
 irs
 son
-pSU
+oEP
 jOC
 oak
 pPo
@@ -216478,7 +216567,7 @@ cxn
 hRb
 hRb
 ibo
-jKe
+nFO
 fti
 kcL
 gVE
@@ -259367,7 +259456,7 @@ lbB
 hCH
 hHJ
 brM
-pYS
+aNX
 ihk
 fGh
 boP
@@ -263993,7 +264082,7 @@ woE
 mmc
 wsA
 qCF
-pYS
+fps
 ihk
 fGh
 qEA
@@ -264248,7 +264337,7 @@ aFR
 ges
 npi
 rsU
-rsU
+vdg
 qCF
 iOP
 ihk
@@ -265021,7 +265110,7 @@ lpY
 snI
 skE
 qCF
-pYS
+mXr
 ihk
 kjR
 mpH
