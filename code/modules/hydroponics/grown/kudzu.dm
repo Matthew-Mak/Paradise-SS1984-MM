@@ -44,7 +44,8 @@
 
 		add_fingerprint(user)
 		qdel(I)
-	. = ..()
+		return ATTACK_CHAIN_BLOCKED
+	return ..()
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	if(plant(user))
