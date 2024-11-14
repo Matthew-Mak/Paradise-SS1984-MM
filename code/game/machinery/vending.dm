@@ -30,7 +30,7 @@
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
-	desc = "A generic vending machine."
+	desc = "Обычный торговый автомат."
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic_off"
 	layer = BELOW_OBJ_LAYER
@@ -212,11 +212,11 @@
 /obj/machinery/vending/examine(mob/user)
 	. = ..()
 	if(tilted)
-		. += span_warning("It's been tipped over and won't be usable unless it's righted.")
+		. += span_warning("Он находится в неисправном состоянии, и не будет функционировать до тех пор, пока его не починят.")
 		if(Adjacent(user))
-			. += span_notice("You can <b>Alt-Click</b> it to right it.")
+			. += span_notice("Вы можете <b>Alt-Click</b> чтобы исправить это.")
 	if(aggressive)
-		. += span_warning("Its product lights seem to be blinking ominously...")
+		. += span_warning("Его индикаторы, кажется, зловеще мигают...")
 
 /obj/machinery/vending/AltClick(mob/user)
 	if(!tilted || !Adjacent(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
@@ -433,7 +433,7 @@
 
 	var/obj/item/vending_refill/R = locate() in component_parts
 	if(!R)
-		CRASH("Constructible vending machine did not have a refill canister")
+		CRASH("В торговом автомате не было канистры для заправки")
 
 	R.products = unbuild_inventory(product_records)
 	R.contraband = unbuild_inventory(hidden_records)
@@ -460,7 +460,7 @@
 /obj/machinery/vending/attackby(obj/item/I, mob/user, params)
 	if(tilted)
 		if(user.a_intent == INTENT_HELP)
-			to_chat(user, span_warning("[src] is tipped over and non-functional! You'll need to right it first."))
+			to_chat(user, span_warning("[src] неисправен! Сначала нужно его починить."))
 			return ATTACK_CHAIN_BLOCKED_ALL
 		return ..()
 
@@ -470,39 +470,39 @@
 	if(istype(I, /obj/item/coin))
 		add_fingerprint(user)
 		if(!length(premium))
-			to_chat(user, span_warning("[src] does not accept coins."))
+			balloon_alert(user, "не принимает монеты")
 			return ATTACK_CHAIN_PROCEED
 		if(coin)
-			to_chat(user, span_warning("There is already a coin in this machine!"))
+			balloon_alert(user, "в автомате уже есть монета!")
 			return ATTACK_CHAIN_PROCEED
 		if(!user.drop_transfer_item_to_loc(I, src))
 			return ..()
 		coin = I
-		to_chat(user, span_notice("You insert [I] into [src]."))
+		balloon_alert(user, "монета вставлена")
 		SStgui.update_uis(src)
 		return ATTACK_CHAIN_BLOCKED_ALL
 
 	if(istype(I, refill_canister))
 		add_fingerprint(user)
 		if(stat & (BROKEN|NOPOWER))
-			to_chat(user, span_notice("[src] does not respond."))
+			balloon_alert(user, "не отвечает")
 			return ATTACK_CHAIN_PROCEED
 		if(!panel_open)
-			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
+			balloon_alert(user, "закрутите панель")
 			return ATTACK_CHAIN_PROCEED
 
 		var/obj/item/vending_refill/canister = I
 		if(canister.get_part_rating() == 0)
-			to_chat(user, span_warning("The [canister.name] is empty!"))
+			balloon_alert(user, "[canister.name] пуста!")
 			return ATTACK_CHAIN_PROCEED
 
 		// instantiate canister if needed
 		var/transferred = restock(canister)
 		if(transferred)
-			to_chat(user, span_notice("You loaded [transferred] items in [src]."))
+			to_chat(user, span_notice("Вы зарядили [transferred] в [src]."))
 			return ATTACK_CHAIN_PROCEED_SUCCESS
 
-		to_chat(user, span_warning("There's nothing to restock!"))
+		balloon_alert(user,"Нечего пополнять!")
 		return ATTACK_CHAIN_PROCEED
 
 	if(item_slot_check(user, I))
@@ -519,8 +519,8 @@
 			// no goodies, but also no tilts
 			return
 		if(COOLDOWN_FINISHED(src, last_hit_time))
-			visible_message(span_warning("[src] seems to sway a bit!"))
-			to_chat(user, span_userdanger("You might want to think twice about doing that again, [src] looks like it could come crashing down!"))
+			visible_message(span_warning("[src] кажется, немного качается!"))
+			to_chat(user, span_userdanger("Возможно, Вы захотите еще раз подумать прежде чем сделать это, [src] похоже, вот-вот рухнет!"))
 			COOLDOWN_START(src, last_hit_time, hit_warning_cooldown_length)
 			return
 
@@ -539,7 +539,8 @@
 				tilt(user, crit = TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/user, num_freebies)
-	visible_message(span_notice("[num_freebies] free goodie\s tumble[num_freebies > 1 ? "" : "s"] out of [src]!"))
+//   visible_message(span_notice("[num_freebies] free goodie\s tumble[num_freebies > 1 ? "" : "s"] из [src]!"))
+	visible_message(span_notice("бесплатные вкусности выпадают из [src]!"))
 	for(var/i in 1 to num_freebies)
 		for(var/datum/data/vending_product/R in shuffle(product_records))
 			if(R.amount <= 0)
@@ -557,8 +558,8 @@
 
 	if(isliving(AM) && prob(25))
 		AM.visible_message(
-			span_warning("[src] suddenly topples over onto [AM]!"),
-			span_userdanger("[src] topples over onto you without warning!")
+			span_warning("[src] внезапно опрокидывается на [AM]!"),
+			span_userdanger("[src] обрушивается на Вас без предупреждения!")
 		)
 	tilt(AM, prob(5), FALSE)
 	aggressive = FALSE
@@ -570,14 +571,14 @@
 		return
 	. = TRUE
 	if(tilted)
-		to_chat(user, span_warning("You'll need to right it first!"))
+		balloon_alert(user, "сначала нужно починить")
 		return
 	default_deconstruction_crowbar(user, I)
 
 /obj/machinery/vending/multitool_act(mob/user, obj/item/I)
 	. = TRUE
 	if(tilted)
-		to_chat(user, span_warning("You'll need to right it first!"))
+		balloon_alert(user, "сначала нужно починить")
 		return
 	if(!I.use_tool(src, user, 0, volume = I.tool_volume))
 		return
@@ -586,7 +587,7 @@
 /obj/machinery/vending/screwdriver_act(mob/user, obj/item/I)
 	. = TRUE
 	if(tilted)
-		to_chat(user, span_warning("You'll need to right it first!"))
+		balloon_alert(user, "сначала нужно починить")
 		return
 	if(!I.use_tool(src, user, 0, volume = I.tool_volume))
 		return
@@ -599,7 +600,7 @@
 /obj/machinery/vending/wirecutter_act(mob/user, obj/item/I)
 	. = TRUE
 	if(tilted)
-		to_chat(user, span_warning("You'll need to right it first!"))
+		balloon_alert(user, "сначала нужно починить")
 		return
 	if(I.use_tool(src, user, 0, volume = 0))
 		wires.Interact(user)
@@ -607,7 +608,7 @@
 /obj/machinery/vending/wrench_act(mob/user, obj/item/I)
 	. = TRUE
 	if(tilted)
-		to_chat(user, span_warning("The fastening bolts aren't on the ground, you'll need to right it first!"))
+		to_chat(user, span_warning("Болты не на месте, сначала нужно это починить!"))
 		return
 	if(!I.use_tool(src, user, 0, volume = 0))
 		return
@@ -633,7 +634,7 @@
 	if(!item_slot)
 		return FALSE
 	if(inserted_item)
-		to_chat(user, "<span class='warning'>There is something already inserted!</span>")
+		balloon_alert(user, "тут уже что-то есть")
 		return FALSE
 	return TRUE
 
@@ -665,7 +666,7 @@
 	else
 		to_chat(user, display_parts(user))
 	if(moved)
-		to_chat(user, "[moved] items restocked.")
+		to_chat(user, "[moved] запасы товаров пополнились.")
 		W.play_rped_sound()
 	return TRUE
 
@@ -677,10 +678,10 @@
 	if(!item_slot || inserted_item)
 		return
 	if(!user.drop_transfer_item_to_loc(I, src))
-		to_chat(user, "<span class='warning'>[I] is stuck to your hand, you can't seem to put it down!</span>")
+		to_chat(user, "<span class='warning'>[I] словно приклеен к твоей руке! Ты не можешь его отпустить!</span>")
 		return
 	inserted_item = I
-	to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+	to_chat(user, "<span class='notice'>Вы вставили [I] в [src].</span>")
 	SStgui.update_uis(src)
 
 /obj/machinery/vending/proc/eject_item(mob/user)
@@ -700,7 +701,7 @@
 /obj/machinery/vending/emag_act(mob/user)
 	emagged = TRUE
 	if(user)
-		to_chat(user, "You short out the product lock on [src]")
+		to_chat(user, "Вы закоротили панель [src]")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
@@ -713,7 +714,7 @@
 		return
 
 	if(tilted)
-		to_chat(user, span_warning("[src] is tipped over and non-functional! You'll need to right it first."))
+		to_chat(user, span_warning("[src] неисправен! Сначала нужно его починить."))
 		return
 
 	if(..())
@@ -740,7 +741,7 @@
 /obj/machinery/vending/ui_data(mob/user)
 	var/list/data = list()
 	var/datum/money_account/A = null
-	data["guestNotice"] = "No valid ID card detected. Wear your ID, or present cash.";
+	data["guestNotice"] = "Не обнаружено действительной ID-карты. Носите при себе ID-карту или наличные.";
 	data["userMoney"] = 0
 	data["user"] = null
 	if(issilicon(user) && !istype(user, /mob/living/silicon/robot/drone) && !istype(user, /mob/living/silicon/pai))
@@ -755,7 +756,7 @@
 		var/obj/item/stack/spacecash/S = H.get_active_hand()
 		if(istype(S))
 			data["userMoney"] = S.amount
-			data["guestNotice"] = "Accepting Cash. You have: [S.amount] credits."
+			data["guestNotice"] = "Принимаем наличные. У вас есть: [S.amount] кредитов."
 		else if(istype(H))
 			var/obj/item/card/id/C = H.get_id_card()
 			if(istype(A))
@@ -764,7 +765,7 @@
 				data["userMoney"] = A.money
 				data["user"]["job"] = (istype(C) && C.rank) ? C.rank : "No Job"
 			else
-				data["guestNotice"] = "Unlinked ID detected. Present cash to pay.";
+				data["guestNotice"] = "Обнаружена несвязанная ID-карта. Предъявите наличные для оплаты.";
 	data["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		data["stock"][R.name] = R.amount
@@ -831,7 +832,7 @@
 	if(.)
 		return
 	if(issilicon(usr) && !isrobot(usr))
-		to_chat(usr, span_warning("The vending machine refuses to interface with you, as you are not in its target demographic!"))
+		to_chat(usr, span_warning("Торговый автомат отказывается взаимодействовать с Вами, поскольку Вы не входите в его целевую аудиторию!"))
 		return
 	switch(action)
 		if("toggle_voice")
@@ -843,22 +844,22 @@
 			. = TRUE
 		if("remove_coin")
 			if(!coin)
-				to_chat(usr, span_warning("There is no coin in this machine."))
+				balloon_alert(usr, "в автомате нет монет")
 				return
 			if(istype(usr, /mob/living/silicon))
-				to_chat(usr, span_warning("You lack hands."))
+				balloon_alert(usr, "нет рук")
 				return
-			to_chat(usr, span_notice("You remove [coin] from [src]."))
+			to_chat(usr, span_notice("Вы достали [coin] из [src]."))
 			coin.forceMove_turf()
 			usr.put_in_hands(coin, ignore_anim = FALSE)
 			coin = null
 			. = TRUE
 		if("vend")
 			if(!vend_ready)
-				to_chat(usr, span_warning("The vending machine is busy!"))
+				balloon_alert(usr, "торговый автомат занят!")
 				return
 			if(panel_open)
-				to_chat(usr, span_warning("The vending machine cannot dispense products while its service panel is open!"))
+				balloon_alert(usr, "закрутите панель!")
 				return
 			var/key = text2num(params["inum"])
 			var/list/display_records = product_records + coin_records
@@ -904,7 +905,7 @@
 
 			// --- THE REST OF THIS PROC IS JUST PAYMENT LOGIC ---
 			if(!GLOB.vendor_account || GLOB.vendor_account.suspended)
-				to_chat(usr, "Vendor account offline. Unable to process transaction.")
+				to_chat(usr, "Учетная запись торговых автоматов отключена. Не удается обработать транзакцию.")
 				flick_vendor_overlay(FLICK_DENY)
 				vend_ready = TRUE
 				return
@@ -924,7 +925,7 @@
 				to_chat(usr, span_notice("Vending object due to admin interaction."))
 				paid = TRUE
 			else
-				to_chat(usr, span_warning("Payment failure: you have no ID or other method of payment."))
+				to_chat(usr, span_warning("Сбой платежа: у вас нет ID-карты или другого способа оплаты."))
 				vend_ready = TRUE
 				flick_vendor_overlay(FLICK_DENY)
 				. = TRUE // we set this because they shouldn't even be able to get this far, and we want the UI to update.
@@ -933,7 +934,7 @@
 				vend(currently_vending, usr)
 				. = TRUE
 			else
-				to_chat(usr, span_warning("Payment failure: unable to process payment."))
+				to_chat(usr, span_warning("Сбой платежа: не удается обработать платеж."))
 				vend_ready = TRUE
 	if(.)
 		add_fingerprint(usr)
@@ -943,13 +944,13 @@
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if(!allowed(user) && !user.can_admin_interact() && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-		to_chat(user, span_warning("Access denied."))//Unless emagged of course
+		to_chat(user, span_warning("В доступе отказано."))//Unless emagged of course
 		flick_vendor_overlay(FLICK_DENY)
 		vend_ready = TRUE
 		return
 
 	if(!R.amount)
-		to_chat(user, span_warning("The vending machine has ran out of that product."))
+		to_chat(user, span_warning("В торговом автомате закончился этот продукт."))
 		vend_ready = TRUE
 		return
 
@@ -957,14 +958,14 @@
 
 	if(coin_records.Find(R))
 		if(!coin)
-			to_chat(user, span_notice("You need to insert a coin to get this item."))
+			to_chat(user, span_notice("Вам нужно вставить монету, чтобы получить этот предмет."))
 			vend_ready = TRUE
 			return
 		if(coin.string_attached)
 			if(prob(50))
-				to_chat(user, span_notice("You successfully pull the coin out before [src] could swallow it."))
+				to_chat(user, span_notice("Вы успешно вытаскиваете монету до того, как [src] успевает ее проглотить."))
 			else
-				to_chat(user, span_notice("You weren't able to pull the coin out fast enough, the machine ate it, string and all."))
+				to_chat(user, span_notice("Вы не смогли вытащить монету достаточно быстро, машина съела ее вместе с ниткой и всем остальным."))
 				QDEL_NULL(coin)
 		else
 			QDEL_NULL(coin)
@@ -1095,24 +1096,24 @@
 	if(!throw_item)
 		return
 	throw_item.throw_at(target, 16, 3)
-	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
+	visible_message("<span class='danger'>[src] метнул [throw_item.name] в [target.name]!</span>")
 
 
 /obj/machinery/vending/shove_impact(mob/living/target, mob/living/attacker)
 	if(HAS_TRAIT(target, TRAIT_FLATTENED))
 		return
 	if(!HAS_TRAIT(attacker, TRAIT_PACIFISM) || !GLOB.pacifism_after_gt)
-		add_attack_logs(attacker, target, "shoved into a vending machine ([src])")
+		add_attack_logs(attacker, target, "толкнули в торговый автомат ([src])")
 		tilt(target, from_combat = TRUE)
 		target.visible_message(
-			span_danger("[attacker] slams [target] into [src]!"),
-			span_userdanger("You get slammed into [src] by [attacker]!"),
-			span_danger(">You hear a loud crunch.")
+			span_danger("[attacker] толкает [target] в [src]!"),
+			span_userdanger("Вы получили удар [src] из [attacker]!"),
+			span_danger(">Вы слышите громкий хруст.")
 		)
 	else
 		attacker.visible_message(
-			span_notice("[attacker] lightly presses [target] against [src]."),
-			span_userdanger("You lightly press [target] against [src], you don't want to hurt [target.p_them()]!")
+			span_notice("[attacker] слегка прижимает [target] к [src]."),
+			span_userdanger("Вы слегка прижимаете [target] к [src], Вы же не хотите причинить боль [target.p_them()]!")
 			)
 	return TRUE
 
@@ -1142,15 +1143,15 @@
 			return VENDOR_CRUSH_HANDLED
 
 		should_throw_at_target = critical_attack.fall_towards_mob
-		add_attack_logs(null, victim, "critically crushed by [src] causing [critical_attack]")
+		add_attack_logs(null, victim, "критически раздавлен [src] вызывающий [critical_attack]")
 
 	else
 		victim.visible_message(
-			span_danger("[victim] is crushed by [src]!"),
-			span_userdanger("[src] crushes you!"),
-			span_warning("You hear a loud crunch!")
+			span_danger("[victim] раздавлен [src]!"),
+			span_userdanger("[src] сокрушает тебя!"),
+			span_warning("Вы слышите громкий хруст!")
 		)
-		add_attack_logs(null, victim, "crushed by [src]")
+		add_attack_logs(null, victim, "раздавлен [src]")
 
 	// 30% chance to spread damage across the entire body, 70% chance to target two limbs in particular
 	damage_to_deal = max(damage_to_deal - crit_rebate, 0)
@@ -1214,12 +1215,12 @@
 					should_throw_at_target = FALSE
 		else
 			victim.visible_message(
-				span_danger("[victim] is crushed by [src]!"),
-				span_userdanger("[src] falls on top of you, crushing you!"),
-				span_warning("You hear a loud crunch!")
+				span_danger("[victim] раздавлен [src]!"),
+				span_userdanger("[src] падает сверху, сокрушая тебя!"),
+				span_warning("Вы слышите громкий хруст!")
 			)
 			victim.apply_damage(damage_to_deal, BRUTE)
-			add_attack_logs(null, victim, "crushed by [src]")
+			add_attack_logs(null, victim, "раздавлен [src]")
 
 		. = TRUE
 		victim.Weaken(4 SECONDS)
@@ -1231,7 +1232,7 @@
 		tilt_over(should_throw_at_target ? target_atom : null)
 
 /obj/machinery/vending/proc/tilt_over(mob/victim)
-	visible_message( span_danger("[src] tips over!"))
+	visible_message( span_danger("[src] опрокидывается!"))
 	playsound(src, "sound/effects/bang.ogg", 100, TRUE)
 	var/picked_rotation = pick(90, 270)
 	tilted_rotation = picked_rotation
@@ -1247,15 +1248,15 @@
 
 	if(user)
 		user.visible_message(
-			"[user] begins to right [src].",
-			"You begin to right [src]."
+			"[user] начинает исправлять [src].",
+			"Вы начинаете исправлять [src]."
 		)
 		if(!do_after(user, 7 SECONDS, src, max_interact_count = 1, cancel_on_max = TRUE))
 			return
 		user.visible_message(
-			span_notice("[user] rights [src]."),
-			span_notice("You right [src]."),
-			span_notice(">You hear a loud clang.")
+			span_notice("[user] исправил [src]."),
+			span_notice("Вы исправили [src]."),
+			span_notice("Вы слышите громкий лязг.")
 		)
 	if(!tilted) //Sanity check
 		return
@@ -1280,12 +1281,12 @@
 	products = list(	/obj/item/assembly/prox_sensor = 5,/obj/item/assembly/igniter = 3,/obj/item/assembly/signaler = 4,
 						/obj/item/wirecutters = 1, /obj/item/cartridge/signal = 4)
 	contraband = list(/obj/item/flashlight = 5,/obj/item/assembly/timer = 2, /obj/item/assembly/voice = 2, /obj/item/assembly/health = 2)
-	ads_list = list("Only the finest!","Have some tools.","The most robust equipment.","The finest gear in space!")
+	ads_list = list("Только самое лучшее!","Имеются всякие инструменты.","Самое надежное оборудование!","Лучшее снаряжение в космосе!")
 	refill_canister = /obj/item/vending_refill/assist
 
 /obj/machinery/vending/boozeomat
 	name = "\improper Booze-O-Mat"
-	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
+	desc = "Чудо техники, предположительно способное выдать идеальный напиток для Вас в тот момент, когда вы об этом попросите."
 
 	icon_state = "boozeomat_off"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	panel_overlay = "boozeomat_panel"
@@ -1339,7 +1340,7 @@
 
 /obj/machinery/vending/coffee
 	name = "\improper Solar's Best Hot Drinks"
-	desc = "A vending machine which dispenses hot drinks."
+	desc = "Это машина, которая готовит горячие напитки. Ну, знаете, такие, которые кипятком заливают."
 	ads_list = list("Выпейте!","Выпьем!","На здоровье!","Не хотите горячего супчику?","Я бы убил за чашечку кофе!","Лучшие зёрна в галактике","Для Вас — только лучшие напитки","М-м-м-м… Ничто не сравнится с кофе","Я люблю кофе, а Вы?","Кофе помогает работать!","Возьмите немного чайку","Надеемся, Вы предпочитаете лучшее!","Отведайте наш новый шоколад!","Admin conspiracies")
 
 	icon_state = "coffee_off"
@@ -1418,9 +1419,9 @@
 
 /obj/machinery/vending/snack
 	name = "\improper Getmore Chocolate Corp"
-	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
+	desc = "Автомат самообслуживания, любезно предоставленный шоколадной корпорацией Getmore, базирующейся на Марсе."
 	slogan_list = list("Попробуйте наш новый батончик с нугой!","Вдвое больше калорий за полцены!")
-	ads_list = list("The healthiest!","Award-winning chocolate bars!","Mmm! So good!","Oh my god it's so juicy!","Have a snack.","Snacks are good for you!","Have some more Getmore!","Best quality snacks straight from mars.","We love chocolate!","Try our new jerky!")
+	ads_list = list("Самый здоровый!","Отмеченные наградами шоколадные батончики!","Ммм! Так вкусно!","О боже, это так вкусно!","Перекусите.","Закуски - это здорово!","Возьми немного, и еще немного!","Закуски высшего качества прямо с Марса.","Мы любим шоколад!","Попробуйте наше новое вяленое мясо!")
 
 	icon_state = "snack_off"
 	panel_overlay = "snack_panel"
@@ -1461,7 +1462,7 @@
 
 /obj/machinery/vending/chinese
 	name = "\improper Mr. Chang"
-	desc = "A self-serving Chinese food machine, for all your Chinese food needs."
+	desc = "Китайская машина самообслуживания, создана специально для удовлетворения потребности в китайской кухне."
 	slogan_list = list("Попробуйте 5000 лет культуры!","Мистер Чанг, одобрен для безопасного потребления в более чем 10 секторах!","Китайская кухня отлично подходит для вечернего свидания или одинокого вечера!","Вы не ошибетесь, если попробуете настоящую китайскую кухню от мистера Чанга.!")
 
 	icon_state = "chang_off"
@@ -1505,7 +1506,7 @@
 
 /obj/machinery/vending/cola
 	name = "\improper Robust Softdrinks"
-	desc = "A soft drink vendor provided by Robust Industries, LLC."
+	desc = "Автомат с безалкогольными напитками, предоставляемый компанией Robust Industries, LLC."
 
 	icon_state = "cola-machine_off"
 	panel_overlay = "cola-machine_panel"
@@ -1548,7 +1549,7 @@
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	desc = "Cartridges for PDA's."
+	desc = "Картриджи для КПК."
 	slogan_list = list("Карточки в дорогу!")
 
 	icon_state = "cart_off"
@@ -1573,7 +1574,7 @@
 
 /obj/machinery/vending/liberationstation
 	name = "\improper Liberation Station"
-	desc = "An overwhelming amount of <b>ancient patriotism</b> washes over you just by looking at the machine."
+	desc = "При одном взгляде на эту машину вас охватывает непреодолимое чувство <b>древнего патриотизма</b>."
 
 	icon_state = "liberationstation_off"
 	panel_overlay = "liberationstation_panel"
@@ -1598,7 +1599,7 @@
 
 /obj/machinery/vending/toyliberationstation
 	name = "\improper Syndicate Donksoft Toy Vendor"
-	desc = "An ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
+	desc = "Одобренный автомат игрушек для детей от 8 лет и старше. Если вы найдете нужные провода, вы сможете разблокировать <i>режим для взрослых!</i>"
 
 	icon_state = "syndi_off"
 	panel_overlay = "syndi_panel"
@@ -1633,7 +1634,7 @@
 
 /obj/machinery/vending/cigarette
 	name = "ShadyCigs Deluxe"
-	desc = "If you want to get cancer, might as well do it in style."
+	desc = "Если ты собираешься заболеть раком, по крайней мере, сделай это стильно!"
 	slogan_list = list("Космосигареты весьма хороши на вкус, какими они и должны быть","I'd rather toolbox than switch.","Затянитесь!","Не верьте исследованиям — курите!")
 	ads_list = list("Наверняка не очень-то и вредно для Вас!","Не верьте учёным!","На здоровье!","Не бросайте курить, купите ещё!","Затянитесь!","Никотиновый рай","Лучшие сигареты с 2150 года","Сигареты с множеством наград")
 	vend_delay = 34
@@ -1693,7 +1694,7 @@
 
 /obj/machinery/vending/cigarette/beach //Used in the lavaland_biodome_beach.dmm ruin
 	name = "\improper ShadyCigs Ultra"
-	desc = "Now with extra premium products!"
+	desc = "Теперь с дополнительными продуктами премиум-класса!"
 	ads_list = list("Наверняка не очень-то и вредно для Вас!","Допинг проведёт через безденежье лучше, чем деньги через бездопингье!","На здоровье!")
 	slogan_list = list("Включи, настрой, получи!","С химией жить веселей!","Затянитесь!","Сохраняй улыбку на устах и песню в своём сердце!")
 	products = list(/obj/item/storage/fancy/cigarettes = 5,
@@ -1711,7 +1712,7 @@
 
 /obj/machinery/vending/medical
 	name = "\improper NanoMed Plus"
-	desc = "Medical drug dispenser."
+	desc = "Медицинский раздатчик веществ."
 
 	icon_state = "med_off"
 	panel_overlay = "med_panel"
@@ -1755,7 +1756,7 @@
 
 /obj/machinery/vending/plasmaresearch
 	name = "\improper Toximate 3000"
-	desc = "All the fine parts you need in one vending machine!"
+	desc = "Все, что вам нужно, в одном удобном месте!"
 
 	icon_state = "generic_off"
 	panel_overlay = "generic_panel"
@@ -1771,7 +1772,7 @@
 
 /obj/machinery/vending/wallmed
 	name = "\improper NanoMed"
-	desc = "Wall-mounted Medical Equipment dispenser."
+	desc = "Настенный раздатчика медицинских изделий."
 	ads_list = list("Иди и спаси несколько жизней!","Лучшее снаряжение для вашего медотдела","Только лучшие инструменты","Натуральные химикаты!","Эта штука спасает жизни","Может сами примете?","Пинг!")
 
 	icon_state = "wallmed_off"
@@ -1792,7 +1793,7 @@
 
 /obj/machinery/vending/wallmed/syndicate
 	name = "\improper SyndiWallMed"
-	desc = "<b>EVIL</b> wall-mounted Medical Equipment dispenser."
+	desc = "<b>Злое</b> воплощение настенного раздатчика медицинских изделий."
 
 	icon_state = "wallmed_off"
 	panel_overlay = "wallmed_panel"
@@ -1811,7 +1812,7 @@
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"
-	desc = "A security equipment vendor."
+	desc = "Дилер снаряжения службы безопасности."
 	ads_list = list("Круши черепа капиталистов!","Отбей несколько голов!","Не забывай, вредительство - полезно!","Твое оружие здесь.","Наручники!","Стоять, подонок!","Не бей меня, брат!","Убей их, брат.","Почему бы не съесть пончик?")
 
 	icon_state = "sec_off"
@@ -1833,7 +1834,7 @@
 
 /obj/machinery/vending/security/training
 	name = "\improper SecTech Training"
-	desc = "A security training equipment vendor."
+	desc = "Дилер тренировочного снаряжения службы безопасности."
 	ads_list = list("Соблюдай чистоту на стрельбище!","Даже я стреляю лучше тебя!","Почему так косо, бухой что ли?!","Техника безопасности нам не писана, да?","1 из 10 попаданий... А ты хорош!","Инструктор это твой папочка!","Эй, ты куда целишься?!")
 
 	icon_state = "sectraining_off"
@@ -1880,13 +1881,13 @@
 
 /obj/item/security_voucher
 	name = "security voucher"
-	desc = "A token to redeem a weapon kit. Use it on a SecTech."
+	desc = "Жетон, позволяющий получить набор оружия. Используйте его на SecTech."
 	icon_state = "security_voucher"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/machinery/vending/hydronutrients
 	name = "\improper NutriMax"
-	desc = "A plant nutrients vendor"
+	desc = "Поставщик питательных веществ для растений."
 	slogan_list = list("Вам не надо удобрять почву естественным путём — разве это не чудесно?","Теперь на 50% меньше вони!","Растения тоже люди!")
 	ads_list = list("Мы любим растения!","Может сами примете?","Самые зелёные кнопки на свете.","Мы любим большие растения.","Мягкая почва…")
 
@@ -1905,8 +1906,8 @@
 
 /obj/machinery/vending/hydroseeds
 	name = "\improper MegaSeed Servitor"
-	desc = "When you need seeds fast!"
-	slogan_list = list("THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!","Hands down the best seed selection on the station!","Also certain mushroom varieties available, more for experts! Get certified today!")
+	desc = "Когда вам срочно нужны семена!"
+	slogan_list = list("ВОТ ГДЕ ЖИВУТ СЕМЕНА! ВОЗЬМИ СЕБЕ НЕМНОГО!","Без сомнений, лучший выбор семян на станции!","Кроме того, некоторые виды грибов доступны исключительно для экспертов! Получите сертификат уже сегодня!")
 	ads_list = list("Мы любим растения!","Вырасти урожай!","Расти, малыш, расти-и-и-и!","Ды-а, сына!")
 
 	icon_state = "seeds_off"
@@ -1987,7 +1988,7 @@
 
 /obj/machinery/vending/magivend
 	name = "\improper MagiVend"
-	desc = "A magic vending machine."
+	desc = "Волшебный торговый автомат."
 
 	icon_state = "magivend_off"
 	panel_overlay = "magivend_panel"
@@ -1996,10 +1997,10 @@
 	broken_overlay = "magivend_broken"
 	broken_lightmask_overlay = "magivend_broken_lightmask"
 
-	slogan_list = list("Sling spells the proper way with MagiVend!","Be your own Houdini! Use MagiVend!")
+	slogan_list = list("MagiVend превращает произнесение заклинаний в сущий пустяк!","Стань сам себе Гудини! Используй MagiVend!")
 	vend_delay = 15
-	vend_reply = "Have an enchanted evening!"
-	ads_list = list("FJKLFJSD","AJKFLBJAKL","1234 LOONIES LOL!",">MFW","Kill them fuckers!","GET DAT FUKKEN DISK","HONK!","EI NATH","Destroy the station!","Admin conspiracies since forever!","Space-time bending hardware!")
+	vend_reply = "Желаю вам чудесного вечера!"
+	ads_list = list("FJKLFJSD","AJKFLBJAKL","1234 LOONIES LOL!",">MFW","Kill them fuckers!","GET DAT FUKKEN DISK","HONK!","EI NATH","Разнесите станцию!","Админские заговоры стары как само время!","Оборудование для изгиба пространства-времени!")
 	products = list(/obj/item/clothing/head/wizard = 5,
 					/obj/item/clothing/suit/wizrobe = 5,
 					/obj/item/clothing/head/wizard/red = 5,
@@ -2033,7 +2034,7 @@
 
 /obj/machinery/vending/autodrobe
 	name = "\improper AutoDrobe"
-	desc = "A vending machine for costumes."
+	desc = "Автомат с бесплатными костюмами!"
 
 	icon_state = "theater_off"
 	panel_overlay = "theater_panel"
@@ -2043,9 +2044,9 @@
 	broken_lightmask_overlay = "theater_broken_lightmask"
 	deny_overlay = "theater_deny"
 
-	slogan_list = list("Dress for success!","Suited and booted!","It's show time!","Why leave style up to fate? Use AutoDrobe!")
+	slogan_list = list("Приоденься для Успеха!","Одетый и обутый!","Пришло время шоу!","Зачем оставлять стиль на произвол судьбы? Используй AutoDrobe!")
 	vend_delay = 15
-	vend_reply = "Thank you for using AutoDrobe!"
+	vend_reply = "Спасибо за использование AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
 					/obj/item/clothing/head/chicken = 1,
 					/obj/item/clothing/under/gladiator = 1,
@@ -2192,8 +2193,8 @@
 
 /obj/machinery/vending/dinnerware
 	name = "\improper Plasteel Chef's Dinnerware Vendor"
-	desc = "A kitchen and restaurant equipment vendor."
-	ads_list = list("Mm, food stuffs!","Food and food accessories.","Get your plates!","You like forks?","I like forks.","Woo, utensils.","You don't really need these...")
+	desc = "Поставщик кухонного и ресторанного оборудования."
+	ads_list = list("Мм, продукты питания!","Пища и пищевые принадлежности.","Принесите свои тарелки!","Тебе нравятся вилки?","Я люблю вилки.","Ух ты, посуда.","На самом деле они тебе не нужны...")
 
 	icon_state = "dinnerware_off"
 	panel_overlay = "dinnerware_panel"
@@ -2237,7 +2238,7 @@
 
 /obj/machinery/vending/sovietsoda
 	name = "\improper BODA"
-	desc = "Old sweet water vending machine."
+	desc = "Старый автомат по продаже сладкой газировки."
 
 	icon_state = "sovietsoda_off"
 	panel_overlay = "sovietsoda_panel"
@@ -2246,7 +2247,7 @@
 	broken_overlay = "sovietsoda_broken"
 	broken_lightmask_overlay = "sovietsoda_broken_lightmask"
 
-	ads_list = list("For Tsar and Country.","Have you fulfilled your nutrition quota today?","Very nice!","We are simple people, for this is all we eat.","If there is a person, there is a problem. If there is no person, then there is no problem.")
+	ads_list = list("За царя и Отечество.","Ты уже осуществил свою норму питания на сегодня?","Очень хорошо!","Мы обычные люди, и едим мы то, что есть.","Если есть человек, то есть и проблема. Если нет человека, то нет и проблемы.")
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass/soda = 30)
 	contraband = list(/obj/item/reagent_containers/food/drinks/drinkingglass/cola = 20)
 	resistance_flags = FIRE_PROOF
@@ -2254,7 +2255,7 @@
 
 /obj/machinery/vending/tool
 	name = "\improper YouTool"
-	desc = "Tools for tools."
+	desc = "Инструменты для инструментов."
 
 	icon_state = "tool_off"
 	panel_overlay = "tool_panel"
@@ -2295,7 +2296,7 @@
 
 /obj/machinery/vending/engivend
 	name = "\improper Engi-Vend"
-	desc = "Spare tool vending. What? Did you expect some witty description?"
+	desc = "Автомат с запасными инструментами. Что? Вы ожидали какого-нибудь остроумного описания?"
 
 	icon_state = "engivend_off"
 	panel_overlay = "engivend_panel"
@@ -2313,7 +2314,7 @@
 
 /obj/machinery/vending/engineering
 	name = "\improper Robco Tool Maker"
-	desc = "Everything you need for do-it-yourself station repair."
+	desc = "Все, что вам требуется для самостоятельного обслуживания станции."
 
 	icon_state = "engi_off"
 	panel_overlay = "engi_panel"
@@ -2335,7 +2336,7 @@
 
 /obj/machinery/vending/robotics
 	name = "\improper Robotech Deluxe"
-	desc = "All the tools you need to create your own robot army."
+	desc = "Все, что вам нужно для создания вашей собственной армии роботов."
 
 	icon_state = "robotics_off"
 	panel_overlay = "robotics_panel"
@@ -2373,9 +2374,9 @@
 
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
-	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
-	slogan_list = list("Enjoy your meal.","Enough calories to support strenuous labor.")
-	ads_list = list("The healthiest!","Award-winning chocolate bars!","Mmm! So good!","Oh my god it's so juicy!","Have a snack.","Snacks are good for you!","Have some more Getmore!","Best quality snacks straight from mars.","We love chocolate!","Try our new jerky!")
+	desc = "Торговый автомат, в котором продаются продукты питания, в соответствии с разделом 47-С Соглашения об этическом обращении с заключенными в NT."
+	slogan_list = list("Приятного аппетита!","Достаточное количество калорий для интенсивной работы.")
+	ads_list = list("Самый здоровый!","Отмеченные наградами шоколадные батончики!","Ммм! Так вкусно!","О боже, это так вкусно!","Перекусите.","Закуски - это здорово!","Возьми немного, и еще немного!","Закуски высшего качества прямо с Марса.","Мы любим шоколад!","Попробуйте наше новое вяленое мясо!")
 
 	icon_state = "sustenance_off"
 	panel_overlay = "snack_panel"
@@ -2395,7 +2396,7 @@
 	refill_canister = /obj/item/vending_refill/sustenance
 
 /obj/machinery/vending/sustenance/additional
-	desc = "Какого этот автомат тут оказался?!"
+	desc = "Какого чёрта этот автомат тут оказался?!"
 	products = list(/obj/item/reagent_containers/food/snacks/tofu = 12,
 					/obj/item/reagent_containers/food/drinks/ice = 6,
 					/obj/item/reagent_containers/food/snacks/candy/candy_corn = 6)
@@ -2403,7 +2404,7 @@
 
 /obj/machinery/vending/hatdispenser
 	name = "\improper Hatlord 9000"
-	desc = "It doesn't seem the slightest bit unusual. This frustrates you immensely."
+	desc = "В этом нет ничего необычного. Это вас очень расстраивает."
 
 	icon_state = "hats_off"
 	panel_overlay = "hats_panel"
@@ -2425,7 +2426,7 @@
 
 /obj/machinery/vending/suitdispenser
 	name = "\improper Suitlord 9000"
-	desc = "You wonder for a moment why all of your shirts and pants come conjoined. This hurts your head and you stop thinking about it."
+	desc = "На мгновение ты задумываешься, почему все твои рубашки и брюки сшиты вместе. От этого у тебя начинает болеть голова, и ты перестаешь об этом думать."
 
 	icon_state = "suits_off"
 	panel_overlay = "suits_panel"
@@ -2434,7 +2435,7 @@
 	broken_overlay = "suits_broken"
 	broken_lightmask_overlay = "suits_broken_lightmask"
 
-	ads_list = list("Pre-Ironed, Pre-Washed, Pre-Wor-*BZZT*","Blood of your enemies washes right out!","Who are YOU wearing?","Look dapper! Look like an idiot!","Dont carry your size? How about you shave off some pounds you fat lazy- *BZZT*")
+	ads_list = list("Предварительно проглаженный, предварительно стиранный, предво-*БЗЗЗ*","Кровь твоих врагов сразу же смоется!","Что ВЫ носите?","Выгляди элегантно! Выгляди как идиот!","Не подходит по размеру? А как насчет того, чтобы сбросить пару килограммов, ты, жирный лентяй-*БЗЗЗЗ*")
 	products = list(
 		/obj/item/clothing/under/color/black = 10,
 		/obj/item/clothing/under/color/blue = 10,
@@ -2463,7 +2464,7 @@
 
 /obj/machinery/vending/shoedispenser
 	name = "\improper Shoelord 9000"
-	desc = "Wow, hatlord looked fancy, suitlord looked streamlined, and this is just normal. The guy who designed these must be an idiot."
+	desc = "Оу, шляпы у Hatlord такие классные, костюмы у Suitlord такие элегантные, а у этого всё такое обычное... Дизайнер, должно быть, идиот."
 
 	icon_state = "shoes_off"
 	icon_state = "shoes_off"
@@ -2473,7 +2474,7 @@
 	broken_overlay = "shoes_broken"
 	broken_lightmask_overlay = "shoes_broken_lightmask"
 
-	ads_list = list("Put your foot down!","One size fits all!","IM WALKING ON SUNSHINE!","No hobbits allowed.","NO PLEASE WILLY, DONT HURT ME- *BZZT*")
+	ads_list = list("Опусти ногу!","Один размер подходит всем!","Я ШАГАЮ В ЛУЧАХ СОЛНЦА!","Хоббитам вход воспрещен.","НЕТ, ПОЖАЛУЙСТА, ВИЛЛИ, НЕ ДЕЛАЙ МНЕ БОЛЬНО-*БЗЗЗЗ*")
 	products = list(/obj/item/clothing/shoes/black = 10,/obj/item/clothing/shoes/brown = 10,/obj/item/clothing/shoes/blue = 10,/obj/item/clothing/shoes/green = 10,/obj/item/clothing/shoes/yellow = 10,/obj/item/clothing/shoes/purple = 10,/obj/item/clothing/shoes/red = 10,/obj/item/clothing/shoes/white = 10,/obj/item/clothing/shoes/sandal=10)
 	contraband = list(/obj/item/clothing/shoes/orange = 5)
 	premium = list(/obj/item/clothing/shoes/rainbow = 1)
@@ -2481,7 +2482,7 @@
 
 /obj/machinery/vending/syndicigs
 	name = "\improper Suspicious Cigarette Machine"
-	desc = "Smoke 'em if you've got 'em."
+	desc = "Кури, раза уж взял."
 	slogan_list = list("Космосигареты на вкус хороши, какими они и должны быть.","I'd rather toolbox than switch.","Затянитесь!","Не верьте исследованиям — курите сегодня!")
 	ads_list = list("Наверняка не очень-то и вредно для Вас!","Не верьте учёным!","На здоровье!","Не бросайте курить, купите ещё!","Затянитесь!","Никотиновый рай.","Лучшие сигареты с 2150 года.","Сигареты с множеством наград.")
 	vend_delay = 34
@@ -2498,9 +2499,9 @@
 
 /obj/machinery/vending/syndisnack
 	name = "\improper Getmore Chocolate Corp"
-	desc = "A modified snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars"
-	slogan_list = list("Try our new nougat bar!","Twice the calories for half the price!")
-	ads_list = list("The healthiest!","Award-winning chocolate bars!","Mmm! So good!","Oh my god it's so juicy!","Have a snack.","Snacks are good for you!","Have some more Getmore!","Best quality snacks straight from mars.","We love chocolate!","Try our new jerky!")
+	desc = "Модифицированный автомат самообслуживания, любезно предоставленный шоколадной корпорацией Getmore, базирующейся на Марсе."
+	slogan_list = list("Попробуйте наш новый батончик с нугой!","Вдвое больше калорий за полцены!")
+	ads_list = list("Самый здоровый!","Отмеченные наградами шоколадные батончики!","Ммм! Так вкусно!","О боже, это так вкусно!","Перекусите.","Закуски - это здорово!","Возьми немного, и еще немного!","Закуски высшего качества прямо с Марса.","Мы любим шоколад!","Попробуйте наше новое вяленое мясо!")
 
 	icon_state = "snack_off"
 	panel_overlay = "snack_panel"
@@ -2544,7 +2545,7 @@
 //don't forget to change the refill size if you change the machine's contents!
 /obj/machinery/vending/clothing
 	name = "\improper ClothesMate" //renamed to make the slogan rhyme
-	desc = "A vending machine for clothing."
+	desc = "Автомат с бесплатной одеждой."
 
 	icon_state = "clothes_off"
 	panel_overlay = "clothes_panel"
@@ -2553,9 +2554,9 @@
 	broken_overlay = "clothes_broken"
 	broken_lightmask_overlay = "clothes_broken_lightmask"
 
-	slogan_list = list("Dress for success!","Prepare to look swagalicious!","Look at all this free swag!","Why leave style up to fate? Use the ClothesMate!")
+	slogan_list = list("Приоденься для Успеха!","Приготовьтесь выглядеть потрясающе!","Посмотрите на все эти классные вещи бесплатно!","Зачем оставлять стиль на произвол судьбы? Используй ClothesMate!")
 	vend_delay = 15
-	vend_reply = "Thank you for using the ClothesMate!"
+	vend_reply = "Спасибо за использование ClothesMate!"
 	products = list(/obj/item/clothing/head/that = 2,
 					/obj/item/clothing/head/fedora = 1,
 					/obj/item/clothing/glasses/monocle = 1,
@@ -2652,9 +2653,9 @@
 
 /obj/machinery/vending/artvend
 	name = "\improper ArtVend"
-	desc = "A vending machine for art supplies."
-	slogan_list = list("Stop by for all your artistic needs!","Color the floors with crayons, not blood!","Don't be a starving artist, use ArtVend. ","Don't fart, do art!")
-	ads_list = list("Just like Kindergarten!","Now with 1000% more vibrant colors!","Screwing with the janitor was never so easy!","Creativity is at the heart of every spessman.")
+	desc = "Торговый автомат для всех ваших художественных нужд."
+	slogan_list = list("Забирайте свои прикольные вещички!","Раскрасьте пол цветными карандашами, а не кровью!","Не будь голодающим творцом, используй ArtVend.","Не сри, твори!")
+	ads_list = list("Прямо как в детском саду!","Теперь на 1000% больше ярких цветов!","Поиметь уборщика еще никогда не было так просто!","Креативность лежит в основе каждого специалиста!")
 	vend_delay = 15
 
 	icon_state = "artvend_off"
@@ -2712,9 +2713,9 @@
 
 /obj/machinery/vending/crittercare
 	name = "\improper CritterCare"
-	desc = "A vending machine for pet supplies."
-	slogan_list = list("Stop by for all your animal's needs!","Cuddly pets deserve a stylish collar!","Pets in space, what could be more adorable?","Freshest fish eggs in the system!","Rocks are the perfect pet, buy one today!")
-	ads_list = list("House-training costs extra!","Now with 1000% more cat hair!","Allergies are a sign of weakness!","Dogs are man's best friend. Remember that Vulpkanin!"," Heat lamps for Unathi!"," Vox-y want a cracker?")
+	desc = "Торговый автомат по продаже зоотоваров."
+	slogan_list = list("Здесь всё, чтобы ваш питомец был всем доволен!","Крутые питомцы заслуживают крутой ошейник!","Домашние животные в космосе - что может быть очаровательнее?","Самая свежая икра в системе!","Камни - лучшие питомцы, купите себе их уже сегодня!")
+	ads_list = list("Дрессировка на дому оплачивается дополнительно!","Теперь на 1000% больше кошачьей шерсти!","Аллергия - признак слабости!","Собаки - лучшие друзья человека. Помни об этом, вульпа!"," Нагревательные лампы для Унатхов!"," Вокс хочет крекер?")
 	vend_delay = 15
 
 	icon_state = "crittercare_off"
@@ -3276,7 +3277,7 @@
 
 /obj/machinery/vending/nta
 	name = "NT Ammunition"
-	desc = "A special equipment vendor."
+	desc = "Автомат-помощник по выдаче специального снаряжения."
 	ads_list = list("Возьми патрон!","Не забывай, снаряжаться - полезно!","Бжж-Бзз-з!.","Обезопасить, Удержать, Сохранить!","Стоять, снярядись на задание!")
 
 	icon_state = "nta_base"
@@ -3355,7 +3356,7 @@
 
 /obj/machinery/vending/nta/ertarmory/blue
 	name = "NT ERT Medium Gear & Ammunition"
-	desc = "A ERT Medium equipment vendor."
+	desc = "Автомат-помощник по выдаче снаряжения среднего класса."
 	ads_list = list("Круши черепа синдиката!","Не забывай, спасать - полезно!","Бжж-Бзз-з!.","Обезопасить, Удержать, Сохранить!","Стоять, снярядись на задание!")
 
 	icon_state = "nta_base"
@@ -3383,7 +3384,7 @@
 
 /obj/machinery/vending/nta/ertarmory/red
 	name = "NT ERT Heavy Gear & Ammunition"
-	desc = "A ERT Heavy equipment vendor."
+	desc = "Автомат-помощник по выдаче снаряжения тяжелого класса."
 	ads_list = list("Круши черепа синдиката!","Не забывай, спасать - полезно!","Бжж-Бзз-з!.","Обезопасить, Удержать, Сохранить!","Стоять, снярядись на задание!")
 
 	icon_state = "nta_base"
@@ -3411,7 +3412,7 @@
 
 /obj/machinery/vending/nta/ertarmory/green
 	name = "NT ERT Light Gear & Ammunition"
-	desc = "A ERT Light equipment vendor."
+	desc = "Автомат-помощник по выдаче снаряжения легкого класса"
 	ads_list = list("Круши черепа синдиката!","Не забывай, спасать - полезно!","Бжж-Бзз-з!.","Обезопасить, Удержать, Сохранить!","Стоять, снярядись на задание!")
 
 	icon_state = "nta_base"
@@ -3443,7 +3444,7 @@
 
 /obj/machinery/vending/nta/ertarmory/green/cc_jail
 	name = "NT CentComm prison guards' Gear & Ammunition"
-	desc = "An equipment vendor for CentComm corrections officers."
+	desc = "Автомат с оборудованием для сотрудников CentComm."
 	products = list(/obj/item/restraints/handcuffs=5,
 		/obj/item/restraints/handcuffs/cable/zipties=5,
 		/obj/item/grenade/flashbang=3,
@@ -3463,7 +3464,7 @@
 
 /obj/machinery/vending/nta/ertarmory/yellow
 	name = "NT ERT Death Wish Gear & Ammunition"
-	desc = "A ERT Death Wish equipment vendor."
+	desc = "Автомат с оборудованием для ОБР — помогает людям осуществить их желание умереть."
 	ads_list = list("Круши черепа ВСЕХ!","Не забывай, УБИВАТЬ - полезно!","УБИВАТЬ УБИВАТЬ УБИВАТЬ УБИВАТЬ!.","УБИВАТЬ, Удержать, УБИВАТЬ!","Стоять, снярядись на УБИВАТЬ!")
 
 	icon_state = "nta_base"
@@ -3490,7 +3491,7 @@
 
 /obj/machinery/vending/nta/ertarmory/medical
 	name = "NT ERT Medical Gear"
-	desc = "A ERT medical equipment vendor."
+	desc = "Автомат с медицинским оборудованием ОБР."
 	ads_list = list("Лечи раненых от рук синдиката!","Не забывай, лечить - полезно!","Бжж-Бзз-з!.","Перевязать, Оперировать, Выписать!","Стоять, снярядись медикаментами на задание!")
 
 	icon_state = "nta_base"
@@ -3527,7 +3528,7 @@
 
 /obj/machinery/vending/nta/ertarmory/engineer
 	name = "NT ERT Engineer Gear"
-	desc = "A ERT engineering equipment vendor."
+	desc = "Автомат с инженерным оборудованием ОБР."
 	ads_list = list("Чини станцию от рук синдиката!","Не забывай, чинить - полезно!","Бжж-Бзз-з!.","Починить, Заварить, Трубить!","Стоять, снярядись на починку труб!")
 
 	icon_state = "nta_base"
@@ -3557,7 +3558,7 @@
 
 /obj/machinery/vending/nta/ertarmory/janitor
 	name = "NT ERT Janitor Gear"
-	desc = "A ERT ccleaning equipment vendor."
+	desc = "Автомат с уборочным оборудованием ОБР."
 	ads_list = list("Чисть станцию от рук синдиката!","Не забывай, чистить - полезно!","Вилкой чисти!.","Помыть, Постирать, Оттереть!","Стоять, снярядись клинерами!")
 
 	icon_state = "nta_base"
@@ -3585,7 +3586,7 @@
 
 /obj/machinery/vending/pai
 	name = "\improper RoboFriends"
-	desc = "Wonderful vendor of PAI friends"
+	desc = "Потрясающий продавец ПИИ-друзей!"
 
 	icon_state = "paivend_off"
 	panel_overlay = "paivend_panel"
@@ -3594,7 +3595,7 @@
 	broken_overlay = "paivend_broken"
 	broken_lightmask_overlay = "paivend_broken_lightmask"
 
-	ads_list = list("А вы любите нас?","Мы твои друзья!","Эта покупка войдет в историю","Я ПАИ простой, купишь меня, а я тебе друга!","Спасибо за покупку.")
+	ads_list = list("А вы любите нас?","Мы твои друзья!","Эта покупка войдет в историю","Я ПИИ простой, купишь меня, а я тебе друга!","Спасибо за покупку.")
 	resistance_flags = FIRE_PROOF
 	products = list(
 		/obj/item/paicard = 10,
@@ -3624,7 +3625,7 @@
 
 /obj/machinery/vending/security/ert
 	name = "NT ERT Consumables Gear"
-	desc = "A consumable equipment for different situations."
+	desc = "Расходное оборудование для различных ситуаций."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	refill_canister = /obj/item/vending_refill/nta
 
@@ -3697,7 +3698,7 @@
 
 /obj/machinery/vending/ntc/medal
 	name = "NT Cargo Encouragement"
-	desc = "A encourage vendor with many of medal types."
+	desc = "Тяжелый кейс с медалями на любой вкус и цвет."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "medalbox"
 	products = list(
@@ -3717,7 +3718,7 @@
 
 /obj/machinery/vending/ntc/medical
 	name = "NT Cargo Medical Gear"
-	desc = "A some medical equipment vendor for cargo."
+	desc = "Различное медицинское оборудование для доставки."
 
 	icon_state = "nta_base"
 	base_icon_state = "nta-medical"
@@ -3738,7 +3739,7 @@
 
 /obj/machinery/vending/ntc/engineering
 	name = "NT Cargo Engineering Gear"
-	desc = "A some engineering equipment vendor for cargo."
+	desc = "Различное инженерное оборудование для доставки."
 
 	icon_state = "nta_base"
 	base_icon_state = "nta-engi"
@@ -3758,7 +3759,7 @@
 
 /obj/machinery/vending/ntc/janitor
 	name = "NT Cargo Janitor Gear"
-	desc = "A some janitor equipment vendor for cargo."
+	desc = "Различное уборочное оборудование для доставки."
 
 	icon_state = "nta_base"
 	base_icon_state = "nta-janitor"
@@ -3783,7 +3784,7 @@
 
 /obj/machinery/vending/ntcrates
 	name = "NT Cargo Preset Gear"
-	desc = "A already preset of equipments vendor for cargo."
+	desc = "Предварительный комплект оборудования для доставки, на все случаи жизни."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	refill_canister = /obj/item/vending_refill/nta
 
@@ -3809,7 +3810,7 @@
 
 /obj/machinery/vending/ntc/ert
 	name = "NT Response Team Base Gear"
-	desc = "A ERT Base equipment vendor"
+	desc = "Автомат с базовым оборудованием ОБР"
 
 	icon_state = "nta_base"
 	base_icon_state = "nta-blue"
@@ -3830,7 +3831,7 @@
 
 /obj/machinery/vending/ntc_resources
 	name = "NT Matter Сompression Vendor"
-	desc = "Its vendor use advanced technology of matter compression and can have a many volume of resources."
+	desc = "Этот автомат использует передовую технологию сжатия и может хранить в себе большой объем ресурсов."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	refill_canister = /obj/item/vending_refill/nta
 
@@ -3863,7 +3864,7 @@
 
 /obj/machinery/vending/mech/ntc/exousuit
 	name = "NT Exosuit Bluespace Transporter"
-	desc = "Fabricator with advanced technology of bluespace transporting of resources."
+	desc = "Фабрикатор с передовой технологией BlueSpace-транспортировки ресурсов."
 	icon = 'icons/obj/machines/robotics.dmi'
 	icon_state = "fab-idle"
 	products = list(
@@ -3877,7 +3878,7 @@
 
 /obj/machinery/vending/mech/ntc/equipment
 	name = "NT Exosuit Bluespace Transporter"
-	desc = "Fabricator with advanced technology of bluespace transporting of resources."
+	desc = "Фабрикатор с передовой технологией BlueSpace-транспортировки ресурсов."
 
 	icon_state = "engivend_off"
 	panel_overlay = "engivend_panel"
@@ -3897,7 +3898,7 @@
 
 /obj/machinery/vending/mech/ntc/weapon
 	name = "NT Exosuit Bluespace Transporter"
-	desc = "Fabricator with advanced technology of bluespace transporting of resources."
+	desc = "Фабрикатор с передовой технологией BlueSpace-транспортировки ресурсов."
 
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "liberationstation_off"
@@ -3923,7 +3924,7 @@
 
 /obj/machinery/vending/mech/ntc/tools
 	name = "NT Exosuit Bluespace Transporter"
-	desc = "Fabricator with advanced technology of bluespace transporting of resources."
+	desc = "Фабрикатор с передовой технологией BlueSpace-транспортировки ресурсов."
 
 	icon_state = "tool_off"
 	panel_overlay = "tool_panel"
