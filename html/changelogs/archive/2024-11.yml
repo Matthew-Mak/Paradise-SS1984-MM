@@ -103,3 +103,16 @@
   - balance: maintenance tunnels access for everyone (#6158)
   Vitalya:
   - imageadd: New sprites for some Wryn masks (#6144)
+  Vladisvell:
+  - bugfix: Fixes icon smooth for map templates (#6164)
+'2024-11-12':
+  Vladisvell:
+  - add: Allows you to not load station (#6165)
+  - bugfix: Fixes icon smoothing for sure (#6167)
+  littleboobs:
+  - spellcheck: DNA effects translation (#6155)
+'2024-11-14':
+  Testmerge Worker:
+  - add: Ashwalkers survival update (#5893) [testmerge][5ee3919]
+  - add: request console cart in pda[bounty] (#5990) [testmerge][cf9dadc]
+  - unknown: New() -> Initialize() organs migration. (#6137) [testmerge][5c9962f]
