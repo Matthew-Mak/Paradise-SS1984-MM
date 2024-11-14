@@ -277,7 +277,7 @@
 	if(wisp.loc == src)
 		RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 
-		to_chat(user, span_notice("Выпущенный дух кружится вокруг вашей головы.</span>"))
+		to_chat(user, span_notice("Выпущенный дух кружится вокруг вашей головы."))
 		wisp.forceMove(user)
 		update_icon(UPDATE_ICON_STATE)
 		INVOKE_ASYNC(wisp, TYPE_PROC_REF(/atom/movable, orbit), user, 20)
@@ -290,7 +290,7 @@
 	else
 		UnregisterSignal(user, COMSIG_MOB_UPDATE_SIGHT)
 
-		to_chat(user, span_notice("Вы помещаете духа обратно в лампу.</span>"))
+		to_chat(user, span_notice("Вы помещаете духа обратно в лампу."))
 		wisp.stop_orbit()
 		wisp.forceMove(src)
 		set_light_on(TRUE)
@@ -311,7 +311,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message(span_notice("[wisp] взгрустнул на момент, после чего исчез.</span>"))
+			wisp.visible_message(span_notice("[wisp] взгрустнул на момент, после чего исчез."))
 	return ..()
 
 /obj/item/wisp_lantern/proc/update_user_sight(mob/user)
