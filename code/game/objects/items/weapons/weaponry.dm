@@ -450,3 +450,29 @@
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 30
 
+/obj/item/primitive_kolotushka
+	name = "primitive kolotushka"
+	desc = "Простейшая дубина из кости, воплощает в себе силу природы и первобытную мощь."
+	icon_state = "kolotushka"
+	item_state = "kolotushka"
+	hitsound = 'sound/weapons/kolotushka_smash.ogg'
+	slot_flags = ITEM_SLOT_BELT
+	force = 3
+	throwforce = 3
+	w_class = WEIGHT_CLASS_NORMAL
+	var/stamina_damage = 22
+
+/obj/item/primitive_kolotushka/afterattack(atom/target, mob/user, proximity, params, status)
+	if(!isliving(target) || !proximity || user.incapacitated() || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return
+
+	var/mob/living/victim = target
+	if(isrobot(victim))
+		if(prob(30))
+			victim.flash_eyes(3 SECONDS)
+			victim.Stun(3 SECONDS)
+
+	if(ishuman(victim))
+		victim.apply_damage(stamina_damage, STAMINA, blocked = victim.getarmor(user.zone_selected, MELEE))
+		if(prob(30))
+			victim.Knockdown(3 SECONDS)
