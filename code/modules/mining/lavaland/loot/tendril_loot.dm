@@ -21,7 +21,7 @@
 	// basically we cannot put one bag in the storage if another one is already there
 	if(istype(I) && I.bag && I.bag == src && I.twin_storage && I.twin_storage.loc == src)
 		if(!stop_messages)
-			balloon_alert(usr, "нельзя в себя же")
+			balloon_alert(usr, "нельзя положить в себя")
 		return FALSE
 	return ..()
 
@@ -127,7 +127,7 @@
 
 /obj/item/book_of_babel
 	name = "Book of Babel"
-	desc = "Древний фолиант, написанный в бесчисленном количестве языков."
+	desc = "Древний фолиант, написанный на бесчисленном количестве языков."
 	ru_names = list(
 		NOMINATIVE = "книга вавилона",
 		GENITIVE = "книги вавилона",
@@ -143,7 +143,7 @@
 
 /obj/item/book_of_babel/attack_self(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_NO_BABEL))
-		user.visible_message(span_notice("[user] внезапно останавливается, осознавая [src]."))
+		user.visible_message(span_notice("[user] внезапно останавлива[pluralize_ru(user, "ет", "ют")]ся, осознавая [src]."))
 		to_chat(user, span_warning("Вы не знаете ни что такое книга, ни что с ней делать."))
 		return
 
@@ -162,7 +162,7 @@
 
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
-	desc = "Мистический флакон с полусвятой аурой исходящей от него. Надпись на нем гласит: 'эуфц'хъъ тъи'рв лвх йв'атв'."
+	desc = "Мистический флакон с почти что святой аурой исходящей от него. Надпись на нем гласит: 'эуфц'хъъ тъи'рв лвх йв'атв'."
 	ru_names = list(
 		NOMINATIVE = "странный эликсир",
 		GENITIVE = "странного эликсира",
@@ -182,7 +182,7 @@
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	id = "flightpotion"
-	description = "Странный реагент с неизвестным происхождением."
+	description = "Странный реагент неизвестного происхождения."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
@@ -192,10 +192,10 @@
 		var/mob/living/carbon/human/H = M
 		if(!ishumanbasic(H) || reac_volume < 5) // implying xenohumans are holy
 			if(method == INGEST && show_message)
-				to_chat(H, span_notice(span_italics("Вы не чувствуете ничего, кроме отвратительного послевкусия.")))
+				to_chat(H, span_notice(span_italics("Кроме отвратительного послевкусия у вас во рту, вы ничего не почувствовали.")))
 			return ..()
 
-		to_chat(H, "<span class='userdanger'>Невыносимая боль проходит через вашу спину, как вдруг оттуда вырываются крылья!</span>")
+		span_danger("Невыносимая боль проходит через вашу спину, как вдруг оттуда вырываются крылья!")
 		H.set_species(/datum/species/angel)
 		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
 		H.adjustBruteLoss(20)
@@ -220,7 +220,7 @@
 	var/turf/T = get_turf(src)
 	var/ladder_x = T.x
 	var/ladder_y = T.y
-	to_chat(user, "<span class='notice'>Вы разворачиваете лестницу. Она уходит значительно дальше, чем вы ожидали.</span>")
+	to_chat(user, span_notice("Вы разворачиваете лестницу. Она уходит значительно дальше, чем вы ожидали.</span>"))
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
 		if(is_admin_level(i) || is_away_level(i) || is_taipan(i))
@@ -270,14 +270,14 @@
 
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		balloon_alert(user, "Дух исчез!")
+		balloon_alert(user, "дух исчез!")
 		update_icon(UPDATE_ICON_STATE)
 		return
 
 	if(wisp.loc == src)
 		RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 
-		to_chat(user, "<span class='notice'>Выпущенный дух крутится вокруг вашей головы.</span>")
+		to_chat(user, span_notice("Выпущенный дух кружится вокруг вашей головы.</span>"))
 		wisp.forceMove(user)
 		update_icon(UPDATE_ICON_STATE)
 		INVOKE_ASYNC(wisp, TYPE_PROC_REF(/atom/movable, orbit), user, 20)
@@ -290,7 +290,7 @@
 	else
 		UnregisterSignal(user, COMSIG_MOB_UPDATE_SIGHT)
 
-		to_chat(user, "<span class='notice'>Вы помещаете духа обратно в лампу.</span>")
+		to_chat(user, span_notice("Вы помещаете духа обратно в лампу.</span>"))
 		wisp.stop_orbit()
 		wisp.forceMove(src)
 		set_light_on(TRUE)
@@ -311,7 +311,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message("<span class='notice'>[wisp] взгрустнул на момент, после чего исчез.</span>")
+			wisp.visible_message(span_notice("[wisp] взгрустнул на момент, после чего исчез.</span>"))
 	return ..()
 
 /obj/item/wisp_lantern/proc/update_user_sight(mob/user)
@@ -351,11 +351,11 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
-		balloon_alert(user, "[src] искрится и шипит.")
+		balloon_alert(user, "[src] искрится и шипит")
 		return
 
 	if(is_in_teleport_proof_area(user) || is_in_teleport_proof_area(linked))
-		balloon_alert(user, "[src] искрится и шипит.")
+		balloon_alert(user, "[src] искрится и шипит")
 		return
 	if(do_after(user, 1.5 SECONDS, user))
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -404,6 +404,7 @@
 		ACCUSATIVE = "мясной крюк",
 		INSTRUMENTAL = "мясным крюком",
 		PREPOSITIONAL = "мясном крюке",
+	)
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
@@ -443,7 +444,7 @@
 		var/turf/firer_turf = get_turf(firer)
 		var/mob/living/L = target
 		if(!L.anchored && L.loc)
-			L.visible_message("<span class='danger'>[firer] утаскива[pluralize_ru(user.gender, "ет", "ют")] [L] своим крюком!</span>")
+			L.visible_message(span_danger("[firer] утаскива[pluralize_ru(user.gender, "ет", "ют")] [L] своим крюком!"))
 			ADD_TRAIT(L, TRAIT_UNDENSE, UNIQUE_TRAIT_SOURCE(src)) // Ensures the hook does not hit the target multiple times
 			L.forceMove(firer_turf)
 			REMOVE_TRAIT(L, TRAIT_UNDENSE, UNIQUE_TRAIT_SOURCE(src))
@@ -485,7 +486,7 @@
 
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, last_used_immortality_talisman))
-		balloon_alert(user, "перезарядка!")
+		balloon_alert(user, "перезарядка")
 		return
 
 	var/turf/source_turf = get_turf(src)
@@ -512,12 +513,12 @@
 
 	var/turf/effect_turf = get_turf(effect)
 	if(!effect_turf)
-		stack_trace("[effect] вне содержаний этой земли.")
+		stack_trace("[effect] is outside of the turf contents")
 		return
 
 	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), UNIQUE_TRAIT_SOURCE(src))
 	user.forceMove(effect_turf)
-	user.visible_message(span_danger("[user] возвращается в нашу реальность!"))
+	user.visible_message(span_danger("[user] возвраща[pluralize_ru(user, "ет", "ют")]ся в нашу реальность!"))
 	effect.can_destroy = TRUE
 
 	if(length(effect.contents))
